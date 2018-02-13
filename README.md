@@ -7,7 +7,6 @@ Brandeis University
 Spring 2018
 
 Participants:
-
 Shuai <br/>
 Si <br/>
 Alyssa <br/>
