@@ -8,9 +8,9 @@ Spring 2018
 
 Participants:
 
-Shuai
-Si
-Alyssa
+Shuai <br/>
+Si <br/>
+Alyssa <br/>
 
 ## Resources
 
