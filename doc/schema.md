@@ -55,21 +55,28 @@ table **Hashtags**<br>
 &nbsp;&nbsp;&nbsp;&nbsp;has_many Tweets<br>
 
 ### Tables
-**Users**<br>
+**Users**
+
 | Name  | Key Type | Data Type | Description | Rquired |
 | --- | -------- | --------- | ----------- | ------- |
 | **user_id** | primary key | `integer` | The identifier of user | Yes |
-| **email** | --- | `text` | Email of user | Yes |
-| **password** | --- | `text` | Password of user | Yes |
-| **apitoken** | --- | `text` | For distinguishing API calls that need a logged in user vs. those that are public. Those that are public would not require the user's apitoken. | default: nil |
+| **email** | | `text` | Email of user | Yes |
+| **password** | | `text` | Password of user | Yes |
+| **apitoken** | | `text` | For distinguishing API calls that need a logged in user vs. those that are public. Those that are public would not require the user's apitoken. | default: nil |
+
 <br>
+
 **Follows**
+
 |   |Key Type|Data Type|Description|Rquired|
 |---|--------|---------|-----------|-------|
 |**follower_id**|foreign key to **Users**|`integer`|The user who is followed| Yes |
-|**following_id**|foreign key to **Users**|`integer`|The user who follows **follower** user| Yes|
+|**following_id**|foreign key to **Users**|`integer`|The user who follows **follower** user| Yes
+
+<br>
 
 **Tweets**
+
 |   |Key Type|Data Type|Description|Rquired|
 |---|--------|---------|-----------|-------|
 |**tweet_id**|primary key|`integer`|The unique id of tweet|Yes|
@@ -77,7 +84,10 @@ table **Hashtags**<br>
 |**creation_time**||`time`|The time when this tweet created|Yes|
 |**author_id**|foreign key to **Users**|`integer`|Id of the user who created this tweet|Yes|
 
+<br>
+
 **Profiles**
+
 |   |Key Type|Data Type|Description|Rquired|
 |---|--------|---------|-----------|-------|
 |**user_id**|foreign key to **Users**|`integer`|The user's id|Yes|
@@ -86,14 +96,20 @@ table **Hashtags**<br>
 |**date_joined**||`date`|The date this user created|Yes|
 |**location**||`text`|The location where this user is|No|
 
+<br>
+
 **Mentions**
+
 |   |Key Type|Data Type|Description|Rquired|
 |---|--------|---------|-----------|-------|
 |**tweet_id**|foreign key to **Tweets**|`integer`| The id of tweet|Yes|
 |**user_id**|foreign key to **Users**|`integer`|The user is mentioned in this tweet|Yes|
 |**author_id**||`integer`|The user who wrote this tweet|TBD|
 
+<br>
+
 **Hashtags**
+
 |   |Key Type|Data Type|Description|Rquired|
 |---|--------|---------|-----------|-------|
 |**hashtag_name**|primary key|`text`|The content of this hashtag|Yes|
