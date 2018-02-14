@@ -1,68 +1,68 @@
 ## Schema Design
 
 ### ActiveRecord Noation
-table **Users**
-&nbsp;&nbsp;&nbsp;&nbsp;primary key user_id: integer
-&nbsp;&nbsp;&nbsp;&nbsp;email: text
-&nbsp;&nbsp;&nbsp;&nbsp;password: text
-&nbsp;&nbsp;&nbsp;&nbsp;apitoken: text
+table **Users**<br>
+&nbsp;&nbsp;&nbsp;&nbsp;primary key user_id: integer<br>
+&nbsp;&nbsp;&nbsp;&nbsp;email: text<br>
+&nbsp;&nbsp;&nbsp;&nbsp;password: text<br>
+&nbsp;&nbsp;&nbsp;&nbsp;apitoken: text<br>
 
-table **Follows**
-&nbsp;&nbsp;&nbsp;&nbsp;foreign key follower_id: integer
-&nbsp;&nbsp;&nbsp;&nbsp;foreign key follower_id: integer
+table **Follows**<br>
+&nbsp;&nbsp;&nbsp;&nbsp;foreign key follower_id: integer<br>
+&nbsp;&nbsp;&nbsp;&nbsp;foreign key follower_id: integer<br>
 
-table **Tweets**
-&nbsp;&nbsp;&nbsp;&nbsp;foreign key tweet_id: integer
-&nbsp;&nbsp;&nbsp;&nbsp;text: text
-&nbsp;&nbsp;&nbsp;&nbsp;creation_time: time
-&nbsp;&nbsp;&nbsp;&nbsp;foreign key author_id: integer
+table **Tweets**<br>
+&nbsp;&nbsp;&nbsp;&nbsp;foreign key tweet_id: integer<br>
+&nbsp;&nbsp;&nbsp;&nbsp;text: text<br>
+&nbsp;&nbsp;&nbsp;&nbsp;creation_time: time<br>
+&nbsp;&nbsp;&nbsp;&nbsp;foreign key author_id: integer<br>
 
-table **Profiles**
-&nbsp;&nbsp;&nbsp;&nbsp;foreign key user_id: integer
-&nbsp;&nbsp;&nbsp;&nbsp;bio: text
-&nbsp;&nbsp;&nbsp;&nbsp;dob: date
-&nbsp;&nbsp;&nbsp;&nbsp;date_joined: date
-&nbsp;&nbsp;&nbsp;&nbsp;location: text
+table **Profiles**<br>
+&nbsp;&nbsp;&nbsp;&nbsp;foreign key user_id: integer<br>
+&nbsp;&nbsp;&nbsp;&nbsp;bio: text<br>
+&nbsp;&nbsp;&nbsp;&nbsp;dob: date<br>
+&nbsp;&nbsp;&nbsp;&nbsp;date_joined: date<br>
+&nbsp;&nbsp;&nbsp;&nbsp;location: text<br>
 
-table **Mentions**
-&nbsp;&nbsp;&nbsp;&nbsp;foreign key tweet_id: integer
-&nbsp;&nbsp;&nbsp;&nbsp;foreign key user_id: integer
-&nbsp;&nbsp;&nbsp;&nbsp;author_id: integer
+table **Mentions**<br>
+&nbsp;&nbsp;&nbsp;&nbsp;foreign key tweet_id: integer<br>
+&nbsp;&nbsp;&nbsp;&nbsp;foreign key user_id: integer<br>
+&nbsp;&nbsp;&nbsp;&nbsp;author_id: integer<br>
 
-table **Hashtags**
-&nbsp;&nbsp;&nbsp;&nbsp;primary key hashtag_name: text
-&nbsp;&nbsp;&nbsp;&nbsp;foreign key tweet_id: text
+table **Hashtags**<br>
+&nbsp;&nbsp;&nbsp;&nbsp;primary key hashtag_name: text<br>
+&nbsp;&nbsp;&nbsp;&nbsp;foreign key tweet_id: text<br>
 
-**Users**
-&nbsp;&nbsp;&nbsp;&nbsp;has_many Users through Follows
-&nbsp;&nbsp;&nbsp;&nbsp;has_many Tweets
-&nbsp;&nbsp;&nbsp;&nbsp;has_one Profiles
-&nbsp;&nbsp;&nbsp;&nbsp;has_many Mentions
+**Users**<br>
+&nbsp;&nbsp;&nbsp;&nbsp;has_many Users through Follows<br>
+&nbsp;&nbsp;&nbsp;&nbsp;has_many Tweets<br>
+&nbsp;&nbsp;&nbsp;&nbsp;has_one Profiles<br>
+&nbsp;&nbsp;&nbsp;&nbsp;has_many Mentions<br>
 
-**Profiles**
-&nbsp;&nbsp;&nbsp;&nbsp;belongs_to Users
+**Profiles**<br>
+&nbsp;&nbsp;&nbsp;&nbsp;belongs_to Users<br>
 
-**Tweets**
-&nbsp;&nbsp;&nbsp;&nbsp;belongs_to Users
-&nbsp;&nbsp;&nbsp;&nbsp;has_many Mentions
-&nbsp;&nbsp;&nbsp;&nbsp;has_many Hashtags
+**Tweets**<br>
+&nbsp;&nbsp;&nbsp;&nbsp;belongs_to Users<br>
+&nbsp;&nbsp;&nbsp;&nbsp;has_many Mentions<br>
+&nbsp;&nbsp;&nbsp;&nbsp;has_many Hashtags<br>
 
-**Mentions**
-&nbsp;&nbsp;&nbsp;&nbsp;belongs_to Tweets
-&nbsp;&nbsp;&nbsp;&nbsp;belongs_to Users
+**Mentions**<br>
+&nbsp;&nbsp;&nbsp;&nbsp;belongs_to Tweets<br>
+&nbsp;&nbsp;&nbsp;&nbsp;belongs_to Users<br>
 
-**Hashtags**
-&nbsp;&nbsp;&nbsp;&nbsp;has_many Tweets
+**Hashtags**<br>
+&nbsp;&nbsp;&nbsp;&nbsp;has_many Tweets<br>
 
 ### Tables
-**Users**
-|   |Key Type|Data Type|Description|Rquired|
-|---|--------|---------|-----------|-------|
-|**user_id**|primary key|`integer`|The identifier of user| Yes |
-|**email**||`text`|Email of user|Yes|
-|**password**||`text`|Password of user|Yes|
-|**apitoken**||`text`|For distinguishing API calls that need a logged in user vs. those that are public. Those that are public would not require the user's apitoken.|default: nil|
-
+**Users**<br>
+| Name  | Key Type | Data Type | Description | Rquired |
+| --- | -------- | --------- | ----------- | ------- |
+| **user_id** | primary key | `integer` | The identifier of user | Yes |
+| **email** | --- | `text` | Email of user | Yes |
+| **password** | --- | `text` | Password of user | Yes |
+| **apitoken** | --- | `text` | For distinguishing API calls that need a logged in user vs. those that are public. Those that are public would not require the user's apitoken. | default: nil |
+<br>
 **Follows**
 |   |Key Type|Data Type|Description|Rquired|
 |---|--------|---------|-----------|-------|
