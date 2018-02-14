@@ -57,7 +57,7 @@ table **Hashtags**<br>
 ### Tables
 **Users**
 
-| Name  | Key Type | Data Type | Description | Rquired |
+|     | Key Type | Data Type | Description | Rquired |
 | --- | -------- | --------- | ----------- | ------- |
 | **user_id** | primary key | `integer` | The identifier of user | Yes |
 | **email** | | `text` | Email of user | Yes |
