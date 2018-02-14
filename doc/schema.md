@@ -1,6 +1,6 @@
-## Schema Design
+# Schema Design
 
-### ActiveRecord Noation
+## ActiveRecord Noation
 table **Users**<br>
 &nbsp;&nbsp;&nbsp;&nbsp;primary key user_id: integer<br>
 &nbsp;&nbsp;&nbsp;&nbsp;email: text<br>
@@ -54,7 +54,7 @@ table **Hashtags**<br>
 **Hashtags**<br>
 &nbsp;&nbsp;&nbsp;&nbsp;has_many Tweets<br>
 
-### Tables
+## Tables
 **Users**
 
 |     | Key Type | Data Type | Description | Rquired |
