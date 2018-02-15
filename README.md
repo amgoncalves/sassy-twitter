@@ -7,9 +7,9 @@ Brandeis University
 Spring 2018
 
 Participants: <br/>
-Shuai <br/>
 Si <br/>
 Alyssa <br/>
+Shuai <br/>
 
 ## Resources
 
