@@ -8,7 +8,7 @@ table **Users**<br>
 &nbsp;&nbsp;&nbsp;&nbsp;apitoken: text<br>
 
 table **Follows**<br>
-&nbsp;&nbsp;&nbsp;&nbsp;foreign key follower_id: integer<br>
+&nbsp;&nbsp;&nbsp;&nbsp;foreign key user_id: integer<br>
 &nbsp;&nbsp;&nbsp;&nbsp;foreign key follower_id: integer<br>
 
 table **Tweets**<br>
@@ -70,8 +70,8 @@ table **Hashtags**<br>
 
 |   |Key Type|Data Type|Description|Rquired|
 |---|--------|---------|-----------|-------|
-|**follower_id**|foreign key to **Users**|`integer`|The user who is followed| Yes |
-|**following_id**|foreign key to **Users**|`integer`|The user who follows **follower** user| Yes
+|**user_id**|foreign key to **Users**|`integer`|The id of user| Yes |
+|**follower_id**|foreign key to **Users**|`integer`|The user who follows **<user_id>** user| Yes |
 
 <br>
 
