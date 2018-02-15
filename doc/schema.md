@@ -115,4 +115,6 @@ table **Hashtags**<br>
 |**hashtag_name**|primary key|`text`|The content of this hashtag|Yes|
 |**tweet_id**|foreign key to **Tweets**|`integer`|The id of this tweet|Yes|
 
+# Schema Diagram
 
+![alt text](https://github.com/amgoncalves/sassy-twitter/tree/master/doc/schema_diagram.png)
