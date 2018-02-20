@@ -1,18 +1,15 @@
-# nanotwitter
+# nanoTwitter :bird:
 
 COSI-105b Software Engineering for Scalability
 
-Brandeis University
+Brandeis University, Spring 2018
 
-Spring 2018
+Si Chen, Alyssa Goncalves, Shuai Yu
 
-Participants: <br/>
-Si <br/>
-Alyssa <br/>
-Shuai <br/>
+## Change History
 
-## Resources
+### nt0.1
 
-[Nanotwitter Project Outline](http://cosi105b.s3-website-us-west-2.amazonaws.com/content/nt/03_nt_outline.md/)
+License file and documentation for routes and database schema were added to the repo.  This was done together as a group.
 
-[nT Functionality](http://cosi105b.s3-website-us-west-2.amazonaws.com/content/nt/01_nt_functionality.md/)
+A pilot project (pilot-project/mongo-evite) using mongodb was added by Shuai.
