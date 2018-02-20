@@ -1,0 +1,11 @@
+<h3> List Events</h3>
+<ul>
+	<% @events.each do |event| %>
+		<li>
+			<%= "ID: " +  event.id.to_s() %> <br>
+			<%= "Name: " + event.name %> <br>
+			<%= "Date: " + event.date.to_s() %> <br>
+		</li>
+	<% end %>
+</ul>
+<a href="/">BACK TO HOME</a>

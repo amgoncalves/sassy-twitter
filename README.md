@@ -6,6 +6,11 @@ Brandeis University
 
 Spring 2018
 
+Participants: <br/>
+Si <br/>
+Alyssa <br/>
+Shuai <br/>
+
 ## Resources
 
 [Nanotwitter Project Outline](http://cosi105b.s3-website-us-west-2.amazonaws.com/content/nt/03_nt_outline.md/)

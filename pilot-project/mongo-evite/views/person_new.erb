@@ -1,0 +1,9 @@
+<h3>Please fill up the form to create a person.</h3>
+<form action = '/person/new/submit' method = 'POST'>
+	Person name: <input type = 'text' name='persn[name]' placeholder = 'Input a name' />
+	Date of birth: <input type = 'date' name='persn[date_of_birth]' />
+	Gender: <input type = 'checkbox' name='persn[gender]' value='male' /> Male 
+	<input type = 'checkbox' name = 'persn[gender]' value = 'female' /> Female 
+	Zipcode: <input type = 'text' name='persn[zipcode]' placeholder = 'Input a zipcode'/>
+	<input type = 'submit' value = 'Submit' />
+</form>

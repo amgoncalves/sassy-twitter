@@ -1,0 +1,12 @@
+<h3> List Registrations</h3>
+<ul>
+	<% @registrations.each do |reg| %>
+		<li>
+			<%= "Registration ID: " + reg.id.to_s() %> <br>
+			<%= "Person ID: " +  reg.person_id.to_s() %> <br>
+			<%= "Event ID: " + reg.event_id.to_s() %> <br>
+			<%= "Status: " + reg.status %> <br>
+		</li>
+	<% end %>
+</ul>
+<a href="/">BACK TO HOME</a>
