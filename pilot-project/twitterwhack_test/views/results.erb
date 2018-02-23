@@ -1,0 +1,48 @@
+<link rel="stylesheet" type="text/css" href="/style.css">
+<link rel="app" type="text/css" href="/app.css">
+<ul>
+<div class="blog-card">
+	<div class="description">
+		<h3>Results of Your Twitterwhack</h3>
+
+		<p class="summary"> 
+
+			<%=	"Your words (" + @terms.term_one + " and " + @terms.term_two + ") gave an index of " + @idx.to_s() + " with a score of " + @score.to_s() + "." %>
+
+	   	<br>
+		 </p>
+
+	</div>
+</div>
+
+
+<div class="blog-card">
+	<div class="description">
+		<h3>Comment: </h3>
+
+		<p class="summary"> 
+
+			<%= @comment %> <br>
+	   	<br>
+		 </p>
+
+	</div>
+</div>
+
+
+<div class="blog-card">
+	<div class="description">
+		<h3>Example Tweet</h3>
+
+		<p class="summary"> 
+			<%= @example_tweet[1] %> <br>
+			<br>
+			<%= "By " + @example_tweet[0] %> <br>
+	   	<br>
+		 </p>
+
+	</div>
+</div>
+
+</ul>
+<a href="/">BACK TO HOME</a>

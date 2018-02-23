@@ -1,0 +1,13 @@
+#info_bubble {
+  opacity: .80;
+  filter: alpha(opacity=80);
+  position:absolute;
+  border:1px #333 solid;
+  visibility:hidden;
+  font-size:10px;
+  font-family: verdana;
+  color:#000;
+  font-weight:bold;
+  background:#85a5d6;
+  padding:5px;
+}

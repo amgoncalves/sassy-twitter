@@ -1,0 +1,203 @@
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,700|Roboto:400,700);
+
+body {background: #f1f1f1; margin: 2rem}
+
+img {
+	margin: 0 25%;
+	width: 50%;
+	border-radius: 40px;
+}
+
+input[type="text"] {
+	border: 2px solid red;
+	border-radius: 4px;
+	padding: 10px 12px;
+	margin: 8px 0;
+	font-size: 1em;
+}
+
+t1 {
+	font-size: 1em;
+	padding: 4px 2px;
+	font-weight: bold;
+}
+
+input[type="submit" i] {
+	padding: 12px 20px;
+	text-align: center;
+	position: relative;
+	left: 45%;
+	border-radius: 15px;
+	font-size: 1em;
+	font-weight: bold;
+}
+
+.blog-card {
+	background: #fff;
+	border-radius: 20px;
+	box-shadow: 0 3px 7px -3px rgba(0, 0, 0, 0.3);
+	margin: 0 auto 1.6%;
+	overflow: hidden;
+	position: relative;
+	font-size: 14px;
+	line-height: 1.45em;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+.details {
+	background: rgba(0, 0, 0, 0.6);
+	box-sizing: border-box;
+	color: #fff;
+	font-family: "Open Sans";
+	list-style: none;
+	margin: 0;
+	height: 220px;
+
+	/*POSITION*/
+	position: absolute;
+	top: 0;
+
+	> li {
+		padding: 3px 0;
+	}
+
+	li:before, .tags ul:before {
+		font-family: FontAwesome;
+		margin-right: 10px;
+		vertical-align: middle;
+	}
+
+	.author:before {
+		content: "\f007";
+	}
+
+	.date:before {
+		content: "\f133";
+	}
+
+	.tags {
+		ul {
+			&:before {
+				content: "\f02b";
+			}
+
+			list-style: none;
+			margin: 0;
+			padding: 0;
+		}
+
+		li {
+			display: inline-block;
+			margin-right: 3px;
+		}
+	}
+}
+
+a {
+	color: inherit;
+	border-bottom: 1px dotted;
+
+	&:hover {
+		color: green;
+	}
+}
+
+.description {
+	padding: 10px;
+	box-sizing: border-box;
+	position: relative;
+
+}
+
+h1 {
+	font-family: "Roboto";
+	line-height: 1em;
+	margin: 0 0 10px 0;
+}
+
+h3 {
+	color: green;
+	font-family: "Open Sans";
+	line-height: 1.2em;
+	text-transform: uppercase;
+	font-size: 1.5em;
+	font-weight: bold;
+	margin: 1.2% 0;
+}
+
+p {
+	position: relative;
+	margin: 0;
+	padding-top: 20px;
+	font-size: 20px;
+	padding: 15px;
+	font-weight: bold;
+}
+
+a {
+	color: green;
+	margin-bottom: 10px;
+	float: right;
+
+	&:after {
+		content: "\f061";
+		font-family: FontAwesome;
+		margin-left: -10px;
+		opacity: 0;
+		vertical-align: middle;
+	}
+
+	&:hover:after {
+		margin-left: 5px;
+		opacity: 1;
+	}
+}
+
+@media screen and (min-width: 600px) {
+	.blog-card {
+		height: 220px;
+		max-width: 600px;
+		background-image: url("https://rlhb.lexblogplatformthree.com/wp-content/uploads/sites/111/2016/10/twitter-company-statistics.jpg");
+		background-size: contain;
+		opacity: 0.7;
+
+		&.alt {
+			.details {
+				padding-left: 30px;
+			}
+
+			.description {
+				float: right;
+
+				&:before {
+					transform: skewX(5deg);
+					right: -15px;
+					left: inherit;
+				}
+			}
+		}
+	}
+
+	.details {
+		width: 40%;
+	}
+
+	.description {
+		float: left;
+		z-index: 0;
+
+		&:before {
+			transform: skewX(-5deg);
+			content: "";
+			background: #fff;
+			width: 100%;
+			z-index: -1;
+			/*POSITION*/
+			position: absolute;
+			left: -15px;
+			top: 0;
+			bottom: 0;
+		}
+	}
+}

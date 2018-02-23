@@ -1,0 +1,117 @@
+<%# <1%# <link rel="stylesheet" type="text/css" href="/style.css"> %1> %>
+<link rel="stylesheet" type="text/css" href="/preview.css">
+<%# <script type = "text/javascript"> %>
+<%# $("#preview-card").hover(function() { %>
+<%#     $(this).find(".details").stop(true, true).fadeIn(); %>
+<%# }, function() { %>
+<%#     $(this).find(".details").stop(true, true).fadeOut(); %>
+<%# }); %>
+<%# </script> %>
+<%# <ul> %>
+<%# <div class="blog-card"> %>
+<%# 	<div class="description"> %>
+<%# 		<h2>Please provide two search terms, then submit.</h3> %>
+
+<%# 		<p class="summary"> %> 
+
+<%# 		<form action = '/results' method = 'POST'> %>
+<%# 			<t1> Search Term 1: </t1> <input type = 'text' name = 'terms[term_one]' placeholder = 'Input search term' /> %>
+<%# 			<t1> Search Term 2: </t1> <input type = 'text' name = 'terms[term_two]' placeholder = 'Input search term' /> %>
+<%# 			<input type = 'submit' value = 'Submit' /> %>
+<%# 		</form> %>
+
+<%# 	   	<br> %>
+<%# 		 </p> %>
+
+<%# 	</div> %>
+<%# </div> %>
+
+<%# </ul> %>
+
+	<%# <span id="preview-card"> %>
+	<%# 	<label class="name">Prashant Chaudhary</label> %>
+	<%# 	<span class="details"> %>
+	<%# 		Web developer. Loves UI/UX.<br/> %>
+	<%# 		Indianapolis IN<br/> %>
+	<%# 		<a href="#">http://callmepc.com</a> %>
+	<%# 	</span> %>
+	<%# </span> %>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>mouseover demo</title>
+  <style>
+  div.out {
+    width: 40%;
+    height: 120px;
+    margin: 0 15px;
+    background-color: #d6edfc;
+    float: left;
+  }
+  div.in {
+    width: 60%;
+    height: 60%;Ï
+    background-color: #fc0;
+    margin: 10px auto;
+  }
+  p {
+    line-height: 1em;
+    margin: 0;
+    padding: 0;
+  }
+  </style>
+  <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+</head>
+<body>
+ 
+<div class="out overout">
+	<span id="preview-card">
+		<label class="name">Prashant Chaudhary</label>
+        <img src="https://30.media.tumblr.com/avatar_d3eadb3e29f8_128.png" alt="PC"/>   
+		<span class="details">
+			Web developer. Loves UI/UX.<br/>
+			Indianapolis IN<br/>
+			<a href="#">http://callmepc.com</a>
+		</span>
+  <div class="in">
+  </div>
+</div>
+ 
+<div class="out enterleave">
+	<span id="preview-card">
+		<label class="name">Prashant Chaudhary</label>
+		<span class="details">
+        <img src="https://30.media.tumblr.com/avatar_d3eadb3e29f8_128.png" alt="PC"/>   
+			Web developer. Loves UI/UX.<br/>
+			Indianapolis IN<br/>
+			<a href="#">http://callmepc.com</a>
+		</span>
+  <div class="in">
+  </div>
+</div>
+ 
+<script>
+var i = 0;
+$( "div.overout" )
+  .mouseover(function() {
+    i += 1;
+    $( this ).find( "span" ).text( "mouse over x " + i );
+  })
+  .mouseout(function() {
+    $( this ).find( "span" ).text( "mouse out " );
+  });
+ 
+var n = 0;
+$( "div.enterleave" )
+  .mouseenter(function() {
+    n += 1;
+    $( this ).find( ".details" ).stop(true, true).fadeIn()
+  })
+  .mouseleave(function() {
+    $( this ).find( ".details" ).stop(true, true).fadeOut()
+  });
+</script>
+ 
+</body>
+</html>
