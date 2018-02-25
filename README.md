@@ -10,6 +10,9 @@ Si Chen, Alyssa Goncalves, Shuai Yu
 
 ### nt0.1
 
-License file and documentation for routes and database schema were added to the repo.  This was done together as a group.
+* License file and documentation for routes and database schema were added to the repo.  This was done together as a group.
+* A pilot project (pilot-project/mongo-evite) using mongodb was added by Shuai.
+* UI design and prototype is completed by Si.
 
-A pilot project (pilot-project/mongo-evite) using mongodb was added by Shuai.
+### nt0.2
+Create Heroku account is done by Alyssa.
