@@ -2,6 +2,7 @@
 
 ## List of UIs
 *all routes starts with **/api/v1***
+*all routes atarts with **/api/v1/{apitoken}** for logged in user*
 
 |ID|page name|description|URI|
 | --- | --- | --- | --- |
@@ -16,6 +17,7 @@
 | [U09](#u09) | Followings | The page displaying all followings of current user | /users/{user_id}/followings |
 | [U10](#u10) | Search Tweet Result | The page displaying all search result tweets | /tweets/search |
 | [U11](#u11) | Search User Result | The page displaying all search result users | /users/search |
+| [U12](#u12) | User Homepage | The page displaying the recent tweets from the users followed by current user | /users/{user_id}/recents |
 
 ## Details
 ### <a name="u01"></a> UnloggedIn Homepage
@@ -102,6 +104,11 @@
 * Change follow relationship by click button **Follow** when not following, **Unfollow** to release following relationship
 
 ![followings list page](https://github.com/amgoncalves/sassy-twitter/blob/master/doc/UI/mockUIs/Followings.png)
+
+### <a name="u12"></a> User home pate
+* A list of latest tweets from the users followed by current user
+
+![user homepage](https://github.com/amgoncalves/sassy-twitter/blob/master/doc/UI/mockUIs/UserHP.png)
 
 ### <a name="u10"></a> Search Tweet result page
 * A list of search result tweets which contains keyword or #hashtag and each contains a link to [tweet page](#u06)
