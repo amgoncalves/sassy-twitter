@@ -117,4 +117,4 @@ table **Hashtags**<br>
 
 # Schema Diagram
 
-![alt schema](https://github.com/amgoncalves/sassy-twitter/blob/master/doc/shema/schema_diagram.pngg)
+![alt schema](https://github.com/amgoncalves/sassy-twitter/blob/master/doc/shema/schema_diagram.png)
