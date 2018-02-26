@@ -142,8 +142,6 @@ table **Hashtags**<br>
 &nbsp;&nbsp;&nbsp;&nbsp;field :api_token, type: String<br>
 
 &nbsp;&nbsp;&nbsp;&nbsp;embeds_one :profile<br>
-&nbsp;&nbsp;&nbsp;&nbsp;has_many :followers<br>
-&nbsp;&nbsp;&nbsp;&nbsp;has_many :followings<br>
 
 **Profile**<br>
 &nbsp;&nbsp;&nbsp;&nbsp;field :bio, type: String<br>
@@ -174,15 +172,12 @@ table **Hashtags**<br>
 &nbsp;&nbsp;&nbsp;&nbsp;has_and_belongs_to_many :tweets<br>
 
 **Follower**<br>
+&nbsp;&nbsp;&nbsp;&nbsp;field: user_id, type: Integer<br>
 &nbsp;&nbsp;&nbsp;&nbsp;field: follower_id, type: Integer<br>
 
-&nbsp;&nbsp;&nbsp;&nbsp;belongs_to :user<br>
-
 **Following**<br>
+&nbsp;&nbsp;&nbsp;&nbsp;field: user_id, type: Integer<br>
 &nbsp;&nbsp;&nbsp;&nbsp;field: following_id, type: Integer<br>
-
-&nbsp;&nbsp;&nbsp;&nbsp;belongs_to :user<br>
-
 
 ### <a name="nonrelation_diagram"></a> Diagram
 ![alt nonrelational schema](https://github.com/amgoncalves/sassy-twitter/blob/master/doc/design/shema/Nonrelation_schema.png)
