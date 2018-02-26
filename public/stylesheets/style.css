@@ -1,0 +1,37 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 400;
+    color: #808080;
+    line-height: 1.5;
+}
+
+a:link,
+a:visited,
+a:active {
+    color: #339eee;
+    text-decoration: none;
+    -webkit-transition-duration: 0.4s;
+    transition-duration: 0.4s;    
+}
+
+a:hover {
+    color: #b5ddff;
+}
+
+button {
+    padding: 10px;
+}
+
+footer,
+header,
+#container {
+    width: 60%;
+    margin: 0px auto;
+    text-align: center;
+}
+
+footer {
+    font-size: .75rem;
+}
