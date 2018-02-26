@@ -1,6 +1,5 @@
 require 'sinatra'
 require 'sinatra/flash'
-require_relative 'helpers'
 
 helpers do
   def redirect_to_original_request
