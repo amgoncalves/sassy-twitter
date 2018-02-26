@@ -1,55 +1,132 @@
 # Schema Design
 
-## ActiveRecord Noation
-table Users    
-    primary key user_id: integer    
-    email: text    
-    password: text    
-    apitoken: text    
+## Schema Type
+### [Relational Schema](#relation)
+### [Nonrelational Schema](#nonraltion)
 
-table Follows    
-    foreign key user_id: integer    
-    foreign key follower_id: integer    
 
-table Tweets    
-    foreign key tweet_id: integer    
-    text: text    
-    creation_time: time    
-    foreign key author_id: integer    
+## <a name="relation"></a> Relational Schema
+* [ActiveRecord Notation](#relation_ar)
+* [Table Definition](#relation_table)
+* [Diagram](#relation_diagram)
 
-table Profiles    
-    foreign key user_id: integer    
-    bio: text    
-    dob: date    
-    date_joined: date    
-    location: text    
+### <a name="relation_ar"></a> ActiveRecord Notation
+table **Users**<br>
+&nbsp;&nbsp;&nbsp;&nbsp;primary key user_id: integer<br>
+&nbsp;&nbsp;&nbsp;&nbsp;email: text<br>
+&nbsp;&nbsp;&nbsp;&nbsp;password: text<br>
+&nbsp;&nbsp;&nbsp;&nbsp;apitoken: text<br>
 
-table Mentions    
-    foreign key tweet_id: integer    
-    foreign key user_id: integer    
-    author_id: integer    
+table **Follows**<br>
+&nbsp;&nbsp;&nbsp;&nbsp;foreign key user_id: integer<br>
+&nbsp;&nbsp;&nbsp;&nbsp;foreign key follower_id: integer<br>
 
-table Hashtags    
-    primary key hashtag_name: text    
-    foreign key tweet_id: text    
+table **Tweets**<br>
+&nbsp;&nbsp;&nbsp;&nbsp;foreign key tweet_id: integer<br>
+&nbsp;&nbsp;&nbsp;&nbsp;text: text<br>
+&nbsp;&nbsp;&nbsp;&nbsp;creation_time: time<br>
+&nbsp;&nbsp;&nbsp;&nbsp;foreign key author_id: integer<br>
 
-Users    
-    has_many Users through Follows    
-    has_many Tweets    
-    has_one Profiles    
-    has_many Mentions    
+table **Profiles**<br>
+&nbsp;&nbsp;&nbsp;&nbsp;foreign key user_id: integer<br>
+&nbsp;&nbsp;&nbsp;&nbsp;bio: text<br>
+&nbsp;&nbsp;&nbsp;&nbsp;dob: date<br>
+&nbsp;&nbsp;&nbsp;&nbsp;date_joined: date<br>
+&nbsp;&nbsp;&nbsp;&nbsp;location: text<br>
 
-Profiles    
-    belongs_to Users    
+table **Mentions**<br>
+&nbsp;&nbsp;&nbsp;&nbsp;foreign key tweet_id: integer<br>
+&nbsp;&nbsp;&nbsp;&nbsp;foreign key user_id: integer<br>
+&nbsp;&nbsp;&nbsp;&nbsp;author_id: integer<br>
 
-Tweets    
-    belongs_to Users    
-    has_many Mentions    
-    has_many Hashtags    
+table **Hashtags**<br>
+&nbsp;&nbsp;&nbsp;&nbsp;primary key hashtag_name: text<br>
+&nbsp;&nbsp;&nbsp;&nbsp;foreign key tweet_id: text<br>
 
-Mentions    
-    belongs_to Tweets    
-    belongs_to Users    
+**Users**<br>
+&nbsp;&nbsp;&nbsp;&nbsp;has_many Users through Follows<br>
+&nbsp;&nbsp;&nbsp;&nbsp;has_many Tweets<br>
+&nbsp;&nbsp;&nbsp;&nbsp;has_one Profiles<br>
+&nbsp;&nbsp;&nbsp;&nbsp;has_many Mentions<br>
 
-Hashtags    
-    has_many Tweets    
+**Profiles**<br>
+&nbsp;&nbsp;&nbsp;&nbsp;belongs_to Users<br>
+
+**Tweets**<br>
+&nbsp;&nbsp;&nbsp;&nbsp;belongs_to Users<br>
+&nbsp;&nbsp;&nbsp;&nbsp;has_many Mentions<br>
+&nbsp;&nbsp;&nbsp;&nbsp;has_many Hashtags<br>
+
+**Mentions**<br>
+&nbsp;&nbsp;&nbsp;&nbsp;belongs_to Tweets<br>
+&nbsp;&nbsp;&nbsp;&nbsp;belongs_to Users<br>
+
+**Hashtags**<br>
+&nbsp;&nbsp;&nbsp;&nbsp;has_many Tweets<br>
+
+### <a name="relation_table"></a> Tables
+**Users**
+
+|     | Key Type | Data Type | Description | Rquired |
+| --- | -------- | --------- | ----------- | ------- |
+| **user_id** | primary key | `integer` | The identifier of user | Yes |
+| **email** | | `text` | Email of user | Yes |
+| **password** | | `text` | Password of user | Yes |
+| **apitoken** | | `text` | For distinguishing API calls that need a logged in user vs. those that are public. Those that are public would not require the user's apitoken. | default: nil |
+
+<br>
+
+**Follows**
+
+|   |Key Type|Data Type|Description|Rquired|
+|---|--------|---------|-----------|-------|
+|**user_id**|foreign key to **Users**|`integer`|The id of user| Yes |
+|**follower_id**|foreign key to **Users**|`integer`|The user who follows **<user_id>** user| Yes |
+
+<br>
+
+**Tweets**
+
+|   |Key Type|Data Type|Description|Rquired|
+|---|--------|---------|-----------|-------|
+|**tweet_id**|primary key|`integer`|The unique id of tweet|Yes|
+|**text**||`text`|The text content of tweet|Yes default: ""|
+|**creation_time**||`time`|The time when this tweet created|Yes|
+|**author_id**|foreign key to **Users**|`integer`|Id of the user who created this tweet|Yes|
+
+<br>
+
+**Profiles**
+
+|   |Key Type|Data Type|Description|Rquired|
+|---|--------|---------|-----------|-------|
+|**user_id**|foreign key to **Users**|`integer`|The user's id|Yes|
+|**bio**||`text`|The bio of user|No|
+|**dob**||`date`|The date of birth of user|No|
+|**date_joined**||`date`|The date this user created|Yes|
+|**location**||`text`|The location where this user is|No|
+
+<br>
+
+**Mentions**
+
+|   |Key Type|Data Type|Description|Rquired|
+|---|--------|---------|-----------|-------|
+|**tweet_id**|foreign key to **Tweets**|`integer`| The id of tweet|Yes|
+|**user_id**|foreign key to **Users**|`integer`|The user is mentioned in this tweet|Yes|
+|**author_id**||`integer`|The user who wrote this tweet|TBD|
+
+<br>
+
+**Hashtags**
+
+|   |Key Type|Data Type|Description|Rquired|
+|---|--------|---------|-----------|-------|
+|**hashtag_name**|primary key|`text`|The content of this hashtag|Yes|
+|**tweet_id**|foreign key to **Tweets**|`integer`|The id of this tweet|Yes|
+
+### <a name="relation_diagram"></a> Schema Diagram
+
+![alt relational schema](https://github.com/amgoncalves/sassy-twitter/blob/master/doc/design/schema/Relation_diagram.png)
+
+## <a name="nonrelation"></a> Nonrelational Schema
