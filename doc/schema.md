@@ -1,4 +1,5 @@
 # Schema Design
+Sassytwitter
 
 ## Schema Type
 ### [Relational Schema](#relation)
@@ -130,12 +131,57 @@ table **Hashtags**<br>
 ![alt relational schema](https://github.com/amgoncalves/sassy-twitter/blob/master/doc/design/shema/Relation_diagram.png)
 
 ## <a name="nonrelation"></a> Nonrelational Schema
-* [Mongoid Notation](#nonrelation_mapper)
-* [Table Definition](#nonrelation_table)
+* [MongoID Notation](#nonrelation_mapper)
 * [Diagram](#nonrelation_diagram)
 
-### <a name="nonrelation_mapper"></a> MongoID Anotation
+### <a name="nonrelation_mapper"></a> MongoID Notation
+**User**
+&nbsp;&nbsp;&nbsp;&nbsp;field :user_id, type: Integer
+&nbsp;&nbsp;&nbsp;&nbsp;field :email, type: String
+&nbsp;&nbsp;&nbsp;&nbsp;field :password, type: String
+&nbsp;&nbsp;&nbsp;&nbsp;field :api_token, type: String
 
-### <a name="nonrelation_table"></a> Tables
+&nbsp;&nbsp;&nbsp;&nbsp;embeds_one :profile
+&nbsp;&nbsp;&nbsp;&nbsp;has_many :followers
+&nbsp;&nbsp;&nbsp;&nbsp;has_many :followings
+
+**Profile**
+&nbsp;&nbsp;&nbsp;&nbsp;field :bio, type: String
+&nbsp;&nbsp;&nbsp;&nbsp;field :dob, type: Date
+&nbsp;&nbsp;&nbsp;&nbsp;field :date_joined, type: Date
+&nbsp;&nbsp;&nbsp;&nbsp;field :location, type: String
+
+&nbsp;&nbsp;&nbsp;&nbsp;embedded_in :user
+
+**Tweet**
+&nbsp;&nbsp;&nbsp;&nbsp;field :tweet_id, type: Integer
+&nbsp;&nbsp;&nbsp;&nbsp;field :content, type: String
+&nbsp;&nbsp;&nbsp;&nbsp;field :time_created, type: Timestamp
+&nbsp;&nbsp;&nbsp;&nbsp;field :author_id, type: Integer
+
+&nbsp;&nbsp;&nbsp;&nbsp;has_and_belongs_to_many :mentions
+&nbsp;&nbsp;&nbsp;&nbsp;has_and_belongs_to_many :hashtags
+
+**Mention**
+&nbsp;&nbsp;&nbsp;&nbsp;field: user_id, type: Integer
+
+&nbsp;&nbsp;&nbsp;&nbsp;has_and_belongs_to_many :tweets
+
+**Hashtag**
+&nbsp;&nbsp;&nbsp;&nbsp;field: hashtag_id, type: Integer
+&nbsp;&nbsp;&nbsp;&nbsp;field: hashtag_name, type: String
+
+&nbsp;&nbsp;&nbsp;&nbsp;has_and_belongs_to_many :tweets
+
+**Follower**
+&nbsp;&nbsp;&nbsp;&nbsp;field: follower_id, type: Integer
+
+&nbsp;&nbsp;&nbsp;&nbsp;belongs_to :user
+
+**Following**
+&nbsp;&nbsp;&nbsp;&nbsp;field: following_id, type: Integer
+
+&nbsp;&nbsp;&nbsp;&nbsp;belongs_to :user
+
 
 ### <a name="nonrelation_diagram"></a> Diagram
