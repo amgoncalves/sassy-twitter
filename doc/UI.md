@@ -26,7 +26,7 @@
 * Move the cursor over user's name can review the [profile](#u05) of the user
 * Click the tweet can review the [tweet](#u06) page
 
-![not logged in user home page](https://github.com/amgoncalves/sassy-twitter/blob/master/doc/design/NonLoggedInHP.png)
+![not logged in user home page](https://github.com/amgoncalves/sassy-twitter/blob/master/doc/design/UI/NonLoggedInHP.png)
 
 ### <a name="u02"></a> Log in page
 * An input field enable user to log in by email and password
@@ -36,7 +36,7 @@
 * A link to [Sign up](#u03)
 * A link to verify user information and transfer to [logged in homepage](#u04) for successful log in
 
-![log in page](https://github.com/amgoncalves/sassy-twitter/blob/master/doc/design/LogIn.png)
+![log in page](https://github.com/amgoncalves/sassy-twitter/blob/master/doc/design/UI/LogIn.png)
 
 ### <a name="u03"></a> Sign up page
 * An input field to register new account by inputting email and password
@@ -44,7 +44,7 @@
 * Show warning message for existing email address
 * Sign up link to create user and direct to [logged in homepage](#u04) for successful sign up
 
-![sign up page](https://github.com/amgoncalves/sassy-twitter/blob/master/doc/design/Signup.png)
+![sign up page](https://github.com/amgoncalves/sassy-twitter/blob/master/doc/design/UI/Signup.png)
 
 ### <a name="u04"></a> LoggedIn Homepage
 * List of most recent 50 tweets of users you follow
@@ -60,7 +60,7 @@
 * When moved the cursor over user's name in twitter, there appear the [profile pop up window for this user](#u05). Move the cursor away from the user's name, the profile pop up window will disappear.
 * When click the tweet, direct to [tweet detail page](#u06)
 
-![logged in home page](https://github.com/amgoncalves/sassy-twitter/blob/master/doc/design/LoggedInHP.png)
+![logged in home page](https://github.com/amgoncalves/sassy-twitter/blob/master/doc/design/UI/LoggedInHP.png)
 
 ### <a name="u05"></a> Profile pop up page
 * Show profile of user
@@ -69,7 +69,7 @@
 * a link to [list of users followed](#u09) by this user by clicking the count of followings.
 * a link to [list of users following this user](#u08) by clicking the count of followers.
 
-![profile page](https://github.com/amgoncalves/sassy-twitter/blob/master/doc/design/Profile(pop).png)
+![profile page](https://github.com/amgoncalves/sassy-twitter/blob/master/doc/design/UI/Profile(pop).png)
 
 ### <a name="u06"></a> Tweet page
 * Show the tweet detail and all replies of this tweet
@@ -79,7 +79,7 @@
 * Create a reply tweet by inputting tweet contents and clicking **Tweet** button
 * Each reply tweet has a link to corresponding [tweet page](#u06)
 
-![tweet page](https://github.com/amgoncalves/sassy-twitter/blob/master/doc/design/Tweet(Unfollowing).png)
+![tweet page](https://github.com/amgoncalves/sassy-twitter/blob/master/doc/design/UI/Tweet(Unfollowing).png)
 
 ### <a name="u07"></a> User page
 * User's most recent 50 tweets
@@ -89,38 +89,38 @@
 * Link to [list of users followed](#u09) by this user by clicking following
 * Link to [list of users following thi user](#08) by clicking followers
 
-![user page](https://github.com/amgoncalves/sassy-twitter/blob/master/doc/design/User(Following).png)
+![user page](https://github.com/amgoncalves/sassy-twitter/blob/master/doc/design/UI/User(Following).png)
 
 ### <a name="u08"></a> Followers list page
 * A list of followers' mini profiles
 * Each profile block contains a link to corresponding [user's page](#u07)
 * Change follow relationship by click button **Follow** when not following, **Unfollow** to release following relationship
 
-![followers list page](https://github.com/amgoncalves/sassy-twitter/blob/master/doc/design/Followers.png)
+![followers list page](https://github.com/amgoncalves/sassy-twitter/blob/master/doc/design/UI/Followers.png)
 
 ### <a name="u09"></a> Followings list page
 * A list of mini profiles of users who are following current user
 * Each profile block contains a link to corresponding [user's page](#u07)
 * Change follow relationship by click button **Follow** when not following, **Unfollow** to release following relationship
 
-![followings list page](https://github.com/amgoncalves/sassy-twitter/blob/master/doc/design/Followings.png)
+![followings list page](https://github.com/amgoncalves/sassy-twitter/blob/master/doc/design/UI/Followings.png)
 
 ### <a name="u12"></a> User home pate
 * A list of latest tweets from the users followed by current user
 
-![user homepage](https://github.com/amgoncalves/sassy-twitter/blob/master/doc/design/UserHP.png)
+![user homepage](https://github.com/amgoncalves/sassy-twitter/blob/master/doc/design/UI/UserHP.png)
 
 ### <a name="u10"></a> Search Tweet result page
 * A list of search result tweets which contains keyword or #hashtag and each contains a link to [tweet page](#u06)
 * A link to search the [users](#u11) by current searching query
 
-![tweet search result](https://github.com/amgoncalves/sassy-twitter/blob/master/doc/design/TweetSearch(keyword).png)
+![tweet search result](https://github.com/amgoncalves/sassy-twitter/blob/master/doc/design/UI/TweetSearch(keyword).png)
 
 ### <a name="u11"></a> Search User result page
 * A list of search result users which contains keyword or #hashtag and each contains a link to [user page](#u07)
 * A link to search the [tweets](#u10) by current searching query
 
-![user search result](https://github.com/amgoncalves/sassy-twitter/blob/master/doc/design/UserSearch(hashtag).png)
+![user search result](https://github.com/amgoncalves/sassy-twitter/blob/master/doc/design/UI/UserSearch(hashtag).png)
 
 
 
