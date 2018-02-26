@@ -135,7 +135,7 @@ table **Hashtags**<br>
 * [Diagram](#nonrelation_diagram)
 
 ### <a name="nonrelation_mapper"></a> MongoID Notation
-**User**
+**User**<br>
 &nbsp;&nbsp;&nbsp;&nbsp;field :user_id, type: Integer<br>
 &nbsp;&nbsp;&nbsp;&nbsp;field :email, type: String<br>
 &nbsp;&nbsp;&nbsp;&nbsp;field :password, type: String<br>
@@ -145,7 +145,7 @@ table **Hashtags**<br>
 &nbsp;&nbsp;&nbsp;&nbsp;has_many :followers<br>
 &nbsp;&nbsp;&nbsp;&nbsp;has_many :followings<br>
 
-**Profile**
+**Profile**<br>
 &nbsp;&nbsp;&nbsp;&nbsp;field :bio, type: String<br>
 &nbsp;&nbsp;&nbsp;&nbsp;field :dob, type: Date<br>
 &nbsp;&nbsp;&nbsp;&nbsp;field :date_joined, type: Date<br>
@@ -153,7 +153,7 @@ table **Hashtags**<br>
 
 &nbsp;&nbsp;&nbsp;&nbsp;embedded_in :user<br>
 
-**Tweet**
+**Tweet**<br>
 &nbsp;&nbsp;&nbsp;&nbsp;field :tweet_id, type: Integer<br>
 &nbsp;&nbsp;&nbsp;&nbsp;field :content, type: String<br>
 &nbsp;&nbsp;&nbsp;&nbsp;field :time_created, type: Timestamp<br>
@@ -162,23 +162,23 @@ table **Hashtags**<br>
 &nbsp;&nbsp;&nbsp;&nbsp;has_and_belongs_to_many :mentions<br>
 &nbsp;&nbsp;&nbsp;&nbsp;has_and_belongs_to_many :hashtags<br>
 
-**Mention**
+**Mention**<br>
 &nbsp;&nbsp;&nbsp;&nbsp;field: user_id, type: Integer<br>
 
 &nbsp;&nbsp;&nbsp;&nbsp;has_and_belongs_to_many :tweets<br>
 
-**Hashtag**
+**Hashtag**<br>
 &nbsp;&nbsp;&nbsp;&nbsp;field: hashtag_id, type: Integer<br>
 &nbsp;&nbsp;&nbsp;&nbsp;field: hashtag_name, type: String<br>
 
 &nbsp;&nbsp;&nbsp;&nbsp;has_and_belongs_to_many :tweets<br>
 
-**Follower**
+**Follower**<br>
 &nbsp;&nbsp;&nbsp;&nbsp;field: follower_id, type: Integer<br>
 
 &nbsp;&nbsp;&nbsp;&nbsp;belongs_to :user<br>
 
-**Following**
+**Following**<br>
 &nbsp;&nbsp;&nbsp;&nbsp;field: following_id, type: Integer<br>
 
 &nbsp;&nbsp;&nbsp;&nbsp;belongs_to :user<br>
