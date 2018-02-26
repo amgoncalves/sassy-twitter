@@ -136,52 +136,52 @@ table **Hashtags**<br>
 
 ### <a name="nonrelation_mapper"></a> MongoID Notation
 **User**
-&nbsp;&nbsp;&nbsp;&nbsp;field :user_id, type: Integer
-&nbsp;&nbsp;&nbsp;&nbsp;field :email, type: String
-&nbsp;&nbsp;&nbsp;&nbsp;field :password, type: String
-&nbsp;&nbsp;&nbsp;&nbsp;field :api_token, type: String
+&nbsp;&nbsp;&nbsp;&nbsp;field :user_id, type: Integer<br>
+&nbsp;&nbsp;&nbsp;&nbsp;field :email, type: String<br>
+&nbsp;&nbsp;&nbsp;&nbsp;field :password, type: String<br>
+&nbsp;&nbsp;&nbsp;&nbsp;field :api_token, type: String<br>
 
-&nbsp;&nbsp;&nbsp;&nbsp;embeds_one :profile
-&nbsp;&nbsp;&nbsp;&nbsp;has_many :followers
-&nbsp;&nbsp;&nbsp;&nbsp;has_many :followings
+&nbsp;&nbsp;&nbsp;&nbsp;embeds_one :profile<br>
+&nbsp;&nbsp;&nbsp;&nbsp;has_many :followers<br>
+&nbsp;&nbsp;&nbsp;&nbsp;has_many :followings<br>
 
 **Profile**
-&nbsp;&nbsp;&nbsp;&nbsp;field :bio, type: String
-&nbsp;&nbsp;&nbsp;&nbsp;field :dob, type: Date
-&nbsp;&nbsp;&nbsp;&nbsp;field :date_joined, type: Date
-&nbsp;&nbsp;&nbsp;&nbsp;field :location, type: String
+&nbsp;&nbsp;&nbsp;&nbsp;field :bio, type: String<br>
+&nbsp;&nbsp;&nbsp;&nbsp;field :dob, type: Date<br>
+&nbsp;&nbsp;&nbsp;&nbsp;field :date_joined, type: Date<br>
+&nbsp;&nbsp;&nbsp;&nbsp;field :location, type: String<br>
 
-&nbsp;&nbsp;&nbsp;&nbsp;embedded_in :user
+&nbsp;&nbsp;&nbsp;&nbsp;embedded_in :user<br>
 
 **Tweet**
-&nbsp;&nbsp;&nbsp;&nbsp;field :tweet_id, type: Integer
-&nbsp;&nbsp;&nbsp;&nbsp;field :content, type: String
-&nbsp;&nbsp;&nbsp;&nbsp;field :time_created, type: Timestamp
-&nbsp;&nbsp;&nbsp;&nbsp;field :author_id, type: Integer
+&nbsp;&nbsp;&nbsp;&nbsp;field :tweet_id, type: Integer<br>
+&nbsp;&nbsp;&nbsp;&nbsp;field :content, type: String<br>
+&nbsp;&nbsp;&nbsp;&nbsp;field :time_created, type: Timestamp<br>
+&nbsp;&nbsp;&nbsp;&nbsp;field :author_id, type: Integer<br>
 
-&nbsp;&nbsp;&nbsp;&nbsp;has_and_belongs_to_many :mentions
-&nbsp;&nbsp;&nbsp;&nbsp;has_and_belongs_to_many :hashtags
+&nbsp;&nbsp;&nbsp;&nbsp;has_and_belongs_to_many :mentions<br>
+&nbsp;&nbsp;&nbsp;&nbsp;has_and_belongs_to_many :hashtags<br>
 
 **Mention**
-&nbsp;&nbsp;&nbsp;&nbsp;field: user_id, type: Integer
+&nbsp;&nbsp;&nbsp;&nbsp;field: user_id, type: Integer<br>
 
-&nbsp;&nbsp;&nbsp;&nbsp;has_and_belongs_to_many :tweets
+&nbsp;&nbsp;&nbsp;&nbsp;has_and_belongs_to_many :tweets<br>
 
 **Hashtag**
-&nbsp;&nbsp;&nbsp;&nbsp;field: hashtag_id, type: Integer
-&nbsp;&nbsp;&nbsp;&nbsp;field: hashtag_name, type: String
+&nbsp;&nbsp;&nbsp;&nbsp;field: hashtag_id, type: Integer<br>
+&nbsp;&nbsp;&nbsp;&nbsp;field: hashtag_name, type: String<br>
 
-&nbsp;&nbsp;&nbsp;&nbsp;has_and_belongs_to_many :tweets
+&nbsp;&nbsp;&nbsp;&nbsp;has_and_belongs_to_many :tweets<br>
 
 **Follower**
-&nbsp;&nbsp;&nbsp;&nbsp;field: follower_id, type: Integer
+&nbsp;&nbsp;&nbsp;&nbsp;field: follower_id, type: Integer<br>
 
-&nbsp;&nbsp;&nbsp;&nbsp;belongs_to :user
+&nbsp;&nbsp;&nbsp;&nbsp;belongs_to :user<br>
 
 **Following**
-&nbsp;&nbsp;&nbsp;&nbsp;field: following_id, type: Integer
+&nbsp;&nbsp;&nbsp;&nbsp;field: following_id, type: Integer<br>
 
-&nbsp;&nbsp;&nbsp;&nbsp;belongs_to :user
+&nbsp;&nbsp;&nbsp;&nbsp;belongs_to :user<br>
 
 
 ### <a name="nonrelation_diagram"></a> Diagram
