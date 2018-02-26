@@ -185,3 +185,4 @@ table **Hashtags**<br>
 
 
 ### <a name="nonrelation_diagram"></a> Diagram
+![alt nonrelational schema](https://github.com/amgoncalves/sassy-twitter/blob/master/doc/design/shema/Nonrelation_schema.png)
