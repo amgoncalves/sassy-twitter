@@ -2,7 +2,7 @@
 
 ## Schema Type
 ### [Relational Schema](#relation)
-### [Nonrelational Schema](#nonraltion)
+### [Nonrelational Schema](#nonrelation)
 
 
 ## <a name="relation"></a> Relational Schema
@@ -127,6 +127,15 @@ table **Hashtags**<br>
 
 ### <a name="relation_diagram"></a> Schema Diagram
 
-![alt relational schema](https://github.com/amgoncalves/sassy-twitter/blob/master/doc/design/schema/Relation_diagram.png)
+![alt relational schema](https://github.com/amgoncalves/sassy-twitter/blob/master/doc/design/shema/Relation_diagram.png)
 
 ## <a name="nonrelation"></a> Nonrelational Schema
+* [Mongoid Notation](#nonrelation_mapper)
+* [Table Definition](#nonrelation_table)
+* [Diagram](#nonrelation_diagram)
+
+### <a name="nonrelation_mapper"></a> MongoID Anotation
+
+### <a name="nonrelation_table"></a> Tables
+
+### <a name="nonrelation_diagram"></a> Diagram
