@@ -3,8 +3,7 @@ require 'mongo'
 require 'mongoid'
 
 class Profile
-<<<<<<< HEAD
-	attr_reader :bio, :name
+	attr_reader :bio, :name, :date_joined, :location, :name
 
 	def initialize(bio = "", name = "", date_joined = "", location = "", name = "")
 		@bio, @name, @date_joined, @location, @name = bio, name, date_joined, location, name
@@ -34,38 +33,6 @@ class Profile
 
 		end
 	end
-=======
-  attr_reader :bio, :name
-
-  def initialize(bio = "", name = "")
-    @bio, @name = bio, name
-  end
-
-  def mongoize 
-    [ bio, dob, date_joined, location, name]
-  end
-
-  class << self
-    def demongoize(object)
-      Profile.new(object[0], object[1])
-    end
-
-    def mongoize(object)
-      case object
-      when Profile then object.mongoize
-      else object
-      end
-    end
-
-    def evolve(object)
-      case object
-      when Profile then object.mongoize
-      else object
-      end
-
-    end
-  end
->>>>>>> ad9a1a2d473f2ac9bd8838e1b35b08f56342a938
 end
 
 class User
