@@ -128,7 +128,7 @@ table **Hashtags**<br>
 
 ### <a name="relation_diagram"></a> Schema Diagram
 
-![alt relational schema](https://github.com/amgoncalves/sassy-twitter/blob/master/doc/design/shema/Relation_diagram.png)
+![alt relational schema](https://github.com/amgoncalves/sassy-twitter/blob/master/doc/design/schema/Relation_diagram.png)
 
 ## <a name="nonrelation"></a> Nonrelational Schema
 * [MongoID Notation](#nonrelation_mapper)
@@ -180,4 +180,4 @@ table **Hashtags**<br>
 &nbsp;&nbsp;&nbsp;&nbsp;field: following_id, type: Integer<br>
 
 ### <a name="nonrelation_diagram"></a> Diagram
-![alt nonrelational schema](https://github.com/amgoncalves/sassy-twitter/blob/master/doc/design/shema/Nonrelational_schema.png)
+![alt nonrelational schema](https://github.com/amgoncalves/sassy-twitter/blob/master/doc/design/schema/Nonrelation_schema.png)
