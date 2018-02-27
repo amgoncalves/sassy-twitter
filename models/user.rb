@@ -4,8 +4,8 @@ require 'mongoid'
 class Profile
 	attr_reader :bio, :name
 
-	def initialize(bio = "", name = "")
-		@bio, @name = bio, name
+	def initialize(bio = "", name = "", date_joined = "", location = "", name = "")
+		@bio, @name, @date_joined, @location, @name = bio, name, date_joined, location, name
 	end
 
 	def mongoize 
@@ -14,7 +14,7 @@ class Profile
 
 	class << self
 		def demongoize(object)
-			Profile.new(object[0], object[1])
+			Profile.new(object[0], object[1], object[2], object[3], object[4])
 		end
 
 		def mongoize(object)
