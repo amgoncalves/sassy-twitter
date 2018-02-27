@@ -4,6 +4,10 @@ require 'mongo'
 require 'json'
 require "sinatra/reloader" if development?
 require 'byebug'
+require_relative './models/event'
+require_relative './models/persn'
+require_relative './models/registration'
+require_relative './models/user'
 
 # require File.dirname(__FILE__) + '/vendor/gems/environment'
 # Bundler.require_env
@@ -16,33 +20,57 @@ Mongoid.load!("mongoid.yml")
 # db = connect("localhost:27017/mongoid_evite")
 # byebug
 
-class Event
-	include Mongoid::Document
+# class Event
+# 	include Mongoid::Document
 
-	field :name, type: String
-	field :date, type: Date
-end
+# 	field :name, type: String
+# 	field :date, type: Date
+# end
 
-class Persn
-	include Mongoid::Document
+# class Persn
+# 	include Mongoid::Document
 
-	field :name, type: String
-	field :date_of_birth, type: Date
-	field :gender, type: String
-	field :zipcode, type: String
-end
+# 	field :name, type: String
+# 	field :date_of_birth, type: Date
+# 	field :gender, type: String
+# 	field :zipcode, type: String
+# 	# field :bio, type: String
+# end
 
-class Registration
-	include Mongoid::Document
+# class Registration
+# 	include Mongoid::Document
 
-	field :person_id, type: Integer
-	field :event_id, type: Integer
-	field :status, type: String
-end
+# 	field :person_id, type: Integer
+# 	field :event_id, type: Integer
+# 	field :status, type: String
+# end
 
 
 get '/' do
 	erb :index
+end
+
+get '/users' do
+	@users = User.all
+	erb :list_users
+end
+
+get '/user/new' do
+	erb :user_new
+end
+
+post '/user/new/submit' do
+	byebug
+	# @user = User.new(params[:user])
+	@profile = Profile.new(params[:user][:Profile][:bio],
+						  params[:user][:Profile][:name])
+	params[:user][:Profile] = @profile
+	@user = User.new(params[:user])
+	if @user.save
+		redirect '/users'
+	else 
+		'Sorry, error'
+	end
 end
 
 # list all the persons
@@ -58,6 +86,7 @@ end
 
 # add the new person into db
 post '/person/new/submit' do
+	# byebug
 	@person = Persn.new(params[:persn])
 	if @person.save
 		redirect '/persons'
