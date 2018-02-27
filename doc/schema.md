@@ -137,13 +137,20 @@ table **Hashtags**<br>
 ### <a name="nonrelation_mapper"></a> MongoID Notation
 **User**<br>
 &nbsp;&nbsp;&nbsp;&nbsp;field :user_id, type: Integer<br>
+&nbsp;&nbsp;&nbsp;&nbsp;field :handle, type: String<br>
 &nbsp;&nbsp;&nbsp;&nbsp;field :email, type: String<br>
 &nbsp;&nbsp;&nbsp;&nbsp;field :password, type: String<br>
-&nbsp;&nbsp;&nbsp;&nbsp;field :api_token, type: String<br>
+&nbsp;&nbsp;&nbsp;&nbsp;field :apitoken, type: String<br>
+&nbsp;&nbsp;&nbsp;&nbsp;field :profiles, type: Profile<br>
+&nbsp;&nbsp;&nbsp;&nbsp;field :followeds, type:Array<br>
+&nbsp;&nbsp;&nbsp;&nbsp;field :followings, type:Array<br>
+&nbsp;&nbsp;&nbsp;&nbsp;field :tweets, type:Array<br>
+&nbsp;&nbsp;&nbsp;&nbsp;field :likedtweets, type:Array<br>
 
 &nbsp;&nbsp;&nbsp;&nbsp;embeds_one :profile<br>
 
 **Profile**<br>
+&nbsp;&nbsp;&nbsp;&nbsp;field :name, type: String<br>
 &nbsp;&nbsp;&nbsp;&nbsp;field :bio, type: String<br>
 &nbsp;&nbsp;&nbsp;&nbsp;field :dob, type: Date<br>
 &nbsp;&nbsp;&nbsp;&nbsp;field :date_joined, type: Date<br>
@@ -156,28 +163,26 @@ table **Hashtags**<br>
 &nbsp;&nbsp;&nbsp;&nbsp;field :content, type: String<br>
 &nbsp;&nbsp;&nbsp;&nbsp;field :time_created, type: Timestamp<br>
 &nbsp;&nbsp;&nbsp;&nbsp;field :author_id, type: Integer<br>
+&nbsp;&nbsp;&nbsp;&nbsp;field :original_tweet_id, type: Integer<br>
+&nbsp;&nbsp;&nbsp;&nbsp;field :likedby, type:Array<br>
+&nbsp;&nbsp;&nbsp;&nbsp;field :replys, type:Array<br>
 
-&nbsp;&nbsp;&nbsp;&nbsp;has_and_belongs_to_many :mentions<br>
-&nbsp;&nbsp;&nbsp;&nbsp;has_and_belongs_to_many :hashtags<br>
+&nbsp;&nbsp;&nbsp;&nbsp;has_many :replies<br>
+&nbsp;&nbsp;&nbsp;&nbsp;has_one :tweets<br>
+&nbsp;&nbsp;&nbsp;&nbsp;belongs_one :tweet<br>
 
-**Mention**<br>
-&nbsp;&nbsp;&nbsp;&nbsp;field: user_id, type: Integer<br>
+**Reply**<br>
+&nbsp;&nbsp;&nbsp;&nbsp;field :reply_id, type: Integer<br>
+&nbsp;&nbsp;&nbsp;&nbsp;field :tweet_id, type: Integer<br>
+&nbsp;&nbsp;&nbsp;&nbsp;field :content, type: String<br>
+&nbsp;&nbsp;&nbsp;&nbsp;field :time_created, type: Timestamp<br>
+&nbsp;&nbsp;&nbsp;&nbsp;field :author_id, type: Integer<br>
 
-&nbsp;&nbsp;&nbsp;&nbsp;has_and_belongs_to_many :tweets<br>
+&nbsp;&nbsp;&nbsp;&nbsp;belongs_to :tweet<br>
 
 **Hashtag**<br>
-&nbsp;&nbsp;&nbsp;&nbsp;field: hashtag_id, type: Integer<br>
-&nbsp;&nbsp;&nbsp;&nbsp;field: hashtag_name, type: String<br>
-
-&nbsp;&nbsp;&nbsp;&nbsp;has_and_belongs_to_many :tweets<br>
-
-**Follower**<br>
-&nbsp;&nbsp;&nbsp;&nbsp;field: user_id, type: Integer<br>
-&nbsp;&nbsp;&nbsp;&nbsp;field: follower_id, type: Integer<br>
-
-**Following**<br>
-&nbsp;&nbsp;&nbsp;&nbsp;field: user_id, type: Integer<br>
-&nbsp;&nbsp;&nbsp;&nbsp;field: following_id, type: Integer<br>
+&nbsp;&nbsp;&nbsp;&nbsp;field :hashtag_name, type: String<br>
+&nbsp;&nbsp;&nbsp;&nbsp;field :tweets, type: Array<br>
 
 ### <a name="nonrelation_diagram"></a> Diagram
 ![alt nonrelational schema](https://github.com/amgoncalves/sassy-twitter/blob/master/doc/design/schema/Nonrelation_schema.png)
