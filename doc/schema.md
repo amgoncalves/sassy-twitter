@@ -180,4 +180,4 @@ table **Hashtags**<br>
 &nbsp;&nbsp;&nbsp;&nbsp;field: following_id, type: Integer<br>
 
 ### <a name="nonrelation_diagram"></a> Diagram
-![alt nonrelational schema](https://github.com/amgoncalves/sassy-twitter/blob/master/doc/design/shema/Nonrelation_schema.png)
+![alt nonrelational schema](https://github.com/amgoncalves/sassy-twitter/blob/master/doc/design/shema/Nonrelational_schema.png)
