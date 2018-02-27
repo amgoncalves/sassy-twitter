@@ -1,5 +1,10 @@
+require 'mongoid'
+require 'mongo'
 require 'sinatra'
 require 'sinatra/flash'
+require_relative './models/user'
+
+Mongoid.load!('./config/mongoid.yml')
 
 helpers do
   def redirect_to_original_request
@@ -39,6 +44,26 @@ get '/logout' do
   redirect '/'
 end
 
-get '/signup/?' do
-  
+get '/user/new' do
+  erb :signup, :locals => { :title => 'Signup' }
+end
+
+post '/user/new/submit' do
+  @profile = Profile.new(
+    params[:user][:Profile][:bio],
+    params[:user][:Profile][:name])
+
+  params[:user][:Profile] = @profile
+  @user = User.new(params[:user])
+  if @user.save
+    redirect '/login'
+  else
+    flash[:warning] = 'Signup failed.'
+  end
+end
+
+get '/users' do
+  authenticate!
+  @users = User.all
+  erb :users, :locals => { :title => 'All Users' }
 end
