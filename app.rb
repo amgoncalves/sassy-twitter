@@ -63,7 +63,6 @@ post '/user/new/submit' do
 end
 
 get '/users' do
-  authenticate!
   @users = User.all
   erb :users, :locals => { :title => 'All Users' }
 end
