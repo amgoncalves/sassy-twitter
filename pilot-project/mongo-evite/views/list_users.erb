@@ -2,13 +2,16 @@
 <ul>
 	<% @users.each do |user| %>
 		<li>
-			<%= "ID: " + user.user_id.to_s %> <br>
+			<%= "ID: " + user._id.to_s %> <br>
 			<%= "handle " + user.handle %> <br>
 			<%= "email " + user.email %> <br>
 			<%= "password " + user.password %> <br>
 			<%= "APItoken " + user.APItoken %> <br>
 			<%= "Profile.Bio " + user.Profile.bio.to_s %> <br>
-			<%= "Profile.name " + user.Profile.name.to_s %> <br>
+			<%= "Profile.dob " + user.Profile.dob.to_s %><br>
+			<%= "Profile.date_joined " + user.Profile.date_joined.to_s %><br>
+			<%= "Profile.location " + user.Profile.location.to_s %><br>
+			<%= "Profile.name " + user.Profile.name.to_s %><br>
 		</li>
 	<% end %>
 </ul>
