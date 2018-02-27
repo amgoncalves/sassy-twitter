@@ -1,0 +1,15 @@
+<h3> List Users</h3>
+<ul>
+	<% @users.each do |user| %>
+		<li>
+			<%= "ID: " + user.user_id.to_s %> <br>
+			<%= "handle " + user.handle %> <br>
+			<%= "email " + user.email %> <br>
+			<%= "password " + user.password %> <br>
+			<%= "APItoken " + user.APItoken %> <br>
+			<%= "Profile.Bio " + user.Profile.bio.to_s %> <br>
+			<%= "Profile.name " + user.Profile.name.to_s %> <br>
+		</li>
+	<% end %>
+</ul>
+<a href="/">BACK TO HOME</a>
