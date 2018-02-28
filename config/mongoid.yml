@@ -4,7 +4,7 @@ development:
       database: nanotwitter-dev
       hosts:
         - localhost:27017
-	
+
 production:
   sessions:
     default:
