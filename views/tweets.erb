@@ -1,0 +1,44 @@
+<a href='/tweet/test'> back to tweet test </a>
+
+<ul>
+  <% @tweets.each do |tweet| %>
+    <li>
+      <div>
+        id : <a href="/tweet/<%= tweet._id %>"><%= tweet._id %></a>
+      </div>
+
+      <div>
+        content: <%= tweet.content %>
+      </div>
+  
+      <div>
+        created_time: <%= tweet.time_created %>
+      </div>
+
+      <div>
+        original_tweet_id: <%= tweet.original_tweet_id %>
+      </div>
+
+      <div>
+        <form action="/reply?tweet_id=<%= tweet._id %>" method='POST'>
+          Reply: <input type="text" name="reply[content]" placeholder="make a tweet to reply"><br>
+          <button type='submit'>Reply</button>
+        </form>
+      </div>
+
+      <div>
+        <form action="/like?tweet_id=<%= tweet._id %>" method='POST'>
+          <button type='submit'>Like</button>
+        </form>
+      </div>
+
+      <div>
+        <form action="/retweet?tweet_id=<%= tweet._id %>" method='POST'>
+          Retweet: <input type="text" name="retweet[content]" placeholder="make a tweet to retweet"><br>
+          <button type='submit'>Retweet</button>
+        </form>
+      </div>
+
+    <br><br>
+  <% end %>
+</ul>

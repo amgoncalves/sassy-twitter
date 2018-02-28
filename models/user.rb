@@ -3,19 +3,20 @@ require 'mongo'
 require 'mongoid'
 
 class Profile
-	attr_reader :bio, :name, :date_joined, :location, :name
+	attr_reader :bio, :name, :date_joined, :location
 
-	def initialize(bio = "", name = "", date_joined = "", location = "", name = "")
-		@bio, @name, @date_joined, @location, @name = bio, name, date_joined, location, name
+	def initialize(bio = "", name = "", date_joined = "", location = "")
+		@bio, @name, @date_joined, @location = bio, name, date_joined, location
 	end
 
+  # conver the object into database friendly value
 	def mongoize 
-		[ bio, dob, date_joined, location, name]
+		[ bio, date_joined, location, name]
 	end
 
 	class << self
 		def demongoize(object)
-			Profile.new(object[0], object[1], object[2], object[3], object[4])
+			Profile.new(object[0], object[2], object[3], object[4])
 		end
 
 		def mongoize(object)

@@ -1,0 +1,21 @@
+<a href='/tweets'> back to tweet list </a>
+<br>
+
+id : <%= @tweet._id %><br>
+content : <%= @tweet.content %><br>
+time_created : <%= @tweet.time_created %><br>
+author_id : <%= @tweet.author_id %><br>
+original_tweet_id : <%= @tweet.original_tweet_id %><br>
+likedby : <%= @tweet.likedby.length %><br>
+replys: <br>
+<ul>
+  <% @replys.each do |reply| %>
+  <li>
+    reply_id: <%= reply._id %><br>
+    content : <%= reply.content %><br>
+    time_created : <%= reply.time_created %><br>
+    <br>
+  </li>
+  <% end %>
+</ul>
+
