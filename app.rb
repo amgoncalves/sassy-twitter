@@ -1,4 +1,3 @@
-require 'byebug'
 require 'mongoid'
 require 'mongo'
 require 'sinatra'
