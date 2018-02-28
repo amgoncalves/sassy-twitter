@@ -2,11 +2,11 @@
 
 [https://sassy-nanotwitter.herokuapp.com/](https://sassy-nanotwitter.herokuapp.com/)
 
+Si Chen, Alyssa Goncalves, Shuai Yu
+
 COSI-105b Software Engineering for Scalability
 
 Brandeis University, Spring 2018
-
-Si Chen, Alyssa Goncalves, Shuai Yu
 
 ## Change History
 
