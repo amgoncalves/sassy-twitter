@@ -9,7 +9,7 @@ class User
 
   field :handle, type: String
   field :email, type: String
-  field :password, type: String
+  field :password_hash, type: String
   field :APItoken, type: String
   field :Profile, type: Profile
   field :Followed, type: Set, default: []
@@ -22,14 +22,17 @@ class User
   validates :password, presence: true
   validates :APItoken, presence: true, uniqueness: true
 
-  def self.authenticate(params = {})
-    return nil if params[:handle].blank? || params[:password].blank?
+  def initialize(params)
+    super
+    self.APItoken = self.handle
+  end  
 
-    @@credentials ||= YAML.load_file(File.join(__dir__, '../credentials.yml'))
-    handle = params[:handle].downcase
-    return nil if handle != @@credentials['handle']
-
-    password_hash = Password.new(@@credentials['password_hash'])
-    User.new(handle) if password_hash == params[:password]
+  def password
+    @password ||= Password.new(password_hash)
   end
+
+  def password=(new_password)
+    @password = Password.create(new_password)
+    self.password_hash = @password
+  end  
 end
