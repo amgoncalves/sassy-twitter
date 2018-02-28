@@ -59,7 +59,7 @@ Download this repo.  Use [Bundler](http://bundler.io/) to install the required p
 
 ```$ bundle install```
 
-Make sure MongoDB is running (refer to the previous section).  To launch the app, run the following command in the project's root directory:
+Make sure MongoDB is running according to the instructions given in **MongoDB Setup**.  To launch the app, run the following command in the project's root directory:
 
 ```$ ruby app.rb```
 
