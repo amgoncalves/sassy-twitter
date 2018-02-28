@@ -1,60 +1,38 @@
 require 'bcrypt'
 require 'mongo'
 require 'mongoid'
-
-class Profile
-	attr_reader :bio, :name, :date_joined, :location
-
-	def initialize(bio = "", name = "", date_joined = "", location = "")
-		@bio, @name, @date_joined, @location = bio, name, date_joined, location
-	end
-
-  # conver the object into database friendly value
-	def mongoize 
-		[ bio, date_joined, location, name]
-	end
-
-	class << self
-		def demongoize(object)
-			Profile.new(object[0], object[2], object[3], object[4])
-		end
-
-		def mongoize(object)
-			case object
-			when Profile then object.mongoize
-			else object
-			end
-		end
-
-		def evolve(object)
-			case object
-			when Profile then object.mongoize
-			else object
-			end
-
-		end
-	end
-end
+require_relative 'profile'
 
 class User
   include BCrypt
   include Mongoid::Document
 
-  field :user_id, type: Integer
   field :handle, type: String
   field :email, type: String
-  field :password, type: String
+  field :password_hash, type: String
   field :APItoken, type: String
   field :Profile, type: Profile
+  field :Followed, type: Set, default: []
+  field :Following, type: Set, default: []
+  field :Tweets, type: Set, default: []
+  field :LikedTweets, type: Set, default: []
 
-  def self.authenticate(params = {})
-    return nil if params[:handle].blank? || params[:password].blank?
+  validates :handle, presence: true, uniqueness: true
+  validates :email, presence: true, uniqueness: true
+  validates :password, presence: true
+  validates :APItoken, presence: true, uniqueness: true
 
-    @@credentials ||= YAML.load_file(File.join(__dir__, '../credentials.yml'))
-    handle = params[:handle].downcase
-    return nil if handle != @@credentials['handle']
+  def initialize(params)
+    super
+    self.APItoken = self.handle
+  end  
 
-    password_hash = Password.new(@@credentials['password_hash'])
-    User.new(handle) if password_hash == params[:password]
+  def password
+    @password ||= Password.new(password_hash)
   end
+
+  def password=(new_password)
+    @password = Password.create(new_password)
+    self.password_hash = @password
+  end  
 end

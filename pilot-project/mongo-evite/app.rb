@@ -2,6 +2,7 @@ require 'sinatra'
 require 'mongoid'
 require 'mongo'
 require 'json'
+require 'date'
 require "sinatra/reloader" if development?
 require 'byebug'
 require_relative './models/event'
@@ -60,12 +61,18 @@ get '/user/new' do
 end
 
 post '/user/new/submit' do
-	byebug
 	# @user = User.new(params[:user])
+	params[:user][:Profile][:date_joined] = Date.today.to_s
 	@profile = Profile.new(params[:user][:Profile][:bio],
+						  params[:user][:Profile][:dob],
+						  params[:user][:Profile][:date_joined],
+						  params[:user][:Profile][:location],
 						  params[:user][:Profile][:name])
 	params[:user][:Profile] = @profile
+	params[:user][:APItoken] = params[:user][:handle]
+	params[:user][:Followed] = Set[1, 2, 3]
 	@user = User.new(params[:user])
+	byebug
 	if @user.save
 		redirect '/users'
 	else 

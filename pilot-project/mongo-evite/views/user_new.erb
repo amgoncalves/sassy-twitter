@@ -1,12 +1,12 @@
 <h3>Please fill up the form to create an user.</h3>
 <form action = '/user/new/submit' method = 'POST'>
-	User id: <input type = 'text' name='user[user_id]' placeholder = 'Input an id' />
-	Handle: <input type = 'text' name = 'user[handle]' placeholder = 'Input an handle' />
+	User handle: <input type = 'text' name='user[handle]' placeholder = 'Input an handle' />
 	Email: <input type = 'text' name = 'user[email]' placeholder = 'Input an email' />
 	Password: <input type = 'text' name = 'user[password]' placeholder = 'Input password' />
-	APItoken: <input type = 'text' name = 'user[APItoken]' placeholder = 'Input APItoken' />
-	Bio: <input type = 'text' name = 'user[Profile][bio]' placeholder = 'Input bio' />
-	Name: <input type = 'text' name = 'user[Profile][name]' placeholder = 'Name' />
+	Profile Bio: <input type = 'text' name = 'user[Profile][bio]' placeholder = 'Input bio' />
+	Profile dob: <input type = 'date' name = 'user[Profile][dob]' placeholder = 'DoB' />
+	Profile location: <input type = 'text' name = 'user[Profile][location]' placeholder = 'Location' />
+	Profile name: <input type = 'text', name = 'user[Profile][name]' placeholder = 'Name' />
 	<%# Date of birth: <input type = 'date' name='persn[date_of_birth]' /> %>
 	<%# Gender: <input type = 'checkbox' name='persn[gender]' value='male' /> Male %> 
 	<%# <input type = 'checkbox' name = 'persn[gender]' value = 'female' /> Female %> 

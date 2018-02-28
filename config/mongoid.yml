@@ -4,3 +4,8 @@ development:
       database: nanotwitter-dev
       hosts:
         - localhost:27017
+
+production:
+  clients:
+    default:
+      uri: <%= ENV['MONGOLAB_URI'] %>

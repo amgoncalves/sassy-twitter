@@ -1,15 +1,18 @@
 <p><em>Blue skies, smiling at me, nothing but blue skies do I see...</em></p>
 <p><img src="images/frank.jpg"></p>
 <p><em>Bluebirds singing a song, nothing but bluebirds all day long...</em></p>
-<form action='/user/new' method='GET'>
-  <p><button type='submit'>Signup</button></p>
-</form>
-<form action='/login' method='GET'>
-  <p><button type='submit'>Login</button></p>
-</form>
 
-<!-- use for testing tweet -->
-<form action='/tweet/test' method='GET'>
-  <button type='submit'>Test Tweet</button>
-</form> 
+<% if is_authenticated? %>
+  <form action='/logout' method='POST'>
+    <p><button type='submit'>Logout</button></p>
+  </form>
 
+<% else %>
+  <form action='/login' method='GET'>
+    <p><button type='submit'>Login</button></p>
+  </form>
+
+  <form action='/signup' method='GET'>
+    <p><button type='submit'>Signup</button></p>
+  </form>
+<% end %>
