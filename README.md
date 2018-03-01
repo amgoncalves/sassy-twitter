@@ -18,7 +18,7 @@ Brandeis University, Spring 2018
 
 ### nt0.2
 
-* Create Heroku account and documentation is done by Alyssa.
+* Alyssa - Setup Heroku and mLab, added login/logout, added userauth, and added documentation.
 
 ## Documentation
 
