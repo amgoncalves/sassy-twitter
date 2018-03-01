@@ -40,6 +40,7 @@ Brandeis University, Spring 2018
 * A pilot project (pilot-project/sinatra-bootstrap-master) testing navigation bar feature was added by Shuai.
 * A pilot project (pilot-project/twitterwhack_test) testing the hover card feature was added by Shuai.
 * The database models of User, Profile and Hashtag were implemented and tested by Shuai.
+* The database modesl of Tweet, Reply were implemented and tested by Si.
 * Heroku and mLab setup, login/logout routes, sessions, BCrypt added by Alyssa
 
 
