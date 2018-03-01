@@ -19,7 +19,7 @@ class User
 
   validates :handle, presence: true, uniqueness: true
   validates :email, presence: true, uniqueness: true
-  validates :password, presence: true
+  validates :password_hash, presence: true
   validates :APItoken, presence: true, uniqueness: true
 
   def initialize(params)
