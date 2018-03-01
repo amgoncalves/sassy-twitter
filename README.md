@@ -27,7 +27,7 @@ Brandeis University, Spring 2018
 
 * *[MIGRATIONS]* - MongoDB does not use migrations.
 
-* *[AUTHENTICATION]* - We used BCrypt and enabled Sinatra's default sessions with cookies accomplish user authentication.  A user is authenticated using the auth_user method, which checks a password against the stored BCrypt password_hash for that user in the database.  The user is stored in session[:user] if authentication succeeds.  Routes are marked as protected by calling authenticate!.  For now, this is a secret page, ```/users```, that displays a list of all users who have registered for nanoTwitter.  When a user logs out, they are removed from the session.
+* *[AUTHENTICATION]* - We used BCrypt and enabled Sinatra's default sessions with cookies to accomplish user authentication.  A user is authenticated using the ```auth_user``` method, which checks a password against the stored BCrypt password_hash for that user in the database.  The user is stored in ```session[:user]``` if authentication succeeds.  Routes are marked as protected by calling ```authenticate!```.  For now, this is a secret page, ```/users```, that displays a list of all users who have registered for nanoTwitter.  When a user logs out, they are removed from the session.
 
 * *[HEROKU]* - [https://sassy-nanotwitter.herokuapp.com/](https://sassy-nanotwitter.herokuapp.com/)  Authentication can be tested by creating an account, logging in, and logging out.  Visitors can also post a Tweet.
 
