@@ -1,12 +1,14 @@
+<h4>Welcome, <%= @name.handle %>!</h4>
+
+<p>All users:</p>
+
 <table>
   <tr>
-    <th>id</th>
     <th>email</th>
     <th>handle</th>
   </tr>
 <% @users.each do |user| %>
    <tr>
-      <td><%= user.id %></td>
       <td><%= user.email %></td>
       <td><%= user.handle %></td>
    </tr>

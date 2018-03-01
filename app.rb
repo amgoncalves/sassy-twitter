@@ -82,6 +82,7 @@ end
 
 get '/users' do
   authenticate!
+  @name = session[:user]
   @users = User.all
   erb :users, :locals => { :title => 'All Users' }
 end

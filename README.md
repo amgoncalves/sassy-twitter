@@ -1,4 +1,4 @@
-# nanoTwitter :bird:
+# nanoTwitter 0.2 :bird:
 
 [https://sassy-nanotwitter.herokuapp.com/](https://sassy-nanotwitter.herokuapp.com/)
 
@@ -10,15 +10,27 @@ Brandeis University, Spring 2018
 
 ## Change History
 
-### nt0.1
+### nt0.1 - Foundation
 
 * License file and documentation for routes and database schema were added to the repo.  This was done together as a group.
 * A pilot project (pilot-project/mongo-evite) using mongodb was added by Shuai.
 * UI design and prototype is completed by Si.
 
-### nt0.2
+### nt0.2 - First Minimal Implementation
 
-* Alyssa - Setup Heroku and mLab, added login/logout, added userauth, and added documentation.
+#### Requirements
+
+* *[SINATRA]* - The skeleton app's routes are in ```app.rb```.  Templates are in ```views```.   Mongoid ODMs (Object-Document-Mappers) are in ```models```.  Stylesheets and images are in ```public```.
+
+* *[MIGRATIONS]* - MongoDB does not use migrations.
+
+* *[AUTHENTICATION]* - We used BCrypt and enabled Sinatra's default sessions with cookies accomplish user authentication.  A user is authenticated using the auth_user method, which checks a password against the stored BCrypt password_hash for that user in the database.  The user is stored in session[:user] if authentication succeeds.  Routes are marked as protected by calling authenticate!.  For now, this is a secret page, ```/users```, that displays a list of all users who have registered for nanoTwitter.  When a user logs out, they are removed from the session.
+
+* *[HEROKU]* - [https://sassy-nanotwitter.herokuapp.com/](https://sassy-nanotwitter.herokuapp.com/).  Authentication can be tested by creating an account, logging in, and logging out.  Visitors can also post a Tweet.
+
+* *[nanoTwitter 0.2]* - Release has been "tagged" by naming the project nanoTwitter 0.2 and updating version.rb.
+
+* Alyssa - Setup Heroku and mLab, added login/logout routes, enabled sessions, added BCrypt to users.rb, and added documentation.
 
 ## Documentation
 
