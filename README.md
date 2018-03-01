@@ -12,11 +12,12 @@ Brandeis University, Spring 2018
 
 ### nt0.1 - Foundation
 
-* License file and documentation for routes and database schema were added to the repo.  This was done together as a group.
+* License file and documentation for routes and sql database schema were added to the repo.  This was done together as a group.
 * A pilot project (pilot-project/mongo-evite) using mongodb was added by Shuai.
 * UI design and prototype is completed by Si.
 
 ### nt0.2 - First Minimal Implementation
+
 
 #### Requirements
 
@@ -30,7 +31,13 @@ Brandeis University, Spring 2018
 
 * *[nanoTwitter 0.2]* - Release has been "tagged" by naming the project nanoTwitter 0.2 and updating version.rb.
 
-* Alyssa - Setup Heroku and mLab, added login/logout routes, enabled sessions, added BCrypt to users.rb, and added documentation.
+* Create Heroku account and documentation is done by Alyssa.
+* Change sql database schema to nonsql database sql by Shuai and Si.
+* A pilot project (pilot-project/sinatra-bootstrap-master) testing navigation bar feature was added by Shuai.
+* A pilot project (pilot-project/twitterwhack_test) testing the hover card feature was added by Shuai.
+* The database models of User, Profile and Hashtag were implemented and tested by Shuai.
+* Heroku and mLab setup, login/logout routes, sessions, BCrypt added by Alyssa
+
 
 ## Documentation
 
