@@ -12,6 +12,8 @@ Brandeis University, Spring 2018
 
 ### nt0.1 - Foundation
 
+#### Developer's Log
+
 * License file and documentation for routes and sql database schema were added to the repo.  This was done together as a group.
 * A pilot project (pilot-project/mongo-evite) using mongodb was added by Shuai.
 * UI design and prototype is completed by Si.
@@ -27,9 +29,11 @@ Brandeis University, Spring 2018
 
 * *[AUTHENTICATION]* - We used BCrypt and enabled Sinatra's default sessions with cookies accomplish user authentication.  A user is authenticated using the auth_user method, which checks a password against the stored BCrypt password_hash for that user in the database.  The user is stored in session[:user] if authentication succeeds.  Routes are marked as protected by calling authenticate!.  For now, this is a secret page, ```/users```, that displays a list of all users who have registered for nanoTwitter.  When a user logs out, they are removed from the session.
 
-* *[HEROKU]* - [https://sassy-nanotwitter.herokuapp.com/](https://sassy-nanotwitter.herokuapp.com/).  Authentication can be tested by creating an account, logging in, and logging out.  Visitors can also post a Tweet.
+* *[HEROKU]* - [https://sassy-nanotwitter.herokuapp.com/](https://sassy-nanotwitter.herokuapp.com/)  Authentication can be tested by creating an account, logging in, and logging out.  Visitors can also post a Tweet.
 
 * *[nanoTwitter 0.2]* - Release has been "tagged" by naming the project nanoTwitter 0.2 and updating version.rb.
+
+#### Developer's Log
 
 * Create Heroku account and documentation is done by Alyssa.
 * Change sql database schema to nonsql database sql by Shuai and Si.
