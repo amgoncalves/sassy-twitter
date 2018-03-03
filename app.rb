@@ -5,6 +5,7 @@ require 'sinatra/flash'
 require_relative './models/user'
 require_relative './models/tweet'
 require_relative './models/reply'
+require 'byebug'
 
 Mongoid.load!('./config/mongoid.yml')
 
@@ -69,7 +70,7 @@ post '/signup/submit' do
   # Build the user's profile
   today = DateTime.now
   @profile = Profile.new("", "", today, "", "")
-  params[:user][:Profile] = @profile
+  params[:user][:profile] = @profile
 
   # Build the user's account
   @user = User.new(params[:user])
@@ -79,6 +80,50 @@ post '/signup/submit' do
     flash[:notice] = 'Signup failed.'
   end
 end
+
+get '/user/:_id' do
+	present = User.where(_id: params[:_id]).exists?
+
+	if present
+		@cur_user = User.where(_id: params[:_id]).first
+		@cur_tweets = Array.new
+		@cur_followed = Array.new
+		@cur_following = Array.new
+		@cur_likedtweets = Array.new
+
+		# if @cur_user[:tweets].length > 0
+		# 	// 50
+		# 	@cur_tweets = Tweet.in(_id: @cur_user[:tweet])
+		# end
+		# byebug
+		erb :user, :locals => { :title => 'User Profile' }
+	end
+end
+
+post '/follow' do
+	following_id = params[:user_id]
+	user_id = session[:user]._id
+	user = User.where(_id: user_id).first
+	user.toggle_following(following_id)
+	byebug
+
+	redirect "/user/#{user_id}"
+end
+
+get '/posted' do
+	user_id = session[:user]._id
+	user = User.where(_id: user_id).first
+	posted_ids = user.tweets
+	if posted_ids.length > 50
+		posted_ids = posted_ids[-50..-1]
+	end
+	if posted_ids.length > 0
+		@posted_tweets = Tweet.in(_id: posted_ids)
+	end
+	byebug
+	erb :posted
+end
+
 
 get '/users' do
   authenticate!
@@ -94,6 +139,9 @@ end
 post '/tweet/new' do
   tweet = Tweet.new(params[:tweet])
   if tweet.save
+	  user_id = session[:user]._id
+		user = User.where(_id: user_id).first
+		user.add_tweet(tweet._id)
     redirect '/tweets'
   else
     flash[:warning] = 'Create tweet failed'
@@ -147,6 +195,7 @@ post '/like' do
   tweet_id = params[:tweet_id]
   tweet = Tweet.where(_id: tweet_id).first
 
+	# session[:user]._id
   # add user id into likedby
   tweet.add_like("temp")
   

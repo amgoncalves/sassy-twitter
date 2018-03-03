@@ -1,0 +1,136 @@
+<link href="/stylesheets/pcard1.css" type = "text/css" rel="stylesheet" id="bootstrap-css">
+<%# <script src="//code.jquery.com/jquery-1.11.1.min.js"></script> %>
+<script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
+<script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+
+<div class="container">
+<div class="row">
+<h1>Twitter Profile Card</h1>
+<p>You can use with Twitter API, bot or manual.</p>
+<!-- code start -->
+<div class="twPc-div">
+    <a class="twPc-bg twPc-block"></a>
+
+	<div>
+		<div class="twPc-button">
+            <!-- Twitter Button | you can get from: https://about.twitter.com/tr/resources/buttons#follow -->
+            <a href="https://twitter.com/mertskaplan" class="twitter-follow-button" data-show-count="false" data-size="large" data-show-screen-name="false" data-dnt="true">Follow @mertskaplan</a>
+            <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+            <!-- Twitter Button -->   
+		</div>
+
+		<a title="Mert Salih Kaplan" href="https://twitter.com/mertskaplan" class="twPc-avatarLink">
+			<img alt="Default" src="/images/default-profile.png" class="twPc-avatarImg">
+		</a>
+
+		<div class="twPc-divUser">
+			<div class="twPc-divName">
+				<a href="https://twitter.com/mertskaplan">Mert S. Kaplan</a>
+			</div>
+			<span>
+				<a href="https://twitter.com/mertskaplan">@<span>mertskaplan</span></a>
+			</span>
+		</div>
+
+		<div class="twPc-divStats">
+			<ul class="twPc-Arrange">
+				<li class="twPc-ArrangeSizeFit">
+					<a href="https://twitter.com/mertskaplan" title="9.840 Tweet">
+						<span class="twPc-StatLabel twPc-block">Tweets</span>
+						<span class="twPc-StatValue">9.840</span>
+					</a>
+				</li>
+				<li class="twPc-ArrangeSizeFit">
+					<a href="https://twitter.com/mertskaplan/following" title="885 Following">
+						<span class="twPc-StatLabel twPc-block">Following</span>
+						<span class="twPc-StatValue">885</span>
+					</a>
+				</li>
+				<li class="twPc-ArrangeSizeFit">
+					<a href="https://twitter.com/mertskaplan/followers" title="1.810 Followers">
+						<span class="twPc-StatLabel twPc-block">Followers</span>
+						<span class="twPc-StatValue">1.810</span>
+					</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+</div>
+<!-- code end -->
+</div>
+</div>
+
+
+
+<%# <link rel = "stylesheet" href = "/stylesheets/profilecard.css" > %>
+<%# <link rel = "stylesheet" href = "/stylesheets/profile.css" > %>
+<%# <link rel = "stylesheet" href = "/stylesheets/followbutton.css"> %>
+<%# <script src="https://code.jquery.com/jquery-1.10.2.js"></script> %>
+
+<%# <div class="frame"> %>
+<%# 	<div class="center"> %>
+		
+<%# 		<div class="profile"> %>
+<%# 			<div class="image"> %>
+<%# 				<div class="circle-1"></div> %>
+<%# 				<div class="circle-2"></div> %>
+<%# 				<img src="http://100dayscss.com/codepen/jessica-potter.jpg" width="70" height="70" alt="Jessica Potter"> %>
+<%# 			</div> %>
+			
+<%# 			<div class="name"><%= @cur_user.profile.name %1></div> %>
+<%# 			<div class="handle"><%= @cur_user.handle %1></div> %>
+			
+<%# 			<div class="actions"> %>
+<%# 				<button class="btn">Follow</button> %>
+<%# 				<button class="btn">Message</button> %>
+<%# 			</div> %>
+<%# 		</div> %>
+		
+<%# 		<div class="stats"> %>
+<%# 			<div class="box"> %>
+<%# 				<span class="value">523</span> %>
+<%# 				<span class="parameter">Posts</span> %>
+<%# 			</div> %>
+<%# 			<div class="box"> %>
+<%# 				<span class="value">1387</span> %>
+<%# 				<span class="parameter">Likes</span> %>
+<%# 			</div> %>
+<%# 			<div class="box"> %>
+<%# 				<span class="value">146</span> %>
+<%# 				<span class="parameter">Follower</span> %>
+<%# 			</div> %>
+<%# 		</div> %>
+<%# 	</div> %>
+<%# </div> %>
+
+<%# <div> %>
+<%# 	<ul> %>
+<%# 		<li> %>
+<%# 			<div> name: <%= @cur_user.profile.name %1> </div> %>
+<%# 			<div> handle: <%= @cur_user.handle %1> </div> %>
+<%# 			<div> %>
+<%# 				<form action = "/follow?user_id=<%= @cur_user._id %1>" method = 'POST' > %>
+<%# 					<1%# if_followed = %1> %> 
+<%# 					<button class = "follow following" type = "submit"> %>
+<%# 						<span class = "msg-follow"> Follow </span> %>
+<%# 						<span class = "msg-following"> Following </span> %>
+<%# 						<span class = "msg-unfollow"> Unfollow </span> %>
+<%# 					</button> %>
+<%# 				</form> %>
+<%# 			</div> %>
+<%# 	</ul> %>
+<%# </div> %>
+
+<%# <script> %>
+<%# $('button').click(function(){ %>
+<%#   var $this = $(this); %>
+<%#   $this.toggleClass('following') %>
+<%#   if($this.is('.following')){ %>
+<%#     $this.addClass('wait'); %>
+<%#   } %>
+<%# }).on('mouseleave',function(){ %>
+<%#   $(this).removeClass('wait'); %>
+<%# }) %>
+<%# </script> %>

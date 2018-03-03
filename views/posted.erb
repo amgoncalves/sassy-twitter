@@ -1,0 +1,24 @@
+<a href='/tweet/test'> back to tweet test </a>
+
+<ul>
+  <% @posted_tweets.each do |tweet| %>
+    <li>
+      <div>
+        id : <a href="/tweet/<%= tweet._id %>"><%= tweet._id %></a>
+      </div>
+
+      <div>
+        content: <%= tweet.content %>
+      </div>
+  
+      <div>
+        created_time: <%= tweet.time_created %>
+      </div>
+
+      <div>
+        original_tweet_id: <%= tweet.original_tweet_id %>
+      </div>
+
+    <br><br>
+  <% end %>
+</ul>
