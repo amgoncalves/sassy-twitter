@@ -37,7 +37,10 @@
 						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
 							<a class="dropdown-item" href="/edit_profile">EditProfile</a>
 							<div class="dropdown-divider"></div>
-							<a class="dropdown-item" href="/logout">Logout</a>
+							<%# <a class="dropdown-item" href="/logout">Logout</a> %>
+							<form action="/logout" method='POST'>
+								<button type="submit" class="btn btn-link btn-logout">Logout</button>
+							</form>
 						</div>
 					</li>
 				</ul>
