@@ -6,11 +6,18 @@
 * [/logout](#r03)
 * [/signup](#r04)
 * [/edit_profile](#r05)
-* [/user](#r06)
+* [/edit_profile/submit](#05)
+* [/user/:targeted_id](#r06)
+* [/user/new_tweets](#r06)
+* [/user/followings](#06)
+* [/user/followeds](#06)
 * [/users](#r07)
 * [/follow](#r08)
 * [/posted](#r09)
-* [/tweet](#r10)
+* [/tweet/:tweet_id](#r10)
+* [/tweet/new](#r10)
+* [/tweet/like](#r10)
+* [/tweet/reply](#r10)
 * [/reply](#r11)
 * [/search](#r12)
 
@@ -95,11 +102,11 @@ Construct the follow relationship between user and targted user
 Get the posted tweet of users
 
 ### <a name="r10"></a> /tweet
-* POST /tweet
+* POST /tweet/new
     - tweet
     - user
 Create new tweet
-* GET /tweet
+* GET /tweet/:tweet_id
     - tweet_id
 Display a specific tweet
 * POST /tweet/like
@@ -115,7 +122,6 @@ Create a new tweet which retweet another tweet
     - reply
     - tweet_id
 Create a reply to a tweet
-
 
 ### <a name="r12"></a> /search
 * Display search interface to search tweets with certain words
