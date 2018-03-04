@@ -1,5 +1,6 @@
 <link href = "/stylesheets/twitterlayout.css" type = "text/css" rel="stylesheet">
 <link href = "/stylesheets/pcard1.css" type = "text/css" rel="stylesheet">
+<link href = "/stylesheets/gallery.css" type = "text/css" rel="stylesheet">
 <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
 <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 <script src='http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.5/jquery-ui.min.js'></script>
@@ -84,7 +85,7 @@
 						<div class="col-xs-3">
 							<h5>
 								<small>TWEETS</small>
-								<a href="/user/<%= @targeted_id %>" >
+								<a href="/user/<%= @targeted_id %>">
 									<%= @ntweets %>
 								</a>
 							</h5>
@@ -92,7 +93,7 @@
 						<div class="col-xs-4">
 							<h5>
 								<small>FOLLOWING</small>
-								<a href="/user/followings/?targeted_id=<%= @targeted_id %>" >
+								<a href="/user/followings/?targeted_id=<%= @targeted_id %>">
 									<%= @nfollowing %>
 								</a>
 							</h5>
@@ -147,8 +148,8 @@
 			<%# </div> %>
 
 		</div>
-		<div class="col-sm-6">
-			<div class="panel panel-info">
+		<div class="col-sm-9">
+			<%# <div class="panel panel-info"> %>
 
 				<%# <div class="panel-heading"> %>
 				<%# 	<div class="media"> %>
@@ -165,31 +166,22 @@
 				<%# 		</div> %>
 				<%# 	</div> %>
 				<%# </div> %>
-			<br>
+			<%# <br> %>
 
-				<div class="panel-body">
-					<% @targeted_tweets.each do |tweet| %>
-							<div class="media">
-								<a class="media-left" href="#fake">
-									<img alt="" class="media-object img-rounded" src="http://placehold.it/64x64">
-								</a>
-								<div class="media-body">
-									<h4 class="media-heading"><%= @targeted_user.handle %></h4>
-									<p>
-									<%= tweet.content %>
-									</p>
-									<ul class="nav nav-pills nav-pills-custom">
-										<li><a href="#"><span class="glyphicon glyphicon-share-alt"></span></a></li>
-										<li><a href="#"><span class="glyphicon glyphicon-retweet"></span></a></li>
-										<li><a href="#"><span class="glyphicon glyphicon-star"></span></a></li>
-										<li><a href="#"><span class="glyphicon glyphicon-option-horizontal"></span></a></li>
-									</ul>
-								</div>
+				<%# <div class="panel-body"> %>
+					<div class="gallery">
+						<% @targeted_following.each do |f| %>
+							<div>
+								<%= f.profile.name %> <br>
+								<%= f.handle %><br>
+								<%= f.profile.bio %><br>
+								<%= f.profile.dob %>
 							</div>
-					<% end %>
+						<% end %>
+					</div>
 
-				</div>
-			</div>
+				<%# </div> %>
+			<%# </div> %>
 
 			<br>
 			<br>
@@ -206,63 +198,6 @@
 			<%# 	</div> %>
 			<%# </div> %>
 		</div>
-
-		<div class="col-sm-3">
-			<div class="panel panel-default panel-custom">
-				<div class="panel-heading">
-					<h3 class="panel-title">
-						Who to follow
-						<small><a href="#">Refresh</a> ● <a href="#">View all</a></small>
-					</h3>
-				</div>
-				<div class="panel-body">
-					<div class="media">
-						<div class="media-left">
-							<img src="http://placehold.it/32x32" alt="" class="media-object img-rounded">
-						</div>
-						<div class="media-body">
-							<h4 class="media-heading">Nome e cognome</h4>
-							<a href="#" class="btn btn-default btn-xs">
-								+
-								<span class="glyphicon glyphicon-user"></span>
-								Follow
-							</a>
-						</div>
-					</div>
-					<div class="media">
-						<div class="media-left">
-							<img src="http://placehold.it/32x32" alt="" class="media-object img-rounded">
-						</div>
-						<div class="media-body">
-							<h4 class="media-heading">Nome e cognome</h4>
-							<a href="#" class="btn btn-default btn-xs">
-								+
-								<span class="glyphicon glyphicon-user"></span>
-								Follow
-							</a>
-						</div>
-					</div>
-					<div class="media">
-						<div class="media-left">
-							<img src="http://placehold.it/32x32" alt="" class="media-object img-rounded">
-						</div>
-						<div class="media-body">
-							<h4 class="media-heading">Nome e cognome</h4>
-							<a href="#" class="btn btn-default btn-xs">
-								+
-								<span class="glyphicon glyphicon-user"></span>
-								Follow
-							</a>
-						</div>
-					</div>
-				</div>
-				<div class="panel-footer">
-					<a href="www.google.it">
-						<span class="glyphicon glyphicon-user"></span>
-						Find people you know
-					</a>
-				</div>
-			</div>
 
 			<%# <div class="well well-sm"> %>
 			<%# 	<ul class="list-inline"> %>

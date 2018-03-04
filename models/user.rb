@@ -15,7 +15,7 @@ class User
   field :followed, type: Set, default: []
   field :following, type: Set, default: []
   field :tweets, type: Array, default: []
-  field :likedTweets, type: Set, default: []
+  field :liked, type: Set, default: []
 
   validates :handle, presence: true, uniqueness: true
   validates :email, presence: true, uniqueness: true
@@ -37,9 +37,27 @@ class User
 		self.set(following: nxt_following)
 	end
 
+	def toggle_followed(followed_id)
+		nxt_followed = followed
+		if followed.include?(followed_id)
+			nxt_followed.delete(followed_id)
+		else
+			nxt_followed.add(followed_id)
+		end
+		self.set(followed: nxt_followed)
+	end
+
 	def add_tweet(tweet_id)
 		nxt_tweets = tweets.push(tweet_id)
 		self.set(tweets: nxt_tweets)
+	end
+
+	def update_profile(newprofile)
+		self.set(profile: newprofile)
+	end
+
+	def follow?(targeted_id)
+		following.include?(targeted_id)
 	end
 
   def password
