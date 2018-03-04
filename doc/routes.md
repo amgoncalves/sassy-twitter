@@ -1,50 +1,123 @@
 ## Routes Design
 
-### /
-* Non-logged-in root page
+### Routes Reference Index
+* [/](#r01)
+* [/login](#r02)
+* [/logout](#r03)
+* [/signup](#r04)
+* [/edit_profile](#r05)
+* [/user](#r06)
+* [/users](#r07)
+* [/follow](#r08)
+* [/posted](#r09)
+* [/tweet](#r10)
+* [/reply](#r11)
+* [/search](#r12)
+
+### <a name="r01"></a> /
+* GET / (Non-logged-in root page)
     - List of the most recent tweets from any user, each with link to tweeter’s page
     - Login link
     - Register link
-* Logged-in root page
+* GET / (Logged-in root page)
     - List of most recent 50 tweets of users you follow
     - Ability to tweet
     - Mini-profile
 
-### /users/<user_id>/
-* User <user_id>’s most recent 50 tweets
-* User <user_id>’s mini-profile
-* Button to follow that user (available only if logged in and not looking at self)
-* Link to list of users followed by this user. Link text is a count
-* Link to list of newest tweets of users followed by this user
-* Link to list of users following this user. Link text is a count
+### <a name="r02"></a> /login
+* GET /login
+get the login page
+* POST /login
+pass the email and password to login
+    - email
+    - password
 
-### /users/<user_id>/followers
-* List of users who are following this user
+### <a name="r03"></a> /logout
+* POST /logout
+Logout for particular user
+    - user
 
-### /users/<user_id>/followings
-* List of users this user is following
+### <a name="r04"></a> /signup
+* GET /signup
+Direct to signup page
+* POST /signup/submit
+Sign up a new user and empty profile in database
+    - user
 
-### /users/<user_id>/new_tweets
-* List of newest tweets of users followed by this user
+### <a name="r05"></a> /edit_profile
+* GET /edit_profile
+Direct to edit_profile page
+* POST /edit_profile/submit
+Edit the profile
+    - profile
+    - user
 
-### /users/register
-* Display the user registration page
+### <a name="r06"></a> /user
+* GET /user/:targeted_id
+    - targeted_id
+    - user
+```` 
+ User <user_id>’s most recent 50 tweets
+ User <user_id>’s mini-profile
+ Button to follow that user (available only if logged in and not looking at self)
+ Link to list of users followed by this user. Link text is a count
+ Link to list of newest tweets of users followed by this user
+ Link to list of users following this user. Link text is a count 
+````
 
-### /login
-* Display user login prompt, and check for correct password
+* GET /user/new_tweets
+List of 50 newest tweets of users followed by this user
+    - user
 
-### /logout
-* Logout
 
-### /verify
-* Verify if the user who is trying to log in is an existing user in database
+* POST /user/followings
+List of users who are following this user
+    - targeted_id
 
-### /search
+* POST /user/followeds
+List of users who are following this user
+    - targeted_id
+
+### <a name="r07"></a> /users
+* GET /users
+    - user
+Get all the users in database
+
+### <a name="r08"></a> /follow
+* POST /follow
+    - targeted_id
+    - user
+Construct the follow relationship between user and targted user
+
+### <a name="r09"></a> /posted
+* GET /posted
+    - user
+Get the posted tweet of users
+
+### <a name="r10"></a> /tweet
+* POST /tweet
+    - tweet
+    - user
+Create new tweet
+* GET /tweet
+    - tweet_id
+Display a specific tweet
+* POST /tweet/like
+    - tweet_id
+    - user
+Record the user likes this tweet
+* POST /tweet/retweet
+    - retweet
+Create a new tweet which retweet another tweet
+
+### <a name="r11"></a> /reply
+* POST /reply
+    - reply
+    - tweet_id
+Create a reply to a tweet
+
+
+### <a name="r12"></a> /search
 * Display search interface to search tweets with certain words
 * [TBD] which terms would be included for matching
-
-### /tweets/<tweet_id>
-* Display a specific tweet
-
-
 
