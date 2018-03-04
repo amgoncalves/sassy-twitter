@@ -141,7 +141,8 @@ post '/follow' do
 	targeted_user = User.where(_id: @targeted_id).first
 	targeted_user.toggle_followed(user_id)
 
-	redirect "/user/#{@targeted_id}"
+	# redirect "/user/#{@targeted_id}"
+	redirect back
 end
 
 get '/user/followings/' do
