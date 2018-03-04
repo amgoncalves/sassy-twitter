@@ -128,7 +128,7 @@ get '/user/:targeted_id' do
 			@targeted_following = User.in(_id: @targeted_user[:following])
 		end
 
-		erb :user, :locals => { :title => 'User Profile' }
+		erb :user, :layout => false, :locals => { :title => 'User Profile' }
 		# erb :followeds, :locals => { :title => 'User Profile' }
 	end
 end
@@ -176,7 +176,7 @@ get '/user/followings/' do
 		end
 
 		# erb :user, :locals => { :title => 'User Profile' }
-		erb :followings, :locals => { :title => 'User Profile' }
+		erb :followings, :layout => false, :locals => { :title => 'User Profile' }
 	end
 end
 
@@ -210,7 +210,7 @@ get '/user/followeds/' do
 		# end
 
 		# erb :user, :locals => { :title => 'User Profile' }
-		erb :followeds, :locals => { :title => 'User Profile' }
+		erb :followeds, :layout => false, :locals => { :title => 'User Profile' }
 	end
 end
 
