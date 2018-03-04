@@ -11,11 +11,11 @@ class User
   field :email, type: String
   field :password_hash, type: String
   field :APItoken, type: String
-  field :Profile, type: Profile
-  field :Followed, type: Set, default: []
-  field :Following, type: Set, default: []
-  field :Tweets, type: Set, default: []
-  field :LikedTweets, type: Set, default: []
+  field :profile, type: Profile
+  field :followed, type: Set, default: []
+  field :following, type: Set, default: []
+  field :tweets, type: Array, default: []
+  field :liked, type: Set, default: []
 
   validates :handle, presence: true, uniqueness: true
   validates :email, presence: true, uniqueness: true
@@ -26,6 +26,39 @@ class User
     super
     self.APItoken = self.handle
   end  
+
+	def toggle_following(following_id)
+		nxt_following = following
+		if following.include?(following_id)
+			nxt_following.delete(following_id)
+		else
+			nxt_following.add(following_id)
+		end
+		self.set(following: nxt_following)
+	end
+
+	def toggle_followed(followed_id)
+		nxt_followed = followed
+		if followed.include?(followed_id)
+			nxt_followed.delete(followed_id)
+		else
+			nxt_followed.add(followed_id)
+		end
+		self.set(followed: nxt_followed)
+	end
+
+	def add_tweet(tweet_id)
+		nxt_tweets = tweets.push(tweet_id)
+		self.set(tweets: nxt_tweets)
+	end
+
+	def update_profile(newprofile)
+		self.set(profile: newprofile)
+	end
+
+	def follow?(targeted_id)
+		following.include?(targeted_id)
+	end
 
   def password
     @password ||= Password.new(password_hash)

@@ -5,6 +5,7 @@ require 'sinatra/flash'
 require_relative './models/user'
 require_relative './models/tweet'
 require_relative './models/reply'
+require 'byebug'
 
 Mongoid.load!('./config/mongoid.yml')
 
@@ -38,6 +39,7 @@ helpers do
 end
 
 get '/' do
+	@ids = User.pluck(:id)
   erb :index, :locals => { :title => 'Welcome!' }
 end
 
@@ -69,7 +71,7 @@ post '/signup/submit' do
   # Build the user's profile
   today = DateTime.now
   @profile = Profile.new("", "", today, "", "")
-  params[:user][:Profile] = @profile
+  params[:user][:profile] = @profile
 
   # Build the user's account
   @user = User.new(params[:user])
@@ -79,6 +81,151 @@ post '/signup/submit' do
     flash[:notice] = 'Signup failed.'
   end
 end
+
+get '/edit_profile' do
+	erb :edit_profile, :locals => {:title => "Edit Profile" }
+end
+
+post '/edit_profile/submit' do
+	params[:profile][:date_joined] = Date.today.to_s
+	@profile = Profile.new(params[:profile][:bio], 
+												params[:profile][:dob],
+												params[:profile][:date_joined],
+												params[:profile][:location],
+												params[:profile][:name])
+	user_id = session[:user]._id
+	user = User.where(_id: user_id).first
+	user.update_profile(@profile)
+	redirect "/user/#{user_id}"
+end
+
+get '/user/:targeted_id' do
+	@targeted_id = BSON::ObjectId.from_string(params[:targeted_id])
+	present = User.where(_id: @targeted_id).exists?
+
+	if present
+		cur_user_id = session[:user]._id
+		@cur_user = User.where(_id: cur_user_id).first
+		@targeted_user = User.where(_id: @targeted_id).first
+		@targeted_tweets = Array.new
+		@targeted_followed = Array.new
+		@targeted_following = Array.new
+		@targeted_liked = Array.new
+
+		@isfollowing = @cur_user.follow?(@targeted_id)
+		@ntweets = @targeted_user[:tweets].length
+		if @ntweets > 0
+			@targeted_tweets = Tweet.in(_id: @targeted_user[:tweets])
+		end
+
+		@nfollowed = @targeted_user[:followed].length
+		if @nfollowed > 0
+			@targeted_followed = User.in(_id: @targeted_user[:followed])
+		end
+
+		@nfollowing = @targeted_user[:following].length
+		if @nfollowing > 0
+			@targeted_following = User.in(_id: @targeted_user[:following])
+		end
+
+		erb :user, :locals => { :title => 'User Profile' }
+		# erb :followeds, :locals => { :title => 'User Profile' }
+	end
+end
+
+post '/follow' do
+	@targeted_id= BSON::ObjectId.from_string(params[:targeted_id])
+	user_id = session[:user]._id
+	user = User.where(_id: user_id).first
+	user.toggle_following(@targeted_id)
+	targeted_user = User.where(_id: @targeted_id).first
+	targeted_user.toggle_followed(user_id)
+
+	redirect "/user/#{@targeted_id}"
+end
+
+get '/user/followings/' do
+# get '/user/followings/' do
+	@targeted_id = BSON::ObjectId.from_string(params[:targeted_id])
+	present = User.where(_id: @targeted_id).exists?
+
+	if present
+		cur_user_id = session[:user]._id
+		@cur_user = User.where(_id: cur_user_id).first
+		@targeted_user = User.where(_id: @targeted_id).first
+		# @targeted_tweets = Array.new
+		# @targeted_followed = Array.new
+		@targeted_following = Array.new
+		# @targeted_liked = Array.new
+
+		@isfollowing = @cur_user.follow?(@targeted_id)
+		@ntweets = @targeted_user[:tweets].length
+		# if @ntweets > 0
+		# 	@targeted_tweets = Tweet.in(_id: @targeted_user[:tweets])
+		# end
+
+		@nfollowed = @targeted_user[:followed].length
+		# if @nfollowed > 0
+		# 	@targeted_followed = User.in(_id: @targeted_user[:followed])
+		# end
+
+		@nfollowing = @targeted_user[:following].length
+		if @nfollowing > 0
+			@targeted_following = User.in(_id: @targeted_user[:following])
+		end
+
+		# erb :user, :locals => { :title => 'User Profile' }
+		erb :followings, :locals => { :title => 'User Profile' }
+	end
+end
+
+get '/user/followeds/' do
+	@targeted_id = BSON::ObjectId.from_string(params[:targeted_id])
+	present = User.where(_id: @targeted_id).exists?
+
+	if present
+		cur_user_id = session[:user]._id
+		@cur_user = User.where(_id: cur_user_id).first
+		@targeted_user = User.where(_id: @targeted_id).first
+		# @targeted_tweets = Array.new
+		@targeted_followed = Array.new
+		# @targeted_following = Array.new
+		# @targeted_liked = Array.new
+
+		@isfollowing = @cur_user.follow?(@targeted_id)
+		@ntweets = @targeted_user[:tweets].length
+		# if @ntweets > 0
+		# 	@targeted_tweets = Tweet.in(_id: @targeted_user[:tweets])
+		# end
+
+		@nfollowed = @targeted_user[:followed].length
+		if @nfollowed > 0
+			@targeted_followed = User.in(_id: @targeted_user[:followed])
+		end
+
+		@nfollowing = @targeted_user[:following].length
+		# if @nfollowing > 0
+		# 	@targeted_following = User.in(_id: @targeted_user[:following])
+		# end
+
+		# erb :user, :locals => { :title => 'User Profile' }
+		erb :followeds, :locals => { :title => 'User Profile' }
+	end
+end
+
+get '/posted' do
+	user_id = session[:user]._id
+	user = User.where(_id: user_id).first
+	posted_ids = user.tweets
+	if posted_ids.length > 50
+		posted_ids = posted_ids[-50..-1]
+	end
+	if posted_ids.length > 0
+		@posted_tweets = Tweet.in(_id: posted_ids)
+	end
+	erb :posted
+end
+
 
 get '/users' do
   authenticate!
@@ -94,6 +241,9 @@ end
 post '/tweet/new' do
   tweet = Tweet.new(params[:tweet])
   if tweet.save
+	  user_id = session[:user]._id
+		user = User.where(_id: user_id).first
+		user.add_tweet(tweet._id)
     redirect '/tweets'
   else
     flash[:warning] = 'Create tweet failed'
@@ -147,6 +297,7 @@ post '/like' do
   tweet_id = params[:tweet_id]
   tweet = Tweet.where(_id: tweet_id).first
 
+	# session[:user]._id
   # add user id into likedby
   tweet.add_like("temp")
   
@@ -166,5 +317,3 @@ post '/retweet' do
   end
 
 end
-
-

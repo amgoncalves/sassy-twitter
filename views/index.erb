@@ -18,3 +18,15 @@
 <% end %>
 
 <a href='/tweet/test'>Tweet Function Test Link</a>
+
+<p><em> First Login, then click the link to view user pages.</em></p>
+<a href='edit_profile'> Edit your profile. </a>
+<ul>
+	<% @ids.each do |id| %>
+		<li>
+			<div>
+				id: <a href="/user/<%= id %>"><%= id %></a>
+		</li>
+	<% end %>
+</ul>
+
