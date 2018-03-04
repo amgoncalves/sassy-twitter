@@ -110,12 +110,13 @@ get '/user/:targeted_id' do
 		@targeted_tweets = Array.new
 		@targeted_followed = Array.new
 		@targeted_following = Array.new
-		@targeted_liked = Array.new
+		# @targeted_liked = Array.new
 
 		@isfollowing = @cur_user.follow?(@targeted_id)
 		@ntweets = @targeted_user[:tweets].length
 		if @ntweets > 0
 			@targeted_tweets = Tweet.in(_id: @targeted_user[:tweets])
+			@targeted_tweets = @targeted_tweets.reverse
 		end
 
 		@nfollowed = @targeted_user[:followed].length
