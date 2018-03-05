@@ -1,0 +1,527 @@
+swagger: '2.0'
+info:
+  description: >-
+    `NanoTwitter (nT)` is a baby version of Twitter designed as a platform for experimentation with scaling issues.You can find out the code at [https://github.com/amgoncalves/sassy-twitter.git](https://github.com/amgoncalves/sassy-twitter.git). 
+  version: "1.0.0"
+  title: NanoTwitter
+  contact: 
+    name: "Sassy"
+    email: "temp@gmail.com"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+host: localhost
+basePath: /v1
+tags:
+  - name: api
+    description: Service Functionality
+  - name: profile
+    description: Operations about profile
+  - name: user
+    description: Operations about user
+  - name: tweet
+    description: Opeartions about tweet
+schemes:
+  - http
+paths:
+  /:
+    get:
+      tags:
+        - api
+      summary: Index for unlogged in user
+      description: ' '
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Tweet'
+  /apitoken:
+    get:
+      tags:
+        - api
+      summary: Index for logged in user
+      description: ' '
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Tweet'
+  /login:
+    post:
+      tags:
+        - api
+      summary: Process login for user
+      description: ' '
+      parameters:
+        - name: email
+          in: path
+          description: email of user
+          required: true
+          type: string
+        - name: password
+          in: path
+          description: password of user
+          required: true
+          type: string
+      responses:
+        '202':
+          description: Succefully Logged In
+          schema:
+            $ref: '#/definitions/User'
+  /logout:
+    post:
+      tags:
+        - api
+      summary: Process logout for user
+      description: ' '
+      parameters:
+        - name: user_id
+          in: path
+          description: id of user
+          required: true
+          type: string
+          format: ObjectId
+      responses:
+        '202':
+          description: Succefully Logged Out
+  /signup:
+    post:
+      tags:
+        - api
+      summary: Process signup for user
+      description: ' '
+      parameters:
+        - name: email
+          in: path
+          description: email of user
+          required: true
+          type: string
+        - name: password
+          in: path
+          description: password of user
+          required: true
+          type: string
+      responses:
+        '202':
+          description: Succefully Logged Out
+          schema:
+            type: array
+            items:
+              - $ref: '#/definitions/User'
+  /users:
+    get:
+      tags:
+        - api
+      summary: Find all users
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/User'
+  /follow:
+    post:
+      tags:
+        - api
+      summary: Construct the follow relationship between user and targted user
+      parameters:
+        - name: targeted_id
+          in: path
+          description: uesr id of who is followed
+          required: true
+          type: string
+        - name: user_id
+          in: path
+          description: user id of current user
+          required: true
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/User'
+  /edit:
+    get:
+      tags:
+        - profile
+      summary: Profile edit page
+      description: ' '
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/Profile'
+  /edit/submit:
+    post:
+      tags:
+        - profile
+      summary: Update an existing profile
+      description: ''
+      operationId: updateProfile
+      parameters:
+        - name: profile
+          in: body
+          description: Profile object that needs to be updated to the store
+          required: true
+          schema:
+            $ref: '#/definitions/Profile'
+      responses:
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Profile not found
+        '405':
+          description: Validation exception
+  /:target_id:
+    get:
+      tags:
+        - user
+      summary: Finds user by id
+      description: ''
+      operationId: findUserById
+      parameters:
+        - name: targeted_id
+          in: query
+          description: User id to filter by
+          required: true
+          type: string
+          format: ObejctId
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/User'
+  /new_tweets:
+    get:
+      tags:
+        - user
+      summary: List of 50 newest tweets of users followed by this user
+      parameters:
+        - name: user_id
+          in: query
+          description: user to filter by
+          required: true
+          type: string
+          format: ObjectId
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Tweet'
+  /followings:
+    get:
+      tags:
+        - user
+      summary: Find followings of user
+      parameters:
+        - name: user_id
+          in: query
+          description: ID of user to find the followings
+          required: true
+          type: string
+          format: ObjectId
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/User'
+  /followed:
+    get:
+      tags:
+        - user
+      summary: Find followeds of user
+      parameters:
+        - name: user_id
+          in: query
+          description: ID of user to find the followeds
+          required: true
+          type: string
+          format: ObjectId
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/User'
+  /posted:
+    get:
+      tags:
+        - user
+      summary: Find posted tweets of user
+      parameters:
+        - name: user_id
+          in: query
+          description: ID of user to find the posted tweets
+          required: true
+          type: string
+          format: ObjectId
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Tweet'
+  /new:
+    post:
+      tags:
+        - tweet
+      summary: Create a new tweet
+      description: ' '
+      parameters:
+        - name: user_id
+          in: path
+          description: id of user
+          required: true
+          type: string
+        - name: content
+          in: path
+          description: content of tweet
+          required: true
+          type: string
+      responses:
+        '202':
+          description: Succefully Created Tweet
+          schema:
+            $ref: '#/definitions/Tweet'
+  /:tweet_id:
+    get:
+      tags:
+        - tweet
+      summary: Finds tweet by id
+      description: ''
+      parameters:
+        - name: tweet_id
+          in: query
+          description: Tweet id to filter by
+          required: true
+          type: string
+          format: ObejctId
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/Tweet'
+  /like:
+    post:
+      tags:
+        - tweet
+      summary: Construct like relationship betweetn tweet and user
+      parameters:
+        - name: user_id
+          in: path
+          description: id of user
+          required: true
+          type: string
+        - name: tweet_id
+          in: path
+          description: id of tweet
+          required: true
+          type: string
+      responses:
+        '202':
+          description: Succefully Created Tweet
+          schema:
+            items:
+              $ref: '#/definitions/User'
+  /retweet:
+    post:
+      tags:
+        - tweet
+      summary: Create a retweet for another tweet
+      description: ' '
+      parameters:
+        - name: user_id
+          in: path
+          description: id of user
+          required: true
+          type: string
+        - name: tweet_id
+          in: path
+          description: id of original tweet
+          required: true
+          type: string
+        - name: content
+          in: path
+          description: content of tweet
+          required: true
+          type: string
+      responses:
+        '202':
+          description: Succefully Created ReTweet
+          schema:
+            $ref: '#/definitions/Tweet'
+  /reply:
+    post:
+      tags:
+        - reply
+      summary: Create a reply for another tweet
+      description: ' '
+      parameters:
+        - name: tweet_id
+          in: path
+          description: id of user
+          required: true
+          type: string
+        - name: content
+          in: path
+          description: content of tweet
+          required: true
+          type: string
+      responses:
+        '202':
+          description: Succefully Created Reply
+          schema:
+            $ref: '#/definitions/Reply'
+definitions:
+  User:
+    type: object
+    required:
+      - email
+      - password
+    properties:
+      _id:
+        type: string
+        format: ObjectId
+        example: 5a96fc17c936e8206d065fd5
+      handle:
+        type: string
+        example: testuser
+      email:
+        type: string
+        example: testuser@gmail.com
+      password:
+        type: string
+        format: BCrypt
+      apitoken:
+        type: string
+        example: testuser@gmail.com
+      profiles:
+        type: array
+        items:
+          $ref: '#/definitions/Profile'
+      followeds:
+        type: array
+        items:
+          type: integer
+        example: [5a96fe3ac936e8216354d9bb,5a96fe3ac936e8216234d9bb,5a96fe3ac936e8216354d9aa]
+      followings:
+        type: array
+        items:
+          type: integer
+        example: [5a96fe3ac936e8216354d9e2, 5a96fe3ac936e8216354d234]
+      tweets:
+        type: array
+        items:
+          type: integer
+        example: [5a96fd62c936e82122c9ee2b, 5a96fd62c936e821abcdee2b]
+      likedtweets:
+        type: array
+        items:
+          type: integer
+        example: [5a96fd62c936e82122c9ee2a]
+    xml:
+      name: User
+  Profile:
+    type: object
+    properties:
+      name:
+        type: string
+        example: testuser
+      bio:
+        type: string
+        example: a simple bio
+      dob:
+        type: string
+        format: date-time
+      date_joined:
+        type: string
+        format: date-time
+      location:
+        type: string
+    xml:
+      name: Profile
+  Tweet:
+    type: object
+    properties:
+      _id:
+        type: string
+        format: ObjectId
+        example: 5a96fd62c936e82122c9ee2b
+      content:
+        type: string
+        example: Hello tweet, Good "#weather"!
+      time_created:
+        type: string
+        format: date-time
+      author_id:
+        type: string
+        format: ObjectId
+        example: 5a96fc17c936e8206d065fd5
+      original_tweet_id:
+        type: string
+        format: ObjectId
+        example: 5a96fd62c936e82122c9ee2a
+      likedby:
+        type: array
+        items:
+          type: string
+          format: ObjectId
+      replys:
+        type: array
+        items:
+          type: string
+          format: ObjectId
+    xml:
+      name: Tweet
+  Reply:
+    type: object
+    properties:
+      _id:
+        type: string
+        format: ObjectId
+        example: 5a96fd62c936e821abcdee2b
+      tweet_id:
+        type: string
+        format: ObjectId
+        example: 5a96fd62c936e82122c9ee2b
+      content:
+        type: string
+        example: Yes, this is a great '#weather'!
+      time_created:
+        type: string
+        format: date-time
+      author_id:
+        type: string
+        format: ObjectId
+        example: 5a96fc17c936e8206d065fd5
+    xml:
+      name: Reply
+  Hashtag:
+    type: object
+    properties:
+      hashtag_name:
+        type: string
+        example: storm
+      tweets:
+        type: array
+        items:
+          type: string
+          format: ObjectId
+          example: [5a96fd62c936e821abcdee2b, 5a96fd62c936e82122c9ee2b]
+    xml:
+      name: Hashtag
+  
+externalDocs:
+  description: Find out more about Swagger
+  url: 'http://swagger.io'
