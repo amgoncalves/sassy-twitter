@@ -9,7 +9,7 @@ Sassy
 
 **License:** [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.html)
 
-[You can review the swagger version by importing API.yaml ](http://swagger.io)
+[You can review the swagger version here](https://editor.swagger.io//?_ga=2.263948428.1029835881.1520190959-992994591.1519606651#/)
 
 ### /
 ---
