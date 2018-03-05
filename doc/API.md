@@ -3,7 +3,7 @@ NanoTwitter (Sassy)
 `NanoTwitter (nT)` is a baby version of Twitter designed as a platform for experimentation with scaling issues.You can find out the code at [https://github.com/amgoncalves/sassy-twitter.git](https://github.com/amgoncalves/sassy-twitter.git).
 
 **Team:**
-Sassy
+Sassy: Si Chen, Alyssa Goncalves, and Shuai Yu
 
 **Version:** 1.0.0
 
