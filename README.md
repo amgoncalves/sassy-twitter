@@ -43,6 +43,7 @@ Brandeis University, Spring 2018
 * The database modesl of Tweet, Reply were implemented and tested by Si.
 * Added some basic functions related to Tweet and Reply models by Si
 * Heroku and mLab setup, login/logout routes, sessions, BCrypt added by Alyssa
+* API design document and Swagger API are implemented by Si
 
 
 ## Documentation
