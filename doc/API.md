@@ -1,4 +1,4 @@
-NanoTwitter
+NanoTwitter (Sassy)
 ===========
 `NanoTwitter (nT)` is a baby version of Twitter designed as a platform for experimentation with scaling issues.You can find out the code at [https://github.com/amgoncalves/sassy-twitter.git](https://github.com/amgoncalves/sassy-twitter.git).
 
@@ -11,6 +11,7 @@ Sassy
 
 [You can review the swagger version here](https://editor.swagger.io//?_ga=2.263948428.1029835881.1520190959-992994591.1519606651#/)
 
+## Service API
 ### /
 ---
 ##### ***GET***
@@ -125,7 +126,8 @@ Sassy
 | ---- | ----------- | ------ |
 | 200 | successful operation | [User](#user) |
 
-### /edit
+## Profile
+### /profile/edit
 ---
 ##### ***GET***
 **Summary:** Profile edit page
@@ -138,7 +140,7 @@ Sassy
 | ---- | ----------- | ------ |
 | 200 | successful operation | [Profile](#profile) |
 
-### /edit/submit
+### /profile/edit/submit
 ---
 ##### ***POST***
 **Summary:** Update an existing profile
@@ -159,7 +161,8 @@ Sassy
 | 404 | Profile not found |
 | 405 | Validation exception |
 
-### /:target_id
+## User
+### /user/:target_id
 ---
 ##### ***GET***
 **Summary:** Finds user by id
@@ -178,7 +181,7 @@ Sassy
 | ---- | ----------- | ------ |
 | 200 | successful operation | [User](#user) |
 
-### /new_tweets
+### /user/new_tweets
 ---
 ##### ***GET***
 **Summary:** List of 50 newest tweets of users followed by this user
@@ -195,7 +198,7 @@ Sassy
 | ---- | ----------- | ------ |
 | 200 | successful operation | [ [Tweet](#tweet) ] |
 
-### /followings
+### /user/followings
 ---
 ##### ***GET***
 **Summary:** Find followings of user
@@ -212,7 +215,7 @@ Sassy
 | ---- | ----------- | ------ |
 | 200 | successful operation | [ [User](#user) ] |
 
-### /followed
+### /user/followed
 ---
 ##### ***GET***
 **Summary:** Find followeds of user
@@ -229,7 +232,7 @@ Sassy
 | ---- | ----------- | ------ |
 | 200 | successful operation | [ [User](#user) ] |
 
-### /posted
+### /user/posted
 ---
 ##### ***GET***
 **Summary:** Find posted tweets of user
@@ -246,7 +249,8 @@ Sassy
 | ---- | ----------- | ------ |
 | 200 | successful operation | [ [Tweet](#tweet) ] |
 
-### /new
+## Tweet
+### /tweet/new
 ---
 ##### ***POST***
 **Summary:** Create a new tweet
@@ -266,7 +270,7 @@ Sassy
 | ---- | ----------- | ------ |
 | 202 | Succefully Created Tweet | [Tweet](#tweet) |
 
-### /:tweet_id
+### /tweet/:tweet_id
 ---
 ##### ***GET***
 **Summary:** Finds tweet by id
@@ -285,7 +289,7 @@ Sassy
 | ---- | ----------- | ------ |
 | 200 | successful operation | [Tweet](#tweet) |
 
-### /like
+### /tweet/like
 ---
 ##### ***POST***
 **Summary:** Construct like relationship betweetn tweet and user
@@ -303,7 +307,7 @@ Sassy
 | ---- | ----------- | ------ |
 | 202 | Succefully Created Tweet |  |
 
-### /retweet
+### /tweet/retweet
 ---
 ##### ***POST***
 **Summary:** Create a retweet for another tweet
@@ -324,6 +328,7 @@ Sassy
 | ---- | ----------- | ------ |
 | 202 | Succefully Created ReTweet | [Tweet](#tweet) |
 
+## Reply
 ### /reply
 ---
 ##### ***POST***
