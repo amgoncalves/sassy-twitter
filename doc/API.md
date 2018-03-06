@@ -1,6 +1,6 @@
 NanoTwitter  (Sassy)
 ===========
-`NanoTwitter (nT)` is a baby version of Twitter designed as a platform for experimentation with scaling issues.You can find out the code at [https://github.com/amgoncalves/sassy-twitter.git](https://github.com/amgoncalves/sassy-twitter.git).
+`NanoTwitter (nT)` is a baby version of Twitter designed as a platform for experimentation with scaling issues.You can find out the code at [https://github.com/amgoncalves/sassy-twitter.git](https://github.com/amgoncalves/sassy-twitter.git). 
 
 **Team:**
 Sassy: Si Chen, Alyssa Goncalves, and Shuai Yu
@@ -15,7 +15,7 @@ You can import the yaml file in doc/design/API to see the swagger version by [ s
 ##### ***GET***
 **Summary:** Index for unlogged in user
 
-**Description:**
+**Description:**  
 
 **Responses**
 
@@ -28,7 +28,7 @@ You can import the yaml file in doc/design/API to see the swagger version by [ s
 ##### ***GET***
 **Summary:** Index for logged in user
 
-**Description:**
+**Description:**  
 
 **Responses**
 
@@ -41,7 +41,7 @@ You can import the yaml file in doc/design/API to see the swagger version by [ s
 ##### ***POST***
 **Summary:** Process login for user
 
-**Description:**
+**Description:**  
 
 **Parameters**
 
@@ -61,7 +61,7 @@ You can import the yaml file in doc/design/API to see the swagger version by [ s
 ##### ***POST***
 **Summary:** Process logout for user
 
-**Description:**
+**Description:**  
 
 **Parameters**
 
@@ -80,7 +80,7 @@ You can import the yaml file in doc/design/API to see the swagger version by [ s
 ##### ***POST***
 **Summary:** Process signup for user
 
-**Description:**
+**Description:**  
 
 **Parameters**
 
@@ -130,7 +130,7 @@ You can import the yaml file in doc/design/API to see the swagger version by [ s
 ##### ***GET***
 **Summary:** Profile edit page
 
-**Description:**
+**Description:**  
 
 **Responses**
 
@@ -143,7 +143,7 @@ You can import the yaml file in doc/design/API to see the swagger version by [ s
 ##### ***POST***
 **Summary:** Update an existing profile
 
-**Description:**
+**Description:** 
 
 **Parameters**
 
@@ -165,7 +165,7 @@ You can import the yaml file in doc/design/API to see the swagger version by [ s
 ##### ***GET***
 **Summary:** Finds user by id
 
-**Description:**
+**Description:** 
 
 **Parameters**
 
@@ -253,7 +253,7 @@ You can import the yaml file in doc/design/API to see the swagger version by [ s
 ##### ***POST***
 **Summary:** Create a new tweet
 
-**Description:**
+**Description:**  
 
 **Parameters**
 
@@ -273,7 +273,7 @@ You can import the yaml file in doc/design/API to see the swagger version by [ s
 ##### ***GET***
 **Summary:** Finds tweet by id
 
-**Description:**
+**Description:** 
 
 **Parameters**
 
@@ -310,7 +310,7 @@ You can import the yaml file in doc/design/API to see the swagger version by [ s
 ##### ***POST***
 **Summary:** Create a retweet for another tweet
 
-**Description:**
+**Description:**  
 
 **Parameters**
 
@@ -332,7 +332,7 @@ You can import the yaml file in doc/design/API to see the swagger version by [ s
 ##### ***POST***
 **Summary:** Create a reply for another tweet
 
-**Description:**
+**Description:**  
 
 **Parameters**
 
@@ -402,7 +402,7 @@ You can import the yaml file in doc/design/API to see the swagger version by [ s
 ### Models
 ---
 
-### User
+### User  
 
 | Name | Type | Description | Required |
 | ---- | ---- | ----------- | -------- |
@@ -417,7 +417,7 @@ You can import the yaml file in doc/design/API to see the swagger version by [ s
 | tweets | [ integer ] |  | No |
 | likedtweets | [ integer ] |  | No |
 
-### Profile
+### Profile  
 
 | Name | Type | Description | Required |
 | ---- | ---- | ----------- | -------- |
@@ -427,7 +427,7 @@ You can import the yaml file in doc/design/API to see the swagger version by [ s
 | date_joined | dateTime |  | No |
 | location | string |  | No |
 
-### Tweet
+### Tweet  
 
 | Name | Type | Description | Required |
 | ---- | ---- | ----------- | -------- |
@@ -439,7 +439,7 @@ You can import the yaml file in doc/design/API to see the swagger version by [ s
 | likedby | [ string (ObjectId) ] |  | No |
 | replys | [ string (ObjectId) ] |  | No |
 
-### Reply
+### Reply  
 
 | Name | Type | Description | Required |
 | ---- | ---- | ----------- | -------- |
@@ -449,11 +449,10 @@ You can import the yaml file in doc/design/API to see the swagger version by [ s
 | time_created | dateTime |  | No |
 | author_id | string (ObjectId) |  | No |
 
-### Hashtag
+### Hashtag  
 
 | Name | Type | Description | Required |
 | ---- | ---- | ----------- | -------- |
 | _id | string (ObjectId) |  | No |
 | hashtag_name | string |  | No |
 | tweets | [ string (ObjectId) ] |  | No |
-
