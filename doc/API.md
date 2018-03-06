@@ -1,23 +1,21 @@
-NanoTwitter (Sassy)
+NanoTwitter  (Sassy)
 ===========
-`NanoTwitter (nT)` is a baby version of Twitter designed as a platform for experimentation with scaling issues.You can find out the code at [https://github.com/amgoncalves/sassy-twitter.git](https://github.com/amgoncalves/sassy-twitter.git).
+`NanoTwitter (nT)` is a baby version of Twitter designed as a platform for experimentation with scaling issues.You can find out the code at [https://github.com/amgoncalves/sassy-twitter.git](https://github.com/amgoncalves/sassy-twitter.git). 
 
 **Team:**
 Sassy: Si Chen, Alyssa Goncalves, and Shuai Yu
 
-**Version:** 1.0.0
+**Version:** 0.1
 
-**License:** [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.html)
+You can import the yaml file in doc/design/API to see the swagger version by [ swagger editor](http://swagger.io)
 
-[You can review the swagger version here](https://editor.swagger.io//?_ga=2.263948428.1029835881.1520190959-992994591.1519606651#/)
-
-## Service API
+## Service Funtions
 ### /
 ---
 ##### ***GET***
 **Summary:** Index for unlogged in user
 
-**Description:**
+**Description:**  
 
 **Responses**
 
@@ -25,12 +23,12 @@ Sassy: Si Chen, Alyssa Goncalves, and Shuai Yu
 | ---- | ----------- | ------ |
 | 200 | successful operation | [ [Tweet](#tweet) ] |
 
-### /apitoken
+### /:apitoken
 ---
 ##### ***GET***
 **Summary:** Index for logged in user
 
-**Description:**
+**Description:**  
 
 **Responses**
 
@@ -43,7 +41,7 @@ Sassy: Si Chen, Alyssa Goncalves, and Shuai Yu
 ##### ***POST***
 **Summary:** Process login for user
 
-**Description:**
+**Description:**  
 
 **Parameters**
 
@@ -63,7 +61,7 @@ Sassy: Si Chen, Alyssa Goncalves, and Shuai Yu
 ##### ***POST***
 **Summary:** Process logout for user
 
-**Description:**
+**Description:**  
 
 **Parameters**
 
@@ -82,7 +80,7 @@ Sassy: Si Chen, Alyssa Goncalves, and Shuai Yu
 ##### ***POST***
 **Summary:** Process signup for user
 
-**Description:**
+**Description:**  
 
 **Parameters**
 
@@ -132,7 +130,7 @@ Sassy: Si Chen, Alyssa Goncalves, and Shuai Yu
 ##### ***GET***
 **Summary:** Profile edit page
 
-**Description:**
+**Description:**  
 
 **Responses**
 
@@ -145,7 +143,7 @@ Sassy: Si Chen, Alyssa Goncalves, and Shuai Yu
 ##### ***POST***
 **Summary:** Update an existing profile
 
-**Description:**
+**Description:** 
 
 **Parameters**
 
@@ -167,7 +165,7 @@ Sassy: Si Chen, Alyssa Goncalves, and Shuai Yu
 ##### ***GET***
 **Summary:** Finds user by id
 
-**Description:**
+**Description:** 
 
 **Parameters**
 
@@ -215,7 +213,7 @@ Sassy: Si Chen, Alyssa Goncalves, and Shuai Yu
 | ---- | ----------- | ------ |
 | 200 | successful operation | [ [User](#user) ] |
 
-### /user/followed
+### /user/followeds
 ---
 ##### ***GET***
 **Summary:** Find followeds of user
@@ -255,7 +253,7 @@ Sassy: Si Chen, Alyssa Goncalves, and Shuai Yu
 ##### ***POST***
 **Summary:** Create a new tweet
 
-**Description:**
+**Description:**  
 
 **Parameters**
 
@@ -275,7 +273,7 @@ Sassy: Si Chen, Alyssa Goncalves, and Shuai Yu
 ##### ***GET***
 **Summary:** Finds tweet by id
 
-**Description:**
+**Description:** 
 
 **Parameters**
 
@@ -312,7 +310,7 @@ Sassy: Si Chen, Alyssa Goncalves, and Shuai Yu
 ##### ***POST***
 **Summary:** Create a retweet for another tweet
 
-**Description:**
+**Description:**  
 
 **Parameters**
 
@@ -334,7 +332,7 @@ Sassy: Si Chen, Alyssa Goncalves, and Shuai Yu
 ##### ***POST***
 **Summary:** Create a reply for another tweet
 
-**Description:**
+**Description:**  
 
 **Parameters**
 
@@ -349,10 +347,62 @@ Sassy: Si Chen, Alyssa Goncalves, and Shuai Yu
 | ---- | ----------- | ------ |
 | 202 | Succefully Created Reply | [Reply](#reply) |
 
+## Search
+### /search/:hashtag_id
+---
+##### ***GET***
+**Summary:** Search tweets by hashtag
+
+**Parameters**
+
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ---- |
+| hashtag_id | query | Hashtag id to filter by | Yes | string (ObejctId) |
+
+**Responses**
+
+| Code | Description | Schema |
+| ---- | ----------- | ------ |
+| 200 | successful operation | [ [Tweet](#tweet) ] |
+
+### /search/:user_id
+---
+##### ***GET***
+**Summary:** Search user by user id
+
+**Parameters**
+
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ---- |
+| user_id | query | User id to filter by | Yes | string (ObejctId) |
+
+**Responses**
+
+| Code | Description | Schema |
+| ---- | ----------- | ------ |
+| 200 | successful operation | [User](#user) |
+
+### /search/:keyword
+---
+##### ***GET***
+**Summary:** Search tweets by keyword
+
+**Parameters**
+
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ---- |
+| keyword | query | keyword to filter by | Yes | string |
+
+**Responses**
+
+| Code | Description | Schema |
+| ---- | ----------- | ------ |
+| 200 | successful operation | [ [Tweet](#tweet) ] |
+
 ### Models
 ---
 
-### User
+### User  
 
 | Name | Type | Description | Required |
 | ---- | ---- | ----------- | -------- |
@@ -367,7 +417,7 @@ Sassy: Si Chen, Alyssa Goncalves, and Shuai Yu
 | tweets | [ integer ] |  | No |
 | likedtweets | [ integer ] |  | No |
 
-### Profile
+### Profile  
 
 | Name | Type | Description | Required |
 | ---- | ---- | ----------- | -------- |
@@ -377,7 +427,7 @@ Sassy: Si Chen, Alyssa Goncalves, and Shuai Yu
 | date_joined | dateTime |  | No |
 | location | string |  | No |
 
-### Tweet
+### Tweet  
 
 | Name | Type | Description | Required |
 | ---- | ---- | ----------- | -------- |
@@ -389,7 +439,7 @@ Sassy: Si Chen, Alyssa Goncalves, and Shuai Yu
 | likedby | [ string (ObjectId) ] |  | No |
 | replys | [ string (ObjectId) ] |  | No |
 
-### Reply
+### Reply  
 
 | Name | Type | Description | Required |
 | ---- | ---- | ----------- | -------- |
@@ -399,10 +449,10 @@ Sassy: Si Chen, Alyssa Goncalves, and Shuai Yu
 | time_created | dateTime |  | No |
 | author_id | string (ObjectId) |  | No |
 
-### Hashtag
+### Hashtag  
 
 | Name | Type | Description | Required |
 | ---- | ---- | ----------- | -------- |
+| _id | string (ObjectId) |  | No |
 | hashtag_name | string |  | No |
 | tweets | [ string (ObjectId) ] |  | No |
-
