@@ -1,15 +1,17 @@
 swagger: '2.0'
 info:
   description: >-
-    `NanoTwitter (nT)` is a baby version of Twitter designed as a platform for experimentation with scaling issues.You can find out the code at [https://github.com/amgoncalves/sassy-twitter.git](https://github.com/amgoncalves/sassy-twitter.git). 
-  version: "1.0.0"
+    `NanoTwitter (nT)` is a baby version of Twitter designed as a platform for
+    experimentation with scaling issues.You can find out the code at
+    [https://github.com/amgoncalves/sassy-twitter.git](https://github.com/amgoncalves/sassy-twitter.git). 
+  version: 1.0.0
   title: NanoTwitter
-  contact: 
-    name: "Sassy"
-    email: "temp@gmail.com"
+  contact:
+    name: Sassy
+    email: temp@gmail.com
   license:
-    name: "Apache 2.0"
-    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+    name: Apache 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
 host: localhost
 basePath: /v1
 tags:
@@ -20,7 +22,9 @@ tags:
   - name: user
     description: Operations about user
   - name: tweet
-    description: Opeartions about tweet
+    description: Operations about tweet
+  - name: search
+    description: Operations of searches
 schemes:
   - http
 paths:
@@ -177,7 +181,7 @@ paths:
           description: Profile not found
         '405':
           description: Validation exception
-  /:target_id:
+  '/:target_id':
     get:
       tags:
         - user
@@ -294,7 +298,7 @@ paths:
           description: Succefully Created Tweet
           schema:
             $ref: '#/definitions/Tweet'
-  /:tweet_id:
+  '/:tweet_id':
     get:
       tags:
         - tweet
@@ -383,6 +387,60 @@ paths:
           description: Succefully Created Reply
           schema:
             $ref: '#/definitions/Reply'
+  /:hashtag_id:
+    get:
+      tags:
+        - search
+      summary: Search tweets by hashtag
+      parameters:
+        - name: hashtag_id
+          in: query
+          description: Hashtag id to filter by
+          required: true
+          type: string
+          format: ObejctId
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Tweet'
+  /:user_id:
+    get:
+      tags:
+        - search
+      summary: Search user by user id
+      parameters:
+        - name: user_id
+          in: query
+          description: User id to filter by
+          required: true
+          type: string
+          format: ObejctId
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/User'
+  /:keyword:
+    get:
+      tags:
+        - search
+      summary: Search tweets by keyword
+      parameters:
+        - name: keyword
+          in: query
+          description: keyword to filter by
+          required: true
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Tweet'
 definitions:
   User:
     type: object
@@ -414,22 +472,30 @@ definitions:
         type: array
         items:
           type: integer
-        example: [5a96fe3ac936e8216354d9bb,5a96fe3ac936e8216234d9bb,5a96fe3ac936e8216354d9aa]
+        example:
+          - 5a96fe3ac936e8216354d9bb
+          - 5a96fe3ac936e8216234d9bb
+          - 5a96fe3ac936e8216354d9aa
       followings:
         type: array
         items:
           type: integer
-        example: [5a96fe3ac936e8216354d9e2, 5a96fe3ac936e8216354d234]
+        example:
+          - 5a96fe3ac936e8216354d9e2
+          - 5a96fe3ac936e8216354d234
       tweets:
         type: array
         items:
           type: integer
-        example: [5a96fd62c936e82122c9ee2b, 5a96fd62c936e821abcdee2b]
+        example:
+          - 5a96fd62c936e82122c9ee2b
+          - 5a96fd62c936e821abcdee2b
       likedtweets:
         type: array
         items:
           type: integer
-        example: [5a96fd62c936e82122c9ee2a]
+        example:
+          - 5a96fd62c936e82122c9ee2a
     xml:
       name: User
   Profile:
@@ -460,7 +526,7 @@ definitions:
         example: 5a96fd62c936e82122c9ee2b
       content:
         type: string
-        example: Hello tweet, Good "#weather"!
+        example: 'Hello tweet, Good "#weather"!'
       time_created:
         type: string
         format: date-time
@@ -497,7 +563,7 @@ definitions:
         example: 5a96fd62c936e82122c9ee2b
       content:
         type: string
-        example: Yes, this is a great '#weather'!
+        example: 'Yes, this is a great ''#weather''!'
       time_created:
         type: string
         format: date-time
@@ -510,6 +576,10 @@ definitions:
   Hashtag:
     type: object
     properties:
+      _id:
+        type: string
+        format: ObjectId
+        example: 5a96fc17c936e8206d065123
       hashtag_name:
         type: string
         example: storm
@@ -518,10 +588,11 @@ definitions:
         items:
           type: string
           format: ObjectId
-          example: [5a96fd62c936e821abcdee2b, 5a96fd62c936e82122c9ee2b]
+          example:
+            - 5a96fd62c936e821abcdee2b
+            - 5a96fd62c936e82122c9ee2b
     xml:
       name: Hashtag
-  
 externalDocs:
   description: Find out more about Swagger
   url: 'http://swagger.io'
