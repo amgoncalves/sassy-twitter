@@ -13,9 +13,9 @@ post '/test/reset/all' do
   # delete everything
   Mongoid.purge!
   #create test user
-  User.where(handle: "testuser", 
+  User.create(handle: "testuser", 
     email: "testuser@sample.com", 
-    password: "password").create
+    password: "password")
 end
 
 # One page “report” of collections status
@@ -50,13 +50,13 @@ post '/test/users/create' do
 
   i = 0
   while i < count.to_i do
-    user = User.where(handle: "testuser#{i}", 
+    user = User.create(handle: "testuser#{i}", 
       email: "testuser#{i}@sample.com",
-      password: "password#{i}").create
+      password: "password#{i}")
 
     j = 0
     while j < tweets.to_i do
-      tweet = Tweet.where(content: "no.#{j} tweet").create
+      tweet = Tweet.create(content: "no.#{j} tweet")
       tweet.author_id = user._id
       user.add_tweet(tweet._id)
       j = j + 1

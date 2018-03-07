@@ -1,5 +1,7 @@
 require_relative 'spec_helper'
 
+require_relative '../app.rb'
+
 describe "service" do 
   include Rack::Test::Methods
 
@@ -10,8 +12,7 @@ describe "service" do
   describe "hello test" do
     it "should successfully return root path" do
       get '/'
-      assert last_response.ok?
-      assert true
+      last_response.must_be_ok
     end
   end
 end
