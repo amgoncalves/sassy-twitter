@@ -30,6 +30,7 @@ GEM
       rack
     rack-test (0.8.3)
       rack (>= 1.0, < 3)
+    rake (12.3.0)
     sinatra (2.0.1)
       mustermann (~> 1.0)
       rack (~> 2.0)
@@ -50,6 +51,7 @@ DEPENDENCIES
   minitest (~> 5.8, >= 5.8.4)
   mongoid (~> 6.3)
   rack-minitest
+  rake
   sinatra (= 2.0.1)
   sinatra-flash (~> 0.3.0)
 
