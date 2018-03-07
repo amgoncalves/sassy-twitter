@@ -176,6 +176,10 @@ get '/user/followings/' do
 			@targeted_following = User.in(_id: @targeted_user[:following])
 		end
 
+	  # get all the user info about each following
+		@targeted_following_info
+
+
 		# erb :user, :locals => { :title => 'User Profile' }
 		erb :followings, :layout => false, :locals => { :title => 'User Profile' }
 	end
