@@ -7,9 +7,15 @@ require_relative './models/tweet'
 require_relative './models/reply'
 require 'byebug'
 
-Mongoid.load!('./config/mongoid.yml')
+# Mongoid.load!('./config/mongoid.yml')
+Mongoid::Config.connect_to('nanotwitter-test')
 
 enable :sessions
+
+# sets root as the parent-directory of the current file
+set :root, File.join(File.dirname(__FILE__), '')
+# sets the view directory correctly
+set :views, Proc.new { File.join(root, "views") } 
 
 helpers do
   def redirect_to_original_request

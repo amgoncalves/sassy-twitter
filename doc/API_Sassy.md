@@ -1,22 +1,21 @@
-NanoTwitter
+NanoTwitter  (Sassy)
 ===========
-`NanoTwitter (nT)` is a baby version of Twitter designed as a platform for experimentation with scaling issues.You can find out the code at [https://github.com/amgoncalves/sassy-twitter.git](https://github.com/amgoncalves/sassy-twitter.git).
+`NanoTwitter (nT)` is a baby version of Twitter designed as a platform for experimentation with scaling issues.You can find out the code at [https://github.com/amgoncalves/sassy-twitter.git](https://github.com/amgoncalves/sassy-twitter.git). 
 
 **Team:**
-Sassy
+Sassy: Si Chen, Alyssa Goncalves, and Shuai Yu
 
-**Version:** 1.0.0
+**Version:** 0.1
 
-**License:** [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.html)
+You can import the yaml file in doc/design/API to see the swagger version by [ swagger editor](http://swagger.io)
 
-[You can review the swagger version by importing API.yaml ](http://swagger.io)
-
+## Service Funtions
 ### /
 ---
 ##### ***GET***
 **Summary:** Index for unlogged in user
 
-**Description:**
+**Description:**  
 
 **Responses**
 
@@ -24,12 +23,12 @@ Sassy
 | ---- | ----------- | ------ |
 | 200 | successful operation | [ [Tweet](#tweet) ] |
 
-### /apitoken
+### /:apitoken
 ---
 ##### ***GET***
 **Summary:** Index for logged in user
 
-**Description:**
+**Description:**  
 
 **Responses**
 
@@ -42,7 +41,7 @@ Sassy
 ##### ***POST***
 **Summary:** Process login for user
 
-**Description:**
+**Description:**  
 
 **Parameters**
 
@@ -62,7 +61,7 @@ Sassy
 ##### ***POST***
 **Summary:** Process logout for user
 
-**Description:**
+**Description:**  
 
 **Parameters**
 
@@ -81,7 +80,7 @@ Sassy
 ##### ***POST***
 **Summary:** Process signup for user
 
-**Description:**
+**Description:**  
 
 **Parameters**
 
@@ -125,12 +124,13 @@ Sassy
 | ---- | ----------- | ------ |
 | 200 | successful operation | [User](#user) |
 
-### /edit
+## Profile
+### /profile/edit
 ---
 ##### ***GET***
 **Summary:** Profile edit page
 
-**Description:**
+**Description:**  
 
 **Responses**
 
@@ -138,12 +138,12 @@ Sassy
 | ---- | ----------- | ------ |
 | 200 | successful operation | [Profile](#profile) |
 
-### /edit/submit
+### /profile/edit/submit
 ---
 ##### ***POST***
 **Summary:** Update an existing profile
 
-**Description:**
+**Description:** 
 
 **Parameters**
 
@@ -159,12 +159,13 @@ Sassy
 | 404 | Profile not found |
 | 405 | Validation exception |
 
-### /:target_id
+## User
+### /user/:target_id
 ---
 ##### ***GET***
 **Summary:** Finds user by id
 
-**Description:**
+**Description:** 
 
 **Parameters**
 
@@ -178,7 +179,7 @@ Sassy
 | ---- | ----------- | ------ |
 | 200 | successful operation | [User](#user) |
 
-### /new_tweets
+### /user/new_tweets
 ---
 ##### ***GET***
 **Summary:** List of 50 newest tweets of users followed by this user
@@ -195,7 +196,7 @@ Sassy
 | ---- | ----------- | ------ |
 | 200 | successful operation | [ [Tweet](#tweet) ] |
 
-### /followings
+### /user/followings
 ---
 ##### ***GET***
 **Summary:** Find followings of user
@@ -212,7 +213,7 @@ Sassy
 | ---- | ----------- | ------ |
 | 200 | successful operation | [ [User](#user) ] |
 
-### /followed
+### /user/followeds
 ---
 ##### ***GET***
 **Summary:** Find followeds of user
@@ -229,7 +230,7 @@ Sassy
 | ---- | ----------- | ------ |
 | 200 | successful operation | [ [User](#user) ] |
 
-### /posted
+### /user/posted
 ---
 ##### ***GET***
 **Summary:** Find posted tweets of user
@@ -246,12 +247,13 @@ Sassy
 | ---- | ----------- | ------ |
 | 200 | successful operation | [ [Tweet](#tweet) ] |
 
-### /new
+## Tweet
+### /tweet/new
 ---
 ##### ***POST***
 **Summary:** Create a new tweet
 
-**Description:**
+**Description:**  
 
 **Parameters**
 
@@ -266,12 +268,12 @@ Sassy
 | ---- | ----------- | ------ |
 | 202 | Succefully Created Tweet | [Tweet](#tweet) |
 
-### /:tweet_id
+### /tweet/:tweet_id
 ---
 ##### ***GET***
 **Summary:** Finds tweet by id
 
-**Description:**
+**Description:** 
 
 **Parameters**
 
@@ -285,7 +287,7 @@ Sassy
 | ---- | ----------- | ------ |
 | 200 | successful operation | [Tweet](#tweet) |
 
-### /like
+### /tweet/like
 ---
 ##### ***POST***
 **Summary:** Construct like relationship betweetn tweet and user
@@ -303,12 +305,12 @@ Sassy
 | ---- | ----------- | ------ |
 | 202 | Succefully Created Tweet |  |
 
-### /retweet
+### /tweet/retweet
 ---
 ##### ***POST***
 **Summary:** Create a retweet for another tweet
 
-**Description:**
+**Description:**  
 
 **Parameters**
 
@@ -324,12 +326,13 @@ Sassy
 | ---- | ----------- | ------ |
 | 202 | Succefully Created ReTweet | [Tweet](#tweet) |
 
+## Reply
 ### /reply
 ---
 ##### ***POST***
 **Summary:** Create a reply for another tweet
 
-**Description:**
+**Description:**  
 
 **Parameters**
 
@@ -344,10 +347,62 @@ Sassy
 | ---- | ----------- | ------ |
 | 202 | Succefully Created Reply | [Reply](#reply) |
 
+## Search
+### /search/:hashtag_id
+---
+##### ***GET***
+**Summary:** Search tweets by hashtag
+
+**Parameters**
+
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ---- |
+| hashtag_id | query | Hashtag id to filter by | Yes | string (ObejctId) |
+
+**Responses**
+
+| Code | Description | Schema |
+| ---- | ----------- | ------ |
+| 200 | successful operation | [ [Tweet](#tweet) ] |
+
+### /search/:user_id
+---
+##### ***GET***
+**Summary:** Search user by user id
+
+**Parameters**
+
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ---- |
+| user_id | query | User id to filter by | Yes | string (ObejctId) |
+
+**Responses**
+
+| Code | Description | Schema |
+| ---- | ----------- | ------ |
+| 200 | successful operation | [User](#user) |
+
+### /search/:keyword
+---
+##### ***GET***
+**Summary:** Search tweets by keyword
+
+**Parameters**
+
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ---- |
+| keyword | query | keyword to filter by | Yes | string |
+
+**Responses**
+
+| Code | Description | Schema |
+| ---- | ----------- | ------ |
+| 200 | successful operation | [ [Tweet](#tweet) ] |
+
 ### Models
 ---
 
-### User
+### User  
 
 | Name | Type | Description | Required |
 | ---- | ---- | ----------- | -------- |
@@ -362,7 +417,7 @@ Sassy
 | tweets | [ integer ] |  | No |
 | likedtweets | [ integer ] |  | No |
 
-### Profile
+### Profile  
 
 | Name | Type | Description | Required |
 | ---- | ---- | ----------- | -------- |
@@ -372,7 +427,7 @@ Sassy
 | date_joined | dateTime |  | No |
 | location | string |  | No |
 
-### Tweet
+### Tweet  
 
 | Name | Type | Description | Required |
 | ---- | ---- | ----------- | -------- |
@@ -384,7 +439,7 @@ Sassy
 | likedby | [ string (ObjectId) ] |  | No |
 | replys | [ string (ObjectId) ] |  | No |
 
-### Reply
+### Reply  
 
 | Name | Type | Description | Required |
 | ---- | ---- | ----------- | -------- |
@@ -394,10 +449,10 @@ Sassy
 | time_created | dateTime |  | No |
 | author_id | string (ObjectId) |  | No |
 
-### Hashtag
+### Hashtag  
 
 | Name | Type | Description | Required |
 | ---- | ---- | ----------- | -------- |
+| _id | string (ObjectId) |  | No |
 | hashtag_name | string |  | No |
 | tweets | [ string (ObjectId) ] |  | No |
-
