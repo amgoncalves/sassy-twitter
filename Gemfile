@@ -1,6 +1,7 @@
 source 'https://rubygems.org'
 # ruby '2.4.1'
 
+gem 'rake'
 gem 'bcrypt',        '~> 3.1', '>= 3.1.11'
 gem 'minitest',      '~> 5.8', '>= 5.8.4'
 gem 'mongoid',       '~> 6.3'
