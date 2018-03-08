@@ -1,4 +1,4 @@
-# nanoTwitter 0.2 :bird:
+# nanoTwitter 0.3 :bird:
 
 [https://sassy-nanotwitter.herokuapp.com/](https://sassy-nanotwitter.herokuapp.com/)
 
@@ -10,6 +10,7 @@ Brandeis University, Spring 2018
 
 ## Change History
 
+
 ### nt0.1 - Foundation
 
 #### Developer's Log
@@ -18,8 +19,8 @@ Brandeis University, Spring 2018
 * A pilot project (pilot-project/mongo-evite) using mongodb was added by Shuai.
 * UI design and prototype is completed by Si.
 
-### nt0.2 - First Minimal Implementation
 
+### nt0.2 - First Minimal Implementation
 
 #### Requirements
 
@@ -31,7 +32,7 @@ Brandeis University, Spring 2018
 
 * *[HEROKU]* - [https://sassy-nanotwitter.herokuapp.com/](https://sassy-nanotwitter.herokuapp.com/)  Authentication can be tested by creating an account, logging in, and logging out.  Visitors can also post a Tweet.
 
-* *[nanoTwitter 0.2]* - Release has been "tagged" by naming the project nanoTwitter 0.2 and updating version.rb.
+* *[nanoTwitter 0.2]* - Release has been tagged by naming the project nanoTwitter 0.2 and updating ```version.rb```.
 
 #### Developer's Log
 
@@ -45,6 +46,26 @@ Brandeis University, Spring 2018
 * Heroku and mLab setup, login/logout routes, sessions, BCrypt added by Alyssa
 * API design document and Swagger API are implemented by Si
 
+
+### nt0.3 - Core functionality
+
+### Requirements
+
+* *[UNITTESTS]* -
+
+* *[TESTINTERFACE]* -
+
+* *[CODESHIP]* - Created a Codeship project and setup to run rake tests when code is pushed to the GitHub repo's master branch.
+
+* *[STANDARDSEEDS]* - 
+
+* *[AUTODEPLOY]* - Once Codeship has verified that all of the unit tests pass, the repo is deployed to the production site on Heroku: [https://sassy-nanotwitter.herokuapp.com/](https://sassy-nanotwitter.herokuapp.com/)
+
+* *[nanoTwitter 0.3]* - Release has been tagged by naming the project nanoTwiter 0.3 and updating ```version.rb```.
+
+#### Developer's Log
+
+* Codeship setup and autodeploy was setup by Alyssa.
 
 ## Documentation
 
