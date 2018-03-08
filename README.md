@@ -51,13 +51,13 @@ Brandeis University, Spring 2018
 
 ### Requirements
 
-* *[UNITTESTS]* -
+* *[UNITTESTS]* - Unit tests using Rack and MiniTest Spec were added to the folder ```spec```.  ```Rakefile``` was added with a script to run all tests in this folder.
 
-* *[TESTINTERFACE]* -
+* *[TESTINTERFACE]* - Test interface added to ```spec/loadtest.rb```.
 
 * *[CODESHIP]* - Created a Codeship project and setup to run rake tests when code is pushed to the GitHub repo's master branch.
 
-* *[STANDARDSEEDS]* - 
+* *[STANDARDSEEDS]* - Seeds were downloaded and added to the ```seeds``` directory.  ```spec/loadtest.rb``` loads the seeds into the database.
 
 * *[AUTODEPLOY]* - Once Codeship has verified that all of the unit tests pass, the repo is deployed to the production site on Heroku: [https://sassy-nanotwitter.herokuapp.com/](https://sassy-nanotwitter.herokuapp.com/)
 
@@ -66,6 +66,8 @@ Brandeis University, Spring 2018
 #### Developer's Log
 
 * Codeship setup and autodeploy was setup by Alyssa.
+* Seeds and test interfaces were done by Si.
+* Some unit tests, integration tests, and use page, followings page, followers page were done by Shuai
 
 ## Documentation
 
