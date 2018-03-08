@@ -1,3 +1,4 @@
+# coding: utf-8
 require 'mongoid'
 require 'mongo'
 require 'sinatra'
@@ -70,6 +71,3 @@ post '/test/users/create' do
   Total processing time: #{endtime - starttime} second"
 
 end
-
-
-
