@@ -12,7 +12,7 @@ class Tweet
   field :likedby, type: Array, default: Array.new
   field :replys, type: Array, default: Array.new
 
-  validates_length_of :content, minimum: 1, maximum: 1000
+  validates_length_of :content, minimum: 1, maximum: 280
 
   has_many :replies
   # belong_one :user

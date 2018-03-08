@@ -17,7 +17,7 @@ set :root, File.join(File.dirname(__FILE__), '')
 # sets the view directory correctly
 set :views, Proc.new { File.join(root, "views") } 
 
-helpers do
+# helpers do
   def redirect_to_original_request
     user = session[:user]
     flash[:notice] = 'Welcome back, #{user.name}.'
@@ -42,7 +42,7 @@ helpers do
       redirect '/login'
     end
   end  
-end
+# end
 
 get '/' do
 	@ids = User.pluck(:id)
