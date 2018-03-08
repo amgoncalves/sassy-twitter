@@ -47,7 +47,7 @@ Brandeis University, Spring 2018
 * API design document and Swagger API are implemented by Si
 
 
-### nt0.3 - Core functionality
+### nt0.3 - Core Functionality
 
 ### Requirements
 
