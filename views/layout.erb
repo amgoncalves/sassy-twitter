@@ -7,18 +7,29 @@
   </head>
   <body>
     <header>
-      <h1><a href="/">nanoTwitter (nT)</a></h1>
+      <div class="login" style="float:right">
+	<% if is_authenticated? %>
+	  <form action='/logout' method='POST'>
+	    <button type='submit'>Logout</button>
+	  </form>
+	<% end %>
+      </div>
+      <h1><a href="/">nanoTwitter (nT)</a></h1>      
     </header>
     <div id="container">
       <h2><%= title %></h2>
       <% if flash[:notice] %>
-        <p class="notice"><%= flash[:notice] %></p>
+      <p class="notice"><%= flash[:notice] %></p>
       <% end %>
       <%= yield %>
     </div>
     <footer>
-      <p>&copy; Si Chen, Alyssa Goncalves, Shuai Yu</p>
-      <p>COSI-105b Software Engineering for Scalability</p>
+      <div class="foot-right">
+	<p>COSI-105b Software Engineering for Scalability</p>
+      </div>
+      <div class="foot-left">
+	<p>&copy; Si Chen, Alyssa Goncalves, Shuai Yu</p>
+      </div>
     </footer>
   </body>
 </html>

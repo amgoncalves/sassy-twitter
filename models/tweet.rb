@@ -26,4 +26,13 @@ class Tweet
     new_likedby = likedby.push(user_id)
     self.set(likedby: new_likedby)
   end
+
+  def delete_like(user_id)
+    new_likedby = likedby.delete(user_id)
+    self.set(likedby: new_likedby)
+  end
+
+  def findById(tweet_id)
+    return self.where(_id: tweet_id).first
+  end
 end

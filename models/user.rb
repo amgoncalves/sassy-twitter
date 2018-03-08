@@ -47,6 +47,20 @@ class User
 		self.set(followed: nxt_followed)
 	end
 
+  def release_following(following_id)
+    if following.include?(following_id)
+      new_following = following.delete(following_id)
+      self.set(following: new_following)
+    end
+  end
+
+  def release_followed(followed_id)
+    if followed.include?(followed_id)
+      new_followed = followed.delete(followed_id)
+      self.set(followed: new_followed)
+    end
+  end
+
 	def add_tweet(tweet_id)
 		nxt_tweets = tweets.push(tweet_id)
 		self.set(tweets: nxt_tweets)
@@ -67,5 +81,9 @@ class User
   def password=(new_password)
     @password = Password.create(new_password)
     self.password_hash = @password
+  end
+
+  def findById(user_id)
+    return self.where(_id: user_id).first
   end  
 end
