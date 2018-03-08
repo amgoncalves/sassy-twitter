@@ -1,3 +1,4 @@
+# coding: utf-8
 require 'mongoid'
 require 'mongo'
 require 'sinatra'
@@ -234,6 +235,4 @@ post "/test/user/follow" do
     end
   end
 end
-
-
 

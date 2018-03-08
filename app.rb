@@ -20,7 +20,7 @@ set :views, Proc.new { File.join(root, "views") }
 helpers do
   def redirect_to_original_request
     user = session[:user]
-    flash[:notice] = 'Welcome back, #{user.name}.'
+    flash[:notice] = 'Welcome back, #{user.handle}!'
     original_request = session[:original_request]
     session[:original_request] = nil
     redirect original_request
@@ -45,7 +45,7 @@ helpers do
 end
 
 get '/' do
-	@ids = User.pluck(:id)
+  @ids = User.pluck(:id)
   erb :index, :locals => { :title => 'Welcome!' }
 end
 
@@ -56,7 +56,8 @@ end
 post '/login/?' do
   if user = auth_user(params[:email], params[:password])  
     session[:user] = user
-    redirect '/users'
+    flash[:notice] = "Welcome back, #{user.handle}!"
+    redirect '/'
   else
     flash[:notice] = 'User login failed.  Did you enter the correct username and password?'
     redirect '/login'

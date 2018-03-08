@@ -1,9 +1,5 @@
 require_relative 'spec_helper'
 
-require_relative '../app.rb'
-
-enable :sessions
-
 describe "service" do 
   include Rack::Test::Methods
 

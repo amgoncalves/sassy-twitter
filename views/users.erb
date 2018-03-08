@@ -1,16 +1,10 @@
-<h4>Welcome, <%= @name.handle %>!</h4>
-
-<p>All users:</p>
-
 <table>
-  <tr>
-    <th>email</th>
-    <th>handle</th>
-  </tr>
 <% @users.each do |user| %>
-   <tr>
-      <td><%= user.email %></td>
-      <td><%= user.handle %></td>
+  <tr>
+    <td>
+      <a href='/user/<%= user.id %>'>@<%= user.handle %></a>
+      <% if user == session[:user] %> (that's you!)<% end %>
+    </td>
    </tr>
 <% end %>
 </table>

@@ -1,32 +1,18 @@
-<p><em>Blue skies, smiling at me, nothing but blue skies do I see...</em></p>
-<p><img src="images/frank.jpg"></p>
-<p><em>Bluebirds singing a song, nothing but bluebirds all day long...</em></p>
-
-<% if is_authenticated? %>
-  <form action='/logout' method='POST'>
-    <p><button type='submit'>Logout</button></p>
-  </form>
-
-<% else %>
-  <form action='/login' method='GET'>
-    <p><button type='submit'>Login</button></p>
-  </form>
-
-  <form action='/signup' method='GET'>
-    <p><button type='submit'>Signup</button></p>
-  </form>
-<% end %>
-
-<a href='/tweet/test'>Tweet Function Test Link</a>
-
-<p><em> First Login, then click the link to view user pages.</em></p>
-<a href='edit_profile'> Edit your profile. </a>
-<ul>
-	<% @ids.each do |id| %>
-		<li>
-			<div>
-				id: <a href="/user/<%= id %>"><%= id %></a>
-		</li>
-	<% end %>
-</ul>
-
+<div class="sidebar">
+  <% if is_authenticated? %>
+    <h3>MENU</h3>
+    <ul>
+      <li><a href='/tweet/test'>Tweet!</a></li>
+      <li><a href='edit_profile'>Edit profile</a></li>
+      <li><a href='/users'>View all users</a></li>
+    </ul>
+  <% else %>
+    <div class="signup-container">
+      <p><a href='/login'><button type='submit' class='btn-login'>Login</button></a></p>
+      <p><a href='/signup'><button type='submit' class='btn-login'>Signup</button></a></p>
+    </div>
+  <% end %>
+</div>
+<div class="main">
+  <p><img src="images/frank.jpg"></p>
+</div>
