@@ -69,6 +69,20 @@ Brandeis University, Spring 2018
 * Seeds and test interfaces for load test were completed by Si.
 * Some unit tests, integration tests, and user page, followings page, followers page, follow button, UI were done by Shuai
 
+### nt0.4 - Testing and Deployment
+
+### Requirements
+
+* *[MANUALTEST]* - All three team members log into it at the same time and do some tweeting.
+* *[TESTINTERFACE]* - Implement the complete test interface from the nano Twitter Functionality. 
+* *[LOADTEST]*  - Use loader.io to generate some artificial loads. Play around with different loads. 
+* *[MORETESTS]* - Using load testing, discover actual bugs in the code.
+* *[nanoTwitter 0.4]* - Double check that you are up to date on everything that came before this. Clean up the directory. Update your repo with your latest and tag the release.
+
+#### Developer's Log
+
+* Unit tests or integration tests for login, authentication, user page, followings page, followers page, follow, new tweet, reply, retweet, were done by Shuai
+
 ## Documentation
 
 This Github has a [developer's Wiki](https://github.com/amgoncalves/sassy-twitter/wiki).
