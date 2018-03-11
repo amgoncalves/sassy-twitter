@@ -82,6 +82,11 @@ Brandeis University, Spring 2018
 #### Developer's Log
 
 - [x] Unit tests or integration tests for login, authentication, user page, followings page, followers page, follow, new tweet, reply, retweet, were done by Shuai
+- [ ] Log in at the same time and do manual testing, done by All
+- [ ] Implement the complete test interface, done by Si.
+- [ ] Generate artificial loads. Play around with different loads, done by Shuai.
+- [ ] Do load testing.
+- [ ] Clean up the directory, update repo and submit.
 
 ## Documentation
 
