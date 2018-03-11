@@ -83,6 +83,18 @@
 						<%= @targeted_user.profile.bio %>
 					</div>
 
+					<div>
+						At <%= @targeted_user.profile.location %>
+					</div>
+
+					<div>
+						Joined on <%= @targeted_user.profile.date_joined.to_s %>
+					</div>
+
+					<div>
+						Born on <%= @targeted_user.profile.dob.to_s %>
+					</div>
+
 					<div class="row">
 						<div class="col-xs-3">
 							<h5>
@@ -125,8 +137,6 @@
 
 				</div>
 			</div>
-
-Hello World
 
 			<%# <div class="panel panel-default panel-custom"> %>
 			<%# 	<div class="panel-heading"> %>

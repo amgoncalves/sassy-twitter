@@ -76,7 +76,7 @@ end
 
 post '/signup/submit' do
   # Build the user's profile
-  today = DateTime.now
+  today = Date.today
   @profile = Profile.new("", "", today, "", "")
   params[:user][:profile] = @profile
 
@@ -252,9 +252,10 @@ get '/tweet/test' do
 end
 
 post '/tweet/new' do
+	user_id = session[:user]._id
+	params[:tweet][:author_id] = user_id
   tweet = Tweet.new(params[:tweet])
   if tweet.save
-	  user_id = session[:user]._id
 		user = User.where(_id: user_id).first
 		user.add_tweet(tweet._id)
     redirect '/tweets'
@@ -320,13 +321,16 @@ end
 
 post '/retweet' do
   # create retweet tweet
+	user_id = session[:user]._id
+	params[:retweet][:author_id] = user_id
   params[:retweet][:original_tweet_id] = params[:tweet_id]
   retweet = Tweet.new(params[:retweet])
 
   if retweet.save
+		user = User.where(_id: user_id).first
+		user.add_tweet(retweet._id)
     redirect '/tweets'
   else
     flash[:warning] = 'Create tweet failed'
   end
-
 end
