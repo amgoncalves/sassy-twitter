@@ -67,7 +67,7 @@ Brandeis University, Spring 2018
 
 * Codeship setup and autodeploy was setup by Alyssa.
 * Seeds and test interfaces for load test were completed by Si.
-* Some unit tests, integration tests, and use page, followings page, followers page were done by Shuai
+* Some unit tests, integration tests, and user page, followings page, followers page, follow button, UI were done by Shuai
 
 ## Documentation
 
