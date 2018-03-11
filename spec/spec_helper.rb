@@ -10,6 +10,5 @@ require_relative '../models/profile'
 require_relative '../models/user'
 require_relative '../app.rb'
 require 'database_cleaner'
-require 'test/unit'
 
 Mongoid::Config.connect_to('nanotwitter-dev')
