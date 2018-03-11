@@ -15,9 +15,9 @@ Brandeis University, Spring 2018
 
 #### Developer's Log
 
-[x] License file and documentation for routes and sql database schema were added to the repo.  This was done together as a group.
-[x] A pilot project (pilot-project/mongo-evite) using mongodb was added by Shuai.
-[x] UI design and prototype is completed by Si.
+- [x] License file and documentation for routes and sql database schema were added to the repo.  This was done together as a group.
+- [x] A pilot project (pilot-project/mongo-evite) using mongodb was added by Shuai.
+- [x] UI design and prototype is completed by Si.
 
 
 ### nt0.2 - First Minimal Implementation
@@ -36,15 +36,15 @@ Brandeis University, Spring 2018
 
 #### Developer's Log
 
-[x] Create Heroku account and documentation is done by Alyssa.
-[x] Change sql database schema to nonsql database sql by Shuai and Si.
-[x] A pilot project (pilot-project/sinatra-bootstrap-master) testing navigation bar feature was added by Shuai.
-[x] A pilot project (pilot-project/twitterwhack_test) testing the hover card feature was added by Shuai.
-[x] The database models of User, Profile and Hashtag were implemented and tested by Shuai.
-[x] The database modesl of Tweet, Reply were implemented and tested by Si.
-[x] Added some basic functions related to Tweet and Reply models by Si
-[x] Heroku and mLab setup, login/logout routes, sessions, BCrypt added by Alyssa
-[x] API design document and Swagger API are implemented by Si
+- [x] Create Heroku account and documentation is done by Alyssa.
+- [x] Change sql database schema to nonsql database sql by Shuai and Si.
+- [x] A pilot project (pilot-project/sinatra-bootstrap-master) testing navigation bar feature was added by Shuai.
+- [x] A pilot project (pilot-project/twitterwhack_test) testing the hover card feature was added by Shuai.
+- [x] The database models of User, Profile and Hashtag were implemented and tested by Shuai.
+- [x] The database modesl of Tweet, Reply were implemented and tested by Si.
+- [x] Added some basic functions related to Tweet and Reply models by Si
+- [x] Heroku and mLab setup, login/logout routes, sessions, BCrypt added by Alyssa
+- [x] API design document and Swagger API are implemented by Si
 
 
 ### nt0.3 - Core Functionality
@@ -65,9 +65,9 @@ Brandeis University, Spring 2018
 
 #### Developer's Log
 
-[x] Codeship setup and autodeploy was setup by Alyssa.
-[x] Seeds and test interfaces for load test were completed by Si.
-[x] Some unit tests, integration tests, and user page, followings page, followers page, follow button, UI were done by Shuai
+- [x] Codeship setup and autodeploy was setup by Alyssa.
+- [x] Seeds and test interfaces for load test were completed by Si.
+- [x] Some unit tests, integration tests, and user page, followings page, followers page, follow button, UI were done by Shuai
 
 ### nt0.4 - Testing and Deployment
 
@@ -81,7 +81,7 @@ Brandeis University, Spring 2018
 
 #### Developer's Log
 
-[x] Unit tests or integration tests for login, authentication, user page, followings page, followers page, follow, new tweet, reply, retweet, were done by Shuai
+- [x] Unit tests or integration tests for login, authentication, user page, followings page, followers page, follow, new tweet, reply, retweet, were done by Shuai
 
 ## Documentation
 
