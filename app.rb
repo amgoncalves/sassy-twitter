@@ -7,8 +7,9 @@ require_relative './models/tweet'
 require_relative './models/reply'
 require 'byebug'
 
-# Mongoid.load!('./config/mongoid.yml')
-Mongoid::Config.connect_to('nanotwitter-test')
+unless ENV['MONGOID_ENV'] == 'production'
+  Mongoid::Config.connect_to('nanotwitter-test')
+end
 
 enable :sessions
 
