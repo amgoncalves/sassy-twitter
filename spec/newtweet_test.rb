@@ -1,6 +1,6 @@
 require_relative './spec_helper.rb'
 
-class TweetTest < MiniTest::Unit::TestCase
+class NewTweetTest < MiniTest::Unit::TestCase
 	include Rack::Test::Methods
 
 	def app

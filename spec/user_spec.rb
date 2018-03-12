@@ -1,6 +1,6 @@
 require_relative './spec_helper.rb'
 
-class UserAPITest < MiniTest::Unit::TestCase
+class UserTest < MiniTest::Unit::TestCase
 	include Rack::Test::Methods
 
 	def app

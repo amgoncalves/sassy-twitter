@@ -1,6 +1,6 @@
 require_relative './spec_helper.rb'
 
-class UserAPITest < MiniTest::Unit::TestCase
+class FollowPageTest < MiniTest::Unit::TestCase
 	include Rack::Test::Methods
 
 	def app
@@ -11,53 +11,53 @@ class UserAPITest < MiniTest::Unit::TestCase
 		DatabaseCleaner.strategy = :truncation
 		DatabaseCleaner.clean
 
-		params = {}
-		params[:user] = { :handle => 'shuaiyu8',
+		@params = {}
+		@params[:user] = { :handle => 'shuaiyu8',
 						 :email => "shuaiyu@brandeis.edu",
 						 :password => '123456'}
 		@day_before_yesterday = Date.yesterday - 1
 		@day_before_yesterday = @day_before_yesterday.to_s
 		@profile = Profile.new('engineer', @day_before_yesterday, @day_before_yesterday, 'new york', 'Shuai Yu')
-		params[:user][:profile] = @profile
-		@targeted = User.new(params[:user])
+		@params[:user][:profile] = @profile
+		@targeted = User.new(@params[:user])
 		@targeted.save
 		@id_shuai = @targeted._id
 
 		# log in as shuai, follow other users
-		post '/login?', params[:user]
+		post '/login?', @params[:user]
 
-		params[:user] = { :handle => 'alyssa',
+		@params[:user] = { :handle => 'alyssa',
 										:email => 'alyssa@brandeis.edu',
 										:password => '123456'}
 		@yesterday = Date.yesterday.to_s
 		@profile = Profile.new('girl', @yesterday, @yesterday, 'boston', 'Alyssa Goncalves')
-		params[:user][:profile] = @profile
-		@targeted = User.new(params[:user])
+		@params[:user][:profile] = @profile
+		@targeted = User.new(@params[:user])
 		@targeted.save
 		@id_alyssa = @targeted._id
-		params[:targeted_id] = @id_alyssa.to_s
+		@params[:targeted_id] = @id_alyssa.to_s
 		# follow alyssa
-		post 'follow', params
+		post 'follow', @params
 
-		params[:user] = { :handle => 'sichen',
+		@params[:user] = { :handle => 'sichen',
 						 :email => 'sichen@brandeis.edu',
 						 :password => '12345678'}
 		@today = Date.today.to_s
 		@profile = Profile.new('student', @today, @today, 'waltham', 'Si Chen')
-		params[:user][:profile] = @profile
-		@targeted = User.new(params[:user])
+		@params[:user][:profile] = @profile
+		@targeted = User.new(@params[:user])
 		@targeted.save
 		@id_si = @targeted._id
-		params[:targeted_id] = @id_si.to_s
+		@params[:targeted_id] = @id_si.to_s
 		# follow si
-		post '/follow', params
+		post '/follow', @params
 
 		post '/logout'
 		# login as user 'sichen'
-		post '/login?', params[:user]
-		params[:targeted_id] = @id_shuai.to_s
+		post '/login?', @params[:user]
+		@params[:targeted_id] = @id_shuai.to_s
 		# sichen follows shuai
-		post '/follow', params
+		post '/follow', @params
 	end
 
 	def test_user
@@ -79,9 +79,8 @@ class UserAPITest < MiniTest::Unit::TestCase
 	end
 
 	def test_following
-		params = {}
-		params[:targeted_id] = @id_shuai.to_s
-		res = get "/user/followings/", params
+		@params[:targeted_id] = @id_shuai.to_s
+		res = get "/user/followings/", @params
 		assert res.ok?
 		#handle of logged in user
 		assert res.body.include?('sichen')
@@ -94,9 +93,8 @@ class UserAPITest < MiniTest::Unit::TestCase
 	end
 
 	def test_followed
-		params = {}
-		params[:targeted_id] = @id_shuai.to_s
-		res = get "/user/followeds/", params
+		@params[:targeted_id] = @id_shuai.to_s
+		res = get "/user/followeds/", @params
 		assert res.ok?
 		#handle of logged in user
 		assert res.body.include?('sichen')
