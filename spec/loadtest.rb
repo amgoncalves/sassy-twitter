@@ -2,17 +2,22 @@
 require 'mongoid'
 require 'mongo'
 require 'sinatra'
+require 'sinatra/flash'
 require 'erb'
 require 'time'
+require 'csv'
 require_relative '../models/user'
 require_relative '../models/tweet'
 require_relative '../models/reply'
+require 'byebug'
 
-Mongoid::Config.connect_to('nanotwitter-test')
+Mongoid::Config.connect_to('nanotwitter-loadtest')
 
-enable :sessions
-session[:map] = Hash.new
-sessoin[:users] = Array.new
+# set :session_secret, 'secret'
+# enable :sessions
+use Rack::Session::Cookie, :key => 'rack.session',
+                           :path => '/',
+                           :secret => 'secret'
 
 # delete everything and recreate test uesr
 post '/test/reset/all' do
@@ -30,20 +35,23 @@ end
 post '/test/reset/testuser' do
   user = session[:testuser]
   # remove the following relationship of followed users
-  for user.followed.each do |followed_id|
+  user.followed.each do |followed_id|
     followed_user = User.findById(followed_id)
     followed_user.release_following(user._id)
   end
+
   # remove the followed relationship of following users
-  for user.following.each do |following_id|
+  user.following.each do |following_id|
     following_user = User.findById(following_id)
     following_user.release_followed(user_id)
   end
+
   # remove all liked relationship from liked tweets
-  for user.liked.each do |liked_id|
+  user.liked.each do |liked_id|
     liked_tweet = Tweet.findById(liked_id)
     liked_tweet.delete_like(user_id)
   end
+
   # remove all tweets of this user
   Tweet.in(_id: user.tweets).delete
   # delete TestUser
@@ -91,6 +99,8 @@ end
 # load n tweets from seed data if tweets parameter exists
 # otherwise load all tweets from seed data
 post '/test/reset/standard' do
+  starttime = Time.now
+
   # reset database and delete everything
   Mongoid.purge!
   # Recreate TestUser
@@ -100,11 +110,19 @@ post '/test/reset/standard' do
   session[:testuser] = user
 
   # load all users
-  CSV.foreach('../seeds/users.csv') do |row|
-    elements = row.split(",")
-    if elements.size == 2
-      id = elements[0]
-      handle = elements[1]
+  # CSV.foreach('../seeds/users.csv') do |row|
+  if session[:map] == nil
+    session[:map] = Hash.new
+  end
+  if session[:user] == nil
+    session[:user] = Array.new
+  end
+  user_text = File.read('../seeds/users.csv')
+  user_csv = CSV.parse(user_text, :headers => false)
+  user_csv.each do |row|
+    if row.size == 2
+      id = row[0]
+      handle = row[1]
       new_user = User.create(handle: handle,
         email: "testuser#{id}@sample.com",
         password: "password")
@@ -116,28 +134,33 @@ post '/test/reset/standard' do
   # load tweets from seeds
   n = 100175
   i = 0
-  if params.has_key?(tweets)
+  if params.has_key?("tweets")
     n = params[:tweets].to_i
   end
 
-  CSV.foreach('../seeds/tweets.csv') do |row|
+  # CSV.foreach('../seeds/tweets.csv') do |row|
+  tweets_text = File.read('../seeds/tweets.csv')
+  tweets_csv = CSV.parse(tweets_text, :headers => false)
+  tweets_csv.each do |row|
     if i >= n then break end
-    elements = row.split("\"")
-    if elements.size == 3
+    if row.size == 3
       # obtain the author
-      authord_id = session[:map][elements[0]]
+      author_id = session[:map][row[0]]
       author = User.where(_id: author_id).first
       # create new tweet
-      content = elements[1]
-      time_created = Time.parse(elements[2])
-      tweet = Tweet.where(author_id: author_id,
+      content = row[1]
+      time_created = Time.parse(row[2])
+      tweet = Tweet.create(author_id: author_id,
         content: content,
         time_created: time_created)
       # add tweet under user
-      author.add_tweet(tweet_id)
+      author.add_tweet(tweet._id)
     end
     i = i + 1
   end
+
+  endtime = Time.now
+  erb "process time: #{endtime - starttime} seconds"
 end
 
 # create u (integer) fake Users using faker. Defaults to 1
@@ -146,8 +169,13 @@ post '/test/users/create' do
   user_count = 1
   tweets_count = 0
 
-  if params.has_key(count)? user_count = params[:count] end
-  if params.has_key(tweets)? tweets_count = params[:tweets] end
+  if params.has_key(count)
+    user_count = params[:count] 
+  end
+
+  if params.has_key(tweets) 
+    tweets_count = params[:tweets] 
+  end
 
   # for i users, each user create j tweets
   i = 0

@@ -1,10 +1,13 @@
 test:
   clients:
-    default:
+    unit-test:
       database: nanotwitter-test
       hosts:
         - localhost: 27017
-
+    load-test:
+      database: nanotwitter_loadtest
+      hosts:
+        - localhost: 27017
 
 development:
   clients:
