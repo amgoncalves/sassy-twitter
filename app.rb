@@ -7,13 +7,13 @@ require_relative './models/tweet'
 require_relative './models/reply'
 require 'byebug'
 
-unless ENV['MONGOID_ENV'] == 'production'
-  Mongoid::Config.connect_to('nanotwitter-test')
-else
-  Mongoid.load!('config/mongoid.yml', :production)
-end
-
 enable :sessions
+
+if ENV['MONGOID_ENV'] == 'production'
+  Mongoid.load!('config/mongoid.yml', :production)
+else
+  Mongoid::Config.connect_to('nanotwitter-test')  
+end
 
 # sets root as the parent-directory of the current file
 set :root, File.join(File.dirname(__FILE__), '')
