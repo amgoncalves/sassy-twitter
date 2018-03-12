@@ -1,3 +1,12 @@
+<% if ENV['MONGOLAB_URI'] %>
+production:
+  clients:
+    default:
+      uri: <%= ENV['MONGOLAB_URI'] %>
+      options:
+        skip_version_check: true
+	safe: true
+<% else %>
 test:
   clients:
     unit-test:
@@ -10,13 +19,9 @@ test:
         - localhost: 27017
 
 development:
-  sessions:
+  clients:
     default:
       database: nanotwitter-dev
       hosts:
         - localhost: 27017
-
-production:
-  sessions:
-    default:
-      uri: <%= ENV['MONGOLAB_URI'] %>
+<% end %>
