@@ -10,13 +10,13 @@ test:
         - localhost: 27017
 
 development:
-  clients:
+  sessions:
     default:
       database: nanotwitter-dev
       hosts:
         - localhost: 27017
 
 production:
-  clients:
+  sessions:
     default:
       uri: <%= ENV['MONGOLAB_URI'] %>
