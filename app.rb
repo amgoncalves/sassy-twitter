@@ -10,7 +10,7 @@ require 'byebug'
 enable :sessions
 
 if ENV['MONGOID_ENV'] == 'production'
-  Mongoid.load!('config/mongoid.yml', :production)
+  Mongoid.load!("config/mongoid.yml")
 else
   Mongoid::Config.connect_to('nanotwitter-test')  
 end
