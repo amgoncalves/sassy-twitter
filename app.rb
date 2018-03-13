@@ -18,7 +18,9 @@ end
 # sets root as the parent-directory of the current file
 set :root, File.join(File.dirname(__FILE__), '')
 # sets the view directory correctly
-set :views, Proc.new { File.join(root, "views") } 
+set :views, Proc.new { File.join(root, "views") }
+
+set :public_folder, Proc.new { File.join(root, "public") }
 
 def redirect_to_original_request
   user = session[:user]
