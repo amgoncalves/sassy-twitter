@@ -90,7 +90,7 @@ Brandeis University, Spring 2018
 - [x] Implement the complete test interface, done by Si.
 - [x] Completed Load Test of loading all seed files into local databases, 1000 users, 100715 tweets using 596 seconds by Si.
 - [x] Use Rest Client to do kinds of Load Tests of generating different users, tweets and follows by Si.
-- [ ] Use loader.io to generate artificial loads. Play around with different loads, done by Shuai.
+- [x] Use loader.io to generate artificial loads. Play around with different loads, done by Shuai.
 - [ ] Do load testing.
 - [ ] Clean up the directory, update repo and submit.
 
