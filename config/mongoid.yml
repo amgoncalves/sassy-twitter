@@ -11,7 +11,7 @@ test:
       hosts:
         - localhost: 27017
     load-test:
-      database: nanotwitter_loadtest
+      database: nanotwitter-loadtest
       hosts:
         - localhost: 27017
 
