@@ -1,8 +1,8 @@
 <% if is_authenticated? %>
   <%= erb :timeline %>
 <% else %>
-<div class="row">
-  <div class="col-md-7">
+<div class="row" id="splash">
+  <div class="col-md-7 col-splash">
     <img src="images/bird.jpg" class="bird">
   </div>  
   <div class="col-md-5" id="splash-form">

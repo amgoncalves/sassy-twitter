@@ -31,6 +31,9 @@ def redirect_to_original_request
 end
 
 def is_authenticated?
+  if session[:user] != nil
+    @cur_user = User.where(_id: session[:user]._id).first
+  end
   return !!session[:user]
 end
 
@@ -56,7 +59,7 @@ get '/' do
   @ids = User.pluck(:id)
   if is_authenticated?
     @tweets = Tweet.all.reverse
-    @current_user = User.where(_id: session[:user]._id).first
+    @cur_user = User.where(_id: session[:user]._id).first
   end
   erb :index, :locals => { :title => 'Welcome!' }
 end

@@ -11,20 +11,22 @@ a:hover {
     color: #b5ddff;
 }
 
+.alert-primary {
+    color: #004085;
+    background-color: #cce5ff;
+    border-color: #b8daff;
+}
+
 .navbar {
     margin-bottom: 0px;
     border-bottom: 1px solid #e5e5e5;    
 }
 
 .footer {
-    padding: 19px 0;
+    padding: 19px;
     color: #777;
     border-top: 1px solid #e5e5e5;
-}  
-
-.sidebar {
-    float: left;
-    max-width: 30%;
+    background: #FFF;
 }
 
 #signup {
@@ -33,9 +35,18 @@ a:hover {
     margin-bottom: 20px;
 }
 
+#splash {
+    background: #fff;
+    padding: 0;
+}
+
 #splash-form {
     background: #fff;
     padding: 19px 0;
+}
+
+.col-splash {
+    padding: 0px;
 }
 
 img.bird {
