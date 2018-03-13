@@ -1,35 +1,29 @@
-<!doctype HTML>
-<html>
+<!DOCTYPE html>
+<html lang="en">
   <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">    
     <title><%= title %> | nanoTwitter (nT)</title>
-    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
-    <link href="/stylesheets/style.css" rel="stylesheet">
+    <link href="stylesheets/bootstrap.min.css" rel="stylesheet">
+    <link href="open-iconic/css/open-iconic-bootstrap.min.css" rel="stylesheet">
+    <link href="stylesheets/style.css" rel="stylesheet">    
   </head>
   <body>
-    <header>
-      <div class="login" style="float:right">
-	<% if is_authenticated? %>
-	  <form action='/logout' method='POST'>
-	    <button type='submit'>Logout</button>
-	  </form>
-	<% end %>
-      </div>
-      <h1><a href="/">nanoTwitter (nT)</a></h1>      
-    </header>
-    <div id="container">
-      <h2><%= title %></h2>
+    <%= erb :nav %>
+    <div class="container">
       <% if flash[:notice] %>
-      <p class="notice"><%= flash[:notice] %></p>
+      <div class="alert alert-primary alert-dismiss" role="alert">
+	<%= flash[:notice] %>
+	<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+	  <span aria-hidden="true" class="oi oi-x"></span>
+	</button>	
+      </div>
       <% end %>
       <%= yield %>
-    </div>
-    <footer>
-      <div class="foot-right">
-	<p>COSI-105b Software Engineering for Scalability</p>
-      </div>
-      <div class="foot-left">
-	<p>&copy; Si Chen, Alyssa Goncalves, Shuai Yu</p>
-      </div>
-    </footer>
+    </div><!-- /container -->
+    <%= erb :footer %>
+    <!-- Bootstrap requires both JQuery and Popper. -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="js/bootstrap.min.js"></script>
   </body>
 </html>

@@ -1,5 +1,10 @@
-<form action='/login' method='POST'>
-  <p><label for='email'>Email:</label> <input id='email' maxlength='100' name='email' size='25' type='text'></p>
-  <p><label for='password'>Password:</label> <input maxlength='25' name='password' size='25' type='password'></p>
-  <p><input type='submit' value='Login'></p>
+<h2>Log In</h2>
+<form class="navbar-form navbar-right" action="/login" method="POST">
+  <div class="form-group">
+    <input id="email" name="email" type="text" placeholder="Email" class="form-control">
+  </div>
+  <div class="form-group">
+    <input name="password" type="password" placeholder="Password" class="form-control">
+  </div>
+  <button type="submit" class="btn btn-primary">Sign in</button>
 </form>

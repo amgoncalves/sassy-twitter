@@ -1,6 +1,16 @@
-<form action = '/signup/submit' method='POST'>
-      <p><label for='email'>Email:</label> <input type='text' name='user[email]' placeholder='Input an email' /></p>
-      <p><label for='password'>Password:</label> <input type='text' name='user[password]' placeholder='Input password' /></p>
-      <p><label for='handle'>Handle:</label> <input type='text' name='user[handle]' placeholder='Input an handle' /></p>
-      <p><input type='submit' value='Submit' /></p>
+<form action="/signup/submit" method="POST">
+  <div class="form-group">
+    <label for="email">Email</label>
+    <input id="email" name="user[email]" type="email" class="form-control" placeholder="Enter email">
+  </div>
+  <div class="form-group">
+    <label for="password">Password</label>
+    <input id="password" name="user[password]" type="password" class="form-control" placeholder="Password">
+  </div>
+  <div class="form-group">
+    <label for="handle">Handle</label>
+    <input id="handle" name="user[handle]" type="text" class="form-control" aria-describedby="handleHelp" placeholder="@username">
+    <small id="handleHelp" class="form-text text-muted">Pick something unique but easy to remember.</small>
+  </div>
+  <button type="submit" class="btn btn-primary bt-lg" style="margin: 0px auto">Submit</button>
 </form>

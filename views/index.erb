@@ -1,18 +1,15 @@
-<div class="sidebar">
-  <% if is_authenticated? %>
-    <h3>MENU</h3>
-    <ul>
-      <li><a href='/tweet/test'>Tweet!</a></li>
-      <li><a href='edit_profile'>Edit profile</a></li>
-      <li><a href='/users'>View all users</a></li>
-    </ul>
-  <% else %>
-    <div class="signup-container">
-      <p><a href='/login'><button type='submit' class='btn-login'>Login</button></a></p>
-      <p><a href='/signup'><button type='submit' class='btn-login'>Signup</button></a></p>
+<% if is_authenticated? %>
+  <%= erb :timeline %>
+<% else %>
+<div class="row">
+  <div class="col-md-7">
+    <img src="images/bird.jpg" class="bird">
+  </div>  
+  <div class="col-md-5" id="splash-form">
+    <div id="signup">
+      <h2>Sign Up</h2>
+      <%= erb :signup %>
     </div>
-  <% end %>
+  </div>
 </div>
-<div class="main">
-  <p><img src="images/frank.jpg"></p>
-</div>
+<% end %>
