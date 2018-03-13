@@ -84,8 +84,8 @@ get '/test/status' do
     tweet_num = Tweet.count
   end
 
-  erb "User Number: #{user_num}<br>
-        Follow Number: #{follow_num}<br>
+  erb "User Number: #{user_num} <br>
+        Follow Number: #{follow_num} <br>
         Tweet Number: #{tweet_num}"
 end
 
@@ -109,25 +109,21 @@ post '/test/reset/standard' do
     password: "password")
   session[:testuser] = user
 
-  # load all users
-  # CSV.foreach('../seeds/users.csv') do |row|
   if session[:map] == nil
     session[:map] = Hash.new
   end
-  if session[:user] == nil
-    session[:user] = Array.new
-  end
+
+  # load all users
   user_text = File.read('../seeds/users.csv')
   user_csv = CSV.parse(user_text, :headers => false)
   user_csv.each do |row|
     if row.size == 2
       id = row[0]
       handle = row[1]
-      new_user = User.create(handle: handle,
-        email: "testuser#{id}@sample.com",
+      new_user = User.create(id: id,
+        handle: handle,
+        email: "#{handle}@sample.com",
         password: "password")
-      session[:map][id] = new_user._id
-      session[:user].push(new_user._id)
     end
   end
 
@@ -145,7 +141,7 @@ post '/test/reset/standard' do
     if i >= n then break end
     if row.size == 3
       # obtain the author
-      author_id = session[:map][row[0]]
+      author_id = row[0]
       author = User.where(_id: author_id).first
       # create new tweet
       content = row[1]
@@ -166,14 +162,15 @@ end
 # create u (integer) fake Users using faker. Defaults to 1
 post '/test/users/create' do
   starttime = Time.now
+
   user_count = 1
   tweets_count = 0
 
-  if params.has_key(count)
+  if params[:count] != nil
     user_count = params[:count] 
   end
 
-  if params.has_key(tweets) 
+  if params[:tweets] != nil
     tweets_count = params[:tweets] 
   end
 
@@ -185,8 +182,8 @@ post '/test/users/create' do
       password: "password#{i}")
     j = 0
     while j < tweets_count.to_i do
-      tweet = Tweet.create(content: "no.#{j} tweet")
-      tweet.author_id = user._id
+      tweet = Tweet.create(content: "no.#{j} tweet",
+        author_id: user._id)
       user.add_tweet(tweet._id)
       j = j + 1
     end
@@ -194,8 +191,8 @@ post '/test/users/create' do
   end
   endtime = Time.now
 
-  erb "Created #{count} users<br>
-  For each user created #{tweets} tweets<br><br>
+  erb "Created #{user_count} users <br>
+  For each user created #{tweets_count} tweets <br><br>
   Total processing time: #{endtime - starttime} second"
 
 end
@@ -203,64 +200,104 @@ end
 # user u generates t(integer) new fake tweets
 # if u=”testuser” then this refers to the TestUser
 post "/test/user/:user/tweets" do
-  # obtain the user
+  # initialize variables
   user = nil
+  tweets_count = 0
+  # botain user from database
   if params[:user] == "testuser"
     user = session[:testuser]
-  else
-    user_id = session[:map][user.to_i]
-    user = User.where(_id: user_id).first
+  elsif User.where(_id: params[:user]).exists?
+    user = User.where(_id: params[:user]).first
   end
-
+  # get tweets creating number 
+  if params[:count] != nil
+    tweets_count = params[:count].to_i
+  end
   # create t tweets for this user
-  tweets_count = params[:count]
-  i = 0
-  while i < tweets_count.to_i do
-    tweet = Tweet.create(content: "no.#{i} fake tweet")
-    tweet.author_id = user._id
-    user.add_tweet(tweet._id)
-    i = i + 1
+  if user != nil 
+    i = 0
+    while i < tweets_count.to_i do
+      tweet = Tweet.create(content: "no.#{i} fake tweet", author_id: user._id)
+      user.add_tweet(tweet._id)
+      i = i + 1
+    end
+  else
+    erb "User #{params[:user]} doen't exist in database"
   end
 
+end
+
+# n (integer) randomly selected users follow 
+# ‘n’ (integer) different randomly seleted users.
+post '/test/user/follow' do
+  if User.count < 2
+    erb "Run post '/test/reset/standard' first!"
+  else
+    n = 1 # default 1
+    if params[:count] != nil
+      n = params[:count].to_i
+    end
+    
+    users = (0..1000).to_a
+
+    users.sample(n).each do |user_id|
+      user = User.where(_id: user_id.to_s).first
+      tmp_users = users
+      tmp_users.delete(user_id)
+      tmp_users.sample(n).each do |following_id|  
+        following_user = User.where(_id: following_id.to_s).first
+        user.toggle_following(following_id)
+        following_user.toggle_followed(user_id)
+      end
+      # show the result
+      erb "For user<br>
+        handle: #{user.handle}<br>
+        #{user.following}"
+    end
+  end
 end
 
 # n (integer) randomly selected users follow user u (integer)
 # if u=”testuser” then this refers to the TestUser
 post "/test/user/:user/follow" do
+  # initialize variables
   user = nil
+  n = 0
+  # botain user from database
   if params[:user] == "testuser"
     user = session[:testuser]
-  else
-    user_id = session[:map][user.to_i]
-    user = User.where(_id: user_id).first
+  elsif User.where(_id: params[:user]).exists?
+    user = User.where(_id: params[:user]).first
   end
-
-  # select n randomly followeds of this user
-  n = params[:count]
-  followed_list = user.followed
-  random_list = followed_list.sample(n.to_i)
-
-  # show the result
-  erb "For user<br>
+  # get randomly selecting number
+  if params[:count] != nil
+    n = params[:count].to_i
+  end
+  # select n randomly users to follow user u
+  if user != nil
+    # select n randomly followeds of this user
+    user_num = User.count
+    if User.count < 2
+      erb "Run post '/test/reset/standard' first!"
+    else
+      users = (0..100).to_a
+      if params[:user] != "testuser"
+        users.delete(params[:users].to_i)
+      end
+  
+      users.sample(n).each do |user_id|
+        tmp_user = User.where(id: user_id.to_s).first
+        user.toggle_followed(tmp_user._id)
+        tmp_user.toggle_following(user._id)
+      end
+      # show the result
+      erb "For user<br>
         handle: #{user.handle}<br>
-        #{random_list.join(",")}"
-end
-
-# n (integer) randomly selected users follow 
-# ‘n’ (integer) different randomly seleted users.
-post "/test/user/follow" do 
-  n = params[:count].to_i
-  users = params[:users]
-
-  users.sample(n).each do |user_id|
-    user = User.where(_id: user_id).first
-    tmp_users = users
-    tmp_users.delete(user_id)
-    tmp_users.sample(n).each do |following_id|  
-      following_user = User.where(_id: following_id).first
-      user.toggle_following(following_id)
-      following_user.toggle_followed(user_id)
+        #{user.followed}"
     end
+  else
+    erb "User #{params[:user]} doen't exist in database"
   end
 end
+
 
