@@ -87,8 +87,10 @@ Brandeis University, Spring 2018
 
 - [x] Unit tests or integration tests for login, authentication, user page, followings page, followers page, follow, new tweet, reply, retweet, were done by Shuai
 - [ ] Log in at the same time and do manual testing, done by All
-- [ ] Implement the complete test interface, done by Si.
-- [ ] Generate artificial loads. Play around with different loads, done by Shuai.
+- [x] Implement the complete test interface, done by Si.
+- [x] Completed Load Test of loading all seed files into local databases, 1000 users, 100715 tweets using 596 seconds by Si.
+- [x] Use Rest Client to do kinds of Load Tests of generating different users, tweets and follows by Si.
+- [ ] Use loader.io to generate artificial loads. Play around with different loads, done by Shuai.
 - [ ] Do load testing.
 - [ ] Clean up the directory, update repo and submit.
 
