@@ -41,6 +41,7 @@ GEM
     rack-test (0.8.3)
       rack (>= 1.0, < 3)
     rake (12.3.0)
+    redis (4.0.1)
     rest-client (2.0.2)
       http-cookie (>= 1.0.2, < 2.0)
       mime-types (>= 1.16, < 4.0)
@@ -71,6 +72,7 @@ DEPENDENCIES
   mongoid (~> 6.3)
   rack-minitest
   rake
+  redis
   rest-client
   sinatra (= 2.0.1)
   sinatra-flash (~> 0.3.0)

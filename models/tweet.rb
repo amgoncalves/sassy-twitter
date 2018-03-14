@@ -8,6 +8,7 @@ class Tweet
   field :content, type: String
   field :time_created, type: DateTime, default: Time.now
   field :author_id, type: BSON::ObjectId, default: String.new
+  field :author_handle, type: String, default: String.new
   field :original_tweet_id, type: BSON::ObjectId, default: String.new
   field :likedby, type: Array, default: Array.new
   field :replys, type: Array, default: Array.new

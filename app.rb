@@ -2,6 +2,7 @@ require 'mongoid'
 require 'mongo'
 require 'sinatra'
 require 'sinatra/flash'
+require 'redis'
 require_relative './models/user'
 require_relative './models/tweet'
 require_relative './models/reply'
@@ -14,6 +15,9 @@ if ENV['MONGOID_ENV'] == 'production'
 else
   Mongoid::Config.connect_to('nanotwitter-test')  
 end
+
+# configure redis
+redis = Redis.new(url: ENV["REDIS_URL"])
 
 # sets root as the parent-directory of the current file
 set :root, File.join(File.dirname(__FILE__), '')
@@ -62,6 +66,12 @@ get '/' do
     @cur_user = User.where(_id: session[:user]._id).first
   end
   erb :index, :locals => { :title => 'Welcome!' }
+end
+
+get '/timeline' do
+  cur_user = User.where(_id: session[:user]._id).first
+  @tweets = redis.lrange(session[:user]._id.to_s, 0, -1)
+  erb :hometimeline, :locals => { :title => 'Home Timeline!' }
 end
 
 get '/login/?' do
@@ -163,6 +173,12 @@ post '/follow' do
   user.toggle_following(@targeted_id)
   targeted_user = User.where(_id: @targeted_id).first
   targeted_user.toggle_followed(user_id)
+
+  # add all tweets of that user to current user timeline
+  tweets = targeted_user.tweets
+  tweets.each do |tweet_id|
+    redis.rpush(user_id.to_s, Tweet.where(_id: tweet_id).first.to_json)
+  end
 
   # redirect "/user/#{@targeted_id}"
   redirect back
@@ -269,10 +285,18 @@ end
 post '/tweet/new' do
   user_id = session[:user]._id
   params[:tweet][:author_id] = user_id
+  params[:tweet][:author_handle] = session[:user].handle
   tweet = Tweet.new(params[:tweet])
   if tweet.save
     user = User.where(_id: user_id).first
     user.add_tweet(tweet._id)
+
+    # spread this tweet to all followers
+    followers = user.followed
+    followers.each do |follower|
+      redis.rpush(follower.to_s, tweet.to_json)
+    end
+
     redirect '/tweets'
   else
     flash[:warning] = 'Create tweet failed'
@@ -339,6 +363,7 @@ post '/retweet' do
   user_id = session[:user]._id
   params[:retweet][:author_id] = user_id
   params[:retweet][:original_tweet_id] = params[:tweet_id]
+  params[:retweet][:author_handle] = session[:user].handle
   retweet = Tweet.new(params[:retweet])
 
   if retweet.save
@@ -349,3 +374,4 @@ post '/retweet' do
     flash[:warning] = 'Create tweet failed'
   end
 end
+
