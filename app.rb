@@ -1,11 +1,13 @@
+require 'byebug'
 require 'mongoid'
 require 'mongo'
 require 'sinatra'
+require 'sinatra/cookies'
 require 'sinatra/flash'
+#require 'sinatra/sessionshelper'
 require_relative './models/user'
 require_relative './models/tweet'
 require_relative './models/reply'
-require 'byebug'
 
 enable :sessions
 
@@ -33,6 +35,10 @@ end
 def is_authenticated?
   if session[:user] != nil
     @cur_user = User.where(_id: session[:user]._id).first
+  elsif cookies[:user] != nil
+    @cur_user = User.where(_id: cookies[:user]).first
+    session[:user] = @cur_user
+    return true
   end
   return !!session[:user]
 end
@@ -41,6 +47,10 @@ def auth_user(email, password)
   user = User.where(email: email).first
   return user if user && user.password == password
   return nil
+end
+
+def add_cookie(user)
+  cookies[:user] = user._id
 end
 
 def authenticate!
@@ -69,8 +79,9 @@ get '/login/?' do
 end
 
 post '/login/?' do
-  if user = auth_user(params[:email], params[:password])  
+  if user = auth_user(params[:email], params[:password])
     session[:user] = user
+    add_cookie(user) unless params[:remember] == "off"    
     flash[:notice] = "Welcome back, #{user.handle}!"
     redirect '/'
   else
@@ -80,7 +91,8 @@ post '/login/?' do
 end
 
 post '/logout' do
-  session[:user] = nil
+  session.clear
+  cookies.clear
   flash[:notice] = 'You have been signed out.  Goodbye!'
   redirect '/'
 end
