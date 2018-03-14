@@ -86,11 +86,12 @@ Brandeis University, Spring 2018
 #### Developer's Log
 
 - [x] Unit tests or integration tests for login, authentication, user page, followings page, followers page, follow, new tweet, reply, retweet, were done by Shuai
+- [x] Make sure all the tests passed on codeship, no bugs left, done by Shuai
 - [ ] Log in at the same time and do manual testing, done by All
 - [x] Implement the complete test interface, done by Si.
 - [x] Completed Load Test of loading all seed files into local databases, 1000 users, 100715 tweets using 596 seconds by Si.
 - [x] Use Rest Client to do kinds of Load Tests of generating different users, tweets and follows by Si.
-- [x] Add the generated token file into the heroku server, and verify it, done by Shuai
+- [x] Add the generated token file from loader.io into the heroku server, and verify it, done by Shuai
 - [x] Write ruby program to generate payload file from the seed data, done by Shuai
 - [x] Do load testing using the payload file. Note: the payload file can only be as large as 3MB. done by Shuai
 - [ ] Clean up the directory, update repo and submit.
