@@ -1,7 +1,7 @@
 <% @tweets.each do |tweet| %>
 <div class="tweet-container">
   <div class="tweet-title">
-    <div class="float-left"><a href="/user/<%= tweet.author_id %>">@author</a></div>
+    <div class="float-left"><a href="/user/<%= tweet.author_id %>">@<%= User.where(_id: tweet.author_id).first.handle %></a></div>
     <div class="float-right"><%= tweet.time_created.strftime("%b %d %I:%M:%S %p") %></div>
   </div>
   <div class="tweet-content"><%= tweet.content %></div>
