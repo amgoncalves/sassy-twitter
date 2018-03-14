@@ -1,22 +1,56 @@
 <% @tweets.each do |tweet| %>
-<div class="tweet-container">
-  <div class="tweet-title">
-    <div class="float-left"><a href="/user/<%= tweet.author_id %>">@<%= User.where(_id: tweet.author_id).first.handle %></a></div>
-    <div class="float-right"><%= tweet.time_created.strftime("%b %d %I:%M:%S %p") %></div>
-  </div>
-  <div class="tweet-content"><%= tweet.content %></div>
-  <div class="tweet-footer">
-    <form action="/reply?tweet_id=<%= tweet._id %>" method="POST">
-      <input type="text" name="reply[content]" placeholder="Tweet your reply.">
-      <button type="submit" class="btn"><span class="oi oi-comment-square oi-link"></span></button>
-    </form>
-    <form action="/retweet?tweet_id=<%= tweet._id %>" method="POST">
-      <input type="text" name="retweet[content]" placeholder="Add a comment...">
-      <button type="submit" class="btn"><span class="oi oi-loop-square oi-link"></span></button>
-    </form>	
-    <form action="/like?tweet_id=<%= tweet._id %>" method="POST">
-      <button type="submit" class="btn"><span class="oi oi-heart oi-link"></span></button>
-    </form>	
-  </div>
-</div>
+<div class="media">
+  
+  <a class="media-left" href="#fake">
+    <img alt="" class="media-object img-rounded" src="http://placehold.it/64x64">
+  </a>
+  
+  <div class="media-body">
+    
+    <div class="tweet-date">
+      <%= tweet.time_created.strftime("%b %d %I:%M:%S %p") %>
+    </div>
+    
+    <h4 class="media-heading">
+      <a href="/user/<%= tweet.author_id %>">
+	@<%= User.where(_id: tweet.author_id).first.handle %>
+      </a>
+    </h4>
+
+    <p><%= tweet.content %></p>
+    
+    <ul class="nav nav-pills nav-pills-custom">
+      <li><a href="#"><span class="glyphicon glyphicon-share-alt"></span></a></li>
+      <li><a href="#"><span class="glyphicon glyphicon-retweet"></span></a></li>
+      <li><a href="#"><span class="glyphicon glyphicon-star"></span></a></li>
+      <li><a href="#"><span class="glyphicon glyphicon-option-horizontal"></span></a></li>
+    </ul>
+
+    <!--
+	<ul class="nav nav-pills nav-pills-custom">
+	  <li>
+            <form action="/reply?tweet_id=<%= tweet._id %>" method="POST">	
+	      <button type="submit" class="btn-link"><span class="glyphicon glyphicon-share-alt"></span></button>
+	      <input type="text" name="reply[content]" placeholder="Tweet your reply.">
+	    </form>
+	  </li>
+	  <li>
+	    <form action="/retweet?tweet_id=<%= tweet._id %>" method="POST">
+	      <input type="text" name="retweet[content]" placeholder="Add a comment...">
+	      <button type="submit" class="btn-link"><span class="glyphicon glyphicon-retweet"></span></button>
+	    </form>
+	  </li>
+	  <li>
+	    <form action="/like?tweet_id=<%= tweet._id %>" method="POST">	
+	      <button type="submit" class="btn-link"><span class="glyphicon glyphicon-star"></span></button>
+	    </form>
+	  </li>
+	  <li>
+	    <a href="#"><span class="glyphicon glyphicon-option-horizontal"></span></a>
+	  </li>
+	</ul>
+	-->
+  </div><!-- ./media-body -->
+  
+</div><!-- ./media -->
 <% end %>

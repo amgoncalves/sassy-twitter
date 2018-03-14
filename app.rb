@@ -69,12 +69,35 @@ get '/' do
   @ids = User.pluck(:id)
   if is_authenticated?
     @tweets = Tweet.all.reverse
+    @users = User.all
     @cur_user = User.where(_id: session[:user]._id).first
+    @targeted_user = session[:user]
+    @targeted_id = @targeted_user._id
+    @ntweets = @targeted_user[:tweets].length
+    if @ntweets > 0
+      @targeted_tweets = Tweet.in(_id: @targeted_user[:tweets])
+      @targeted_tweets = @targeted_tweets.reverse
+    end
+
+    @nfollowed = @targeted_user[:followed].length
+    if @nfollowed > 0
+      @targeted_followed = User.in(_id: @targeted_user[:followed])
+    end
+
+    @nfollowing = @targeted_user[:following].length
+    if @nfollowing > 0
+      @targeted_following = User.in(_id: @targeted_user[:following])
+    end
+    
   end
   erb :index, :locals => { :title => 'Welcome!' }
 end
 
 get '/login/?' do
+  if is_authenticated?
+    flash[:notice] = 'You are already logged in.'
+    redirect '/'
+  end
   erb :login, :locals => { :title => 'Login' }
 end
 
@@ -163,7 +186,7 @@ get '/user/:targeted_id' do
       @targeted_following = User.in(_id: @targeted_user[:following])
     end
 
-    erb :user, :layout => false, :locals => { :title => 'User Profile' }
+    erb :user, :locals => { :title => '#{@targeted_user.handle}' }
     # erb :followeds, :locals => { :title => 'User Profile' }
   end
 end

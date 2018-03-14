@@ -19,7 +19,11 @@
 	      @<%= @cur_user.handle %>
 	    </a>
 	    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-	      <div class="dropdown-item"><a href="/edit_profile">Edit Profile</a></div>
+	      <div class="dropdown-item">
+		<form action="/edit_profile" method="GET">
+		  <button type="submit" class="btn btn-link btn-logout">Edit Profile</button>
+		</form>
+	      </div>
 	      <div class="dropdown-divider"></div>
 	      <div class="dropdown-item">
 	      <form action="/logout" method='POST'>
