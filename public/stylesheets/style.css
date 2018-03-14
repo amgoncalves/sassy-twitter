@@ -1,25 +1,15 @@
 a:link,
 a:visited,
 a:active {
-    color: #339eee;
     text-decoration: none;
     -webkit-transition-duration: 0.4s;
     transition-duration: 0.4s;    
-}
-
-a:hover {
-    color: #b5ddff;
 }
 
 .alert-primary {
     color: #004085;
     background-color: #cce5ff;
     border-color: #b8daff;
-}
-
-.navbar {
-    margin-bottom: 0px;
-    border-bottom: 1px solid #e5e5e5;    
 }
 
 .footer {
@@ -59,24 +49,12 @@ img.bird {
     width: inherit;
 }
 
-.oi-link {
-    cursor: pointer;
-    color: #b5ddff;
-    text-decoration: none;
-    -webkit-transition-duration: 0.4s;
-    transition-duration: 0.4s;    
+.bumper {
+    background: #FFF;
+    padding-bottom: 16px;
 }
 
-.oi-link:hover {
-    color: #339eee;
-}
-
-.tweet-container {
-    border-bottom: 1px solid #e5e5e5;
-    padding: 19px 0;
-}
-
-.tweet-content {
-    margin: 8px 0;
-    clear: both;
+.tweet-date {
+    text-align: right;
+    float: right;
 }

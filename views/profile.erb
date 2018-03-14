@@ -1,0 +1,73 @@
+<div class="panel panel-default">
+  <div class="panel-body">
+
+    <!-- Profile Image -->
+    <a href="#"><img class="img-responsive" alt="" src="http://placehold.it/800x500"></a>
+
+    <!-- Profile Info -->
+    <div class="twPc-divName">
+      <%= @targeted_user.profile.name %>
+    </div>
+    <div>
+      <a href="/user/<%= @targeted_id %>">@<%= @targeted_user.handle %></a>
+    </div>
+    <div>
+      Bio: <%= @targeted_user.profile.bio %>
+    </div>
+    <div>
+      <span class="glyphicon glyphicon-map-marker"></span> <%= @targeted_user.profile.location %>
+    </div>
+    <div>
+      <span class="glyphicon glyphicon-calendar"></span> Joined <%= @targeted_user.profile.date_joined.to_s %>
+    </div>
+    <div>
+      <span class="glyphicon glyphicon-user"></span> Born on <%= @targeted_user.profile.dob.to_s %>
+    </div>
+
+    <!-- User Statistics -->
+    <div class="row">
+      <div class="col-xs-3">
+	<h5>
+	  <small>TWEETS</small>
+	  <br>
+	  <a href="/user/<%= @targeted_id %>">
+	    <%= @ntweets %>
+	  </a>
+	</h5>
+      </div>
+      <div class="col-xs-4">
+	<h5>
+	  <small>FOLLOWING</small>
+	  <br>
+	  <a href="/user/followings/?targeted_id=<%= @targeted_id %>">
+	    <%= @nfollowing %>
+	  </a>
+	</h5>
+      </div>
+      <div class="col-xs-5">
+	<h5>
+	  <small>FOLLOWERS&nbsp;</small>
+	  <br>
+	  <a href="/user/followeds/?targeted_id=<%= @targeted_id %>">
+	    <%= @nfollowed %>
+	  </a>
+	</h5>
+      </div>
+    </div>
+
+    <!-- Follow Button -->
+    <% if @targeted_user != session[:user] %>
+    <div>
+      <form action = "/follow?targeted_id=<%= @targeted_id %>" method = 'POST'>
+	<button id="follow-button" class="btn btn-primary" type="submit">
+	  <% if @isfollowing == true %>
+	  Following
+	  <% else %>
+	  + Follow
+	  <% end %>
+	</button>
+      </form>
+    </div>
+    <% end %>
+  </div><!-- ./panel-body -->
+</div><!-- ./panel-default -->

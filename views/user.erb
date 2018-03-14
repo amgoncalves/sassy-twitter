@@ -1,174 +1,12 @@
-<script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
-<script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
-<script src='http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.5/jquery-ui.min.js'></script>
-<script src="/stylesheets/follow-button.js" type="text/javascript"></script>
-
-<!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-<!-- Optional theme -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
-<!-- Latest compiled and minified JavaScript -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-
-<div class="navbar navbar-default navbar-static-top">
-  <div class="container">
-    <div class="navbar-collapse navbar-collapse-1 collapse" aria-expanded="true">
-      <ul class="nav navbar-nav">
-	<li class="active">
-	  <a href="/"><span class="glyphicon glyphicon-home"></span> Home</a>
-	</li>
-      </ul>
-
-      <div class="nav navbar-nav navbar-right">
-	<ul class="nav navbar-nav">
-	  <li class="nav-item dropdown">
-	    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-	      <%= @cur_user.handle %>
-	    </a>
-	    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-	      <a class="dropdown-item" href="/edit_profile">EditProfile</a>
-	      <div class="dropdown-divider"></div>
-	      <%# <a class="dropdown-item" href="/logout">Logout</a> %>
-	      <form action="/logout" method='POST'>
-		<button type="submit" class="btn btn-link btn-logout">Logout</button>
-	      </form>
-	    </div>
-	  </li>
-	</ul>
-      </div>
-
-      <div class="navbar-form navbar-right">
-	<div class="form-group has-feedback">
-	  <input type="text" class="form-control-nav" id="search" aria-describedby="search1">
-	  <span class="glyphicon glyphicon-search form-control-feedback" aria-hidden="true"></span>
-	</div>
-
-	<button class="btn btn-primary" type="submit" aria-label="Left Align">
-	  <span class="glyphicon glyphicon-pencil" aria-hidden="true"> </span> Tweet
-	</button>
-      </div>
-    </div>
-  </div>
-</div>
-
 <div class="container">
   <div class="row">
     <div class="col-sm-3">
-      <div class="panel panel-default">
-	<div class="panel-body">
-	  <a href="#"><img class="img-responsive" alt="" src="http://placehold.it/800x500"></a>
-
-	  <div class="twPc-divName">
-	    <%= @targeted_user.profile.name %>
-	  </div>
-
-	  <span>
-	    <a href="/user/<%= @targeted_id %>">
-	      @<span><%= @targeted_user.handle %></span>
-	    </a>
-	  </span>
-
-	  <div>
-	    <%= @targeted_user.profile.bio %>
-	  </div>
-
-	  <div>
-	    At <%= @targeted_user.profile.location %>
-	  </div>
-
-	  <div>
-	    Joined on <%= @targeted_user.profile.date_joined.to_s %>
-	  </div>
-
-	  <div>
-	    Born on <%= @targeted_user.profile.dob.to_s %>
-	  </div>
-
-	  <div class="row">
-	    <div class="col-xs-3">
-	      <h5>
-		<small>TWEETS</small>
-		<a href="/user/<%= @targeted_id %>" >
-		  <%= @ntweets %>
-		</a>
-	      </h5>
-	    </div>
-	    <div class="col-xs-4">
-	      <h5>
-		<small>FOLLOWING</small>
-		<a href="/user/followings/?targeted_id=<%= @targeted_id %>" >
-		  <%= @nfollowing %>
-		</a>
-	      </h5>
-	    </div>
-	    <div class="col-xs-5">
-	      <h5>
-		<small>FOLLOWERS&nbsp;</small>
-		<a href="/user/followeds/?targeted_id=<%= @targeted_id %>">
-		  <%= @nfollowed %>
-		</a>
-	      </h5>
-	    </div>
-
-	  </div>
-	  
-	  <div>
-	    <form action = "/follow?targeted_id=<%= @targeted_id %>" method = 'POST'>
-	      <button id="follow-button" class="btn btn-primary" type="submit">
-		<% if @isfollowing == true %>
-		Following
-		<% else %>
-		+ Follow
-		<% end %>
-	      </button>
-	    </form>
-	  </div>
-
-	</div>
-      </div>
-
-      <%# <div class="panel panel-default panel-custom"> %>
-      <%# 	<div class="panel-heading"> %>
-      <%# 		<h3 class="panel-title"> %>
-      <%# 			Trends %>
-      <%# 			<small><a href="#">ciao</a></small> %>
-      <%# 		</h3> %>
-      <%# 	</div> %>
-
-      <%# 	<div class="panel-body"> %>
-      <%# 		<ul class="list-unstyled"> %>
-      <%# 			<li><a href="#">#Cras justo odio</a></li> %>
-      <%# 			<li><a href="#">#Dapibus ac facilisis in</a></li> %>
-      <%# 			<li><a href="#">#Morbi leo risus</a></li> %>
-      <%# 			<li><a href="#">#Porta ac consectetur ac</a></li> %>
-      <%# 			<li><a href="#">#Vestibulum at eros</a></li> %>
-      <%# 			<li><a href="#">#Vestibulum at eros</a></li> %>
-      <%# 			<li><a href="#">#Vestibulum at eros</a></li> %>
-      <%# 		</ul> %>
-      <%# 	</div> %>
-      <%# </div> %>
-
+      <%= erb :profile %>
     </div>
+    
     <div class="col-sm-6">
       <div class="panel panel-info">
-
-	<%# <div class="panel-heading"> %>
-	<%# 	<div class="media"> %>
-	<%# 		<a class="media-left" href="#fake"> %>
-	<%# 			<img alt="" class="media-object img-rounded" src="http://placehold.it/35x35"> %>
-	<%# 		</a> %>
-	<%# 		<div class="media-body"> %>
-	<%# 			<div class="form-group has-feedback"> %>
-	<%# 				<label class="control-label sr-only" for="inputSuccess5">Hidden label</label> %>
-	<%# 				<input type="text" class="form-control" id="search2" aria-describedby="search"> %>
-	<%# 				<span class="glyphicon glyphicon-camera form-control-feedback" aria-hidden="true"></span> %>
-	<%# 				<span id="search2" class="sr-only">(success)</span> %>
-	<%# 			</div> %>
-	<%# 		</div> %>
-	<%# 	</div> %>
-	<%# </div> %>
 	<br>
-
 	<div class="panel-body">
 	  <% @targeted_tweets.each do |tweet| %>
 	  <div class="media">
@@ -189,24 +27,8 @@
 	    </div>
 	  </div>
 	  <% end %>
-
 	</div>
       </div>
-
-      <br>
-      <br>
-      <br>
-
-      <%# <div class="panel panel-default"> %>
-      <%# 	<div class="panel-heading">Prova</div> %>
-      <%# 	<div class="panel-body"> %>
-      <%# 		<ul class="nav nav-pills"> %>
-      <%# 			<li role="presentation" class="active"><a href="#">Home</a></li> %>
-      <%# 			<li role="presentation"><a href="#">Profile</a></li> %>
-      <%# 			<li role="presentation"><a href="#">Messages</a></li> %>
-      <%# 		</ul> %>
-      <%# 	</div> %>
-      <%# </div> %>
     </div>
 
     <div class="col-sm-3">

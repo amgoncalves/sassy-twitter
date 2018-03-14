@@ -1,12 +1,14 @@
+require 'byebug'
 require 'mongoid'
 require 'mongo'
 require 'sinatra'
+require 'sinatra/cookies'
 require 'sinatra/flash'
 require 'redis'
+#require 'sinatra/sessionshelper'
 require_relative './models/user'
 require_relative './models/tweet'
 require_relative './models/reply'
-require 'byebug'
 
 enable :sessions
 
@@ -37,6 +39,10 @@ end
 def is_authenticated?
   if session[:user] != nil
     @cur_user = User.where(_id: session[:user]._id).first
+  elsif cookies[:user] != nil
+    @cur_user = User.where(_id: cookies[:user]).first
+    session[:user] = @cur_user
+    return true
   end
   return !!session[:user]
 end
@@ -45,6 +51,10 @@ def auth_user(email, password)
   user = User.where(email: email).first
   return user if user && user.password == password
   return nil
+end
+
+def add_cookie(user)
+  cookies[:user] = user._id
 end
 
 def authenticate!
@@ -63,7 +73,26 @@ get '/' do
   @ids = User.pluck(:id)
   if is_authenticated?
     @tweets = Tweet.all.reverse
+    @users = User.all
     @cur_user = User.where(_id: session[:user]._id).first
+    @targeted_user = session[:user]
+    @targeted_id = @targeted_user._id
+    @ntweets = @targeted_user[:tweets].length
+    if @ntweets > 0
+      @targeted_tweets = Tweet.in(_id: @targeted_user[:tweets])
+      @targeted_tweets = @targeted_tweets.reverse
+    end
+
+    @nfollowed = @targeted_user[:followed].length
+    if @nfollowed > 0
+      @targeted_followed = User.in(_id: @targeted_user[:followed])
+    end
+
+    @nfollowing = @targeted_user[:following].length
+    if @nfollowing > 0
+      @targeted_following = User.in(_id: @targeted_user[:following])
+    end
+    
   end
   erb :index, :locals => { :title => 'Welcome!' }
 end
@@ -75,12 +104,17 @@ get '/timeline' do
 end
 
 get '/login/?' do
+  if is_authenticated?
+    flash[:notice] = 'You are already logged in.'
+    redirect '/'
+  end
   erb :login, :locals => { :title => 'Login' }
 end
 
 post '/login/?' do
-  if user = auth_user(params[:email], params[:password])  
+  if user = auth_user(params[:email], params[:password])
     session[:user] = user
+    add_cookie(user) unless params[:remember] == "off"    
     flash[:notice] = "Welcome back, #{user.handle}!"
     redirect '/'
   else
@@ -90,7 +124,8 @@ post '/login/?' do
 end
 
 post '/logout' do
-  session[:user] = nil
+  session.clear
+  cookies.clear
   flash[:notice] = 'You have been signed out.  Goodbye!'
   redirect '/'
 end
@@ -161,7 +196,7 @@ get '/user/:targeted_id' do
       @targeted_following = User.in(_id: @targeted_user[:following])
     end
 
-    erb :user, :layout => false, :locals => { :title => 'User Profile' }
+    erb :user, :locals => { :title => '#{@targeted_user.handle}' }
     # erb :followeds, :locals => { :title => 'User Profile' }
   end
 end
