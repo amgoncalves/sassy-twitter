@@ -17,14 +17,14 @@ line_count = 100
 
 File.open("tweet_load", "w+") do |f|
 	f.print('{')
-	f.print('"keys":["tweet"],')
+	f.print('"keys":["tweet"], ')
 	f.print('"values":[')
 	line_count = 100
 	File.open(filename) do |file|
 		file.each_line.with_index do |line, index|
 			row = CSV.parse_line(line, :col_sep => ",", :headers => false)
 			if index < line_count
-				f.print('["' + row[1] + '"]' + ",")
+				f.print('["' + row[1] + '"]' + ", ")
 			else
 				f.print('["' + row[1] + '"]')
 				break
