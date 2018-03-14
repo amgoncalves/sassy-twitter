@@ -1,0 +1,13 @@
+<div>
+  <ul>
+    <% @tweets.each do |tweet| %>
+      <% t = JSON.parse(tweet) %>
+      <% byebug %>
+      <li> tweet_id: <%= t["_id"]["$oid"] %> </li>
+      <li> content: <%= t["content"] %> </li>
+      <li> author handle: <%= t["author_handle"] %> </li>
+      <li> created time: <%= t["time_created"] %> </li>
+      <br>
+      <% end %>
+    </ul>
+</div>
