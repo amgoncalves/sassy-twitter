@@ -90,8 +90,9 @@ Brandeis University, Spring 2018
 - [x] Implement the complete test interface, done by Si.
 - [x] Completed Load Test of loading all seed files into local databases, 1000 users, 100715 tweets using 596 seconds by Si.
 - [x] Use Rest Client to do kinds of Load Tests of generating different users, tweets and follows by Si.
-- [x] Use loader.io to generate artificial loads. Play around with different loads, done by Shuai. Note: the payload can only be as large as 3MB.
-- [ ] Do load testing.
+- [x] Add the generated token file into the heroku server, and verify it, done by Shuai
+- [x] Write ruby program to generate payload file from the seed data, done by Shuai
+- [x] Do load testing using the payload file. Note: the payload file can only be as large as 3MB. done by Shuai
 - [ ] Clean up the directory, update repo and submit.
 
 ## Documentation
