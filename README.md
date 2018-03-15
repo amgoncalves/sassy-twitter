@@ -1,4 +1,4 @@
-# nanoTwitter 0.3 :bird:
+# nanoTwitter 0.4 :bird:
 
 [https://sassy-nanotwitter.herokuapp.com/](https://sassy-nanotwitter.herokuapp.com/)
 
@@ -96,6 +96,9 @@ Brandeis University, Spring 2018
 - [x] Do load testing using the payload file. Note: the payload file can only be as large as 3MB. done by Shuai
 - [x] Set Redis cache service both in local and Heroku by Si
 - [x] Implemented caching the timeline in Redis by Si
+- [x] Debugging codeship and Heroku deployment done by Alyssa
+- [x] Cleaned up layout for manual testing done by Alyssa
+- [x] Site-wide Bootstrap, templates, and CSS done by Alyssa
 - [ ] Clean up the directory, update repo and submit.
 
 ## Documentation
