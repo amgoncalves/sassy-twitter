@@ -28,7 +28,6 @@ get '/user/:targeted_id' do
       @targeted_following = User.in(_id: @targeted_user[:following])
     end
 
-		byebug
     erb :user, :locals => { :title => '#{@targeted_user.handle}' }
     # erb :followeds, :locals => { :title => 'User Profile' }
   end
