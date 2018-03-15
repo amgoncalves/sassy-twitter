@@ -9,6 +9,7 @@ require 'redis'
 require_relative './models/user'
 require_relative './models/tweet'
 require_relative './models/reply'
+require_relative './config/initializers/redis.rb'
 
 enable :sessions
 
