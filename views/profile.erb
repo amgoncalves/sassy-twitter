@@ -18,7 +18,7 @@
       <span class="glyphicon glyphicon-map-marker"></span> <%= @targeted_user.profile.location %>
     </div>
     <div>
-      <span class="glyphicon glyphicon-calendar"></span> Joined <%= @targeted_user.profile.date_joined.to_s %>
+      <span class="glyphicon glyphicon-calendar"></span> Joined <%= @targeted_user.profile.date_joined.strftime("%B %Y") %>
     </div>
     <div>
       <span class="glyphicon glyphicon-user"></span> Born on <%= @targeted_user.profile.dob.to_s %>
