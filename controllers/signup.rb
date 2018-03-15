@@ -4,9 +4,9 @@ end
 
 post '/signup/submit' do
   # Build the user's profile
-  today = Date.today.to_s
+  today = Date.today
   # today = Date.today
-  @profile = Profile.new("", "", today, "", "")
+  @profile = Profile.new("", nil, today, "", "")
   params[:user][:profile] = @profile
 
   # Build the user's account

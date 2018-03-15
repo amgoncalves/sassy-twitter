@@ -1,7 +1,14 @@
+require 'mongo'
+require 'mongoid'
+
 class Profile
+	include Mongoid::Document
 	attr_reader :bio, :dob, :date_joined, :location, :name
 
-	def initialize(bio = "", dob= "", date_joined = "", location = "", name = "")
+	field :date_joined, type: Date, default: Date.today
+	field :dob, type: Date, default: nil
+
+	def initialize(bio = "", dob= nil, date_joined = Date.today, location = "", name = "")
 		@bio, @dob, @date_joined, @location, @name = bio, dob, date_joined, location, name
 	end
 

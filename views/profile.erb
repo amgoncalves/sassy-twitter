@@ -5,24 +5,39 @@
     <a href="#"><img class="img-responsive" alt="" src="http://placehold.it/800x500"></a>
 
     <!-- Profile Info -->
-    <div class="twPc-divName">
-      <%= @targeted_user.profile.name %>
-    </div>
+		<% unless @targeted_user.profile.name.empty? %>
+			<div class="twPc-divName">
+				<%= @targeted_user.profile.name %>
+			</div>
+		<% end %>
+
     <div>
       <a href="/user/<%= @targeted_id %>">@<%= @targeted_user.handle %></a>
     </div>
-    <div>
-      Bio: <%= @targeted_user.profile.bio %>
-    </div>
-    <div>
-      <span class="glyphicon glyphicon-map-marker"></span> <%= @targeted_user.profile.location %>
-    </div>
-    <div>
-      <span class="glyphicon glyphicon-calendar"></span> Joined <%= @targeted_user.profile.date_joined.to_s %>
-    </div>
-    <div>
-      <span class="glyphicon glyphicon-user"></span> Born on <%= @targeted_user.profile.dob.to_s %>
-    </div>
+
+		<% unless @targeted_user.profile.bio.empty? %>
+			<div>
+				Bio: <%= @targeted_user.profile.bio %>
+			</div>
+		<% end %>
+
+		<% unless @targeted_user.profile.location.empty? %>
+			<div>
+				<span class="glyphicon glyphicon-map-marker"></span> <%= @targeted_user.profile.location %>
+			</div>
+		<% end %>
+
+		<% unless @targeted_user.profile.date_joined.nil? %>
+			<div>
+				<span class="glyphicon glyphicon-calendar"></span> Joined <%= @targeted_user.profile.date_joined.strftime("%B %Y") %>
+			</div>
+		<% end %>
+
+		<%  unless @targeted_user.profile.dob.nil? %>
+			<div>
+				<span class="glyphicon glyphicon-user"></span> Born on <%= @targeted_user.profile.dob.strftime("%B %d, %Y") %>
+			</div>
+		<% end %>
 
     <!-- User Statistics -->
     <div class="row">
