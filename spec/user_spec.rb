@@ -44,7 +44,7 @@ class UserTest < MiniTest::Unit::TestCase
 		# name of the targeted user
 		assert res.body.include?('Si Chen')
 		# location of the targeted user
-		assert res.body.include?('waltham')
+		assert res.body.include?('To waltham')
 		# date joined of the targeted user
 		assert res.body.include?('Joined ' + @profile.date_joined.to_s)
 	end
