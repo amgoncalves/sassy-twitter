@@ -230,9 +230,9 @@ end
 # n (integer) randomly selected users follow 
 # ‘n’ (integer) different randomly seleted users.
 post '/test/user/follow' do
-  if User.count < 2
-    erb "Run post '/test/reset/standard' first!"
-  else
+  # if User.count < 2
+  #   erb "Run post '/test/reset/standard' first!"
+  # else
     n = 1 # default 1
     if params[:count] != nil
       n = params[:count].to_i
@@ -254,12 +254,13 @@ post '/test/user/follow' do
         handle: #{user.handle}<br>
         #{user.following}"
     end
-  end
+  # end
 end
 
 # n (integer) randomly selected users follow user u (integer)
 # if u=”testuser” then this refers to the TestUser
 post "/test/user/:user/follow" do
+  byebug
   # initialize variables
   user = nil
   n = 0

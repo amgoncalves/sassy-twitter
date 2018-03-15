@@ -18,9 +18,6 @@ else
   Mongoid::Config.connect_to('nanotwitter-test')  
 end
 
-# configure redis
-redis = Redis.new(url: ENV["REDIS_URL"])
-
 # sets root as the parent-directory of the current file
 set :root, File.join(File.dirname(__FILE__), '')
 # sets the view directory correctly
@@ -100,7 +97,7 @@ end
 get '/timeline' do
   @ids = User.pluck(:id)
   if is_authenticated?
-    @tweets = redis.lrange(session[:user]._id.to_s, 0, 50)
+    @tweets = $redis.lrange(session[:user]._id.to_s, 0, 50)
     @users = User.all
     @cur_user = User.where(_id: session[:user]._id).first
     @targeted_user = session[:user]
@@ -234,7 +231,7 @@ post '/follow' do
   # add all tweets of that user to current user timeline
   tweets = targeted_user.tweets
   tweets.each do |tweet_id|
-    redis.rpush(user_id.to_s, Tweet.where(_id: tweet_id).first.to_json)
+    $redis.rpush(user_id.to_s, Tweet.where(_id: tweet_id).first.to_json)
   end
 
   # redirect "/user/#{@targeted_id}"
@@ -351,7 +348,7 @@ post '/tweet/new' do
     # spread this tweet to all followers
     followers = user.followed
     followers.each do |follower|
-      redis.rpush(follower.to_s, tweet.to_json)
+      $redis.rpush(follower.to_s, tweet.to_json)
     end
 
     redirect '/tweets'
