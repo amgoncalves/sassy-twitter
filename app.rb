@@ -157,6 +157,7 @@ end
 
 post '/signup/submit' do
   # Build the user's profile
+  # today = Date.today.to_s
   today = Date.today
   @profile = Profile.new("", "", today, "", "")
   params[:user][:profile] = @profile
