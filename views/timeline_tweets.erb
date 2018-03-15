@@ -1,0 +1,56 @@
+<% @tweets.each do |tweet| %>
+<% t = JSON.parse(tweet) %>
+<div class="media">
+  
+  <a class="media-left" href="#fake">
+    <img alt="" class="media-object img-rounded" src="http://placehold.it/64x64">
+  </a>
+  
+  <div class="media-body">
+    
+    <div class="tweet-date">
+      <%= t["time_created"] %>
+    </div>
+    
+    <h4 class="media-heading">
+      <% author_id = t["author_id"]["$oid"] %>
+      <a href="/user/<%= author_id %>"> @<%= t["author_handle"] %> </a>
+    </h4>
+
+    <p><%= t["content"] %></p>
+    
+    <ul class="nav nav-pills nav-pills-custom">
+      <li><a href="#"><span class="glyphicon glyphicon-share-alt"></span></a></li>
+      <li><a href="#"><span class="glyphicon glyphicon-retweet"></span></a></li>
+      <li><a href="#"><span class="glyphicon glyphicon-star"></span></a></li>
+      <li><a href="#"><span class="glyphicon glyphicon-option-horizontal"></span></a></li>
+    </ul>
+
+    <!--
+  <ul class="nav nav-pills nav-pills-custom">
+    <li>
+            <form action="/reply?tweet_id=<%= t["_id"]["$oid"] %>" method="POST">  
+        <button type="submit" class="btn-link"><span class="glyphicon glyphicon-share-alt"></span></button>
+        <input type="text" name="reply[content]" placeholder="Tweet your reply.">
+      </form>
+    </li>
+    <li>
+      <form action="/retweet?tweet_id=<%= t["_id"]["$oid"] %>" method="POST">
+        <input type="text" name="retweet[content]" placeholder="Add a comment...">
+        <button type="submit" class="btn-link"><span class="glyphicon glyphicon-retweet"></span></button>
+      </form>
+    </li>
+    <li>
+      <form action="/like?tweet_id=<%= t["_id"]["$oid"] %>" method="POST"> 
+        <button type="submit" class="btn-link"><span class="glyphicon glyphicon-star"></span></button>
+      </form>
+    </li>
+    <li>
+      <a href="#"><span class="glyphicon glyphicon-option-horizontal"></span></a>
+    </li>
+  </ul>
+  -->
+  </div><!-- ./media-body -->
+  
+</div><!-- ./media -->
+<% end %>

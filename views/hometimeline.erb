@@ -1,8 +1,30 @@
-<div>
+<div class="container">
+  <div class="row">
+    <div class="col-sm-3">
+      <%= erb :profile %>
+    </div>
+    <div class="col-sm-6">
+      <div class="panel panel-info">
+        <div class="panel-body">
+          <%= erb :tweet_stub %>
+        </div>
+      </div>
+      <a href="/">View All Tweets </a>
+      <div class="panel panel-info">
+        <div class="panel-body">
+          <%= erb :timeline_tweets %>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <%= erb :users %>
+    </div>
+  </div>
+</div>
+<!-- <div>
   <ul>
     <% @tweets.each do |tweet| %>
       <% t = JSON.parse(tweet) %>
-      <% byebug %>
       <li> tweet_id: <%= t["_id"]["$oid"] %> </li>
       <li> content: <%= t["content"] %> </li>
       <li> author handle: <%= t["author_handle"] %> </li>
@@ -11,3 +33,4 @@
       <% end %>
     </ul>
 </div>
+ -->
