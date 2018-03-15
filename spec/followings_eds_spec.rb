@@ -16,7 +16,7 @@ class FollowPageTest < MiniTest::Unit::TestCase
 						 :email => "shuaiyu@brandeis.edu",
 						 :password => '123456'}
 		@day_before_yesterday = Date.yesterday - 1
-		@day_before_yesterday = @day_before_yesterday.to_s
+		@day_before_yesterday = @day_before_yesterday
 		@profile = Profile.new('engineer', @day_before_yesterday, @day_before_yesterday, 'new york', 'Shuai Yu')
 		@params[:user][:profile] = @profile
 		@targeted = User.new(@params[:user])
@@ -29,7 +29,7 @@ class FollowPageTest < MiniTest::Unit::TestCase
 		@params[:user] = { :handle => 'alyssa',
 										:email => 'alyssa@brandeis.edu',
 										:password => '123456'}
-		@yesterday = Date.yesterday.to_s
+		@yesterday = Date.yesterday
 		@profile = Profile.new('girl', @yesterday, @yesterday, 'boston', 'Alyssa Goncalves')
 		@params[:user][:profile] = @profile
 		@targeted = User.new(@params[:user])
@@ -42,7 +42,7 @@ class FollowPageTest < MiniTest::Unit::TestCase
 		@params[:user] = { :handle => 'sichen',
 						 :email => 'sichen@brandeis.edu',
 						 :password => '12345678'}
-		@today = Date.today.to_s
+		@today = Date.today
 		@profile = Profile.new('student', @today, @today, 'waltham', 'Si Chen')
 		@params[:user][:profile] = @profile
 		@targeted = User.new(@params[:user])

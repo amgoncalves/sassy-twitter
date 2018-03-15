@@ -24,7 +24,7 @@ class UserTest < MiniTest::Unit::TestCase
 		params[:user] = { :handle => 'sichen',
 						 :email => 'sichen@brandeis.edu',
 						 :password => "12345678"}
-		today = Date.today.to_s
+		today = Date.today
 		@profile = Profile.new('student', today, today, 'waltham', 'Si Chen')
 		params[:user][:profile] = @profile
 		@targeted = User.new(params[:user])
