@@ -16,7 +16,8 @@ enable :sessions
 if ENV['MONGOID_ENV'] == 'production'
   Mongoid.load!("config/mongoid.yml", :production)
 else
-  Mongoid::Config.connect_to('nanotwitter-test')  
+  Mongoid::Config.connect_to('nanotwitter-test') 
+  $redis = Redis.new(url: ENV["REDIS_URL"]) 
 end
 
 # sets root as the parent-directory of the current file
