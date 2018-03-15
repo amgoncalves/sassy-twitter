@@ -263,7 +263,6 @@ end
 # n (integer) randomly selected users follow user u (integer)
 # if u=”testuser” then this refers to the TestUser
 post "/test/user/:user/follow" do
-  byebug
   # initialize variables
   user = nil
   n = 0
@@ -284,7 +283,7 @@ post "/test/user/:user/follow" do
     if User.count < 2
       erb "Run post '/test/reset/standard' first!"
     else
-      users = (0..1000).to_a
+      users = (1..1000).to_a
       if params[:user] != "testuser"
         users.delete(params[:users].to_i)
       end
@@ -297,7 +296,7 @@ post "/test/user/:user/follow" do
       # show the result
       erb "For user<br>
         handle: #{user.handle}<br>
-        #{user.followed}"
+        #{user.followed.to_a.to_s}"
     end
   else
     erb "User #{params[:user]} doen't exist in database"
