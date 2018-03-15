@@ -75,7 +75,7 @@ class FollowPageTest < MiniTest::Unit::TestCase
 		# location of the targeted user
 		assert res.body.include?('new york')
 		# date joined of the targeted user
-		assert res.body.include?('Joined ' + @day_before_yesterday)
+		assert res.body.include?('Joined ' + @day_before_yesterday.strftime("%B %Y"))
 	end
 
 	def test_following
