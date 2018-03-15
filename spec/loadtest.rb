@@ -230,31 +230,34 @@ end
 # n (integer) randomly selected users follow 
 # ‘n’ (integer) different randomly seleted users.
 post '/test/user/follow' do
-  # if User.count < 2
-  #   erb "Run post '/test/reset/standard' first!"
-  # else
+  if User.count < 2
+    erb "Run post '/test/reset/standard' first!"
+  else
     n = 1 # default 1
     if params[:count] != nil
       n = params[:count].to_i
     end
     
-    users = (0..1000).to_a
+    output = ""
 
+    users = (1..1000).to_a
     users.sample(n).each do |user_id|
       user = User.where(_id: user_id.to_s).first
-      tmp_users = users
+      tmp_users = (1..1000).to_a
       tmp_users.delete(user_id)
-      tmp_users.sample(n).each do |following_id|  
+      tmp_users.sample(n).each do |following_id| 
         following_user = User.where(_id: following_id.to_s).first
         user.toggle_following(following_id)
         following_user.toggle_followed(user_id)
       end
-      # show the result
-      erb "For user<br>
-        handle: #{user.handle}<br>
-        #{user.following}"
+
+      output += "For user<br>
+      handle: #{user.handle}<br>
+      #{user.following.to_a.to_s}<br><br>"
     end
-  # end
+    # show the result
+    erb output
+  end
 end
 
 # n (integer) randomly selected users follow user u (integer)
@@ -281,7 +284,7 @@ post "/test/user/:user/follow" do
     if User.count < 2
       erb "Run post '/test/reset/standard' first!"
     else
-      users = (0..100).to_a
+      users = (0..1000).to_a
       if params[:user] != "testuser"
         users.delete(params[:users].to_i)
       end
