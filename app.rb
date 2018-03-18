@@ -35,6 +35,10 @@ else
   $redis = Redis.new(url: ENV["REDIS_URL"]) 
 end
 
+configure :production do
+	require 'newrelic_rpm'
+end
+
 # sets root as the parent-directory of the current file
 set :root, File.join(File.dirname(__FILE__), '')
 # sets the view directory correctly
