@@ -109,9 +109,13 @@ Brandeis University, Spring 2018
 
 ### Requirements
 * *[INSTRUMENT]* - Collect internal performance and timing data using New Relic
+
 * *[RUNLOADEXPERIMENT]* - Design specific experiments and see whether a change improves performance. Keep up your notes in a text file inside your github repo.
+
 * *[NEWWEB]* Switch web server from WebBrick; try others, measure.
+
 * *[IMPROVESCHEMA]* Update your schema to put indexes and other enhancements and see effects.
+
 * *[nanoTwitter 0.5] Clean up, update readme.md and your repo with latest and tag the release.
 
 #### Developer's Log
