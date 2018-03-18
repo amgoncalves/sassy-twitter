@@ -12,11 +12,11 @@
 
 common: &default_settings
   # Required license key associated with your New Relic account.
-  license_key: eed6e9e2a871612ce96328893d7d940a39c02fc1
+  license_key: a8f1848b888ed06eeafc8ec11037e47f6c54ba35
 
   # Your application name. Renaming here affects where data displays in New
   # Relic.  For more details, see https://docs.newrelic.com/docs/apm/new-relic-apm/maintenance/renaming-applications
-  app_name: Sassy-Twitter
+  app_name: sassy-nanotwitter
 
   # To disable the agent regardless of other settings, uncomment the following:
   # agent_enabled: false
