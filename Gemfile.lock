@@ -33,6 +33,7 @@ GEM
     multi_json (1.13.1)
     mustermann (1.0.2)
     netrc (0.11.0)
+    newrelic_rpm (4.8.0.341)
     rack (2.0.4)
     rack-minitest (0.0.10)
       json
@@ -79,6 +80,7 @@ DEPENDENCIES
   database_cleaner
   minitest (~> 5.8, >= 5.8.4)
   mongoid (~> 6.3)
+  newrelic_rpm
   rack-minitest
   rake
   redis
