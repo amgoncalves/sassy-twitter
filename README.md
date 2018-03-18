@@ -67,7 +67,11 @@ Brandeis University, Spring 2018
 
 - [x] Codeship setup and autodeploy was setup by Alyssa.
 - [x] Seeds and test interfaces for load test were completed by Si.
-- [x] Some unit tests, integration tests, and user page, followings page, followers page, follow button, UI were done by Shuai
+- [x] Some unit tests, integration tests were done by Shuai
+- [x] User page, following page, followers page were implemented by Shuai
+- [x] The navigation bar using Bootstrap on user page, following page, followers page was implemented by Shuai
+- [x] Follow button using jquery was done by Shuai
+- [x] The HTML and CSS template for user page, following page, followers page, timeline page was got by tweaking an open-source template, done by Shuai
 
 ### nt0.4 - Testing and Deployment
 
@@ -100,6 +104,20 @@ Brandeis University, Spring 2018
 - [x] Cleaned up layout for manual testing done by Alyssa
 - [x] Site-wide Bootstrap, templates, and CSS done by Alyssa
 - [ ] Clean up the directory, update repo and submit.
+
+### nt0.5 - Initial Load Testing
+
+### Requirements
+* *[INSTRUMENT]* - Collect internal performance and timing data using New Relic
+* *[RUNLOADEXPERIMENT]* - Design specific experiments and see whether a change improves performance. Keep up your notes in a text file inside your github repo.
+* *[NEWWEB]* Switch web server from WebBrick; try others, measure.
+* *[IMPROVESCHEMA]* Update your schema to put indexes and other enhancements and see effects.
+* *[nanoTwitter 0.5] Clean up, update readme.md and your repo with latest and tag the release.
+
+#### Developer's Log
+
+- [x] Enable New Relic within Heroku Configuration and begin collecting internal performance and timing data, done by Shuai
+- [x] Did an experiment on follow button and write a report, done by Shuai
 
 ## Documentation
 
