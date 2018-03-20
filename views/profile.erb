@@ -54,7 +54,7 @@
 	<h5>
 	  <small>FOLLOWING</small>
 	  <br>
-	  <a href="/user/followings/?targeted_id=<%= @targeted_id %>">
+	  <a id='nfollowing' href="/user/followings/?targeted_id=<%= @targeted_id %>">
 	    <%= @nfollowing %>
 	  </a>
 	</h5>
@@ -63,26 +63,35 @@
 	<h5>
 	  <small>FOLLOWERS&nbsp;</small>
 	  <br>
-	  <a href="/user/followeds/?targeted_id=<%= @targeted_id %>">
+	  <a id='nfollowed' href="/user/followeds/?targeted_id=<%= @targeted_id %>">
 	    <%= @nfollowed %>
 	  </a>
 	</h5>
       </div>
     </div>
 
+		<%# <a id="follow-direct" type="hidden" href="/follow?targeted_id=<%= @targeted_id %1>"> %>
+		<a id="follow-direct" type="hidden" href="/follow">
+		</a>
+		<input id="targeted-id" type="hidden" value="<%= @targeted_id%>">
+		</input>
+			
     <!-- Follow Button -->
     <% if @targeted_user != session[:user] %>
-    <div>
-      <form action = "/follow?targeted_id=<%= @targeted_id %>" method = 'POST'>
-	<button id="follow-button" class="btn btn-primary" type="submit">
-	  <% if @isfollowing == true %>
-	  Following
-	  <% else %>
-	  + Follow
-	  <% end %>
-	</button>
-      </form>
-    </div>
+			<div>
+				<button id="follow-button" class="btn btn-primary"><% if @isfollowing == true %>Following<% else %>+ Follow<% end %></button>
+			</div>
+    <%# <div> %>
+    <%#   <form action = "/follow?targeted_id=<%= @targeted_id %1>" method = 'POST'> %>
+	<%# <button id="follow-button" class="btn btn-primary" type="submit"> %>
+	  <%# <% if @isfollowing == true %1> %>
+	  <%# Following %>
+	  <%# <% else %1> %>
+	  <%# + Follow %>
+	  <%# <% end %1> %>
+	<%# </button> %>
+    <%#   </form> %>
+    <%# </div> %>
     <% end %>
   </div><!-- ./panel-body -->
 </div><!-- ./panel-default -->

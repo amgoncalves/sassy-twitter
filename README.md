@@ -103,7 +103,7 @@ Brandeis University, Spring 2018
 - [x] Debugging codeship and Heroku deployment done by Alyssa
 - [x] Cleaned up layout for manual testing done by Alyssa
 - [x] Site-wide Bootstrap, templates, and CSS done by Alyssa
-- [ ] Clean up the directory, update repo and submit.
+- [x] Clean up the directory, update repo and submit.
 
 ### nt0.5 - Initial Load Testing
 
