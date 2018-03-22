@@ -14,17 +14,23 @@
     
     <h4 class="media-heading">
       <% author_id = t["author_id"]["$oid"] %>
-      <a href="/user/<%= author_id %>"> @<%= t["author_handle"] %> </a>
+      <% if is_authenticated? %>
+        <a href="/user/<%= author_id %>"> @<%= t["author_handle"] %> </a>
+      <% else %>
+        @<%= t["author_handle"] %>
+      <% end %>
     </h4>
 
     <p><%= t["content"] %></p>
     
-    <ul class="nav nav-pills nav-pills-custom">
-      <li><a href="#"><span class="glyphicon glyphicon-share-alt"></span></a></li>
-      <li><a href="#"><span class="glyphicon glyphicon-retweet"></span></a></li>
-      <li><a href="#"><span class="glyphicon glyphicon-star"></span></a></li>
-      <li><a href="#"><span class="glyphicon glyphicon-option-horizontal"></span></a></li>
-    </ul>
+    <% if is_authenticated? %>
+      <ul class="nav nav-pills nav-pills-custom">
+        <li><a href="/reply"><span class="glyphicon glyphicon-share-alt"></span></a></li>
+        <li><a href="#"><span class="glyphicon glyphicon-retweet"></span></a></li>
+        <li><a href="#"><span class="glyphicon glyphicon-star"></span></a></li>
+        <li><a href="#"><span class="glyphicon glyphicon-option-horizontal"></span></a></li>
+      </ul>
+    <% end %>
 
     <!--
   <ul class="nav nav-pills nav-pills-custom">

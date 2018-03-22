@@ -35,7 +35,7 @@
 
 		<%  unless @targeted_user.profile.dob.nil? %>
 			<div>
-				<span class="glyphicon glyphicon-user"></span> Born on <%= @targeted_user.profile.dob.strftime("%B %d, %Y") %>
+				<span class="glyphicon glyphicon-user"></span> Born on <%= @targeted_user.profile.dob.to_s %>
 			</div>
 		<% end %>
 

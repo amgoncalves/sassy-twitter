@@ -13,6 +13,12 @@ post '/tweet/new' do
       $redis.rpush(follower.to_s, tweet.to_json)
     end
 
+    # save this tweet in global timeline
+    $redis.rpush($globalTL, tweet.to_json)
+    if $redis.llen($globalTL) > 50
+      $redis.rpop($globalTL)
+    end
+
     redirect '/tweets'
   else
     flash[:warning] = 'Create tweet failed'

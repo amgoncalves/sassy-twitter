@@ -91,7 +91,7 @@ end
 
 # display version number of this build
 get '/test/version' do
-  erb "Sorry! Version related function not impelemented yet."
+  erb "version: 0.4"
 end
 
 # reset the database by deleting all users, tweets and follows

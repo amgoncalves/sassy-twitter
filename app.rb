@@ -10,6 +10,7 @@ require_relative './models/user'
 require_relative './models/tweet'
 require_relative './models/reply'
 require_relative './config/initializers/redis.rb'
+require_relative './config/vars/global_var.rb'
 require_relative './controllers/session.rb'
 require_relative './controllers/login.rb'
 require_relative './controllers/logout.rb'
@@ -49,8 +50,8 @@ set :public_folder, Proc.new { File.join(root, "public") }
 get '/' do
   @ids = User.pluck(:id)
   if is_authenticated?
-    @tweets = Tweet.all.reverse
-    @users = User.all
+    @tweets = Tweet.all.reverse # the cost of reverse
+    @users = User.all # TODO: delete in future
     @cur_user = User.where(_id: session[:user]._id).first
     @targeted_user = session[:user]
     @targeted_id = @targeted_user._id
@@ -69,7 +70,8 @@ get '/' do
     if @nfollowing > 0
       @targeted_following = User.in(_id: @targeted_user[:following])
     end
-    
+  else 
+    @tweets = $redis.lrange($globalTL, 0, -1)
   end
   erb :index, :locals => { :title => 'Welcome!' }
 end

@@ -8,9 +8,9 @@ end
 
 def is_authenticated?
   if session[:user] != nil
-    @cur_user = User.where(_id: session[:user]._id).first
+    @cur_user = session[:user]
   elsif cookies[:user] != nil
-    @cur_user = User.where(_id: cookies[:user]).first
+    @cur_user = cookies[:user]
     session[:user] = @cur_user
     return true
   end
