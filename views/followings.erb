@@ -175,81 +175,10 @@
 
 					<div class="gallery">
 						<% @targeted_following.each do |f| %>
-
-
-			<div class="panel panel-default">
-				<div class="panel-body">
-					<%# <a href="#"><img class="img-responsive" alt="" src="http://placehold.it/800x500"></a> %>
-
-					<div class="twPc-divName">
-						<%= f.profile.name %>
-					</div>
-
-					<span>
-						<a href="/user/<%= @targeted_id %>">
-							@<span><%= f.handle %></span>
-					</span>
-
-					<div>
-						<%= f.profile.bio %>
-					</div>
-
-					<div class="row">
-						<div class="col-xs-3">
-							<h5>
-								<small>TWEETS</small>
-								<a href="/user/<%= @targeted_id %>">
-									<%= @ntweets %>
-								</a>
-							</h5>
-						</div>
-						<div class="col-xs-4">
-							<h5>
-								<small>FOLLOWING</small>
-								<a href="/user/followings/?targeted_id=<%= @targeted_id %>">
-									<%= @nfollowing %>
-								</a>
-							</h5>
-						</div>
-						<div class="col-xs-5">
-							<h5>
-								<small>FOLLOWERS&nbsp;</small>
-								<a href="/user/followeds/?targeted_id=<%= @targeted_id %>">
-									<%= @nfollowed %>
-								</a>
-							</h5>
-						</div>
-
-					</div>
-						
-					<div>
-						<form action = "/follow?targeted_id=<%= @targeted_id %>" method = 'POST'>
-							<button id="follow-button" class="btn btn-primary" type="submit">
-								<% if @isfollowing == true %>
-									Following
-								<% else %>
-									+ Follow
-								<% end %>
-							</button>
-						</form>
-					</div>
-
-				</div>
-			</div>
-
-
-							<%# <div> %>
-							<%# 	<%= f.profile.name %1> <br> %>
-							<%# 	<%= f.handle %1><br> %>
-							<%# 	<%= f.profile.bio %1><br> %>
-							<%# 	<%= f.profile.dob %1> %>
-							<%# </div> %>
+							<%= erb :miniprofile, :locals=> {:f => f} %>
 						<% end %>
 					</div>
-
-
-				</div>
-			<%# </div> %>
+			</div>
 
 			<br>
 			<br>

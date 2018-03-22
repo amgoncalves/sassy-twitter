@@ -1,0 +1,65 @@
+/* .miniprofile */
+/* { */
+/* 	  background-color:red; */
+/*     position:absolute; */            
+/* 		z-index:100; */
+/* 		display: none; */
+/* } */
+
+#tweet-card
+{
+	position:relative;
+}
+
+/* .miniprofile */
+/* { */
+/* 		background:#fff ; */    
+/*     /1* border:solid 1px #ddd; *1/ */      
+/*     position:absolute ; */
+/*     width:200px; */
+/*     left:20px; */
+/*     top:80px; */
+/*     z-index:100; */
+/* 		display: none; */
+/*     /1* padding:2em 10px 10px; /*leave enough padding on top for the name*/ *1/ */   
+/* } */
+
+
+.miniprofile-container {
+    position: relative;
+    width: 50%;
+}
+
+.miniprofile
+{
+		transition: .5s ease;
+		opacity: 0;
+    position:absolute;
+    width:200px;
+		/* height:300px; */
+    /* top:50%; */
+    left:50%;
+		transform: translate(-115%, 25%);
+		-ms-transform: translate(-115%, 25%);
+		text-align: left;
+		z-index: 500;
+}
+
+/* .middle { */
+/*   transition: .5s ease; */
+/*   opacity: 0; */
+/*   position: absolute; */
+/*   top: 50%; */
+/*   left: 50%; */
+/*   transform: translate(-50%, -50%); */
+/*   -ms-transform: translate(-50%, -50%); */
+/*   text-align: center; */
+/* } */
+
+/* .miniprofile-container:hover .middle { */
+/* 	opacity: 1; */
+/* } */
+
+.miniprofile-container:hover .miniprofile {
+	opacity: 1;
+}

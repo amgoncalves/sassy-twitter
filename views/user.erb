@@ -9,10 +9,26 @@
 	<br>
 	<div class="panel-body">
 	  <% @targeted_tweets.each do |tweet| %>
+
+				<div class="miniprofile-container">
+
+			<div class="miniprofile">
+				<%= erb :miniprofile, :locals=>{:f=>@targeted_user} %>
+			</div>
+				</div>
+
 	  <div class="media">
+
 	    <a class="media-left" href="#fake">
-	      <img alt="" class="media-object img-rounded" src="/images/profile_64x64.png">
+			<%# <span id="tweet-card"> %>
+
+			<img alt="" id='profile_in_tweet' class="media-object img-rounded" src="/images/profile_64x64.png">
+			<%# <span class="miniprofile"> %>
+			<%# 	<%= erb :miniprofile, :locals => {:f => @targeted_user} %1> %>
+			<%# </span> %>
+			<%# </span> %>
 	    </a>
+
 	    <div class="media-body">
 	      <h4 class="media-heading"><%= @targeted_user.handle %></h4>
 	      <p>
@@ -26,6 +42,7 @@
 	      </ul>
 	    </div>
 	  </div>
+
 	  <% end %>
 	</div>
       </div>

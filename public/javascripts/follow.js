@@ -1,4 +1,5 @@
 $(document).ready(function() {
+	var orig_nfollowed = parseInt($('a#nfollowed').text());
 
 	$("#follow-button").click(function(){
 		var $nfollowed = $('a#nfollowed').text();
@@ -19,11 +20,14 @@ $(document).ready(function() {
 	// if so, post 
 	// if not, do nothing
 	$(window).on('unload', function() {
-		$.ajax({
-			type: 'POST',
-			url: $('a#follow-direct').attr('href'),
-			async: false,
-			data: {targeted_id:$("#targeted-id").attr('value')}
-		});
+		var $nfollowed = parseInt($('a#nfollowed').text());
+		if (orig_nfollowed !== $nfollowed) {
+			$.ajax({
+				type: 'POST',
+				url: $('a#follow-direct').attr('href'),
+				async: false,
+				data: {targeted_id:$("#targeted-id").attr('value')}
+			});
+		}
 	});
 });
