@@ -85,5 +85,19 @@ class User
 
   def findById(user_id)
     return self.where(_id: user_id).first
+  end
+
+  def like?(tweet_id)
+    self.liked.include?(tweet_id.to_s)
+  end
+
+  def like(tweet_id)
+    new_liked = self.liked.add(tweet_id.to_s)
+    self.set(liked: new_liked)
+  end
+
+  def unlike(tweet_id)
+    new_liked = self.liked.delete(tweet_id.to_s)
+    self.set(liked: new_liked)
   end  
 end

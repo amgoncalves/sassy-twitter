@@ -9,10 +9,10 @@
           <%= erb :tweet_stub %>
         </div>
       </div>
-      <a href="/">View All Tweets </a>
+      <a href="/timeline">View Timeline </a>
       <div class="panel panel-info">
         <div class="panel-body">
-          <%= erb :timeline_tweets %>
+          <%= erb :tweets %>
         </div>
       </div>
     </div>
@@ -21,16 +21,3 @@
     </div>
   </div>
 </div>
-<!-- <div>
-  <ul>
-    <% @tweets.each do |tweet| %>
-      <% t = JSON.parse(tweet) %>
-      <li> tweet_id: <%= t["_id"]["$oid"] %> </li>
-      <li> content: <%= t["content"] %> </li>
-      <li> author handle: <%= t["author_handle"] %> </li>
-      <li> created time: <%= t["time_created"] %> </li>
-      <br>
-      <% end %>
-    </ul>
-</div>
- -->

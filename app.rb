@@ -52,9 +52,9 @@ get '/' do
   if is_authenticated?
     @tweets = Tweet.all.reverse # the cost of reverse
     @users = User.all # TODO: delete in future
-    @cur_user = User.where(_id: session[:user]._id).first
     @targeted_user = session[:user]
     @targeted_id = @targeted_user._id
+    @cur_user = @targeted_user
     @ntweets = @targeted_user[:tweets].length
     if @ntweets > 0
       @targeted_tweets = Tweet.in(_id: @targeted_user[:tweets])
@@ -70,8 +70,9 @@ get '/' do
     if @nfollowing > 0
       @targeted_following = User.in(_id: @targeted_user[:following])
     end
-  else 
-    @tweets = $redis.lrange($globalTL, 0, -1)
+  else
+    gTLTweet_ids = $redis.lrange($globalTL, 0, -1)
+    @tweets = Tweet.in(_id: gTLTweet_ids)
   end
   erb :index, :locals => { :title => 'Welcome!' }
 end
