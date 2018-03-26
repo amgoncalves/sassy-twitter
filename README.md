@@ -158,6 +158,12 @@ switched to db nanotwitter-dev
 
 The default configuration of the development database is contained in the file config/mongoid.yml.  If you'd like to use a custom development setup, you can edit mongoid.yml and add config/mongoid.yml to your .gitignore file.
 
+
+### Redis Setup
+
+Download and install [Redis](https://redis.io/topics/quickstart).  Redis must be running in the development environment.  Run the command ```$ redis-server``` in terminal.
+
+
 ### Sinatra Setup
 
 Download this repo.  Use [Bundler](http://bundler.io/) to install the required project Gems by running the following command from the project's root directory:

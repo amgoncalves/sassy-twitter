@@ -27,25 +27,25 @@ class User
     self.APItoken = self.handle
   end  
 
-	def toggle_following(following_id)
-		nxt_following = following
-		if following.include?(following_id)
-			nxt_following.delete(following_id)
-		else
-			nxt_following.add(following_id)
-		end
-		self.set(following: nxt_following)
-	end
+  def toggle_following(following_id)
+    nxt_following = following
+    if following.include?(following_id)
+      nxt_following.delete(following_id)
+    else
+      nxt_following.add(following_id)
+    end
+    self.set(following: nxt_following)
+  end
 
-	def toggle_followed(followed_id)
-		nxt_followed = followed
-		if followed.include?(followed_id)
-			nxt_followed.delete(followed_id)
-		else
-			nxt_followed.add(followed_id)
-		end
-		self.set(followed: nxt_followed)
-	end
+  def toggle_followed(followed_id)
+    nxt_followed = followed
+    if followed.include?(followed_id)
+      nxt_followed.delete(followed_id)
+    else
+      nxt_followed.add(followed_id)
+    end
+    self.set(followed: nxt_followed)
+  end
 
   def release_following(following_id)
     if following.include?(following_id)
@@ -61,18 +61,18 @@ class User
     end
   end
 
-	def add_tweet(tweet_id)
-		nxt_tweets = tweets.push(tweet_id)
-		self.set(tweets: nxt_tweets)
-	end
+  def add_tweet(tweet_id)
+    nxt_tweets = tweets.push(tweet_id)
+    self.set(tweets: nxt_tweets)
+  end
 
-	def update_profile(newprofile)
-		self.set(profile: newprofile)
-	end
+  def update_profile(newprofile)
+    self.set(profile: newprofile)
+  end
 
-	def follow?(targeted_id)
-		following.include?(targeted_id)
-	end
+  def follow?(targeted_id)
+    following.include?(targeted_id)
+  end
 
   def password
     @password ||= Password.new(password_hash)
@@ -85,5 +85,9 @@ class User
 
   def findById(user_id)
     return self.where(_id: user_id).first
-  end  
+  end
+
+  def self.search(query)
+    self.where(handle: /#{query}/i)
+  end
 end

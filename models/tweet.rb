@@ -36,4 +36,8 @@ class Tweet
   def findById(tweet_id)
     return self.where(_id: tweet_id).first
   end
+
+  def self.search(query)
+    self.where(content: /#{query}/i)
+  end  
 end

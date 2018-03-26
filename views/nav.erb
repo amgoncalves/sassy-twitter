@@ -26,9 +26,9 @@
 	      </div>
 	      <div class="dropdown-divider"></div>
 	      <div class="dropdown-item">
-	      <form action="/logout" method='POST'>
-		<button type="submit" class="btn btn-link btn-logout">Logout</button>
-	      </form>
+		<form action="/logout" method='POST'>
+		  <button type="submit" class="btn btn-link btn-logout">Logout</button>
+		</form>
 	      </div>
 	    </div>
 	  </li>
@@ -36,11 +36,20 @@
       </div>
 
       <div class="navbar-form navbar-right">
-	<!-- Search form -->	
-	<div class="form-group has-feedback">
-	  <input type="text" class="form-control-nav" id="search" aria-describedby="search1">
-	  <span class="glyphicon glyphicon-search form-control-feedback" aria-hidden="true"></span>
-	</div>
+	<!-- Search form -->
+	<form class="form-inline" action="/search" method="POST">
+	  <label class="radio-inline">
+	    <input type="radio" name="searchRadioOptions" id="inlineRadio1" value="user"> Users
+	  </label>
+	  <label class="radio-inline">
+	    <input type="radio" name="searchRadioOptions" id="inlineRadio2" value="tweet"> Tweets
+	  </label>	  	  
+	  <input type="search" class="form-control" name="query" placeholder="Search...">
+	  <button type="submit" class="btn btn-primary">
+	    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+	  </button>
+	</form>
+	
 	<!-- Tweet Button -->
 	<a href="/tweet/test">
 	  <button class="btn btn-primary" type="submit" aria-label="Left Align">

@@ -1,0 +1,40 @@
+<div class="container">
+  <div class="row">
+    <div class="col-sm-3">
+      <%= erb :profile %>
+    </div>
+    <div class="col-sm-6">
+
+    <% if @switch %>  
+      <% if @user_results %>
+        <h2>Users found:</h2>
+        <div class="panel panel-info">
+          <div class="panel-body">
+	    <% @users = @user_results %>
+	    <%= erb :user_list %>
+	  </div>
+	</div>
+      <% else %>
+        <h2>No users with '<%= params[:query] %>' were found.</h2>
+      <% end %>
+
+    <% else %>
+      <% if !@tweet_results.empty? %>
+        <h2>Tweets found:</h2>
+        <div class="panel panel-info">
+          <div class="panel-body">
+            <% @tweets = @tweet_results %>
+            <%= erb :tweets %>
+	  </div>
+	</div>
+      <% else %>
+        <h2>Tweets found:</h2>
+        <p>No tweets containing '<%= params[:query] %>' were found.</p>
+      <% end %>
+    <% end %>	
+    </div>
+    <div class="col-sm-3">
+      <%= erb :users %>
+    </div>
+  </div>
+</div>

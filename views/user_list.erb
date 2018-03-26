@@ -1,0 +1,28 @@
+<% @users.each do |user| %>
+<% get_targeted_user %>
+<div class="media">
+  <a class="media-left" href="#fake">
+    <img alt="" class="media-object img-rounded" src="/images/profile_64x64.png">
+  </a>
+  <div class="media-body">
+    <h4 class="media-heading">
+     <%= user.profile.name %><br/>
+     <a href="/user/<%= user._id %>">@<%= user.handle %></a>
+    </h4>
+    <% unless user.profile.bio.empty? %>
+      <div>Bio: <%= user.profile.bio %></div>
+    <% end %>
+    <% if user != session[:user] %>
+      <div>
+        <button id="follow-button" class="btn btn-primary">
+	  <% if @isfollowing == true %>
+	    Following
+	  <% else %>
+	    + Follow
+	  <% end %>
+	</button>
+      </div>
+    <% end %>
+  </div><!-- ./media-body -->
+</div><!-- ./media -->
+<% end %>
