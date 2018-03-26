@@ -41,6 +41,11 @@ get '/tweet/:tweet_id' do
     if @tweet[:replys].length > 0
       @replys = Reply.in(_id: @tweet[:replys])
     end
+
+    if @tweet[:original_tweet_id] != nil
+      @ot = Tweet.find(@tweet[:original_tweet_id])
+    end
+    
     erb :tweet, :locals => { :title => 'Tweet' }
   else
     flash[:warning] = 'Can not find tweet!'

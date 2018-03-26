@@ -11,6 +11,24 @@
 
 <br>
 
+<% if @tweet["original_tweet_id"] != nil %>
+  <h4>original tweet</h4>
+  <div class="media">
+    <a class="media-left" href="#fake">
+      <img alt="" class="media-object img-rounded" src="/images/profile_64x64.png">
+    </a>
+    <div class="media-body">
+      <div class="tweet-date"><%= @ot["time_created"] %></div>
+      <h4 class="media-heading">@<%= @ot["author_handle"] %></h4>
+      <p><%= @ot["content"] %></p>
+    </div>
+  </div>
+  <hr>
+<% end %>
+
+<br>
+
+<% if @tweet["replys"].length > 0 %>
 <h4>replys</h4>
 <div class="media">
   <% @replys.each do |reply| %>
@@ -25,5 +43,6 @@
     <hr>
   <% end %>
 </div>
+<% end %>
 
 

@@ -9,10 +9,16 @@ post '/retweet' do
   if retweet.save
     user = session[:user]
     user.add_tweet(retweet._id)
-    redirect back
+    redirect "/tweet/#{retweet._id}"
   else
     byebug
     flash[:warning] = 'Create tweet failed'
   end
 end
+
+get '/retweet' do
+  @t = Tweet.find(params[:tweet_id])
+  erb :retweet, :locals => { :title => 'Retweet' }
+end
+
 

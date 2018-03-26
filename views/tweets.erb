@@ -26,10 +26,11 @@
     <a href="/tweet/<%= @t["original_tweet_id"] %>">this tweet retweeted this tweet</a>
     <% end %>
     
-    <% if is_authenticated? && author_id != @cur_user._id %>
-      <ul class="nav nav-pills nav-pills-custom">
-        <li><a name="reply" data-toggle="modal" data-target="#myReply"><span class="glyphicon glyphicon-share-alt"></span></a></li>
-        <li><a name="retweet" data-toggle="modal" data-target="#reTweet"><span class="glyphicon glyphicon-retweet"></span></a></li>
+    
+    <ul class="nav nav-pills nav-pills-custom">
+      <% if is_authenticated? && author_id != @cur_user._id %>
+        <li><a href="/reply?tweet_id=<%= @t['_id'] %>"><span class="glyphicon glyphicon-share-alt"></span></a></li>
+        <li><a href="/retweet?tweet_id=<%= @t['_id'] %>"><span class="glyphicon glyphicon-retweet"></span></a></li>
         <li>
           <% if @cur_user.like?(@t._id.to_s) %>
             <a href="/unlike?tweet_id=<%= @t['_id'] %>"><span class="glyphicon glyphicon-star" style="color:red"></span></a>
@@ -37,16 +38,15 @@
             <a href="/like?tweet_id=<%= @t['_id'] %>"><span class="glyphicon glyphicon-star"></span></a>
           <% end %>
         </li>
-        <li><a href="/tweet/<%= @t['_id'] %>"><span class="glyphicon glyphicon-option-horizontal"></span></a></li>
-      </ul>
-
-      <!-- Reply Dialog -->
-      <div class="modal fade" id="myReply" role="dialog"><%= erb :reply %></div>
-      <!-- Retweet Dialog -->
-      <div class="modal fade" id="reTweet" role="dialog"><%= erb :retweet %></div>
-
-    <% end %>
+      <% else %>
+        <li><a name="#"><span class="glyphicon glyphicon-share-alt" style="color:grey"></span></a></li>
+        <li><a name="#"><span class="glyphicon glyphicon-retweet" style="color:grey"></span></a></li>
+        <li><a name="#"><span class="glyphicon glyphicon-star" style="color:grey"></span></a></li>
+      <% end %>
+      <li><a href="/tweet/<%= @t['_id'] %>"><span class="glyphicon glyphicon-option-horizontal"></span></a></li>
+    </ul>
   </div>
 </div>
 <hr>
 <% end %>
+

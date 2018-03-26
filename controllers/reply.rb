@@ -4,7 +4,6 @@ post '/reply' do
   params[:reply][:replier_id] = session[:user]._id
   params[:reply][:replier_handle] = session[:user].handle
   reply = Reply.new(params[:reply])
-  byebug
 
   if reply.save
     # update corresponding tweet
@@ -14,11 +13,16 @@ post '/reply' do
     # add reply id to replies
     tweet.add_reply(reply[:_id])
 
-    redirect back
+    redirect "/tweet/#{tweet_id}"
     
   else 
     puts "save failed"
     flash[:warning] = 'Create reply failed'
   end
+end
+
+get '/reply' do
+  @t = Tweet.find(params[:tweet_id])
+  erb :reply, :locals => { :title => 'Reply' }
 end
 
