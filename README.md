@@ -175,3 +175,25 @@ Make sure MongoDB is running according to the instructions given in **MongoDB Se
 ```$ ruby app.rb```
 
 Open a web browser and navigate to ```localhost:4567```.  You should see the nanoTwitter homepage.
+
+### Redis Setup
+* [Download](https://redis.io/download), extract and compile Redis with:
+````
+$ tar xzf redis-4.0.8.tar.gz
+$ cd redis-4.0.8
+$ make
+````
+* The binaries compiled are available in the src directory. Run Redis with:
+````
+$ src/redis-server
+````
+* You can interact with Redis using the built-in client:
+````
+$ src/redis-cli
+redis> flushall       # delete all data in redis
+OK
+redis> keys *         # show all keys stored in redis
+redis> lrange "key" 0 -1          # show all elements stored in the "key" as a list
+````
+
+
