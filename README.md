@@ -122,6 +122,12 @@ Brandeis University, Spring 2018
 
 - [x] Enable New Relic within Heroku Configuration and begin collecting internal performance and timing data, done by Shuai
 - [x] Did an experiment on follow button and write a report, done by Shuai
+- [x] MongoDB index, done by Shuai and Si
+- [x] Implemented the function and related page of like - Si
+- [x] Implemented the function and related page of retweet - Si
+- [x] Implemented the function and related page of reply - Si
+- [x] Implemented the function and related page of tweet detail - Si
+- [x] Improved schema of reply and tweet and generated summary of code optimization to ensure least access to database and efficiency of get method - Si
 
 ## Documentation
 
