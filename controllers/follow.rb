@@ -9,7 +9,7 @@ post '/follow' do
   # add all tweets of that user to current user timeline
   tweets = targeted_user.tweets
   tweets.each do |tweet_id|
-    $redis.rpush(user_id.to_s, Tweet.where(_id: tweet_id).first.to_json)
+    $redis.rpush(user_id.to_s, tweet_id)
   end
 
   # redirect "/user/#{@targeted_id}"

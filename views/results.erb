@@ -3,36 +3,37 @@
     <div class="col-sm-3">
       <%= erb :profile %>
     </div>
+    
     <div class="col-sm-6">
-
-    <% if @switch %>  
-      <% if @user_results %>
-        <h2>Users found:</h2>
-        <div class="panel panel-info">
-          <div class="panel-body">
+    <% if !@hide_users %>
+      <h2>Users found:</h2>
+      <div class="panel panel-info">
+        <div class="panel-body">
+	  <% if @user_results.count == 0 %>
+            <p>No users with '<%= params[:query] %>' were found.</p>
+	  <% else %>
 	    <% @users = @user_results %>
 	    <%= erb :user_list %>
-	  </div>
+	  <% end %>
 	</div>
-      <% else %>
-        <h2>No users with '<%= params[:query] %>' were found.</h2>
-      <% end %>
+      </div>
+    <% end %>
 
-    <% else %>
-      <% if !@tweet_results.empty? %>
-        <h2>Tweets found:</h2>
-        <div class="panel panel-info">
-          <div class="panel-body">
+    <% if !@hide_tweets %>
+      <h2>Tweets found:</h2>
+      <div class="panel panel-info">
+        <div class="panel-body">
+	  <% if @tweet_results.count == 0 %>
+            <p>No tweets containing '<%= params[:query] %>' were found.</p>	    
+	  <% else %>
             <% @tweets = @tweet_results %>
             <%= erb :tweets %>
-	  </div>
+	  <% end %>
 	</div>
-      <% else %>
-        <h2>Tweets found:</h2>
-        <p>No tweets containing '<%= params[:query] %>' were found.</p>
-      <% end %>
+      </div>
     <% end %>	
     </div>
+    
     <div class="col-sm-3">
       <%= erb :users %>
     </div>

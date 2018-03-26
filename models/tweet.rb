@@ -10,7 +10,7 @@ class Tweet
   field :author_id, type: BSON::ObjectId, default: String.new
   field :author_handle, type: String, default: String.new
   field :original_tweet_id, type: BSON::ObjectId, default: String.new
-  field :likedby, type: Array, default: Array.new
+  field :likedby, type: Set, default: []
   field :replys, type: Array, default: Array.new
 
   validates_length_of :content, minimum: 1, maximum: 280
@@ -24,12 +24,12 @@ class Tweet
   end
 
   def add_like(user_id)
-    new_likedby = likedby.push(user_id)
+    new_likedby = self.likedby.add(user_id.to_s)
     self.set(likedby: new_likedby)
   end
 
   def delete_like(user_id)
-    new_likedby = likedby.delete(user_id)
+    new_likedby = self.likedby.delete(user_id.to_s)
     self.set(likedby: new_likedby)
   end
 

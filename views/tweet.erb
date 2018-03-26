@@ -1,21 +1,48 @@
-<a href='/tweets'> back to tweet list </a>
+<div class="container">
+  <a class="media-left" href="#fake">
+    <img alt="" class="media-object img-rounded" src="/images/profile_64x64.png">
+  </a>
+  <div class="media-body">
+    <div class="tweet-date"><%= @tweet["time_created"] %></div>
+    <h2 class="media-heading">@<%= @tweet["author_handle"] %></h2>
+    <h4><%= @tweet["content"] %></h4>
+  </div>
+</div>
+
 <br>
 
-id : <%= @tweet._id %><br>
-content : <%= @tweet.content %><br>
-time_created : <%= @tweet.time_created %><br>
-author_id : <%= @tweet.author_id %><br>
-original_tweet_id : <%= @tweet.original_tweet_id %><br>
-likedby : <%= @tweet.likedby.length %><br>
-replys: <br>
-<ul>
+<% if @tweet["original_tweet_id"] != nil %>
+  <h4>original tweet</h4>
+  <div class="media">
+    <a class="media-left" href="#fake">
+      <img alt="" class="media-object img-rounded" src="/images/profile_64x64.png">
+    </a>
+    <div class="media-body">
+      <div class="tweet-date"><%= @ot["time_created"] %></div>
+      <h4 class="media-heading">@<%= @ot["author_handle"] %></h4>
+      <p><%= @ot["content"] %></p>
+    </div>
+  </div>
+  <hr>
+<% end %>
+
+<br>
+
+<% if @tweet["replys"].length > 0 %>
+<h4>replys</h4>
+<div class="media">
   <% @replys.each do |reply| %>
-  <li>
-    reply_id: <%= reply._id %><br>
-    content : <%= reply.content %><br>
-    time_created : <%= reply.time_created %><br>
-    <br>
-  </li>
+    <a class="media-left" href="#fake">
+      <img alt="" class="media-object img-rounded" src="/images/profile_64x64.png">
+    </a>
+    <div class="media-body">
+      <div class="tweet-date"><%= reply["time_created"] %></div>
+      <h4 class="media-heading">@<%= reply["replier_handle"] %></h4>
+      <p><%= reply["content"] %></p>
+    </div>
+    <hr>
   <% end %>
-</ul>
+</div>
+<% end %>
+
 

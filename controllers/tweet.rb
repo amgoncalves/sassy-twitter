@@ -5,21 +5,22 @@ post '/tweet/new' do
   tweet = Tweet.new(params[:tweet])
   if tweet.save
     user = User.where(_id: user_id).first
-    user.add_tweet(tweet._id)
+    tweet_id = tweet._id
+    user.add_tweet(tweet_id)
 
     # spread this tweet to all followers
     followers = user.followed
     followers.each do |follower|
-      $redis.rpush(follower.to_s, tweet.to_json)
+      $redis.rpush(follower.to_s, tweet_id)
     end
 
     # save this tweet in global timeline
-    $redis.rpush($globalTL, tweet.to_json)
+    $redis.rpush($globalTL, tweet_id)
     if $redis.llen($globalTL) > 50
       $redis.rpop($globalTL)
     end
 
-    redirect '/tweets'
+    redirect back
   else
     flash[:warning] = 'Create tweet failed'
   end
@@ -40,7 +41,12 @@ get '/tweet/:tweet_id' do
     if @tweet[:replys].length > 0
       @replys = Reply.in(_id: @tweet[:replys])
     end
-    erb :tweet, :locals => { :title => "Tweet #{params[:tweet_id]}" }
+
+    if @tweet[:original_tweet_id] != nil
+      @ot = Tweet.find(@tweet[:original_tweet_id])
+    end
+    
+    erb :tweet, :locals => { :title => 'Tweet' }
   else
     flash[:warning] = 'Can not find tweet!'
   end

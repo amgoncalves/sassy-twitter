@@ -28,6 +28,7 @@ require_relative './controllers/followeds.rb'
 require_relative './controllers/helpers.rb'
 require_relative './controllers/search.rb'
 require_relative './controllers/profile.rb'
+require_relative './spec/test_interface.rb'
 
 enable :sessions
 
@@ -52,4 +53,8 @@ set :public_folder, Proc.new { File.join(root, "public") }
 get '/' do
   get_targeted_user
   erb :index, :locals => { :title => 'Welcome!' }
+end
+
+get '/redis/flushall' do
+  $redis.flushall
 end

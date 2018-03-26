@@ -1,4 +1,5 @@
 <% @tweets.each do |tweet| %>
+<% @t = tweet %>
 <div class="media">
   
   <a class="media-left" href="#fake">
@@ -8,49 +9,44 @@
   <div class="media-body">
     
     <div class="tweet-date">
-      <%= tweet.time_created.strftime("%b %d %I:%M:%S %p") %>
+      <%= @t.time_created.strftime("%b %d %I:%M:%S %p") %>
     </div>
     
     <h4 class="media-heading">
-      <a href="/user/<%= tweet.author_id %>">
-	@<%= User.where(_id: tweet.author_id).first.handle %>
-      </a>
+      <% author_id = @t["author_id"] %>
+      <% if is_authenticated? %>
+        <a href="/user/<%= author_id %>"> @<%= @t["author_handle"] %> </a>
+      <% else %>
+        @<%= @t["author_handle"] %>
+      <% end %>
     </h4>
 
-    <p><%= tweet.content %></p>
+    <p><%= @t["content"] %></p>
+    <% if @t["original_tweet_id"] != nil %>
+    <a href="/tweet/<%= @t["original_tweet_id"] %>">this tweet retweeted this tweet</a>
+    <% end %>
+    
     
     <ul class="nav nav-pills nav-pills-custom">
-      <li><a href="#"><span class="glyphicon glyphicon-share-alt"></span></a></li>
-      <li><a href="#"><span class="glyphicon glyphicon-retweet"></span></a></li>
-      <li><a href="#"><span class="glyphicon glyphicon-star"></span></a></li>
-      <li><a href="#"><span class="glyphicon glyphicon-option-horizontal"></span></a></li>
+      <% if is_authenticated? && author_id != @cur_user._id %>
+        <li><a href="/reply?tweet_id=<%= @t['_id'] %>"><span class="glyphicon glyphicon-share-alt"></span></a></li>
+        <li><a href="/retweet?tweet_id=<%= @t['_id'] %>"><span class="glyphicon glyphicon-retweet"></span></a></li>
+        <li>
+          <% if @cur_user.like?(@t._id.to_s) %>
+            <a href="/unlike?tweet_id=<%= @t['_id'] %>"><span class="glyphicon glyphicon-star" style="color:red"></span></a>
+          <% else %>
+            <a href="/like?tweet_id=<%= @t['_id'] %>"><span class="glyphicon glyphicon-star"></span></a>
+          <% end %>
+        </li>
+      <% else %>
+        <li><a name="#"><span class="glyphicon glyphicon-share-alt" style="color:grey"></span></a></li>
+        <li><a name="#"><span class="glyphicon glyphicon-retweet" style="color:grey"></span></a></li>
+        <li><a name="#"><span class="glyphicon glyphicon-star" style="color:grey"></span></a></li>
+      <% end %>
+      <li><a href="/tweet/<%= @t['_id'] %>"><span class="glyphicon glyphicon-option-horizontal"></span></a></li>
     </ul>
-
-    <!--
-	<ul class="nav nav-pills nav-pills-custom">
-	  <li>
-            <form action="/reply?tweet_id=<%= tweet._id %>" method="POST">	
-	      <button type="submit" class="btn-link"><span class="glyphicon glyphicon-share-alt"></span></button>
-	      <input type="text" name="reply[content]" placeholder="Tweet your reply.">
-	    </form>
-	  </li>
-	  <li>
-	    <form action="/retweet?tweet_id=<%= tweet._id %>" method="POST">
-	      <input type="text" name="retweet[content]" placeholder="Add a comment...">
-	      <button type="submit" class="btn-link"><span class="glyphicon glyphicon-retweet"></span></button>
-	    </form>
-	  </li>
-	  <li>
-	    <form action="/like?tweet_id=<%= tweet._id %>" method="POST">	
-	      <button type="submit" class="btn-link"><span class="glyphicon glyphicon-star"></span></button>
-	    </form>
-	  </li>
-	  <li>
-	    <a href="#"><span class="glyphicon glyphicon-option-horizontal"></span></a>
-	  </li>
-	</ul>
-	-->
-  </div><!-- ./media-body -->
-  
-</div><!-- ./media -->
+  </div>
+</div>
+<hr>
 <% end %>
+
