@@ -120,9 +120,11 @@ Brandeis University, Spring 2018
 
 #### Developer's Log
 
-- [x] Enable New Relic within Heroku Configuration and begin collecting internal performance and timing data, done by Shuai
-- [x] Did an experiment on follow button and write a report, done by Shuai
+- [x] Enable New Relic within Heroku Configuration and begin collecting internal performance and timing data -Shuai
 - [x] MongoDB index, done by Shuai and Si
+- [x] Improved scheme of user model - Shuai
+- [x] Added hover card feature on user page - Shuai
+- [x] Reimplemented follow button using Ajax, only POST when unload the page - Shuai
 - [x] Implemented the function and related page of like - Si
 - [x] Implemented the function and related page of retweet - Si
 - [x] Implemented the function and related page of reply - Si
