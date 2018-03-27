@@ -26,6 +26,9 @@ require_relative './controllers/timeline.rb'
 require_relative './controllers/followings.rb'
 require_relative './controllers/followeds.rb'
 require_relative './controllers/helpers.rb'
+require_relative './controllers/search.rb'
+require_relative './controllers/profile.rb'
+require_relative './spec/test_interface.rb'
 
 enable :sessions
 
@@ -80,5 +83,11 @@ get '/' do
 	@info[:target_user] = @targeted_user
 	@info[:target_tweets] = @targeted_tweets
 
+  # get_targeted_user
+  @tweets = Tweet.all.reverse # the cost of reverse  
   erb :index, :locals => { :title => 'Welcome!' }
+end
+
+get '/redis/flushall' do
+  $redis.flushall
 end

@@ -58,20 +58,6 @@ class User
 		self.set(nfolloweds: nxt_nfoloweds)
 	end
 
-  # def release_following(following_id)
-  #   if followings.include?(following_id)
-  #     new_followings = followings.delete(following_id)
-  #     self.set(followings: new_followings)
-  #   end
-  # end
-
-  # def release_followed(followed_id)
-  #   if followeds.include?(followed_id)
-  #     new_followeds = followeds.delete(followed_id)
-  #     self.set(followeds: new_followeds)
-  #   end
-  # end
-
 	def add_tweet(tweet_id)
 		nxt_tweets = tweets.push(tweet_id)
 		self.set(tweets: nxt_tweets)
@@ -79,9 +65,9 @@ class User
 		self.set(ntweets: nxt_ntweets)
 	end
 
-	def update_profile(newprofile)
-		self.set(profile: newprofile)
-	end
+  def update_profile(newprofile)
+    self.set(profile: newprofile)
+  end
 
 	def follow?(target_user)
 		followings.include?(target_user._id)
@@ -98,5 +84,23 @@ class User
 
   def findById(user_id)
     return self.where(_id: user_id).first
+  end
+  
+  def self.search(query)
+    self.where(handle: /#{query}/i)
+  end
+
+  def like?(tweet_id)
+    self.liked.include?(tweet_id.to_s)
+  end
+
+  def like(tweet_id)
+    new_liked = self.liked.add(tweet_id.to_s)
+    self.set(liked: new_liked)
+  end
+
+  def unlike(tweet_id)
+    new_liked = self.liked.delete(tweet_id.to_s)
+    self.set(liked: new_liked)
   end  
 end

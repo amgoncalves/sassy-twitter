@@ -1,13 +1,37 @@
-post '/like' do
+get '/like' do
   # update corresponding tweet
   tweet_id = params[:tweet_id]
-  tweet = Tweet.where(_id: tweet_id).first
+  cur_user = session[:user]
+  user_id = cur_user._id
 
-  # session[:user]._id
-  # add user id into likedby
-  tweet.add_like("temp")
-  
-  redirect "/tweet/#{tweet_id}"
+  tweet = Tweet.where(_id: tweet_id).first
+  tweet.add_like(user_id)
+  if cur_user.like?(tweet_id)
+    byebug
+  else
+    cur_user.like(tweet_id)
+  end
+
+  redirect back
 
 end
+
+get '/unlike' do
+  # update corresponding tweet
+  tweet_id = params[:tweet_id]
+  cur_user = session[:user]
+  user_id = cur_user._id
+
+  tweet = Tweet.where(_id: tweet_id).first
+  tweet.delete_like(user_id.to_s)
+  if cur_user.like?(tweet_id) == false
+    byebug
+  else
+    cur_user.unlike(tweet_id)
+  end
+
+  redirect back
+
+end
+
 

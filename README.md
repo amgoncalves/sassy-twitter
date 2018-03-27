@@ -1,4 +1,4 @@
-# nanoTwitter 0.4 :bird:
+# nanoTwitter 0.5 :bird:
 
 [https://sassy-nanotwitter.herokuapp.com/](https://sassy-nanotwitter.herokuapp.com/)
 
@@ -122,6 +122,16 @@ Brandeis University, Spring 2018
 
 - [x] Enable New Relic within Heroku Configuration and begin collecting internal performance and timing data, done by Shuai
 - [x] Did an experiment on follow button and write a report, done by Shuai
+- [x] MongoDB index, done by Shuai and Si
+- [x] Implemented the function and related page of like - Si
+- [x] Implemented the function and related page of retweet - Si
+- [x] Implemented the function and related page of reply - Si
+- [x] Implemented the function and related page of tweet detail - Si
+- [x] Improved schema of reply and tweet and generated summary of code optimization to ensure least access to database and efficiency of get method - Si
+- [x] Switched server from WEBrick to Puma - Alyssa
+- [x] Implemented search (users and tweets) - Alyssa
+- [x] Moved registration from front page to /signup, added signup to navbar - Alyssa
+- [x] Added scrolling list of all tweets to the front page for unauthenticated users - Alyssa
 
 ## Documentation
 
@@ -158,6 +168,12 @@ switched to db nanotwitter-dev
 
 The default configuration of the development database is contained in the file config/mongoid.yml.  If you'd like to use a custom development setup, you can edit mongoid.yml and add config/mongoid.yml to your .gitignore file.
 
+
+### Redis Setup
+
+Download and install [Redis](https://redis.io/topics/quickstart).  Redis must be running in the development environment.  Run the command ```$ redis-server``` in terminal.
+
+
 ### Sinatra Setup
 
 Download this repo.  Use [Bundler](http://bundler.io/) to install the required project Gems by running the following command from the project's root directory:
@@ -169,3 +185,25 @@ Make sure MongoDB is running according to the instructions given in **MongoDB Se
 ```$ ruby app.rb```
 
 Open a web browser and navigate to ```localhost:4567```.  You should see the nanoTwitter homepage.
+
+### Redis Setup
+* [Download](https://redis.io/download), extract and compile Redis with:
+````
+$ tar xzf redis-4.0.8.tar.gz
+$ cd redis-4.0.8
+$ make
+````
+* The binaries compiled are available in the src directory. Run Redis with:
+````
+$ src/redis-server
+````
+* You can interact with Redis using the built-in client:
+````
+$ src/redis-cli
+redis> flushall       # delete all data in redis
+OK
+redis> keys *         # show all keys stored in redis
+redis> lrange "key" 0 -1          # show all elements stored in the "key" as a list
+````
+
+

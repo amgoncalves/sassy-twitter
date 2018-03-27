@@ -1,6 +1,8 @@
 post '/reply' do
   # create reply
   params[:reply][:tweet_id] = params[:tweet_id]
+  params[:reply][:replier_id] = session[:user]._id
+  params[:reply][:replier_handle] = session[:user].handle
   reply = Reply.new(params[:reply])
 
   if reply.save
@@ -17,5 +19,10 @@ post '/reply' do
     puts "save failed"
     flash[:warning] = 'Create reply failed'
   end
+end
+
+get '/reply' do
+  @t = Tweet.find(params[:tweet_id])
+  erb :reply, :locals => { :title => 'Reply' }
 end
 
