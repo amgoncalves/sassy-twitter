@@ -15,7 +15,7 @@
 
 		<div style="margin-top:-15px;">
 			<span>
-				<a href="/user/<%= @targeted_id %>">
+				<a href="/user/<%= @info[:target_user]._id.toString() %>">
 					@<span><%= f.handle %></span>
 				</a>
 			</span>
