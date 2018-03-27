@@ -1,4 +1,4 @@
-# nanoTwitter 0.4 :bird:
+# nanoTwitter 0.5 :bird:
 
 [https://sassy-nanotwitter.herokuapp.com/](https://sassy-nanotwitter.herokuapp.com/)
 
@@ -128,6 +128,10 @@ Brandeis University, Spring 2018
 - [x] Implemented the function and related page of reply - Si
 - [x] Implemented the function and related page of tweet detail - Si
 - [x] Improved schema of reply and tweet and generated summary of code optimization to ensure least access to database and efficiency of get method - Si
+- [x] Switched server from WEBrick to Puma - Alyssa
+- [x] Implemented search (users and tweets) - Alyssa
+- [x] Moved registration from front page to /signup, added signup to navbar - Alyssa
+- [x] Added scrolling list of all tweets to the front page for unauthenticated users - Alyssa
 
 ## Documentation
 
