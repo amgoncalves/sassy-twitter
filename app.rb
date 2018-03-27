@@ -52,6 +52,7 @@ set :public_folder, Proc.new { File.join(root, "public") }
 
 get '/' do
   get_targeted_user
+  @tweets = Tweet.all.reverse # the cost of reverse  
   erb :index, :locals => { :title => 'Welcome!' }
 end
 

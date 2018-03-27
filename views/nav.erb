@@ -60,9 +60,16 @@
       
       <% else %>
       
+      <div class="navbar-form navbar-right" style="padding-left: 0px;">
+	<form action="/signup" method="GET">
+	  <button class="btn btn-primary" type="submit" aria-label="Left Align">
+	    Signup
+	  </button>
+	  </form>
+      </div>
+
       <!-- Login form -->
       <div class="navbar-form navbar-right">
-	
 	<form action="/login" method="POST">
 	  <input name="remember" type="checkbox" class="form-check-input form-inline" id="remember">
 	  <label class="form-check-label form-inline" for="remember">&nbsp;Remember Me&nbsp;</label>
@@ -71,9 +78,7 @@
 	  <button type="submit" class="btn btn-primary">Sign in</button>	  
 	</form>
       </div>
-      
       <% end %>
-      
     </div> <!-- /navbar-collapse -->
   </div><!-- /container -->
 </div><!-- navbar-static-top -->

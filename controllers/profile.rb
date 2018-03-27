@@ -1,7 +1,7 @@
 def get_targeted_user
   @ids = User.pluck(:id)
+  @tweets = Tweet.all.reverse # the cost of reverse  
   if is_authenticated?
-    @tweets = Tweet.all.reverse # the cost of reverse
     @users = User.all # TODO: delete in future
     @targeted_user = session[:user]
     @targeted_id = @targeted_user._id

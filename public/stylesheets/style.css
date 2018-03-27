@@ -32,7 +32,6 @@ a:active {
 
 #splash-form {
     background: #fff;
-    padding: 19px 0;
 }
 
 .col-splash {
@@ -41,7 +40,7 @@ a:active {
 
 img.bird {
     width: 100%;    
-    height: auto;
+    height: 450px;
 }
 
 .form-inline {
@@ -57,4 +56,10 @@ img.bird {
 .tweet-date {
     text-align: right;
     float: right;
+}
+
+#tweet-scroller {
+    display: block;
+    height: 445px;
+    overflow: scroll;    
 }

@@ -1,18 +1,18 @@
 <% if is_authenticated? %>
-  <%= erb :alltweets %>
+<%= erb :alltweets %>
 <% else %>
 <div class="row" id="splash">
-  <div class="col-md-7 col-splash">
+  <div class="col-md-7">
+    <h1>Welcome to nanoTwitter</h1>
     <img src="images/bird.jpg" class="bird">
   </div>  
   <div class="col-md-5" id="splash-form">
-    <div id="signup">
-      <h2>Sign Up</h2>
-      <%= erb :signup %>
+    <h2>Recent Tweets:</h2>
+    <div class="panel panel-info">
+      <div class="panel-body" id="tweet-scroller">
+    	<%= erb :tweets %>
+      </div>
     </div>
   </div>
-</div>
-<div>
-  <%= erb :tweets %>
 </div>
 <% end %>
