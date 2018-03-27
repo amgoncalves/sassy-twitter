@@ -9,7 +9,7 @@ require 'csv'
 require_relative '../models/user'
 require_relative '../models/tweet'
 require_relative '../models/reply'
-require 'byebug'
+#require 'byebug'
 
 # get the test home page for all test interface
 get '/test' do

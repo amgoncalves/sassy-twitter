@@ -7,7 +7,7 @@ get '/like' do
   tweet = Tweet.where(_id: tweet_id).first
   tweet.add_like(user_id)
   if cur_user.like?(tweet_id)
-    byebug
+    #byebug
   else
     cur_user.like(tweet_id)
   end
@@ -25,7 +25,7 @@ get '/unlike' do
   tweet = Tweet.where(_id: tweet_id).first
   tweet.delete_like(user_id.to_s)
   if cur_user.like?(tweet_id) == false
-    byebug
+    #byebug
   else
     cur_user.unlike(tweet_id)
   end

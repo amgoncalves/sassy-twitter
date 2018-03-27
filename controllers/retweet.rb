@@ -11,7 +11,6 @@ post '/retweet' do
     user.add_tweet(retweet._id)
     redirect "/tweet/#{retweet._id}"
   else
-    byebug
     flash[:warning] = 'Create tweet failed'
   end
 end
