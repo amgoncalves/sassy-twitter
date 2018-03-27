@@ -8,10 +8,10 @@ get '/timeline' do
 
     @users = User.all
     @ntweets = @targeted_user[:tweets].length
-    @nfollowed = @targeted_user[:followed].length
-    @nfollowing = @targeted_user[:following].length
+    @nfollowed = @targeted_user[:followeds].length
+    @nfollowing = @targeted_user[:followings].length
     if @nfollowing > 0
-      @targeted_following = User.in(_id: @targeted_user[:following])
+      @targeted_following = User.in(_id: @targeted_user[:followings])
     end
 
 		# code added by Shuai at Mar 23

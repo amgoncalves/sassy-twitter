@@ -12,14 +12,14 @@ def get_targeted_user
       @targeted_tweets = @targeted_tweets.reverse
     end
 
-    @nfollowed = @targeted_user[:followed].length
+    @nfollowed = @targeted_user[:followeds].length
     if @nfollowed > 0
-      @targeted_followed = User.in(_id: @targeted_user[:followed])
+      @targeted_followed = User.in(_id: @targeted_user[:followeds])
     end
 
-    @nfollowing = @targeted_user[:following].length
+    @nfollowing = @targeted_user[:followings].length
     if @nfollowing > 0
-      @targeted_following = User.in(_id: @targeted_user[:following])
+      @targeted_following = User.in(_id: @targeted_user[:followings])
     end
   else
     gTLTweet_ids = $redis.lrange($globalTL, 0, -1)
