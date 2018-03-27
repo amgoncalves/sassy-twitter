@@ -61,5 +61,5 @@
 /* } */
 
 .miniprofile-container:hover .miniprofile {
-	opacity: 0;
+	opacity: 1;
 }
