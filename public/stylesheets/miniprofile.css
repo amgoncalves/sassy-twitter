@@ -33,7 +33,7 @@
 .miniprofile
 {
 		transition: .5s ease;
-		opacity: 0;
+		opacity: 1;
     position:absolute;
     width:200px;
 		/* height:300px; */
