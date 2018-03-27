@@ -61,17 +61,24 @@ get '/' do
       @targeted_tweets = @targeted_tweets.reverse
     end
 
-    @nfollowed = @targeted_user[:followed].length
+    @nfollowed = @targeted_user[:followeds].length
     if @nfollowed > 0
-      @targeted_followed = User.in(_id: @targeted_user[:followed])
+      @targeted_followed = User.in(_id: @targeted_user[:followeds])
     end
 
-    @nfollowing = @targeted_user[:following].length
+    @nfollowing = @targeted_user[:followings].length
     if @nfollowing > 0
-      @targeted_following = User.in(_id: @targeted_user[:following])
+      @targeted_following = User.in(_id: @targeted_user[:followings])
     end
   else 
     @tweets = $redis.lrange($globalTL, 0, -1)
+
   end
+	# code added by Shuai at Mar 23
+	@info = Hash.new
+	@info[:login_user] = @cur_user
+	@info[:target_user] = @targeted_user
+	@info[:target_tweets] = @targeted_tweets
+
   erb :index, :locals => { :title => 'Welcome!' }
 end

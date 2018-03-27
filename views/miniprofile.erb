@@ -1,33 +1,29 @@
 <div class="panel panel-default">
-
 	<div class="panel-body">
 		<a href="#"><img class="img-responsive" alt="" src="/images/profile_64x64.png"></a>
-		<div class="twPc-button">
-			<form action = "/follow?targeted_id=<%= @targeted_id %>" method = 'POST'>
-				<button id="follow-button" class="btn btn-primary" type="submit">
-					<% if @isfollowing == true %>
-						Following
-					<% else %>
-						+ Follow
-					<% end %>
-				</button>
-			</form>
-		</div>
+    <% if @info[:target_user]._id != @info[:login_user]._id %>
+			<div>
+				<button id="follow-button" class="btn btn-primary"><% if @info[:isfollowing] == true %>Following<% else %>+ Follow<% end %></button>
+			</div>
+    <% end %>
 
 		<p style="margin-top:0px;" >
-		<div class="twPc-divName">
-			<%= f.profile.name %>
-		</div>
+			<div class="twPc-divName">
+				<%= f.profile.name %>
+			</div>
 		</p>
+
 		<div style="margin-top:-15px;">
-		<span>
-			<a href="/user/<%= @targeted_id %>">
-				@<span><%= f.handle %></span>
-			</a>
-		</span>
+			<span>
+				<a href="/user/<%= @targeted_id %>">
+					@<span><%= f.handle %></span>
+				</a>
+			</span>
 		</div>
+
 		<div>
 			<%= f.profile.bio %>
 		</div>
-	</div>
-</div>
+
+	</div> <!-- panel body -->
+</div> <!-- panel panel-default -->

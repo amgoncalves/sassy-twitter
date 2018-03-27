@@ -21,6 +21,11 @@ get '/timeline' do
     if @nfollowing > 0
       @targeted_following = User.in(_id: @targeted_user[:following])
     end
+
+		# code added by Shuai at Mar 23
+		@info = Hash.new
+		@info[:login_user] = @cur_user
+		@info[:target_user] = @targeted_user
     
   end
   erb :hometimeline, :locals => { :title => 'Home Timeline!' }

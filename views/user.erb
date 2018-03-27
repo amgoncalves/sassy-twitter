@@ -1,109 +1,48 @@
 <div class="container">
   <div class="row">
     <div class="col-sm-3">
-      <%= erb :profile %>
+			<%= erb :profile  %>
     </div>
     
     <div class="col-sm-6">
       <div class="panel panel-info">
+				<br>
+				<div class="panel-body">
+					<% @info[:target_tweets].each do |tweet| %>
+
+						<div class="miniprofile-container">
+							<div class="miniprofile">
+								<%= erb :miniprofile, :locals=>{:f=>@info[:target_user]} %>
+							</div> <%# end of div miniprofile %>
+						</div> <%# end of div miniprofile-container %>
+
+						<div class="media">
+							<a class="media-left" href="#fake">
+								<img alt="" id='profile_in_tweet' class="media-object img-rounded" src="/images/profile_64x64.png">
+							</a>
+
+							<div class="media-body">
+								<h4 class="media-heading"><%= @info[:target_user].handle %> </h4>
+
+								<p>
+									<%= tweet.content %>
+								</p>
+
+								<ul class="nav nav-pills nav-pills-custom">
+									<li><a href="#"><span class="glyphicon glyphicon-share-alt"></span></a></li>
+									<li><a href="#"><span class="glyphicon glyphicon-retweet"></span></a></li>
+									<li><a href="#"><span class="glyphicon glyphicon-star"></span></a></li>
+									<li><a href="#"><span class="glyphicon glyphicon-option-horizontal"></span></a></li>
+								</ul>
+							</div> <!-- end of div class="media-body" -->
+						</div> <%# end of div class="media"%>
+					<% end %>
+					</div> <%# end of div panel body %>
+			</div> <%# end of div panel panel panel-info %>
+		</div> <%# end of div col-sm-6 %>
 	<br>
-	<div class="panel-body">
-	  <% @targeted_tweets.each do |tweet| %>
-
-				<div class="miniprofile-container">
-
-			<div class="miniprofile">
-				<%= erb :miniprofile, :locals=>{:f=>@targeted_user} %>
-			</div>
-				</div>
-
-	  <div class="media">
-
-	    <a class="media-left" href="#fake">
-			<%# <span id="tweet-card"> %>
-
-			<img alt="" id='profile_in_tweet' class="media-object img-rounded" src="/images/profile_64x64.png">
-			<%# <span class="miniprofile"> %>
-			<%# 	<%= erb :miniprofile, :locals => {:f => @targeted_user} %1> %>
-			<%# </span> %>
-			<%# </span> %>
-	    </a>
-
-	    <div class="media-body">
-	      <h4 class="media-heading"><%= @targeted_user.handle %></h4>
-	      <p>
-		<%= tweet.content %>
-	      </p>
-	      <ul class="nav nav-pills nav-pills-custom">
-		<li><a href="#"><span class="glyphicon glyphicon-share-alt"></span></a></li>
-		<li><a href="#"><span class="glyphicon glyphicon-retweet"></span></a></li>
-		<li><a href="#"><span class="glyphicon glyphicon-star"></span></a></li>
-		<li><a href="#"><span class="glyphicon glyphicon-option-horizontal"></span></a></li>
-	      </ul>
-	    </div>
-	  </div>
-
-	  <% end %>
-	</div>
-      </div>
-    </div>
-
-    <div class="col-sm-3">
-      <div class="panel panel-default panel-custom">
-	<div class="panel-heading">
-	  <h3 class="panel-title">
-	    Who to follow
-	    <small><a href="#">Refresh</a> ● <a href="#">View all</a></small>
-	  </h3>
-	</div>
-	<div class="panel-body">
-	  <div class="media">
-	    <div class="media-left">
-	      <img src="/images/profile_32x32.png" alt="" class="media-object img-rounded">
-	    </div>
-	    <div class="media-body">
-	      <h4 class="media-heading">Nome e cognome</h4>
-	      <a href="#" class="btn btn-default btn-xs">
-		+
-		<span class="glyphicon glyphicon-user"></span>
-		Follow
-	      </a>
-	    </div>
-	  </div>
-	  <div class="media">
-	    <div class="media-left">
-	      <img src="/images/profile_32x32.png" alt="" class="media-object img-rounded">
-	    </div>
-	    <div class="media-body">
-	      <h4 class="media-heading">Nome e cognome</h4>
-	      <a href="#" class="btn btn-default btn-xs">
-		+
-		<span class="glyphicon glyphicon-user"></span>
-		Follow
-	      </a>
-	    </div>
-	  </div>
-	  <div class="media">
-	    <div class="media-left">
-	      <img src="/images/profile_32x32.png" alt="" class="media-object img-rounded">
-	    </div>
-	    <div class="media-body">
-	      <h4 class="media-heading">Nome e cognome</h4>
-	      <a href="#" class="btn btn-default btn-xs">
-		+
-		<span class="glyphicon glyphicon-user"></span>
-		Follow
-	      </a>
-	    </div>
-	  </div>
-	</div>
-	<div class="panel-footer">
-	  <a href="www.google.it">
-	    <span class="glyphicon glyphicon-user"></span>
-	    Find people you know
-	  </a>
-	</div>
-      </div>
-    </div>
-  </div>
-</div>
+	<br>
+	<br>
+	<%= erb :whotofollow %>
+	</div> <%# end of div row %>
+</div> <%# end of div container %>

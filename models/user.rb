@@ -12,9 +12,12 @@ class User
   field :password_hash, type: String
   field :APItoken, type: String
   field :profile, type: Profile
-  field :followed, type: Set, default: []
-  field :following, type: Set, default: []
+  field :followeds, type: Set, default: []
+	field :nfolloweds, type: Integer, default: 0
+  field :followings, type: Set, default: []
+	field :nfollowings, type: Integer, default: 0
   field :tweets, type: Array, default: []
+	field :ntweets, type: Integer, default: 0
   field :liked, type: Set, default: []
 
   validates :handle, presence: true, uniqueness: true
@@ -28,50 +31,60 @@ class User
   end  
 
 	def toggle_following(following_id)
-		nxt_following = following
-		if following.include?(following_id)
-			nxt_following.delete(following_id)
+		nxt_followings = followings
+		nxt_nfollowings = nfollowings
+		if followings.include?(following_id)
+			nxt_followings.delete(following_id)
+			nxt_nfollowings = nxt_nfollowings - 1
 		else
-			nxt_following.add(following_id)
+			nxt_followings.add(following_id)
+			nxt_nfollowings = nxt_nfollowings + 1
 		end
-		self.set(following: nxt_following)
+		self.set(followings: nxt_followings)
+		self.set(nfollowings: nxt_nfollowings)
 	end
 
 	def toggle_followed(followed_id)
-		nxt_followed = followed
-		if followed.include?(followed_id)
-			nxt_followed.delete(followed_id)
+		nxt_followeds = followeds
+		nxt_nfoloweds = nfolloweds
+		if followeds.include?(followed_id)
+			nxt_followeds.delete(followed_id)
+			nxt_nfoloweds = nxt_nfoloweds - 1
 		else
-			nxt_followed.add(followed_id)
+			nxt_followeds.add(followed_id)
+			nxt_nfoloweds = nxt_nfoloweds + 1
 		end
-		self.set(followed: nxt_followed)
+		self.set(followeds: nxt_followeds)
+		self.set(nfolloweds: nxt_nfoloweds)
 	end
 
-  def release_following(following_id)
-    if following.include?(following_id)
-      new_following = following.delete(following_id)
-      self.set(following: new_following)
-    end
-  end
+  # def release_following(following_id)
+  #   if followings.include?(following_id)
+  #     new_followings = followings.delete(following_id)
+  #     self.set(followings: new_followings)
+  #   end
+  # end
 
-  def release_followed(followed_id)
-    if followed.include?(followed_id)
-      new_followed = followed.delete(followed_id)
-      self.set(followed: new_followed)
-    end
-  end
+  # def release_followed(followed_id)
+  #   if followeds.include?(followed_id)
+  #     new_followeds = followeds.delete(followed_id)
+  #     self.set(followeds: new_followeds)
+  #   end
+  # end
 
 	def add_tweet(tweet_id)
 		nxt_tweets = tweets.push(tweet_id)
 		self.set(tweets: nxt_tweets)
+		nxt_ntweets = ntweets + 1
+		self.set(ntweets: nxt_ntweets)
 	end
 
 	def update_profile(newprofile)
 		self.set(profile: newprofile)
 	end
 
-	def follow?(targeted_id)
-		following.include?(targeted_id)
+	def follow?(target_user)
+		followings.include?(target_user._id)
 	end
 
   def password

@@ -8,7 +8,7 @@ post '/tweet/new' do
     user.add_tweet(tweet._id)
 
     # spread this tweet to all followers
-    followers = user.followed
+    followers = user.followeds
     followers.each do |follower|
       $redis.rpush(follower.to_s, tweet.to_json)
     end

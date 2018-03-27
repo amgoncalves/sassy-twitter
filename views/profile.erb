@@ -1,97 +1,91 @@
 <div class="panel panel-default">
   <div class="panel-body">
-
     <!-- Profile Image -->
     <a href="#"><img class="img-responsive" alt="" src="/images/profile_500x500.png"></a>
 
     <!-- Profile Info -->
-		<% unless @targeted_user.profile.name.empty? %>
+		<% unless @info[:target_user].profile.name.empty? %>
 			<div class="twPc-divName">
-				<%= @targeted_user.profile.name %>
+				<%= @info[:target_user].profile.name %>
 			</div>
 		<% end %>
 
     <div>
-      <a href="/user/<%= @targeted_id %>">@<%= @targeted_user.handle %></a>
+      <a href="/user/<%= @info[:target_user]._id %>">@<%= @info[:target_user].handle %></a>
     </div>
 
-		<% unless @targeted_user.profile.bio.empty? %>
+		<% unless @info[:target_user].profile.bio.empty? %>
 			<div>
-				Bio: <%= @targeted_user.profile.bio %>
+				 <%= @info[:target_user].profile.bio %>
 			</div>
 		<% end %>
 
-		<% unless @targeted_user.profile.location.empty? %>
+		<% unless @info[:target_user].profile.location.empty? %>
 			<div>
-				<span class="glyphicon glyphicon-map-marker"></span> <%= @targeted_user.profile.location %>
+				<span class="glyphicon glyphicon-map-marker"></span> <%= @info[:target_user].profile.location %>
 			</div>
 		<% end %>
 
-		<% unless @targeted_user.profile.date_joined.nil? %>
+		<% unless @info[:target_user].profile.date_joined.nil? %>
 			<div>
-				<span class="glyphicon glyphicon-calendar"></span> Joined <%= @targeted_user.profile.date_joined.strftime("%B %Y") %>
+				<span class="glyphicon glyphicon-calendar"></span> Joined <%= @info[:target_user].profile.date_joined.strftime("%B %Y") %>
 			</div>
 		<% end %>
 
-		<%  unless @targeted_user.profile.dob.nil? %>
+		<%  unless @info[:target_user].profile.dob.nil? %>
 			<div>
-				<span class="glyphicon glyphicon-user"></span> Born on <%= @targeted_user.profile.dob.to_s %>
+				<span class="glyphicon glyphicon-user"></span> Born on <%= @info[:target_user].profile.dob.strftime("%B %d, %Y") %>
 			</div>
 		<% end %>
 
     <!-- User Statistics -->
     <div class="row">
       <div class="col-xs-3">
-	<h5>
-	  <small>TWEETS</small>
-	  <br>
-	  <a href="/user/<%= @targeted_id %>">
-	    <%= @ntweets %>
-	  </a>
-	</h5>
-      </div>
-      <div class="col-xs-4">
-	<h5>
-	  <small>FOLLOWING</small>
-	  <br>
-	  <a id='nfollowing' href="/user/followings/?targeted_id=<%= @targeted_id %>">
-	    <%= @nfollowing %>
-	  </a>
-	</h5>
-      </div>
-      <div class="col-xs-5">
-	<h5>
-	  <small>FOLLOWERS&nbsp;</small>
-	  <br>
-	  <a id='nfollowed' href="/user/followeds/?targeted_id=<%= @targeted_id %>">
-	    <%= @nfollowed %>
-	  </a>
-	</h5>
-      </div>
-    </div>
 
-		<%# <a id="follow-direct" type="hidden" href="/follow?targeted_id=<%= @targeted_id %1>"> %>
+				<h5>
+					<small>TWEETS</small>
+					<br>
+					<a href="/user/<%= @info[:target_user]._id %>">
+						<%= @info[:target_user].ntweets %>
+					</a>
+				</h5>
+
+			</div> <!-- col-xs-3 -->
+
+      <div class="col-xs-4">
+
+				<h5>
+					<small>FOLLOWING</small>
+					<br>
+					<a id='nfollowing' href="/user/followings/?targeted_id=<%= @info[:target_user]._id %>">
+						<%= @info[:target_user].nfollowings %>
+					</a>
+				</h5>
+
+			</div> <!-- col-xs-4 -->
+
+      <div class="col-xs-5">
+				<h5>
+					<small>FOLLOWERS&nbsp;</small>
+					<br>
+					<a id='nfollowed' href="/user/followeds/?targeted_id=<%= @info[:target_user]._id %>">
+						<%= @info[:target_user].nfolloweds %>
+					</a>
+				</h5>
+			</div> <!-- col-xs-5 -->
+
+		</div> <!-- row -->
+
 		<a id="follow-direct" type="hidden" href="/follow">
 		</a>
-		<input id="targeted-id" type="hidden" value="<%= @targeted_id%>">
+		<input id="targeted-id" type="hidden" value="<%= @info[:target_user]._id%>">
 		</input>
 			
     <!-- Follow Button -->
-    <% if @targeted_user != session[:user] %>
+    <% if @info[:target_user] != session[:user] %>
 			<div>
-				<button id="follow-button" class="btn btn-primary"><% if @isfollowing == true %>Following<% else %>+ Follow<% end %></button>
+				<button id="follow-button" class="btn btn-primary"><% if @info[:isfollowing] == true %>Following<% else %>+ Follow<% end %></button>
 			</div>
-    <%# <div> %>
-    <%#   <form action = "/follow?targeted_id=<%= @targeted_id %1>" method = 'POST'> %>
-	<%# <button id="follow-button" class="btn btn-primary" type="submit"> %>
-	  <%# <% if @isfollowing == true %1> %>
-	  <%# Following %>
-	  <%# <% else %1> %>
-	  <%# + Follow %>
-	  <%# <% end %1> %>
-	<%# </button> %>
-    <%#   </form> %>
-    <%# </div> %>
     <% end %>
   </div><!-- ./panel-body -->
 </div><!-- ./panel-default -->
