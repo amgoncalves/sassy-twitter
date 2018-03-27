@@ -125,6 +125,7 @@ Brandeis University, Spring 2018
 - [x] Improved scheme of user model - Shuai
 - [x] Added hover card feature on user page - Shuai
 - [x] Reimplemented follow button using Ajax, only POST when unload the page - Shuai
+- [x] Hello world sinatra app (jruby) running on JVM - Shuai 
 - [x] Implemented the function and related page of like - Si
 - [x] Implemented the function and related page of retweet - Si
 - [x] Implemented the function and related page of reply - Si
