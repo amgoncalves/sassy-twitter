@@ -1,6 +1,8 @@
 post '/search' do
   @hide_tweets = false
   @hide_users = false
+  @user_results = Array.new
+  @tweet_results = Array.new
   if params[:searchRadioOptions] == "user"
     @hide_tweets = true
     @user_results = User.search(params[:query]) unless params[:query].blank?
