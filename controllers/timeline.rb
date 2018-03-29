@@ -6,8 +6,6 @@ get '/timeline' do
     @targeted_user = session[:user]
     @targeted_id = @targeted_user._id
 
-    @users = User.all
-    # @ntweets = @targeted_user[:tweets].length
     @ntweets = @targeted_user.ntweets
     @nfollowed = @targeted_user.nfolloweds
     @nfollowing = @targeted_user.nfollowings
