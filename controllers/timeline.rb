@@ -3,6 +3,7 @@ get '/timeline' do
   if is_authenticated?
     tweet_ids = $redis.lrange(session[:user]._id.to_s, 0, 50)
     @tweets = Tweet.in(_id: tweet_ids)
+    @tweets = @tweets.reverse
     @targeted_user = session[:user]
     @targeted_id = @targeted_user._id
 

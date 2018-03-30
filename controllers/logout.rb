@@ -4,3 +4,4 @@ post '/logout' do
   flash[:notice] = 'You have been signed out.  Goodbye!'
   redirect '/'
 end
+

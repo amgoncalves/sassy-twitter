@@ -12,8 +12,8 @@
 <br>
 
 <% if @tweet["original_tweet_id"] != nil %>
-  <h4>original tweet</h4>
-  <div class="media">
+  <div class="container">
+    <h4>original tweet</h4>
     <a class="media-left" href="#fake">
       <img alt="" class="media-object img-rounded" src="/images/profile_64x64.png">
     </a>
@@ -29,8 +29,8 @@
 <br>
 
 <% if @tweet["replys"].length > 0 %>
-<h4>replys</h4>
-<div class="media">
+<div class="container">
+  <h4>replys</h4>
   <% @replys.each do |reply| %>
     <a class="media-left" href="#fake">
       <img alt="" class="media-object img-rounded" src="/images/profile_64x64.png">

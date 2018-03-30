@@ -27,15 +27,11 @@
             <p>No tweets containing '<%= params[:query] %>' were found.</p>	    
 	  <% else %>
             <% @tweets = @tweet_results %>
-            <%= erb :tweets %>
+            <%= erb :tweets_object %>
 	  <% end %>
 	</div>
       </div>
     <% end %>	
-    </div>
-    
-    <div class="col-sm-3">
-      <%= erb :users %>
     </div>
   </div>
 </div>

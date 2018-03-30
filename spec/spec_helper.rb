@@ -11,4 +11,4 @@ require_relative '../models/user'
 require_relative '../app.rb'
 require 'database_cleaner'
 
-Mongoid::Config.connect_to('nanotwitter-dev')
+Mongoid::Config.connect_to('nanotwitter-test')

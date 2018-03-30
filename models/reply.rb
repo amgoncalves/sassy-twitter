@@ -11,7 +11,7 @@ class Reply
   field :replier_id, type: BSON::ObjectId, default: String.new
   field :replier_handle, type: String, default: String.new
 
-  validates_length_of :content, minimum: 1, maximum: 100
+  validates_length_of :content, minimum: 1, maximum: 400
 
   # belongs_to :user
   belongs_to :tweet
