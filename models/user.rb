@@ -6,7 +6,6 @@ require_relative 'profile'
 class User
   include BCrypt
   include Mongoid::Document
-  include ActiveModel::Serializers::JSON
 
   field :handle, type: String
   field :email, type: String
