@@ -16,7 +16,11 @@
 	<ul class="nav navbar-nav">
 	  <li class="nav-item dropdown">
 	    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-	      @<%= @cur_user.handle %>
+	      <% if @cur_user %>
+	        @<%= @cur_user.handle %>
+	      <% elsif @info %>
+	        @<%= @info[:login_user].handle %>
+	      <% end %>
 	    </a>
 	    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
 	      <div class="dropdown-item">
