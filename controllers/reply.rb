@@ -3,7 +3,7 @@ post '/reply' do
 
   # create reply
   params[:reply][:tweet_id] = params[:tweet_id]
-  params[:reply][:replier_id] = session[:user]._id
+  params[:reply][:replier_id] = session[:user_id]
   params[:reply][:replier_handle] = session[:user].handle
   params[:reply][:content] = generateHashtagTweet(params[:reply][:content])
   params[:reply][:content] = generateMentionTweet(params[:reply][:content])

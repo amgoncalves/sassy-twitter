@@ -2,7 +2,9 @@ require 'mongo'
 require 'mongoid'
 
 class Profile
-	include Mongoid::Document
+  include Mongoid::Document
+  include ActiveModel::Validations
+  
 	attr_reader :bio, :dob, :date_joined, :location, :name
 
 	field :date_joined, type: Date, default: Date.today

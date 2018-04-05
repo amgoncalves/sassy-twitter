@@ -82,7 +82,7 @@
 		</input>
 			
     <!-- Follow Button -->
-    <% if @info[:target_user] != session[:user] %>
+    <% if @info[:target_user] != get_user_from_session %>
 			<div>
 				<button id="follow-button" class="btn btn-primary"><% if @info[:isfollowing] == true %>Following<% else %>+ Follow<% end %></button>
 			</div>

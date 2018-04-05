@@ -3,7 +3,7 @@ def get_targeted_user
   @tweets = Tweet.all.reverse # the cost of reverse  
   if is_authenticated?
     @users = User.all # TODO: delete in future
-    @targeted_user = session[:user]
+    @targeted_user = get_user_from_session
     @targeted_id = @targeted_user._id
     @cur_user = @targeted_user
     @ntweets = @targeted_user[:tweets].length

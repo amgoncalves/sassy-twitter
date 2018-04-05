@@ -1,5 +1,5 @@
 def redirect_to_original_request
-  user = session[:user]
+  user = get_user_from_session
   flash[:notice] = 'Welcome back, #{user.handle}!'
   original_request = session[:original_request]
   session[:original_request] = nil
@@ -7,14 +7,16 @@ def redirect_to_original_request
 end
 
 def is_authenticated?
-  if session[:user] != nil
-    @cur_user = session[:user]
-  elsif cookies[:user] != nil
-    @cur_user = User.where(_id: cookies[:user]).first
-    session[:user] = @cur_user
-    return true
-  end
-  return !!session[:user]
+  return !!session[:user_id]
+end
+
+def set_user_globals
+  if session[:user_id] != nil
+    @cur_user = get_user_from_session
+  elsif cookies[:user_id] != nil
+    @cur_user = get_user_from_cookies
+    session[:user_id] = @cur_user._id unless @cur_user == nil
+  end  
 end
 
 def auth_user(email, password)
@@ -24,11 +26,15 @@ def auth_user(email, password)
 end
 
 def add_cookie(user)
-  cookies[:user] = user._id
+  if user == nil
+    puts "No user was found."
+    return
+  end
+  cookies[:user_id] = user._id
 end
 
 def authenticate!
-  unless session[:user]
+  unless session[:user_id]
     session[:original_request] = request.path_info
     redirect '/login'
   end
@@ -37,4 +43,12 @@ end
 def get_handle(id)
   usr = User.where(_id: id).first
   user.handle
+end
+
+def get_user_from_session
+  return User.where(_id: session[:user_id]).first
+end
+
+def get_user_from_cookie
+  return User.where(_id: cookies[:user_id]).first
 end

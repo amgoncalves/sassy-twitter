@@ -5,7 +5,7 @@ get '/user/:targeted_id' do
 	@info = Hash.new
 
   if target_exist
-		login_user = session[:user]
+		login_user = get_user_from_session
 		target_user = query_res.first
 		isfollowing = login_user.follow?(target_user)
 		target_tweets = Array.new
@@ -18,6 +18,14 @@ get '/user/:targeted_id' do
 		@info[:target_user] = target_user
 		@info[:isfollowing] = isfollowing
 		@info[:target_tweets] = target_tweets
-    erb :user, :locals => { :title => '#{@targeted_user.handle}' }
+                set_user_globals
+    erb :user, :locals => { :title => "#{target_user.handle}" }
   end
+end
+
+# Not used, for testing:
+get '/users' do
+  authenticate!
+  @users = User.all
+  erb :users, :locals => { :title => 'All Users' }
 end

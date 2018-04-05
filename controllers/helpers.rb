@@ -1,6 +1,6 @@
+=begin
 get '/posted' do
-  user_id = session[:user]._id
-  user = User.where(_id: user_id).first
+  user = get_user_from_session
   posted_ids = user.tweets
   if posted_ids.length > 50
     posted_ids = posted_ids[-50..-1]
@@ -10,11 +10,4 @@ get '/posted' do
   end
   erb :posted
 end
-
-get '/users' do
-  authenticate!
-  @name = session[:user]
-  @users = User.all
-  erb :users, :locals => { :title => 'All Users' }
-end
-
+=end

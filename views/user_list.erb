@@ -12,7 +12,7 @@
     <% unless user.profile.bio.empty? %>
       <div>Bio: <%= user.profile.bio %></div>
     <% end %>
-    <% if user != session[:user] %>
+    <% if user != get_user_from_session %>
       <div>
         <button id="follow-button" class="btn btn-primary">
 	  <% if @isfollowing == true %>

@@ -1,10 +1,10 @@
 get '/timeline' do
   @ids = User.pluck(:id)
   if is_authenticated?
-    tweet_ids = $redis.lrange(session[:user]._id.to_s, 0, 50)
+    tweet_ids = $redis.lrange(session[:user_id].to_s, 0, 50)
     @tweets = Tweet.in(_id: tweet_ids)
     @tweets = @tweets.reverse
-    @targeted_user = session[:user]
+    @targeted_user = get_user_from_session
     @targeted_id = @targeted_user._id
 
     @ntweets = @targeted_user.ntweets
@@ -17,7 +17,7 @@ get '/timeline' do
 		# code added by Shuai at Mar 23
 		@info = Hash.new
 		# @info[:login_user] = @cur_user
-		@info[:login_user] = session[:user]
+		@info[:login_user] = get_user_from_session
 		@info[:target_user] = @targeted_user
     
   end

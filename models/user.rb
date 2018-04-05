@@ -6,6 +6,7 @@ require_relative 'profile'
 class User
   include BCrypt
   include Mongoid::Document
+  include ActiveModel::Serializers::JSON
 
   field :handle, type: String
   field :email, type: String
@@ -102,5 +103,5 @@ class User
   def unlike(tweet_id)
     new_liked = self.liked.delete(tweet_id.to_s)
     self.set(liked: new_liked)
-  end  
+  end
 end

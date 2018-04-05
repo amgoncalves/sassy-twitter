@@ -15,7 +15,7 @@ post '/search' do
   end
   # get_targeted_user
   @info = Hash.new
-  @info[:target_user] = session[:user]
+  @info[:target_user] = get_user_from_session
   erb :results, :locals => { :title => 'Search Results' }
 end
 
@@ -35,7 +35,6 @@ get '/search/hashtag' do
 
   # get_targeted_user
   @info = Hash.new
-  @info[:target_user] = session[:user]
+  @info[:target_user] = get_user_from_session
   erb :results, :locals => { :title => 'Search Results' }
-
 end

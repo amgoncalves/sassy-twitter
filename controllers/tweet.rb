@@ -1,9 +1,9 @@
 post '/tweet/new' do
   @hashtag_list = Array.new
 
-  user_id = session[:user]._id
+  user_id = session[:user_id]
   params[:tweet][:author_id] = user_id
-  params[:tweet][:author_handle] = session[:user].handle
+  params[:tweet][:author_handle] = get_user_from_session.handle
   params[:tweet][:content] = generateHashtagTweet(params[:tweet][:content])
   params[:tweet][:content] = generateMentionTweet(params[:tweet][:content])
   tweet = Tweet.new(params[:tweet])

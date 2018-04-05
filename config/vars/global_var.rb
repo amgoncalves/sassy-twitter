@@ -1,1 +1,2 @@
 $globalTL = "globalTL"
+$currentUser = "currentUser"

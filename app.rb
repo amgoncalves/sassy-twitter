@@ -41,7 +41,7 @@ else
 end
 
 configure :production do
-	require 'newrelic_rpm'
+  require 'newrelic_rpm'
 end
 
 # sets root as the parent-directory of the current file
@@ -52,47 +52,25 @@ set :views, Proc.new { File.join(root, "views") }
 set :public_folder, Proc.new { File.join(root, "public") }
 
 get '/' do
-  # @ids = User.pluck(:id)
   if is_authenticated?
-    # if session[:user] is nil logout
-    if session[:user] == nil
+    if session[:user_id] == nil
       session.clear
       cookies.clear
       redirect '/'
     end
 
-    # @tweets = Tweet.all.reverse # the cost of reverse
     @tweets = $redis.lrange($globalTL,0, -1).reverse
-    # @users = User.all # TODO: delete in future
-    @cur_user = session[:user]
-    @targeted_user = session[:user]
+    @cur_user = get_user_from_session
+    @targeted_user = @cur_user
     @targeted_id = @targeted_user._id
-    # @ntweets = @targeted_user[:tweets].length
-    # if @ntweets > 0
-    #   @targeted_tweets = Tweet.in(_id: @targeted_user[:tweets])
-    #   @targeted_tweets = @targeted_tweets.reverse
-    # end
-
-    # @nfollowed = @targeted_user[:followeds].length
-    # if @nfollowed > 0
-    #   @targeted_followed = User.in(_id: @targeted_user[:followeds])
-    # end
-
-    # @nfollowing = @targeted_user[:followings].length
-    # if @nfollowing > 0
-    #   @targeted_following = User.in(_id: @targeted_user[:followings])
-    # end
   else 
     @tweets = $redis.lrange($globalTL, 0, -1).reverse
   end
-	# code added by Shuai at Mar 23
-	@info = Hash.new
-	@info[:login_user] = @cur_user
-	@info[:target_user] = @targeted_user
-	@info[:target_tweets] = @targeted_tweets
-
-  # get_targeted_user
-  # @tweets = Tweet.all.reverse # the cost of reverse  
+  # code added by Shuai at Mar 23
+  @info = Hash.new
+  @info[:login_user] = @cur_user
+  @info[:target_user] = @targeted_user
+  @info[:target_tweets] = @targeted_tweets
   erb :index, :locals => { :title => 'Welcome!' }
 end
 
@@ -101,8 +79,10 @@ get '/reset/redis' do
 end
 
 get '/reset/all' do  
-# delete everything in mongo db
-  Mongoid.purge! 
-# delete everything in redis
+  # delete everything in mongo db
+  Mongoid.purge!
+  # delete everything in redis
   $redis.flushall
+  session.clear
+  cookies.clear
 end
