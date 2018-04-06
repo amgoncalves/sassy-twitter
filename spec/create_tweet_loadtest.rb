@@ -22,6 +22,21 @@ post '/loadtest/user/create' do
   end
 end
 
+post '/loadtest/user/create/:count' do
+  i = 0
+  while i < params[:count].to_i do
+    if User.where(handle: "test#{i}").exists?
+      User.where(handle: "test#{i}").delete
+    end
+
+    user = User.create(handle: "test#{i}", 
+      email: "test#{i}@test",
+      password: "password#{i}")
+    
+    i = i +1
+  end
+end
+
 post '/loadtest/user/delete' do
   if User.where(handle: "test0406").exists?
     flash[:notice] = 'Delete failed.'
@@ -32,10 +47,10 @@ end
 
 post '/loadtest/tweet/new' do
   @hashtag_list = Array.new
-  user_id = $testUserID
+  user_id = rand(100).to_s
   t = Hash.new
   t[:author_id] = user_id
-  t[:author_handle] = "test0406"
+  t[:author_handle] = "test#{user_id}"
   if params[:tweet] == nil
     t[:content] = "test tweet"
   else 
@@ -45,7 +60,7 @@ post '/loadtest/tweet/new' do
   t[:content] = generateMentionTweet(t[:content])
   tweet = Tweet.new(t)
   if tweet.save
-    user = User.where(_id: user_id).first
+    user = User.where(handle: "test#{user_id}").first
     tweet_id = tweet._id
     user.add_tweet(tweet_id)
 
