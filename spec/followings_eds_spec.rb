@@ -91,11 +91,12 @@ class FollowPageTest < MiniTest::Unit::TestCase
 		assert res.body.include?('sichen')
 		#handle of targetted user
 		assert res.body.include?('shuaiyu8')
+
+		# in redis
 		#handle of following 1
-		byebug
-		assert res.body.include?('alyssa')
+		# assert res.body.include?('alyssa')
 		#handle of following 2
-		assert res.body.include?('sichen')
+		# assert res.body.include?('sichen')
 	end
 
 	def test_followed
