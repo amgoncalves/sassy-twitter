@@ -1,12 +1,16 @@
 post '/loadtest/user/create' do
+  if User.where(handle: "test0406").exists?
+    User.where(handle: "test0406").delete
+  end
+
   # Build the user's profile
   @profile = Profile.new("", Date.jd(0), Date.today, "", "")
   testuser = Hash.new
   testuser[:profile] = @profile
-  testuser[:handle] = "test"
-  testuser[:email] = "test@test"
-  testuser[:password_hash] = "test"
-  testuser[:APItoken] = "test"
+  testuser[:handle] = "test0406"
+  testuser[:email] = "test0406@test"
+  testuser[:password_hash] = "test0406"
+  testuser[:APItoken] = "test0406"
 
   # Build the user's account
   @user = User.new(testuser)
@@ -19,8 +23,7 @@ post '/loadtest/user/create' do
 end
 
 post '/loadtest/user/delete' do
-  User.where(handle: "test").delete
-  if User.where(handle: "test").exists?
+  if User.where(handle: "test0406").exists?
     flash[:notice] = 'Delete failed.'
   else
     flash[:notice] = 'Delete Successfully.'
@@ -32,9 +35,9 @@ post '/loadtest/tweet/new' do
   user_id = $testUserID
   t = Hash.new
   t[:author_id] = user_id
-  t[:author_handle] = "test"
+  t[:author_handle] = "test0406"
   if params[:tweet] == nil
-    t[:content] = ""
+    t[:content] = "test tweet"
   else 
     t[:content] = params[:tweet]
   end
