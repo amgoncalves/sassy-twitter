@@ -71,7 +71,7 @@ get '/' do
   @info = Hash.new
   @info[:login_user] = @cur_user
   @info[:target_user] = @targeted_user
-  @info[:target_tweets] = @targeted_tweets
+  @info[:target_tweets] = @tweets
   erb :index, :locals => { :title => 'Welcome!' }
 end
 
