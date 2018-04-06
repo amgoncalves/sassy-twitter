@@ -58,10 +58,10 @@ post '/loadtest/tweet/new' do
   end
   t[:content] = generateHashtagTweet(t[:content])
   t[:content] = generateMentionTweet(t[:content])
-  tweet = Tweet.new(t)
-  if tweet.save
+  @tweet = Tweet.new(t)
+  if @tweet.save
     user = User.where(handle: "test#{user_id}").first
-    tweet_id = tweet._id
+    tweet_id = @tweet._id
     user.add_tweet(tweet_id)
 
     # spread this tweet to all followers
@@ -71,7 +71,7 @@ post '/loadtest/tweet/new' do
     end
 
     # save this tweet in global timeline
-    $redis.rpush($globalTL, tweet.to_json)
+    $redis.rpush($globalTL, @tweet.to_json)
     if $redis.llen($globalTL) > 50
       $redis.rpop($globalTL)
     end
@@ -87,7 +87,8 @@ post '/loadtest/tweet/new' do
         Hashtag.where(hashtag_name: hashtag_name, tweets: tweets).create
       end
     end
-    flash[:warning] = 'Create tweet successully'
+    # flash[:warning] = 'Create tweet successully'
+    erb :tweet, :locals => { :title => 'Tweet Detail' }
   else
     flash[:warning] = 'Create tweet failed'
   end
