@@ -30,6 +30,7 @@ require_relative './controllers/helpers.rb'
 require_relative './controllers/search.rb'
 require_relative './controllers/profile.rb'
 require_relative './spec/test_interface.rb'
+require_relative './spec/create_tweet_loadtest.rb'
 
 enable :sessions
 
