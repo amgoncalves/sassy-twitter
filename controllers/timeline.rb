@@ -18,6 +18,7 @@ get '/timeline' do
 		@info = Hash.new
 		# @info[:login_user] = @cur_user
 		@info[:login_user] = get_user_from_session
+		@cur_user = @info[:login_user]
 		@info[:target_user] = @targeted_user
     
   end

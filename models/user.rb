@@ -31,6 +31,7 @@ class User
   end  
 
 	def toggle_following(following_id)
+		following_id = following_id.to_s
 		nxt_followings = followings
 		nxt_nfollowings = nfollowings
 		if followings.include?(following_id)
@@ -45,6 +46,7 @@ class User
 	end
 
 	def toggle_followed(followed_id)
+		followed_id = followed_id.to_s
 		nxt_followeds = followeds
 		nxt_nfoloweds = nfolloweds
 		if followeds.include?(followed_id)
@@ -69,8 +71,31 @@ class User
     self.set(profile: newprofile)
   end
 
+	def update_followings(redis_user)
+		self.set(followings: redis_user.followings)
+		self.set(nfollowings: redis_user.nfollowings)
+	end
+
+	def update_followeds(redis_user)
+		self.set(followeds: redis_user.followeds)
+		self.set(nfolloweds: redis_user.nfolloweds)
+	end
+
+	def update_user(redis_user)
+		self.set(email: redis_user.email)
+		self.set(password: redis_user.password)
+		self.set(profile: redis_user.profile)
+		self.set(followeds: redis_user.followeds)
+		self.set(nfolloweds: redis_user.nfolloweds)
+		self.set(followings: redis_user.followings)
+		self.set(nfollowings: redis_user.nfollowings)
+		self.set(tweets: redis_user.tweets)
+		self.set(ntweets: redis_user.ntweets)
+		self.set(liked: redis_user.liked)
+	end
+
 	def follow?(target_user)
-		followings.include?(target_user._id)
+		followings.include?(target_user._id.to_s)
 	end
 
   def password
@@ -83,7 +108,7 @@ class User
   end
 
   def findById(user_id)
-    return self.where(_id: user_id).first
+    return self.where(_id: user_id.to_s).first
   end
   
   def self.search(query)

@@ -4,9 +4,9 @@
     <a href="#"><img class="img-responsive" alt="" src="/images/profile_500x500.png"></a>
 
     <!-- Profile Info -->
-		<% unless @info[:target_user].profile.name.empty? %>
+		<% unless @info[:target_user].profile[:name].empty? %>
 			<div class="twPc-divName">
-				<%= @info[:target_user].profile.name %>
+				<%= @info[:target_user].profile[:name] %>
 			</div>
 		<% end %>
 
@@ -14,27 +14,27 @@
       <a href="/user/<%= @info[:target_user]._id %>">@<%= @info[:target_user].handle %></a>
     </div>
 
-		<% unless @info[:target_user].profile.bio.empty? %>
+		<% unless @info[:target_user].profile[:bio].empty? %>
 			<div>
-				 <%= @info[:target_user].profile.bio %>
+				 <%= @info[:target_user].profile[:bio] %>
 			</div>
 		<% end %>
 
-		<% unless @info[:target_user].profile.location.empty? %>
+		<% unless @info[:target_user].profile[:location].empty? %>
 			<div>
-				<span class="glyphicon glyphicon-map-marker"></span> <%= @info[:target_user].profile.location %>
+				<span class="glyphicon glyphicon-map-marker"></span> <%= @info[:target_user].profile[:location] %>
 			</div>
 		<% end %>
 
-		<% unless @info[:target_user].profile.date_joined.nil? %>
+		<% unless @info[:target_user].profile[:date_joined].nil? %>
 			<div>
-				<span class="glyphicon glyphicon-calendar"></span> Joined <%= @info[:target_user].profile.date_joined.strftime("%B %Y") %>
+				<span class="glyphicon glyphicon-calendar"></span> Joined <%= @info[:target_user].profile[:date_joined].strftime("%B %Y") %>
 			</div>
 		<% end %>
 
-		<%  unless @info[:target_user].profile.dob === Date.jd(0) %>
+		<%  unless @info[:target_user].profile[:dob] === Date.jd(0) %>
 			<div>
-				<span class="glyphicon glyphicon-user"></span> Born on <%= @info[:target_user].profile.dob.strftime("%B %d, %Y") %>
+				<span class="glyphicon glyphicon-user"></span> Born on <%= @info[:target_user].profile[:dob].strftime("%B %d, %Y") %>
 			</div>
 		<% end %>
 
@@ -82,7 +82,7 @@
 		</input>
 			
     <!-- Follow Button -->
-    <% if @info[:target_user] != get_user_from_session %>
+    <% if @info[:target_user]._id != @info[:login_user]._id %>
 			<div>
 				<button id="follow-button" class="btn btn-primary"><% if @info[:isfollowing] == true %>Following<% else %>+ Follow<% end %></button>
 			</div>
