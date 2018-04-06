@@ -46,7 +46,10 @@ def get_handle(id)
 end
 
 def get_user_from_session
-  return User.where(_id: session[:user_id]).first
+  # return User.where(_id: session[:user_id]).first
+	user_hash = JSON.parse($redis.get($currentUser))
+	user = User.new(user_hash)
+	return user
 end
 
 def get_user_from_cookie
