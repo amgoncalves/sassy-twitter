@@ -32,7 +32,7 @@
 			</div>
 		<% end %>
 
-		<%  unless @info[:target_user].profile.dob.nil? %>
+		<%  unless @info[:target_user].profile.dob === Date.jd(0) %>
 			<div>
 				<span class="glyphicon glyphicon-user"></span> Born on <%= @info[:target_user].profile.dob.strftime("%B %d, %Y") %>
 			</div>
