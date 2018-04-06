@@ -15,17 +15,27 @@ class UserTest < MiniTest::Unit::TestCase
 		params[:user] = { :handle => 'shuaiyu8',
 						 :email => 'shuaiyu@brandeis.edu',
 						 :password => '123456'}
+		yesterday = Date.yesterday
+		# @profile_shuai = Profile.new('ma4', yesterday, yesterday, 'waltham', 'Shuai Yu')
+		shuai_profile = { :bio => 'ma4', :dob => yesterday, :date_joined => yesterday, :location => 'waltham', :name => 'shuai'}
+		params[:user][:profile] = Profile.new(shuai_profile)
+
+		# params[:user][:profile] = @profile_shuai
 		@targeted = User.new(params[:user])
 		@targeted.save
 
-		# post 'signup/submit', params
 		post '/login?', params[:user]
 
 		params[:user] = { :handle => 'sichen',
 						 :email => 'sichen@brandeis.edu',
 						 :password => "12345678"}
 		today = Date.today
-		@profile = Profile.new('student', today, today, 'waltham', 'Si Chen')
+		si_profile = {:bio => 'student', :dob => today, :date_joined => today, :location => 'waltham', :name => 'Si Chen'}
+		@profile = Profile.new(si_profile)
+		# @profile = Profile.new('student', today, today, 'waltham', 'Si Chen')
+		#
+		# si_profile = { :bio => 'student', :dob => today, :date_joined => todya, :location => 'waltham', :name => 'shuai'}
+		# params[:user][:profile] = Profile.new(si_profile)
 		params[:user][:profile] = @profile
 		@targeted = User.new(params[:user])
 		@targeted.save

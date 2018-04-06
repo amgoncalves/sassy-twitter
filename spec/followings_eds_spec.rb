@@ -17,8 +17,9 @@ class FollowPageTest < MiniTest::Unit::TestCase
 						 :password => '123456'}
 		@day_before_yesterday = Date.yesterday - 1
 		@day_before_yesterday = @day_before_yesterday
-		@profile = Profile.new('engineer', @day_before_yesterday, @day_before_yesterday, 'new york', 'Shuai Yu')
-		@params[:user][:profile] = @profile
+		# @profile = Profile.new('engineer', @day_before_yesterday, @day_before_yesterday, 'new york', 'Shuai Yu')
+		shuai_profile = {:bio => "engineer", :dob => @day_before_yesterday, :date_joined => @day_before_yesterday, :location => 'new york', :name=> 'Shuai Yu'}
+		@params[:user][:profile] = Profile.new(shuai_profile)
 		@targeted = User.new(@params[:user])
 		@targeted.save
 		@id_shuai = @targeted._id
@@ -30,7 +31,9 @@ class FollowPageTest < MiniTest::Unit::TestCase
 										:email => 'alyssa@brandeis.edu',
 										:password => '123456'}
 		@yesterday = Date.yesterday
-		@profile = Profile.new('girl', @yesterday, @yesterday, 'boston', 'Alyssa Goncalves')
+		alyssa_profile = {:bio => 'girl', :dob => @yesterday, :date_joined => @yesterday, :location => 'boston', :name => 'Alyssa Goncalves'}
+		# @profile = Profile.new('girl', @yesterday, @yesterday, 'boston', 'Alyssa Goncalves')
+		@profile = Profile.new(alyssa_profile)
 		@params[:user][:profile] = @profile
 		@targeted = User.new(@params[:user])
 		@targeted.save
@@ -43,7 +46,9 @@ class FollowPageTest < MiniTest::Unit::TestCase
 						 :email => 'sichen@brandeis.edu',
 						 :password => '12345678'}
 		@today = Date.today
-		@profile = Profile.new('student', @today, @today, 'waltham', 'Si Chen')
+		si_profile = {:bio => 'student', :dob => @today, :date_joined => @today, :location => 'waltham', :name => 'Si Chen'}
+		@profile = Profile.new(si_profile)
+		# @profile = Profile.new('student', @today, @today, 'waltham', 'Si Chen')
 		@params[:user][:profile] = @profile
 		@targeted = User.new(@params[:user])
 		@targeted.save
@@ -87,6 +92,7 @@ class FollowPageTest < MiniTest::Unit::TestCase
 		#handle of targetted user
 		assert res.body.include?('shuaiyu8')
 		#handle of following 1
+		byebug
 		assert res.body.include?('alyssa')
 		#handle of following 2
 		assert res.body.include?('sichen')
