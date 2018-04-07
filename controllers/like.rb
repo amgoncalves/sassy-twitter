@@ -1,7 +1,8 @@
 get '/like' do
   # update corresponding tweet
   tweet_id = params[:tweet_id]
-  cur_user = get_user_from_session
+  # cur_user = get_user_from_session
+  cur_user = get_user_from_redis
   user_id = cur_user._id
 
   tweet = Tweet.where(_id: tweet_id).first
@@ -19,7 +20,8 @@ end
 get '/unlike' do
   # update corresponding tweet
   tweet_id = params[:tweet_id]
-  cur_user = get_user_from_session
+  # cur_user = get_user_from_session
+  cur_user = get_user_from_redis
   user_id = cur_user._id
 
   tweet = Tweet.where(_id: tweet_id).first

@@ -4,7 +4,7 @@ require 'mongoid'
 class Profile
   include Mongoid::Document
   
-	attr_accessor :bio, :dob, :date_joined, :location, :name
+	# attr_reader :bio, :dob, :date_joined, :location, :name
 
 	field :date_joined, type: Date, default: Date.today
 	field :dob, type: Date, default: Date.jd(0)
@@ -26,11 +26,7 @@ class Profile
 	end
 
 	def mongoize 
-		[ @bio, @dob, @date_joined, @location, @name]
-	end
-
-	def keys
-		"bio"
+		[ bio, dob, date_joined, location, name]
 	end
 
 	class << self

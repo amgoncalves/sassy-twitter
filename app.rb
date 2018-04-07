@@ -61,8 +61,8 @@ get '/' do
     end
 
     @tweets = $redis.lrange($globalTL,0, -1).reverse
-    # @cur_user = get_user_from_session
-		@cur_user = get_user_from_mongo
+    @cur_user = get_user_from_redis
+		# @cur_user = get_user_from_mongo
     @targeted_user = @cur_user
     @targeted_id = @targeted_user._id
   else 

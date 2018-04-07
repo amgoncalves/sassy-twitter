@@ -3,7 +3,8 @@ post '/tweet/new' do
 
   user_id = session[:user_id]
   params[:tweet][:author_id] = user_id
-  params[:tweet][:author_handle] = get_user_from_session.handle
+  # params[:tweet][:author_handle] = get_user_from_session.handle
+  params[:tweet][:author_handle] = get_user_from_redis.handle
   params[:tweet][:content] = generateHashtagTweet(params[:tweet][:content])
   params[:tweet][:content] = generateMentionTweet(params[:tweet][:content])
   tweet = Tweet.new(params[:tweet])
