@@ -32,7 +32,8 @@ class Profile
 	class << self
 		def demongoize(object)
 			# Profile.new(object[0], object[1], object[2], object[3], object[4])
-			profile_hash = {:bio => object[0], :dob => object[1], :date_joined => object[2], :location => object[3], :name => object[4]}
+			profile_hash = {:bio => object[0], :dob => object[1].to_date, :date_joined => object[2].to_date, :location => object[3], :name => object[4]}
+			# profile_hash.each { |key, value| profile_hash[key] = ""}
 			Profile.new(profile_hash)
 		end
 
