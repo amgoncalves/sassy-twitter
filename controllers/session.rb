@@ -52,6 +52,8 @@ end
 def get_user_from_redis
 	user_hash = JSON.parse($redis.get($currentUser))
 	user = User.new(user_hash)
+	profile_hash = user[:profile]
+	user.profile = Profile.new(profile_hash)
 	return user
 end
 

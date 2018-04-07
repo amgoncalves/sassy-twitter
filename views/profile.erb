@@ -1,6 +1,7 @@
 <div class="panel panel-default">
   <div class="panel-body">
     <!-- Profile Image -->
+		<% byebug %>
     <a href="#"><img class="img-responsive" alt="" src="/images/profile_500x500.png"></a>
 
     <!-- Profile Info -->
@@ -92,7 +93,7 @@
 
 		<a id="follow-direct" type="hidden" href="/follow">
 		</a>
-		<input id="targeted-id" type="hidden" value="<%= @info[:target_user]._id%>">
+		<input id="targeted-id" type="hidden" value="<%= @info[:target_user]._id %>">
 		</input>
 			
     <!-- Follow Button -->

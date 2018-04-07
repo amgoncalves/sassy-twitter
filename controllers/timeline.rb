@@ -18,7 +18,7 @@ get '/timeline' do
 		# code added by Shuai at Mar 23
 		@info = Hash.new
 		# @info[:login_user] = @cur_user
-		@info[:login_user] = get_user_from_redis
+		@info[:login_user] = get_user_from_redis()
 		@cur_user = @info[:login_user]
 		@info[:target_user] = @targeted_user
     

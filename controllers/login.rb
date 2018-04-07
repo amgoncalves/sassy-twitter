@@ -11,6 +11,9 @@ post '/login/?' do
     session[:user_id] = user._id
     add_cookie(user) unless params[:remember] == "off"
     $redis.set($currentUser, user.to_json) # add user to redis 
+
+		byebug
+
     flash[:notice] = "Welcome back, #{user.handle}!"
     redirect '/'
   else
