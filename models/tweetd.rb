@@ -16,7 +16,7 @@ class Tweetd
   validates_length_of :content, minimum: 1, maximum: 400
 
   has_many :replies
-  belongs_to :userd dependent: :delete_all
+  belongs_to :userd
 
   def add_reply(reply_id)
     new_reply = replys.push(reply_id)

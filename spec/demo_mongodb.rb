@@ -12,7 +12,8 @@ post '/demo/mongodb/user/create' do
   starttime = Time.now
   i = 0
   while i < 1000 do
-    profile_hash = {:bio => "", :dob => Date.jd(0), :date_joined => Date.today, :location => "", :name => ""}
+    today = Date.today.strftime("%B %Y")
+    profile_hash = {:bio => "", :dob => "", :date_joined => today, :location => "", :name => ""}
     profile = Profile.new(profile_hash)
     uhash = Hash.new
     uhash[:id] = i.to_s
@@ -70,7 +71,7 @@ post '/demo/mongodb/user' do
   i = 0
   while i < 1000 do
     user_id = rand(1000).to_s
-    user = User.where(handle: "test#{user_id}").first
+    user = Userd.where(handle: "test#{user_id}").first
     i = i +1
   end
   endtime = Time.now
@@ -84,10 +85,17 @@ end
 post '/demo/mongodb/user/delete' do
   Mongoid::Config.connect_to('nanotwitter-demo')
   starttime = Time.now
-  i = 0
-  while i < 100
+  i = 400
+  while i < 500
     user_id = i.to_s
-    Userd.where(_id: user_id).delete
+    Userd.where(_id: user_id).first.delete
+    byebug
+    if Tweetd.where(userd_id: user_id).exists?
+      puts "wrong"
+    else
+      puts "OK"
+    end
+
     i = i + 1
   end
   endtime = Time.now

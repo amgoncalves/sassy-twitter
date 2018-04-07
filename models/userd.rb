@@ -25,7 +25,7 @@ class Userd
   validates :password_hash, presence: true
   validates :APItoken, presence: true, uniqueness: true
 
-  has_many :tweetds
+  has_many :tweetds, dependent: :delete
 
   def initialize(params)
     super
