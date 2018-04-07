@@ -7,7 +7,9 @@ require 'sinatra/flash'
 require 'redis'
 #require 'sinatra/sessionshelper'
 require_relative './models/user'
+require_relative './models/userd'
 require_relative './models/tweet'
+require_relative './models/tweetd'
 require_relative './models/reply'
 require_relative './models/hashtag'
 require_relative './config/initializers/redis.rb'
@@ -31,6 +33,7 @@ require_relative './controllers/search.rb'
 require_relative './controllers/profile.rb'
 require_relative './spec/test_interface.rb'
 require_relative './spec/create_tweet_loadtest.rb'
+require_relative './spec/demo_mongodb.rb'
 
 enable :sessions
 

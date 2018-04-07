@@ -1,13 +1,13 @@
 require 'mongoid'
 require 'mongo'
 
-class Tweet
+class Tweetd
   include Mongoid::Document
   include ActiveModel::Validations
 
   field :content, type: String
   field :time_created, type: DateTime, default: Time.now
-  field :author_id, type: BSON::ObjectId, default: String.new
+  field :userd_id, type: String, default: String.new
   field :author_handle, type: String, default: String.new
   field :original_tweet_id, type: BSON::ObjectId, default: String.new
   field :likedby, type: Set, default: []
@@ -16,7 +16,7 @@ class Tweet
   validates_length_of :content, minimum: 1, maximum: 400
 
   has_many :replies
-  # belongs_to :user
+  belongs_to :userd dependent: :delete_all
 
   def add_reply(reply_id)
     new_reply = replys.push(reply_id)
