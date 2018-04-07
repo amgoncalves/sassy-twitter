@@ -26,17 +26,31 @@
 			</div>
 		<% end %>
 
-		<% unless @info[:target_user].profile[:date_joined].nil? %>
+
+		<% unless @info[:target_user].profile[:date_joined].empty? %>
 			<div>	
-			<span class="glyphicon glyphicon-calendar"></span> Joined <%= @info[:target_user].profile[:date_joined].strftime("%B %Y") %>
+			<span class="glyphicon glyphicon-calendar"></span> Joined <%= @info[:target_user].profile[:date_joined] %>
 			</div>
 		<% end %>
 
-		<% unless @info[:target_user].profile[:dob].year === -4712 %>
+		<%# <% unless @info[:target_user].profile[:date_joined].nil? %1> %>
+		<%# 	<div> %>	
+		<%# 	<span class="glyphicon glyphicon-calendar"></span> Joined <%= @info[:target_user].profile[:date_joined].strftime("%B %Y") %1> %>
+		<%# 	</div> %>
+		<%# <% end %1> %>
+
+
+		<% unless @info[:target_user].profile[:dob].empty?  %>
 			<div>
-				<span class="glyphicon glyphicon-user"></span> Born on <%= @info[:target_user].profile[:dob].strftime("%B %d, %Y") %>
+				<span class="glyphicon glyphicon-user"></span> Born on <%= @info[:target_user].profile[:dob] %>
 			</div>
 		<% end %>
+
+		<%# <% unless @info[:target_user].profile[:dob].year === -4712 %1> %>
+		<%# 	<div> %>
+		<%# 		<span class="glyphicon glyphicon-user"></span> Born on <%= @info[:target_user].profile[:dob].strftime("%B %d, %Y") %1> %>
+		<%# 	</div> %>
+		<%# <% end %1> %>
 
     <!-- User Statistics -->
     <div class="row">

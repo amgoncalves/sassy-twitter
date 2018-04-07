@@ -6,8 +6,10 @@ class Profile
   
 	# attr_reader :bio, :dob, :date_joined, :location, :name
 
-	field :date_joined, type: Date, default: Date.today
-	field :dob, type: Date, default: Date.jd(0)
+	field :date_joined, type: String, default: ""
+	# field :date_joined, type: Date, default: Date.today
+	# field :dob, type: Date, default: Date.jd(0)
+	field :dob, type: String, default: ""
 	field :bio, type: String, default: ""
 	field :location, type: String, default: ""
 	field :name, type: String, default: ""
@@ -32,7 +34,8 @@ class Profile
 	class << self
 		def demongoize(object)
 			# Profile.new(object[0], object[1], object[2], object[3], object[4])
-			profile_hash = {:bio => object[0], :dob => object[1].to_date, :date_joined => object[2].to_date, :location => object[3], :name => object[4]}
+			# profile_hash = {:bio => object[0], :dob => object[1].to_date, :date_joined => object[2].to_date, :location => object[3], :name => object[4]}
+			profile_hash = {:bio => object[0], :dob => object[1], :date_joined => object[2], :location => object[3], :name => object[4]}
 			# profile_hash.each { |key, value| profile_hash[key] = ""}
 			Profile.new(profile_hash)
 		end

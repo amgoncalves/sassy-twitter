@@ -15,9 +15,13 @@ class UserTest < MiniTest::Unit::TestCase
 		params[:user] = { :handle => 'shuaiyu8',
 						 :email => 'shuaiyu@brandeis.edu',
 						 :password => '123456'}
+		# yesterday = Date.yesterday.to_s
 		yesterday = Date.yesterday
+		@date_joined = yesterday.strftime("%B %Y")
+		@dob = yesterday.strftime("%B %d, %Y")
+
 		# @profile_shuai = Profile.new('ma4', yesterday, yesterday, 'waltham', 'Shuai Yu')
-		shuai_profile = { :bio => 'ma4', :dob => yesterday, :date_joined => yesterday, :location => 'waltham', :name => 'shuai'}
+		shuai_profile = { :bio => 'ma4', :dob => @dob, :date_joined => @date_joined, :location => 'waltham', :name => 'shuai'}
 		params[:user][:profile] = Profile.new(shuai_profile)
 
 		# params[:user][:profile] = @profile_shuai
@@ -30,7 +34,9 @@ class UserTest < MiniTest::Unit::TestCase
 						 :email => 'sichen@brandeis.edu',
 						 :password => "12345678"}
 		today = Date.today
-		si_profile = {:bio => 'student', :dob => today, :date_joined => today, :location => 'waltham', :name => 'Si Chen'}
+		@date_joined = today.strftime("%B %Y")
+		@dob = today.strftime("%B %d, %Y")
+		si_profile = {:bio => 'student', :dob => @dob, :date_joined => @date_joined, :location => 'waltham', :name => 'Si Chen'}
 		@profile = Profile.new(si_profile)
 		# @profile = Profile.new('student', today, today, 'waltham', 'Si Chen')
 		#
@@ -56,6 +62,7 @@ class UserTest < MiniTest::Unit::TestCase
 		# location of the targeted user
 		assert res.body.include?('waltham')
 		# date joined of the targeted user
-		assert res.body.include?('Joined ' + @profile.date_joined.strftime("%B %Y"))
+		# assert res.body.include?('Joined ' + @profile.date_joined.strftime("%B %Y"))
+		assert res.body.include?('Joined ' + @date_joined)
 	end
 end

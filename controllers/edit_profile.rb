@@ -3,7 +3,9 @@ get '/edit_profile' do
 end
 
 post '/edit_profile/submit' do
-	params[:profile][:dob] = Date.strptime(params[:profile][:dob],"%Y-%m-%d")
+	# params[:profile][:dob] = Date.strptime(params[:profile][:dob],"%Y-%m-%d").to_s
+	dob_date = Date.strptime(params[:profile][:dob],"%Y-%m-%d")
+	params[:profile][:dob] = dob_date.strftime("%B %d, %Y")
   # @profile = Profile.new(params[:profile][:bio], 
 			 # params[:profile][:dob],
 			 # params[:profile][:date_joined],

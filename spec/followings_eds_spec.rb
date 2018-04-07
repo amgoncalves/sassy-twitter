@@ -17,8 +17,10 @@ class FollowPageTest < MiniTest::Unit::TestCase
 						 :password => '123456'}
 		@day_before_yesterday = Date.yesterday - 1
 		@day_before_yesterday = @day_before_yesterday
+		@dob = @day_before_yesterday.strftime("%B %d, %Y")
+		@date_joined = @day_before_yesterday.strftime("%B %Y")
 		# @profile = Profile.new('engineer', @day_before_yesterday, @day_before_yesterday, 'new york', 'Shuai Yu')
-		shuai_profile = {:bio => "engineer", :dob => @day_before_yesterday, :date_joined => @day_before_yesterday, :location => 'new york', :name=> 'Shuai Yu'}
+		shuai_profile = {:bio => "engineer", :dob => @dob, :date_joined => @date_joined, :location => 'new york', :name=> 'Shuai Yu'}
 		@params[:user][:profile] = Profile.new(shuai_profile)
 		@targeted = User.new(@params[:user])
 		@targeted.save
@@ -31,7 +33,9 @@ class FollowPageTest < MiniTest::Unit::TestCase
 										:email => 'alyssa@brandeis.edu',
 										:password => '123456'}
 		@yesterday = Date.yesterday
-		alyssa_profile = {:bio => 'girl', :dob => @yesterday, :date_joined => @yesterday, :location => 'boston', :name => 'Alyssa Goncalves'}
+		@dob = @yesterday.strftime("%B %d, %Y")
+		@date_joined = @yesterday.strftime("%B %Y")
+		alyssa_profile = {:bio => 'girl', :dob => @dob, :date_joined => @date_joined, :location => 'boston', :name => 'Alyssa Goncalves'}
 		# @profile = Profile.new('girl', @yesterday, @yesterday, 'boston', 'Alyssa Goncalves')
 		@profile = Profile.new(alyssa_profile)
 		@params[:user][:profile] = @profile
@@ -46,7 +50,9 @@ class FollowPageTest < MiniTest::Unit::TestCase
 						 :email => 'sichen@brandeis.edu',
 						 :password => '12345678'}
 		@today = Date.today
-		si_profile = {:bio => 'student', :dob => @today, :date_joined => @today, :location => 'waltham', :name => 'Si Chen'}
+		@dob = @today.strftime("%B %d, %Y")
+		@date_joined = @today.strftime("%B %Y")
+		si_profile = {:bio => 'student', :dob => @dob, :date_joined => @date_joined, :location => 'waltham', :name => 'Si Chen'}
 		@profile = Profile.new(si_profile)
 		# @profile = Profile.new('student', @today, @today, 'waltham', 'Si Chen')
 		@params[:user][:profile] = @profile
@@ -80,7 +86,9 @@ class FollowPageTest < MiniTest::Unit::TestCase
 		# location of the targeted user
 		assert res.body.include?('new york')
 		# date joined of the targeted user
-		assert res.body.include?('Joined ' + @day_before_yesterday.strftime("%B %Y"))
+		# assert res.body.include?('Joined ' + @day_before_yesterday.strftime("%B %Y"))
+		# assert res.body.include?('Joined ' + @day_before_yesterday)
+		assert res.body.include?('Joined ' + @date_joined)
 	end
 
 	def test_following
@@ -94,9 +102,9 @@ class FollowPageTest < MiniTest::Unit::TestCase
 
 		# in redis
 		#handle of following 1
-		# assert res.body.include?('alyssa')
+		assert res.body.include?('alyssa')
 		#handle of following 2
-		# assert res.body.include?('sichen')
+		assert res.body.include?('sichen')
 	end
 
 	def test_followed
