@@ -24,6 +24,5 @@ post '/loadtest/follow' do
 	@info[:isfollowing] = isfollowing
 	@info[:target_tweets] = tweets
 
-	erb :user, :locals => { :title -> "#{target_user.handle}"}
-
+	erb :user, :locals => { :title => "#{target_user.handle}"}
 end
