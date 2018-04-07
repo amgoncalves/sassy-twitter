@@ -72,13 +72,13 @@ get '/' do
     @targeted_id = @targeted_user._id
 
 		@info = Hash.new
-		@info[:login_user] = @cur_user.attributes
-		@info[:target_user] = @targeted_user.attributes
+		@info[:login_user] = @cur_user
+		@info[:target_user] = @targeted_user
 		@info[:target_tweets] = @tweets
   else 
     @tweets = $redis.lrange($globalTL, 0, -1).reverse
   end
-  er :index, :locals => { :title => 'Welcome!' }
+  erb :index, :locals => { :title => 'Welcome!' }
 end
 
 get '/reset/redis' do
