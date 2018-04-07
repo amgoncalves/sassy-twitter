@@ -85,17 +85,15 @@ end
 post '/demo/mongodb/user/delete' do
   Mongoid::Config.connect_to('nanotwitter-demo')
   starttime = Time.now
-  i = 400
-  while i < 500
+  i = 0
+  while i < 100
     user_id = i.to_s
     Userd.where(_id: user_id).first.delete
-    byebug
     if Tweetd.where(userd_id: user_id).exists?
-      puts "wrong"
+      puts "Wrong"
     else
       puts "OK"
     end
-
     i = i + 1
   end
   endtime = Time.now
