@@ -5,7 +5,8 @@ get '/user/followings/' do
 	@info = Hash.new
 
   if target_exist
-		login_user = get_user_from_session
+		# login_user = get_user_from_session
+		login_user = get_user_from_mongo
 		target_user = query_res.first
 		target_followings = Array.new
 		isfollowing = login_user.follow?(target_user)

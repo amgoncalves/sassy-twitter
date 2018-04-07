@@ -12,7 +12,6 @@ post '/edit_profile/submit' do
   user_id = session[:user_id]
   user = User.where(_id: user_id).first
 	params[:profile][:date_joined] = user.profile[:date_joined]
-	byebug
 	@profile = Profile.new(params[:profile])
   user.update_profile(@profile)
   redirect "/user/#{user_id}"
