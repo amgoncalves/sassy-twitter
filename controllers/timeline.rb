@@ -4,7 +4,8 @@ get '/timeline' do
     tweet_ids = $redis.lrange(session[:user_id].to_s, 0, 50)
     @tweets = Tweet.in(_id: tweet_ids)
     @tweets = @tweets.reverse
-    @targeted_user = get_user_from_session
+    # @targeted_user = get_user_from_session
+    @targeted_user = get_user_from_redis
     @targeted_id = @targeted_user._id
 
     @ntweets = @targeted_user.ntweets
@@ -17,7 +18,7 @@ get '/timeline' do
 		# code added by Shuai at Mar 23
 		@info = Hash.new
 		# @info[:login_user] = @cur_user
-		@info[:login_user] = get_user_from_session
+		@info[:login_user] = get_user_from_redis
 		@cur_user = @info[:login_user]
 		@info[:target_user] = @targeted_user
     

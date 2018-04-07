@@ -1,6 +1,6 @@
 =begin
 get '/posted' do
-  user = get_user_from_session
+  user = get_user_from_redis
   posted_ids = user.tweets
   if posted_ids.length > 50
     posted_ids = posted_ids[-50..-1]

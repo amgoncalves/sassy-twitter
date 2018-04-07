@@ -3,14 +3,16 @@ post '/retweet' do
 
   # create retweet tweet
   author_id = session[:user_id]
-  author_handle = get_user_from_session.handle
+  # author_handle = get_user_from_session.handle
+  author_handle = get_user_from_redis.handle
   original_tweet_id = BSON::ObjectId.from_string(params[:tweet_id])
   content = generateHashtagTweet(params[:retweet][:content])
   content = generateMentionTweet(params[:retweet][:content])
   retweet = Tweet.new(author_id: author_id, original_tweet_id: original_tweet_id, author_handle: author_handle, content: content)
 
   if retweet.save
-    user = get_user_from_session
+    # user = get_user_from_session
+    user = get_user_from_redis
     user.add_tweet(retweet._id)
 
     # spread this tweet to all followers

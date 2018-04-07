@@ -34,6 +34,7 @@ require_relative './controllers/profile.rb'
 require_relative './spec/test_interface.rb'
 require_relative './spec/create_tweet_loadtest.rb'
 require_relative './spec/demo_mongodb.rb'
+require_relative './spec/follow_loadtest.rb'
 
 enable :sessions
 
@@ -64,7 +65,7 @@ get '/' do
     end
 
     @tweets = $redis.lrange($globalTL,0, -1).reverse
-    # @cur_user = get_user_from_session
+    # @cur_user = get_user_from_redis
 		@cur_user = get_user_from_mongo
     @targeted_user = @cur_user
     @targeted_id = @targeted_user._id

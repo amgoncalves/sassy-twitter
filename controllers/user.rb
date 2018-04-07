@@ -5,8 +5,8 @@ get '/user/:targeted_id' do
 	@info = Hash.new
 
   if target_exist
-		# login_user = get_user_from_session
-		login_user = get_user_from_mongo
+		login_user = get_user_from_redis
+		# login_user = get_user_from_mongo
 		target_user = query_res.first
 		isfollowing = login_user.follow?(target_user)
 		target_tweets = Array.new

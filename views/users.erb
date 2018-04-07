@@ -4,7 +4,7 @@
   <tr>
     <td>
       <a href='/user/<%= user.id %>'>@<%= user.handle %></a>
-      <% if user == get_user_from_session %> (that's you!)<% end %>
+      <% if user == get_user_from_redis %> (that's you!)<% end %>
     </td>
    </tr>
 <% end %>
