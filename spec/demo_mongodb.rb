@@ -89,11 +89,6 @@ post '/demo/mongodb/user/delete' do
   while i < 100
     user_id = i.to_s
     Userd.where(_id: user_id).first.delete
-    if Tweetd.where(userd_id: user_id).exists?
-      puts "Wrong"
-    else
-      puts "OK"
-    end
     i = i + 1
   end
   endtime = Time.now
