@@ -35,6 +35,7 @@ require_relative './spec/test_interface.rb'
 require_relative './spec/create_tweet_loadtest.rb'
 require_relative './spec/demo_mongodb.rb'
 require_relative './spec/follow_loadtest.rb'
+require_relative './spec/demo_redis.rb'
 
 enable :sessions
 
@@ -69,14 +70,14 @@ get '/' do
 		@cur_user = get_user_from_mongo
     @targeted_user = @cur_user
     @targeted_id = @targeted_user._id
+
+		@info = Hash.new
+		@info[:login_user] = @cur_user
+		@info[:target_user] = @targeted_user
+		@info[:target_tweets] = @tweets
   else 
     @tweets = $redis.lrange($globalTL, 0, -1).reverse
   end
-  # code added by Shuai at Mar 23
-  @info = Hash.new
-  @info[:login_user] = @cur_user
-  @info[:target_user] = @targeted_user
-  @info[:target_tweets] = @tweets
   erb :index, :locals => { :title => 'Welcome!' }
 end
 
