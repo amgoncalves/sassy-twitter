@@ -99,12 +99,14 @@ class User
 	end
 
   def password
-    @password ||= Password.new(password_hash)
+    # @password ||= Password.new(password_hash)
+		@passoword ||= password_hash
   end
 
   def password=(new_password)
-    @password = Password.create(new_password)
-    self.password_hash = @password
+    # @password = Password.create(new_password)
+    # self.password_hash = @password
+		self.password_hash = new_password
   end
 
   def findById(user_id)

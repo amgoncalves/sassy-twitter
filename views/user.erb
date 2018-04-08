@@ -8,41 +8,59 @@
       <div class="panel panel-info">
 				<br>
 				<%# <div class="panel-body"> %>
-					<div class="panel-body" id="tweet-scroller">
-						<%= erb :tweets_object %>
+					<div class="panel-body" >
+					<% @info[:target_tweets].each do |tweet| %>
+
+						<%# <div class="miniprofile-container"> %>
+							<%# <div class="miniprofile"> %>
+								<%# <%= erb :miniprofile, :locals=>{:f=>@info[:target_user]} %1> %>
+							<%# </div> <1%# end of div miniprofile %1> %>
+						<%# </div> <1%# end of div miniprofile-container %1> %>
+
+						<div class="media">
+							<a class="media-left" href="#fake">
+								<img alt="" id='profile_in_tweet' class="media-object img-rounded" src="/images/profile_64x64.png">
+							</a>
+
+							<div class="media-body">
+								<h4 class="media-heading"><%= @info[:target_user].handle %> </h4>
+
+								<p>
+									<%= tweet.content %>
+								</p>
+
+					<ul class="nav nav-pills nav-pills-custom">
+						<% if is_authenticated? && tweet[:author_id] != @info[:login_user]._id %>
+							<li><a href="/reply?tweet_id=<%= tweet['_id'] %>"><span class="glyphicon glyphicon-share-alt"></span></a></li>
+							<li><a href="/retweet?tweet_id=<%= tweet['_id'] %>"><span class="glyphicon glyphicon-retweet"></span></a></li>
+							<li>
+								<% if @info[:login_user].like?(tweet._id.to_s) %>
+									<a href="/unlike?tweet_id=<%= tweet['_id'] %>"><span class="glyphicon glyphicon-star" style="color:red"></span></a>
+								<% else %>
+									<a href="/like?tweet_id=<%= tweet['_id'] %>"><span class="glyphicon glyphicon-star"></span></a>
+								<% end %>
+							</li>
+						<% else %>
+							<li><a name="#"><span class="glyphicon glyphicon-share-alt" style="color:grey"></span></a></li>
+							<li><a name="#"><span class="glyphicon glyphicon-retweet" style="color:grey"></span></a></li>
+							<li><a name="#"><span class="glyphicon glyphicon-star" style="color:grey"></span></a></li>
+						<% end %>
+						<li><a href="/tweet/<%= tweet['_id'] %>"><span class="glyphicon glyphicon-option-horizontal"></span></a></li>
+					</ul>
 
 
 
-					<%# <% @info[:target_tweets].each do |tweet| %1> %>
+								<%# <ul class="nav nav-pills nav-pills-custom"> %>
+								<%# 	<li><a href="#"><span class="glyphicon glyphicon-share-alt"></span></a></li> %>
+								<%# 	<li><a href="#"><span class="glyphicon glyphicon-retweet"></span></a></li> %>
+								<%# 	<li><a href="#"><span class="glyphicon glyphicon-star"></span></a></li> %>
+								<%# 	<li><a href="#"><span class="glyphicon glyphicon-option-horizontal"></span></a></li> %>
+								<%# </ul> %>
 
-					<%# 	<div class="miniprofile-container"> %>
-					<%# 		<div class="miniprofile"> %>
-					<%# 			<%= erb :miniprofile, :locals=>{:f=>@info[:target_user]} %1> %>
-					<%# 		</div> <1%# end of div miniprofile %1> %>
-					<%# 	</div> <1%# end of div miniprofile-container %1> %>
-
-					<%# 	<div class="media"> %>
-					<%# 		<a class="media-left" href="#fake"> %>
-					<%# 			<img alt="" id='profile_in_tweet' class="media-object img-rounded" src="/images/profile_64x64.png"> %>
-					<%# 		</a> %>
-
-					<%# 		<div class="media-body"> %>
-					<%# 			<h4 class="media-heading"><%= @info[:target_user].handle %1> </h4> %>
-
-					<%# 			<p> %>
-					<%# 				<%= tweet.content %1> %>
-					<%# 			</p> %>
-
-					<%# 			<ul class="nav nav-pills nav-pills-custom"> %>
-					<%# 				<li><a href="#"><span class="glyphicon glyphicon-share-alt"></span></a></li> %>
-					<%# 				<li><a href="#"><span class="glyphicon glyphicon-retweet"></span></a></li> %>
-					<%# 				<li><a href="#"><span class="glyphicon glyphicon-star"></span></a></li> %>
-					<%# 				<li><a href="#"><span class="glyphicon glyphicon-option-horizontal"></span></a></li> %>
-					<%# 			</ul> %>
-					<%# 		</div> <!-- end of div class="media-body" --> %>
-					<%# 	</div> <1%# end of div class="media"%> %>
-					<%# <hr> %>
-					<%# <% end %1> %>
+					</div> <!-- end of div class="media-body" -->
+					</div> <%# end of div class="media"%>
+					<hr>
+					<% end %>
 
 
 

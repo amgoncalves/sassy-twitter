@@ -96,10 +96,12 @@
 		</input>
 			
     <!-- Follow Button -->
-    <% if @info[:target_user]._id != @info[:login_user]._id %>
-			<div>
-				<button id="follow-button" class="btn btn-primary"><% if @info[:isfollowing] == true %>Following<% else %>+ Follow<% end %></button>
-			</div>
-    <% end %>
+		<% if is_authenticated? %>
+			<% if @info[:target_user]._id != @info[:login_user]._id %>
+				<div>
+					<button id="follow-button" class="btn btn-primary"><% if @info[:isfollowing] == true %>Following<% else %>+ Follow<% end %></button>
+				</div>
+			<% end %>
+		<% end %>
   </div><!-- ./panel-body -->
 </div><!-- ./panel-default -->
