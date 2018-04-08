@@ -10,7 +10,8 @@ post '/login/?' do
   if user = auth_user(params[:email], params[:password])
     session[:user_id] = user._id
     add_cookie(user) unless params[:remember] == "off"
-    $redis.set($currentUser, user.to_json) # add user to redis 
+    # $redis.set($currentUser, user.to_json) # add user to redis 
+		save_user_to_redis(user)
     flash[:notice] = "Welcome back, #{user.handle}!"
     redirect '/'
   else
