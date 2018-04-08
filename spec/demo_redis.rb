@@ -115,7 +115,12 @@ post '/demo/redis/user/update' do
 	i = 0
 	while i < 1000
 		user_key = "user" + i.to_s
-		$redis.hset(user_key, "password", "newpwd#{i}")
+		# $redis.hset(user_key, "password", "newpwd#{i}")
+		user_hash = JSON.parse($redis.get(user_key))
+		user_hash[:password] = "newpwd#{i}"
+		user = User.new(user_hash)
+		$redis.set(user_key, user.to_json)
+
 		i = i + 1
 	end
 	endtime = Time.now

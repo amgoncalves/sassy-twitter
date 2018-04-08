@@ -19,6 +19,7 @@ get '/user/:targeted_id' do
 		@info[:target_user] = target_user
 		@info[:isfollowing] = isfollowing
 		@info[:target_tweets] = target_tweets
+		@tweets = @info[:target_tweets]
                 set_user_globals
     erb :user, :locals => { :title => "#{target_user.handle}" }
   end

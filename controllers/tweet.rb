@@ -1,6 +1,5 @@
 post '/tweet/new' do
   @hashtag_list = Array.new
-
   user_id = session[:user_id]
   params[:tweet][:author_id] = user_id
   # params[:tweet][:author_handle] = get_user_from_session.handle
@@ -9,12 +8,16 @@ post '/tweet/new' do
   params[:tweet][:content] = generateMentionTweet(params[:tweet][:content])
   tweet = Tweet.new(params[:tweet])
   if tweet.save
-    user = User.where(_id: user_id).first
+    db_login_user = User.where(_id: user_id).first
+		redis_login_user = get_user_from_redis
     tweet_id = tweet._id
-    user.add_tweet(tweet_id)
+    db_login_user.add_tweet(tweet_id)
+		redis_login_user.add_tweet(tweet_id)
+
+		save_user_to_redis(redis_login_user)
 
     # spread this tweet to all followers
-    followers = user.followeds
+    followers = db_login_user.followeds
     followers.each do |follower|
       $redis.rpush(follower.to_s, tweet_id)
       if $redis.llen(follower.to_s) > 50

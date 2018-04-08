@@ -4,7 +4,7 @@ require 'csv'
 require 'set'
 
 filename = './seeds/users.csv'
-line_count = 500
+line_count = 300
 
 
 # names_set = Set.new([])
@@ -17,6 +17,24 @@ File.open(filename) do |file|
 			names_set[row[0]] = row[1]
 		end
 	end
+end
+
+File.open("follow_target_payload", "w+") do |f|
+	# names_set.each do |login|
+	# 	names_set.each do |target|
+	f.print('{')
+	f.print('"keys":["targeted_id"], ')
+	f.print('"values":[')
+
+	names_set.each_with_index do |(targeted_id, target_name), index|
+		if index == line_count - 1 
+			f.print('["' + targeted_id + '"]')
+		else 
+			f.print('["' + targeted_id + '"]' + ", ")
+		end
+	end
+	f.print(']')
+	f.print('}')
 end
 
 File.open("follow_payload", "w+") do |f|
@@ -44,7 +62,7 @@ File.open("follow_payload", "w+") do |f|
 end
 
 
-File.open("create_user_payload", "w+") do |f|
+File.open("make_user_payload", "w+") do |f|
 	f.print('{')
 	f.print('"keys":["id", "email","password","handle"], ')
 	f.print('"values":[')
@@ -60,7 +78,9 @@ File.open("create_user_payload", "w+") do |f|
 			f.print('"' + "hand" + name + '"]' + ", ")
 
 		else
-			f.print('["' + name + "@loadtest.com" + '",')
+			f.print('["' + id + '",')
+
+			f.print('"' + name + "@loadtest.com" + '",')
 
 			f.print('"' + "pwd" + name + '",')
 
