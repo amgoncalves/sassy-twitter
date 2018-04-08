@@ -100,7 +100,7 @@ class User
 
   def password
     # @password ||= Password.new(password_hash)
-		@passoword ||= password_hash
+		@password ||= password_hash
   end
 
   def password=(new_password)
