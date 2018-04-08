@@ -62,7 +62,7 @@ File.open("make_user_payload", "w+") do |f|
 		else
 			f.print('["' + id + '",')
 
-			f.print('["' + name + "@loadtest.com" + '",')
+			f.print('"' + name + "@loadtest.com" + '",')
 
 			f.print('"' + "pwd" + name + '",')
 
