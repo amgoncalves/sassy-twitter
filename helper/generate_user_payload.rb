@@ -44,7 +44,7 @@ File.open("follow_payload", "w+") do |f|
 end
 
 
-File.open("create_user_payload", "w+") do |f|
+File.open("make_user_payload", "w+") do |f|
 	f.print('{')
 	f.print('"keys":["id", "email","password","handle"], ')
 	f.print('"values":[')
@@ -60,6 +60,8 @@ File.open("create_user_payload", "w+") do |f|
 			f.print('"' + "hand" + name + '"]' + ", ")
 
 		else
+			f.print('["' + id + '",')
+
 			f.print('["' + name + "@loadtest.com" + '",')
 
 			f.print('"' + "pwd" + name + '",')
