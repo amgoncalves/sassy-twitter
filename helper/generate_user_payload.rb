@@ -4,7 +4,7 @@ require 'csv'
 require 'set'
 
 filename = './seeds/users.csv'
-line_count = 500
+line_count = 300
 
 
 # names_set = Set.new([])
