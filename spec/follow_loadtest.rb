@@ -6,7 +6,7 @@ post '/loadtest/follow' do
 	target_id = params[:targeted_id]
 	target_query_res = User.where(_id: target_id)
 
-	if login_query_res.exists? and target_query_res.exists?
+	if login_query_res.exists? and target_query_res.exists? and login_id != target_id
 		# db_login_user = User.where(_id: login_id).first
 		db_login_user = login_query_res.first
 		target_user = target_query_res.first

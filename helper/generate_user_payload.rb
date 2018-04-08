@@ -19,6 +19,24 @@ File.open(filename) do |file|
 	end
 end
 
+File.open("follow_target_payload", "w+") do |f|
+	# names_set.each do |login|
+	# 	names_set.each do |target|
+	f.print('{')
+	f.print('"keys":["targeted_id"], ')
+	f.print('"values":[')
+
+	names_set.each_with_index do |(targeted_id, target_name), index|
+		if index == line_count - 1 
+			f.print('["' + targeted_id + '"]')
+		else 
+			f.print('["' + targeted_id + '"]' + ", ")
+		end
+	end
+	f.print(']')
+	f.print('}')
+end
+
 File.open("follow_payload", "w+") do |f|
 	# names_set.each do |login|
 	# 	names_set.each do |target|
