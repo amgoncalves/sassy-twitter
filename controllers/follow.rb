@@ -1,4 +1,5 @@
 post '/follow' do
+  byebug
   target_id = BSON::ObjectId.from_string(params[:targeted_id])
 	target_user = User.where(_id: target_id).first
 	login_user = get_user_from_redis
@@ -20,6 +21,8 @@ post '/follow' do
       $redis.rpop(login_id.to_s)
     end
   end
+
+  byebug
 
   redirect back
 end
