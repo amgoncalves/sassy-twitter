@@ -11,6 +11,7 @@ get '/like' do
     byebug
   else
     cur_user.like(tweet_id)
+    save_user_to_redis(cur_user)
   end
 
   redirect back
@@ -30,6 +31,7 @@ get '/unlike' do
     byebug
   else
     cur_user.unlike(tweet_id)
+    save_user_to_redis(cur_user)
   end
 
   redirect back

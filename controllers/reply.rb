@@ -4,11 +4,10 @@ post '/reply' do
   # create reply
   params[:reply][:tweet_id] = params[:tweet_id]
   params[:reply][:replier_id] = session[:user_id]
-  params[:reply][:replier_handle] = session[:user].handle
+  params[:reply][:replier_handle] = get_user_from_redis[:handle]
   params[:reply][:content] = generateHashtagTweet(params[:reply][:content])
   params[:reply][:content] = generateMentionTweet(params[:reply][:content])
   reply = Reply.new(params[:reply])
-  byebug
 
   if reply.save
     # update corresponding tweet

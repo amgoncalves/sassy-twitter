@@ -19,6 +19,7 @@ post '/signup/submit' do
   if @user.save
     redirect '/login'
   else
-    flash[:notice] = 'Signup failed.'
+    flash[:notice] = 'Signup failed, please try again!'
+    redirect '/signup'
   end
 end

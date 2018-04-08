@@ -17,6 +17,9 @@ post '/tweet/new' do
     followers = user.followeds
     followers.each do |follower|
       $redis.rpush(follower.to_s, tweet_id)
+      if $redis.llen(follower.to_s) > 50
+        $redis.rpop(follower.to_s)
+      end
     end
 
     # save this tweet in global timeline

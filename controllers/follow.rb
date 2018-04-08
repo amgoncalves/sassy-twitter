@@ -14,8 +14,13 @@ post '/follow' do
 
   # add all tweets of that user to current user timeline
   tweets = target_user.tweets
+  byebug
   tweets.each do |tweet_id|
-    $redis.rpush(login_user._id.to_s, tweet_id)
+    byebug
+    $redis.rpush(login_id.to_s, tweet_id)
+    if $redis.llen(login_id.to_s) > 50
+      $redis.rpop(login_id.to_s)
+    end
   end
 
   redirect back
