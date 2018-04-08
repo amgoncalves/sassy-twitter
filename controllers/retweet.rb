@@ -14,11 +14,15 @@ post '/retweet' do
     # user = get_user_from_session
     user = get_user_from_redis
     user.add_tweet(retweet._id)
+    save_user_to_redis(user)
 
     # spread this tweet to all followers
     followers = user.followeds
     followers.each do |follower|
       $redis.rpush(follower.to_s, retweet._id)
+      if $redis.llen(follower.to_s) > 50
+        $redis.rpop(follower.to_s)
+      end
     end
 
     # save this tweet in global timeline

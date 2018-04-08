@@ -14,11 +14,7 @@
     
     <h4 class="media-heading">
       <% author_id = @t["author_id"]["$oid"] %>
-      <% if is_authenticated? %>
-        <a href="/user/<%= author_id %>"> @<%= @t["author_handle"] %> </a>
-      <% else %>
-        @<%= @t["author_handle"] %>
-      <% end %>
+      <a href="/user/<%= author_id %>"> @<%= @t["author_handle"] %> </a> 
     </h4>
 
     <p><%= @t["content"] %></p>

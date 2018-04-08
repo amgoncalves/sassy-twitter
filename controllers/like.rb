@@ -8,7 +8,7 @@ get '/like' do
   tweet = Tweet.where(_id: tweet_id).first
   tweet.add_like(user_id)
   if cur_user.like?(tweet_id)
-    byebug
+    flash[:notice] = 'Not available like operation!'
   else
     cur_user.like(tweet_id)
     save_user_to_redis(cur_user)
@@ -28,7 +28,7 @@ get '/unlike' do
   tweet = Tweet.where(_id: tweet_id).first
   tweet.delete_like(user_id.to_s)
   if cur_user.like?(tweet_id) == false
-    byebug
+    flash[:notice] = 'Not available unlike operation!'
   else
     cur_user.unlike(tweet_id)
     save_user_to_redis(cur_user)
