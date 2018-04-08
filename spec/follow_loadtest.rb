@@ -1,7 +1,9 @@
 post '/loadtest/follow' do
-	login_id = BSON::ObjectId.from_string(params[:login_id])
+	# login_id = BSON::ObjectId.from_string(params[:login_id])
+	login_id = params[:login_id]
 	login_query_res = User.where(_id: login_id)
-	target_id = BSON::ObjectId.from_string(params[:targeted_id])
+	# target_id = BSON::ObjectId.from_string(params[:targeted_id])
+	target_id = params[:targeted_id]
 	target_query_res = User.where(_id: target_id)
 
 	if login_query_res.exists? and target_query_res.exists?
@@ -26,14 +28,17 @@ post '/loadtest/follow' do
 			target_tweets = target_tweets.reverse
 		end
 
-		@info = Hash.new
-		@info[:login_user] = db_login_user
-		@info[:target_user] = target_user
-		@info[:isfollowing] = isfollowing
-		@info[:target_tweets] = target_tweets
-		@tweets = @info[:target_tweets]
+		# @info = Hash.new
+		# @info[:login_user] = db_login_user
+		# @info[:target_user] = target_user
+		# @info[:isfollowing] = isfollowing
+		# @info[:target_tweets] = target_tweets
+		# @tweets = @info[:target_tweets]
 
-		erb :user, :locals => { :title => "#{target_user.handle}"}
+		# erb :user, :locals => { :title => "#{target_user.handle}"}
+
+		erb "#{login_id} successfully follows #{target_id}", 
+			:locals => {:title => 'a user follows another user in mongo'}
 	end
 end
 
