@@ -34,3 +34,13 @@ post '/loadtest/follow' do
 	# byebug
 	erb :user, :locals => { :title => "#{target_user.handle}"}
 end
+
+post '/loadtest/user/make' do
+	today = Date.today.strftime("%B %Y")
+	profile_hash = {:bio => "", :dob => "", :date_joined => today, :location => "", :name => ""}
+	profile = Profile.new(profile_hash)
+	params[:profile] = profile
+	user = User.new(params)
+	user.save
+	erb "created a new user", :locals => {:title => ' create a user in mongo'}
+end
