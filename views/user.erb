@@ -7,37 +7,45 @@
     <div class="col-sm-6">
       <div class="panel panel-info">
 				<br>
-				<div class="panel-body">
-					<% @info[:target_tweets].each do |tweet| %>
+				<%# <div class="panel-body"> %>
+					<div class="panel-body" id="tweet-scroller">
+						<%= erb :tweets_object %>
 
-						<div class="miniprofile-container">
-							<div class="miniprofile">
-								<%= erb :miniprofile, :locals=>{:f=>@info[:target_user]} %>
-							</div> <%# end of div miniprofile %>
-						</div> <%# end of div miniprofile-container %>
 
-						<div class="media">
-							<a class="media-left" href="#fake">
-								<img alt="" id='profile_in_tweet' class="media-object img-rounded" src="/images/profile_64x64.png">
-							</a>
 
-							<div class="media-body">
-								<h4 class="media-heading"><%= @info[:target_user].handle %> </h4>
+					<%# <% @info[:target_tweets].each do |tweet| %1> %>
 
-								<p>
-									<%= tweet.content %>
-								</p>
+					<%# 	<div class="miniprofile-container"> %>
+					<%# 		<div class="miniprofile"> %>
+					<%# 			<%= erb :miniprofile, :locals=>{:f=>@info[:target_user]} %1> %>
+					<%# 		</div> <1%# end of div miniprofile %1> %>
+					<%# 	</div> <1%# end of div miniprofile-container %1> %>
 
-								<ul class="nav nav-pills nav-pills-custom">
-									<li><a href="#"><span class="glyphicon glyphicon-share-alt"></span></a></li>
-									<li><a href="#"><span class="glyphicon glyphicon-retweet"></span></a></li>
-									<li><a href="#"><span class="glyphicon glyphicon-star"></span></a></li>
-									<li><a href="#"><span class="glyphicon glyphicon-option-horizontal"></span></a></li>
-								</ul>
-							</div> <!-- end of div class="media-body" -->
-						</div> <%# end of div class="media"%>
-					<hr>
-					<% end %>
+					<%# 	<div class="media"> %>
+					<%# 		<a class="media-left" href="#fake"> %>
+					<%# 			<img alt="" id='profile_in_tweet' class="media-object img-rounded" src="/images/profile_64x64.png"> %>
+					<%# 		</a> %>
+
+					<%# 		<div class="media-body"> %>
+					<%# 			<h4 class="media-heading"><%= @info[:target_user].handle %1> </h4> %>
+
+					<%# 			<p> %>
+					<%# 				<%= tweet.content %1> %>
+					<%# 			</p> %>
+
+					<%# 			<ul class="nav nav-pills nav-pills-custom"> %>
+					<%# 				<li><a href="#"><span class="glyphicon glyphicon-share-alt"></span></a></li> %>
+					<%# 				<li><a href="#"><span class="glyphicon glyphicon-retweet"></span></a></li> %>
+					<%# 				<li><a href="#"><span class="glyphicon glyphicon-star"></span></a></li> %>
+					<%# 				<li><a href="#"><span class="glyphicon glyphicon-option-horizontal"></span></a></li> %>
+					<%# 			</ul> %>
+					<%# 		</div> <!-- end of div class="media-body" --> %>
+					<%# 	</div> <1%# end of div class="media"%> %>
+					<%# <hr> %>
+					<%# <% end %1> %>
+
+
+
 					</div> <%# end of div panel body %>
 			</div> <%# end of div panel panel panel-info %>
 		</div> <%# end of div col-sm-6 %>
