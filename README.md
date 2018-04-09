@@ -139,13 +139,13 @@ Brandeis University, Spring 2018
 ### nt0.6 - Advanced Scaling
 
 ### Requirements
-* *[REDIS]* Setup Redis caching service, locally and on heroku
+* *[REDIS]* - Setup Redis caching service, locally and on heroku
 
-* *[CACHING]* Add caching and do experiments to see the effect
+* *[CACHING]* - Add caching and do experiments to see the effect
 
-* *[SCALEEXPERIMENT]* Do scaling experiments to see the differences (keep a record)
+* *[SCALEEXPERIMENT]* - Do scaling experiments to see the differences (keep a record)
 
-* *[nanoTwitter 0.6]* Clean up directory. Update repo.
+* *[nanoTwitter 0.6]* - Clean up directory. Update repo.
 
 #### Developer's Log
 
