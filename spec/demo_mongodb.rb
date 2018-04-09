@@ -37,7 +37,7 @@ post '/demo/mongodb/tweet/create' do
   starttime = Time.now
 
   j = 0
-  while j < 100 do
+  while j < 1000 do
     i = 0
     while i < 10 do 
       thash = Hash.new
@@ -85,8 +85,8 @@ end
 post '/demo/mongodb/user/delete' do
   Mongoid::Config.connect_to('nanotwitter-demo')
   starttime = Time.now
-  i = 0
-  while i < 100
+  i = 100
+  while i < 200
     user_id = i.to_s
     Userd.where(_id: user_id).first.delete
     i = i + 1
@@ -102,8 +102,8 @@ end
 post '/demo/mongodb/tweet/delete' do
   Mongoid::Config.connect_to('nanotwitter-demo')
   starttime = Time.now
-  i = 0
-  while i < 100
+  i = 400
+  while i < 500
     userd_id = i.to_s
     Tweetd.where(userd_id: userd_id).delete
     i = i + 1
