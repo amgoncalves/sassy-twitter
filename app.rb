@@ -36,6 +36,7 @@ require_relative './spec/create_tweet_loadtest.rb'
 require_relative './spec/demo_mongodb.rb'
 require_relative './spec/follow_loadtest.rb'
 require_relative './spec/demo_redis.rb'
+require_relative './spec/reply_loadtest.rb'
 
 enable :sessions
 
