@@ -23,7 +23,7 @@ class User
   validates :handle, presence: true, uniqueness: true
   validates :email, presence: true, uniqueness: true
   validates :password_hash, presence: true
-  validates :APItoken, presence: true, uniqueness: true
+  # validates :APItoken, presence: true, uniqueness: true
 
   def initialize(params)
     super
