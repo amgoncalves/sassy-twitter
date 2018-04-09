@@ -25,6 +25,8 @@ post '/follow' do
 			end
 		end
 
-		redirect back
+		# response['Cache-Control'] =  "public, max-age=0, must-revalidate"
+		# redirect back
+		# erb :user, :locals => { :title => "#{target_user.handle}"}
 	end
 end

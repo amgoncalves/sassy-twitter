@@ -15,11 +15,14 @@ $(document).ready(function() {
 		}
 	}); 
 
+				// success: function() {
+				// 	location.reload();
+				// }
 	
 	// check if nfollowed changed 
 	// if so, post 
 	// if not, do nothing
-	$(window).on('unload', function() {
+	$(window).on('beforeunload', function() {
 		var $nfollowed = parseInt($('a#nfollowed').text());
 		if (orig_nfollowed !== $nfollowed) {
 			$.ajax({
