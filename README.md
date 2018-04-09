@@ -139,13 +139,13 @@ Brandeis University, Spring 2018
 ### nt0.6 - Advanced Scaling
 
 ### Requirements
-* *[REDIS] Setup Redis caching service, locally and on heroku
+* *[REDIS]* Setup Redis caching service, locally and on heroku
 
-* *[CACHING] Add caching and do experiments to see the effect
+* *[CACHING]* Add caching and do experiments to see the effect
 
-* *[SCALEEXPERIMENT] Do scaling experiments to see the differences (keep a record)
+* *[SCALEEXPERIMENT]* Do scaling experiments to see the differences (keep a record)
 
-* *[nanoTwitter 0.6] Clean up directory. Update repo.
+* *[nanoTwitter 0.6]* Clean up directory. Update repo.
 
 #### Developer's Log
 
@@ -155,7 +155,7 @@ Brandeis University, Spring 2018
 - [x] Load test for creating users using playload file - Shuai
 - [x] Change Profile model so that we can make an instance of it by hash parameters - Shuai
 - [x] Benchmark load test (redis part) for comparison between mongo and redis - Shuai
-- [x] Did experiments about using Bcrypt or not - Shuai and Si
+- [x] Did experiments about using Bcrypt or not - Si and Shuai
 - [x] Did experiments about including Profile in user model or not - Shuai
 
 ## Documentation
