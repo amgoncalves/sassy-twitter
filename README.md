@@ -136,6 +136,28 @@ Brandeis University, Spring 2018
 - [x] Moved registration from front page to /signup, added signup to navbar - Alyssa
 - [x] Added scrolling list of all tweets to the front page for unauthenticated users - Alyssa
 
+### nt0.6 - Advanced Scaling
+
+### Requirements
+* *[REDIS] Setup Redis caching service, locally and on heroku
+
+* *[CACHING] Add caching and do experiments to see the effect
+
+* *[SCALEEXPERIMENT] Do scaling experiments to see the differences (keep a record)
+
+* *[nanoTwitter 0.6] Clean up directory. Update repo.
+
+#### Developer's Log
+
+- [x] Store the logged in user in redis, and make methods to retrive it and save it correctly - Shuai
+- [x] Make sure redis works properly - Shuai
+- [x] Load test for follow using payload file, including one logged in user follows many others, and many users follow many users - Shuai
+- [x] Load test for creating users using playload file - Shuai
+- [x] Change Profile model so that we can make an instance of it by hash parameters - Shuai
+- [x] Benchmark load test (redis part) for comparison between mongo and redis - Shuai
+- [x] Did experiments about using Bcrypt or not - Shuai and Si
+- [x] Did experiments about including Profile in user model or not - Shuai
+
 ## Documentation
 
 This Github has a [developer's Wiki](https://github.com/amgoncalves/sassy-twitter/wiki).
