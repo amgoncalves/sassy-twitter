@@ -19,7 +19,23 @@ post '/demo/redis/user/create' do
 		user = User.new(user_hash)
 
 		# add user to redis
-		$redis.set("user" + i.to_s, user.to_json)
+    duplicate = false
+    $redis.keys.each do |key|
+      if JSON.parse($redis.get(key))["handle"] == "test_redis#{i}"
+        duplicate = true
+      end
+      if JSON.parse($redis.get(key))["email"] == "test_redis#{i}@redis.com"
+        duplicate = true
+      end
+      if JSON.parse($redis.get(key))["APItoken"] == "test_redis#{i}"
+        duplicate = true
+      end
+    end
+    if duplicate == true
+      puts "WRONG"
+    else 
+		  $redis.set("user" + i.to_s, user.to_json)
+    end
 		
 		i = i + 1
 	end
@@ -33,7 +49,7 @@ post '/demo/redis/tweet/create' do
 	starttime = Time.now
 
 	j = 0
-	while j < 100 do
+	while j < 1000 do
 		i = 0
 		author_hash = JSON.parse($redis.get("user" + j.to_s))
 		author = User.new(author_hash)
@@ -75,15 +91,21 @@ end
 
 post '/demo/redis/user/delete' do
 	starttime = Time.now
-	i = 0
-	while i < 100
+	i = 200
+	while i < 300
 		user_key = "user" + i.to_s
-		user_hash = JSON.parse($redis.get(user_key))
-		user = User.new(user_hash)
-		user.tweets.each do |tweet_id|
-			$redis.del(tweet_id)
-		end
-		$redis.del(user_key)
+		# user_hash = JSON.parse($redis.get(user_key))
+		# user = User.new(user_hash)
+		# user.tweets.each do |tweet_id|
+		# 	$redis.del(tweet_id)
+		# end
+		# $redis.del(user_key)
+    # $redis.keys.each do |key|
+    #   if JSON.parse($redis.get(key))[:userd_id] == user_key
+    #     $redis.del(key)
+    #   end
+    # end
+    $redis.del(user_key)
 		i = i + 1
 	end
 	endtime = Time.now
@@ -115,11 +137,9 @@ post '/demo/redis/user/update' do
 	i = 0
 	while i < 1000
 		user_key = "user" + i.to_s
-		# $redis.hset(user_key, "password", "newpwd#{i}")
 		user_hash = JSON.parse($redis.get(user_key))
 		user_hash[:password] = "newpwd#{i}"
-		user = User.new(user_hash)
-		$redis.set(user_key, user.to_json)
+		$redis.set(user_key, user_hash.to_json)
 
 		i = i + 1
 	end

@@ -25,7 +25,7 @@ class Userd
   validates :password_hash, presence: true
   validates :APItoken, presence: true, uniqueness: true
 
-  has_many :tweetds, dependent: :delete
+  # has_many :tweetds, dependent: :delete
 
   def initialize(params)
     super
@@ -101,12 +101,14 @@ class Userd
   end
 
   def password
-    @password ||= Password.new(password_hash)
+    # @password ||= Password.new(password_hash)
+    @password ||= password_hash
   end
 
   def password=(new_password)
-    @password = Password.create(new_password)
-    self.password_hash = @password
+    # @password = Password.create(new_password)
+    # self.password_hash = @password
+    self.password_hash = new_password
   end
 
   def findById(user_id)
