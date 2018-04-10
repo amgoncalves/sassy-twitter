@@ -46,14 +46,15 @@ def get_handle(id)
 end
 
 def save_user_to_redis(user)
-	$redis.set($currentUser, user.to_json)
+	loginuser_redis_key = session[:user_id].to_s + "loginuser"
+	# $redis.set($currentUser, user.to_json)
+	$redis.set(loginuser_redis_key, user.to_json)
 
 	# $redis.hmset($currentUser, 
 	# keys = user.attributes.keys
 	# byebug
 	# keys.each do |field|
 	# 	if field == "profile"
-	# 		$redis.hset($currentUser, field, user.attributes[field].to_json)
 	# 	else 
 	# 		$redis.hset($currentUser, field, user.attributes[field].to_json)
 	# 	end
@@ -64,7 +65,9 @@ def save_user_to_redis(user)
 end
 
 def get_user_from_redis
-	user_hash = JSON.parse($redis.get($currentUser))
+	loginuser_redis_key = session[:user_id].to_s + "loginuser"
+	# user_hash = JSON.parse($redis.get($currentUser))
+	user_hash = JSON.parse($redis.get(loginuser_redis_key))
 	profile_hash = user_hash["profile"]
 	profile = Profile.new(profile_hash)
 	user_hash["profile"] = profile
@@ -75,6 +78,11 @@ def get_user_from_redis
 	# profile_hash = user[:profile]
 	# user.profile = Profile.new(profile_hash)
 	return user
+end
+
+def del_user_from_redis
+	loginuser_redis_key = session[:user_id].to_s + "loginuser"
+	$redis.del(loginuser_redis_key)
 end
 
 def get_user_from_cookie

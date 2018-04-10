@@ -11,7 +11,9 @@ post '/loadtest/follow' do
 		db_login_user = login_query_res.first
 		target_user = target_query_res.first
 		# target_user = User.where(_id: target_id).first
-		$redis.set($currentUser, db_login_user.to_json)
+		# loginuser_redis_key = session[:user_id].to_s + "loginuser"
+		loginuser_redis_key = login_id.to_s + "loginuser"
+		$redis.set(loginuser_redis_key, db_login_user.to_json)
 
 		db_login_user.toggle_following(target_id)
 		target_user.toggle_followed(login_id)
