@@ -1,5 +1,4 @@
 <% @users.each do |user| %>
-<% get_targeted_user %>
 <div class="media">
   <a class="media-left" href="#fake">
     <img alt="" class="media-object img-rounded" src="/images/profile_64x64.png">
@@ -12,7 +11,7 @@
     <% unless user.profile[:bio].empty? %>
       <div>Bio: <%= user.profile[:bio] %></div>
     <% end %>
-    <% if user != get_user_from_redis %>
+    <% if user != @info[:login_user] %>
       <div>
         <button id="follow-button" class="btn btn-primary">
 	  <% if @isfollowing == true %>

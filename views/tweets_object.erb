@@ -23,11 +23,11 @@
     
     
     <ul class="nav nav-pills nav-pills-custom">
-      <% if is_authenticated? && author_id != @cur_user._id %>
+      <% if is_authenticated? && author_id != @info[:login_user]._id %>
         <li><a href="/reply?tweet_id=<%= @t['_id'] %>"><span class="glyphicon glyphicon-share-alt"></span></a></li>
         <li><a href="/retweet?tweet_id=<%= @t['_id'] %>"><span class="glyphicon glyphicon-retweet"></span></a></li>
         <li>
-          <% if @cur_user.like?(@t._id.to_s) %>
+          <% if @info[:login_user].like?(@t._id.to_s) %>
             <a href="/unlike?tweet_id=<%= @t['_id'] %>"><span class="glyphicon glyphicon-star" style="color:red"></span></a>
           <% else %>
             <a href="/like?tweet_id=<%= @t['_id'] %>"><span class="glyphicon glyphicon-star"></span></a>

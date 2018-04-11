@@ -3,15 +3,16 @@ get '/signup' do
 end
 
 post '/signup/submit' do
-  # Build the user's profile
-  # today = Date.today.to_s
-	today = Date.today.strftime("%B %Y")
-	# dob = Date.jd(0).to_s
-	dob = "";
-  # today = Date.today
-  # @profile = Profile.new("", dob, today, "", "")
-	profile_hash = {:bio => "", :dob => dob, :date_joined => today, :location => "", :name => ""}
-	@profile = Profile.new(profile_hash)
+  byebug
+  today = Date.today.strftime("%B %Y")
+  profile_hash = {
+    :bio => "",
+    :dob => "",
+    :date_joined => today,
+    :location => "",
+    :name => ""
+  }
+  @profile = Profile.new(profile_hash)
   params[:user][:profile] = @profile
 
   # Build the user's account
