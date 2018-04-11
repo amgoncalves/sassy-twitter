@@ -35,11 +35,8 @@ get '/search/hashtag' do
     tweets = hashtag[:tweets]
     @tweet_results = Tweet.in(_id: tweets)
   end
-  # @tweet_results = Tweet.search(params[:query]) unless params[:query].blank?
 
-  # get_targeted_user
   @info = Hash.new
-  # @info[:target_user] = get_user_from_session
-	@info[:target_user] = get_user_from_redis
+  @info[:target_user] = get_user_from_redis
   erb :results, :locals => { :title => 'Search Results' }
 end

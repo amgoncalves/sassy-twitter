@@ -1,5 +1,5 @@
 def redirect_to_original_request
-	user = get_user_from_mongo
+  user = get_user_from_mongo
   flash[:notice] = 'Welcome back, #{user.handle}!'
   original_request = session[:original_request]
   session[:original_request] = nil
@@ -12,7 +12,7 @@ end
 
 def set_user_globals
   if session[:user_id] != nil
-		@cur_user = get_user_from_mongo
+    @cur_user = get_user_from_mongo
   elsif cookies[:user_id] != nil
     @cur_user = get_user_from_cookies
     session[:user_id] = @cur_user._id unless @cur_user == nil
