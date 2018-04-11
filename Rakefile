@@ -10,7 +10,7 @@ namespace :jobs do
   task :work do
     while true
       puts "Hello, world! #{DateTime.now}"
-      sleep 5
+      sleep 100
     end
   end
 end
