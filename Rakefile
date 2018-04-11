@@ -8,9 +8,6 @@ end
 namespace :jobs do
   desc "Some work in job"
   task :work do
-    while true
-      puts "Hello, world! #{DateTime.now}"
-      sleep 100
-    end
+    puts "Hello, world! #{DateTime.now}"
   end
 end
