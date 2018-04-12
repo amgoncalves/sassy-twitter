@@ -17,11 +17,29 @@ post '/follow' do
 		target_user.toggle_followed(login_id)
 
 		# add all tweets of that user to current user timeline
-		tweets = target_user.tweets
-		tweets.each do |tweet_id|
-			$redis.rpush(login_id.to_s, tweet_id)
-			if $redis.llen(login_id.to_s) > 50
-				$redis.rpop(login_id.to_s)
+		# tweets = target_user.tweets
+		# tweets.each do |tweet_id|
+		# 	$redis.rpush(login_id.to_s, tweet_id)
+		# 	if $redis.llen(login_id.to_s) > 50
+		# 		$redis.rpop(login_id.to_s)
+		# 	end
+		# end
+
+		byebug
+		if db_login_user.follow?(target_user)
+		  # delete all tweets of that user to current user timeline
+		  tweets = target_user.tweets
+		  old_tweets = $redis.lrange(login_user._id.to_s, 0, -1).reverse
+		  new_tweets = old_tweets - tweets
+			login_user.update_tweets(new_tweets)
+		else
+			# add all tweets of that user to current user timeline
+			tweets = target_user.tweets
+			tweets.each do |tweet_id|
+					$redis.rpush(login_id.to_s, tweet_id)
+					if $redis.llen(login_id.to_s) > 100
+							$redis.rpop(login_id.to_s)
+					end
 			end
 		end
 
