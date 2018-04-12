@@ -32,4 +32,3 @@ def build_fail_msg(params)
   msg = msg.map { |s| " #{s}," }.join(' ')
   msg.truncate(msg.length - 1)
 end
-  
