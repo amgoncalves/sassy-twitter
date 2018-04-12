@@ -1,5 +1,15 @@
 <% @tweets.each do |tweet| %>
 <% @t = JSON.parse(tweet) %>
+
+
+<%# <% if @info and @info[:target_user] %1> %>
+<%# 	<div class="miniprofile-container"> %>
+<%# 		<div class="miniprofile"> %>
+<%# 			<%= erb :miniprofile, :locals=>{:f=>@info[:target_user]} %1> %>
+<%# 		</div> %>
+<%# 	</div> %>
+<%# <% end %1> %>
+
 <div class="media">
   
   <a class="media-left" href="#fake">

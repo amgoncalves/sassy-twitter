@@ -42,7 +42,7 @@
 		transform: translate(-105%, -90%);
 		-ms-transform: translate(-115%, 25%);
 		text-align: left;
-		/* z-index: 500; */
+		/* z-index: -1; */
 }
 
 /* .middle { */
