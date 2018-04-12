@@ -1,4 +1,4 @@
-# nanoTwitter 0.5 :bird:
+# nanoTwitter 0.6 :bird:
 
 [https://sassy-nanotwitter.herokuapp.com/](https://sassy-nanotwitter.herokuapp.com/)
 
@@ -158,6 +158,16 @@ Brandeis University, Spring 2018
 - [x] Did experiments about using Bcrypt or not - Si and Shuai
 - [x] Did experiments about including Profile in user model or not - Shuai
 - [x] Changed the global redis key for user from currentUser to unique one for each user - Shuai
+- [x] Implemented showing hash tag with link in tweet, reply and retweet and save it in mongodb and Hashtag list - Si
+- [x] Implemented showing mention link in tweet, reply and retweet and save it under each tweet - Si
+- [x] Load test for creating new tweet 2000 clients per min - Si
+- [x] load test for replying new tweet 2000 clients per min - Si
+- [x] load test for unlogged in user 5000 clients in 20 seconds with maintaining 250 client per second - Si
+- [x] Optimised reply model with including replier handle - Si
+- [x] Fix anomalies with the rule changed of get logged in user from redis all tweet related code - Si
+- [x] Benchmark load test (mongo) with inplementing new modles and test interfaces and load test with creating 1000 user and 10000 tweets in mongodb for comparison CRUD between mongo and redis - Si
+- [x] Benchmark load test (redis part) with inplementing new modles and test interfaces and load test with creating 1000 user and 10000 tweets in redis for comparison CRUD between mongo and redis - Si
+- [x] Modified User handle link not show in unlogged in index - Si
 
 ## Documentation
 
