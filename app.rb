@@ -59,7 +59,7 @@ set :views, Proc.new { File.join(root, "views") }
 
 set :public_folder, Proc.new { File.join(root, "public") }
 
-get "#{$prefix}/", "#{$prefix}/:apitoken/", "/" do
+get "/", "#{$prefix}/", "#{$prefix}/:apitoken/" do
   @apitoken = "" 
   if is_authenticated?
     if session[:user_id] == nil
