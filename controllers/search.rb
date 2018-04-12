@@ -54,6 +54,7 @@ get $prefix + "/:handle/search/hashtag" do
   @apitoken = "/" + params[:handle]
   @info[:target_user] = get_user_from_redis
   @cur_user = @info[:target_user]
+  @info[:login_user] = @info[:target_user]
 
   erb :results, :locals => { :title => 'Search Results' }
 end
