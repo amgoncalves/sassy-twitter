@@ -28,7 +28,8 @@ class UserTest < MiniTest::Unit::TestCase
 		@targeted = User.new(params[:user])
 		@targeted.save
 
-		post '/login?', params[:user]
+		# log in as shuaiyu8
+		post '/api/v1/login?', params[:user]
 
 		params[:user] = { :handle => 'sichen',
 						 :email => 'sichen@brandeis.edu',
@@ -49,7 +50,7 @@ class UserTest < MiniTest::Unit::TestCase
 	end
 
 	def test_user
-		res = get "/user/#{@id.to_s}"
+		res = get "/api/v1/shuaiyu8/user/#{@id.to_s}"
 		assert res.ok?
 		# handle of logged in user
 		assert res.body.include?('shuaiyu8') 
