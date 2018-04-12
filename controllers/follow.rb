@@ -17,20 +17,28 @@ post $prefix + "/:apitoken/follow" do
 		target_user.toggle_followed(login_id)
 
     if db_login_user.follow?(target_user)
-      # delete all tweets of that user to current user timeline
+      byebug
+      # add all tweets of that user to current user timeline
       tweets = target_user.tweets
-      old_tweets = $redis.lrange(login_user._id.to_s, 0, -1).reverse
-      new_tweets = old_tweets - tweets
+      tweets.each do |tweet_id|
+        $redis.rpush(login_id.to_s, tweet_id)
+        if $redis.llen(login_id.to_s) > 100
+          $redis.rpop(login_id.to_s)
+        end
+      end
+      #store in mongodb
+      new_tweets = $redis.lrange(login_id.to_s, 0, -1).reverse
       login_user.update_tweets(new_tweets)
     else
-		  # add all tweets of that user to current user timeline
-		  tweets = target_user.tweets
-		  tweets.each do |tweet_id|
-		  	$redis.rpush(login_id.to_s, tweet_id)
-		  	if $redis.llen(login_id.to_s) > 100
-		  		$redis.rpop(login_id.to_s)
-		  	end
-		  end
+      byebug
+      # delete all tweets of that user to current user timeline
+      tweets = target_user.tweets
+      tweets.each do |tweet_id|
+        $redis.lrem(login_id.to_s, 0, tweet_id.to_s)
+      end
+      # store in mongodb
+      new_tweets = $redis.lrange(login_id.to_s, 0, -1).reverse
+      login_user.update_tweets(new_tweets)
     end
 
 		# response['Cache-Control'] =  "public, max-age=0, must-revalidate"
