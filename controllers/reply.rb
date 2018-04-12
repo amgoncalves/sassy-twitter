@@ -41,6 +41,7 @@ end
 get $prefix + "/:handle/reply" do
   @t = Tweet.find(params[:tweet_id])
   @apitoken = "/" + params[:handle]
+  @cur_user = get_user_from_redis
   erb :reply, :locals => { :title => 'Reply' }
 end
 
