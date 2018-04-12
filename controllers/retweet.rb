@@ -53,6 +53,7 @@ end
 get $prefix + "/:handle/retweet" do
   @t = Tweet.find(params[:tweet_id])
   @apitoken = "/" + params[:handle]
+  @cur_user = get_user_from_redis
   erb :retweet, :locals => { :title => 'Retweet' }
 end
 
