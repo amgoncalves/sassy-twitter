@@ -7,15 +7,14 @@
   </a>
   
   <div class="media-body">
+    
     <div class="tweet-date">
       <%= DateTime.parse(@t["time_created"]).strftime("%b %d %I:%M:%S %p") %>
     </div>
     
     <h4 class="media-heading">
       <% author_id = @t["author_id"]["$oid"] %>
-      <% if @apitoken == nil %>
-        @<%= @t["author_handle"] %>
-      <% elsif is_authenticated? == false %>
+      <% if @apitoken == nil || is_authenticated? == false %>
         @<%= @t["author_handle"] %>
       <% else %>
         <a href=<%= $prefix + @apitoken + "/user/" +  author_id %>> @<%= @t["author_handle"] %> </a>
