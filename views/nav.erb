@@ -8,6 +8,8 @@
           <% apitoken = @cur_user.handle %>
         <% elsif @info %>
           <% apitoken = @info[:login_user].handle %>
+				<% else %>
+					<% apitoken = @apitoken %>
         <% end %>
 
         <!-- Home Icon -->
