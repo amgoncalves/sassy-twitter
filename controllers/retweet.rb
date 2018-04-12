@@ -1,4 +1,8 @@
 post $prefix + "/:handle/retweet" do
+  if is_authenticated? || session[:user_id] == nil
+    redirect $prefix + "/"
+  end
+  
   @hashtag_list = Array.new
   @apitoken = "/" + params[:handle]
 
@@ -51,6 +55,10 @@ post $prefix + "/:handle/retweet" do
 end
 
 get $prefix + "/:handle/retweet" do
+  if is_authenticated? || session[:user_id] == nil
+    redirect $prefix + "/"
+  end
+
   @t = Tweet.find(params[:tweet_id])
   @apitoken = "/" + params[:handle]
   @cur_user = get_user_from_redis

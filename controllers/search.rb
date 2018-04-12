@@ -1,4 +1,8 @@
 post $prefix + "/:handle/search" do
+  if is_authenticated? || session[:user_id] == nil
+    redirect $prefix + "/"
+  end
+
   target_user = get_user_from_redis
   if target_user == nil
     redirect $prefix + "/login"
@@ -29,6 +33,10 @@ post $prefix + "/:handle/search" do
 end
 
 get $prefix + "/:handle/search/hashtag" do
+  if is_authenticated? || session[:user_id] == nil
+    redirect $prefix + "/"
+  end
+  
   @hide_tweets = false
   @hide_users = true
   @user_results = Array.new

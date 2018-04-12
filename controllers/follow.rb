@@ -1,4 +1,8 @@
 post $prefix + "/:apitoken/follow" do
+  if is_authenticated? || session[:user_id] == nil
+    redirect $prefix + "/"
+  end
+  
   target_id = BSON::ObjectId.from_string(params[:targeted_id])
 	query_res = User.where(_id: target_id)
 	
