@@ -60,6 +60,7 @@ set :views, Proc.new { File.join(root, "views") }
 set :public_folder, Proc.new { File.join(root, "public") }
 
 get "#{$prefix}/", "#{$prefix}/:apitoken/", "/" do
+  @apitoken = "" 
   if is_authenticated?
     if session[:user_id] == nil
       session.clear
@@ -87,7 +88,6 @@ get "#{$prefix}/", "#{$prefix}/:apitoken/", "/" do
 
     @apitoken = "/" + @cur_user[:APItoken]
   else
-    @apitoken = "" 
     @tweets = $redis.lrange($globalTL, 0, 50).reverse
   end
   erb :index, :locals => { :title => 'Welcome!' }
