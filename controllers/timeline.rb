@@ -1,4 +1,4 @@
-get '/timeline' do
+get $prefix + "/:handle/timeline" do
   @ids = User.pluck(:id)
   if is_authenticated?
     tweet_ids = $redis.lrange(session[:user_id].to_s, 0, 50)
@@ -21,6 +21,7 @@ get '/timeline' do
 		@info[:login_user] = get_user_from_redis()
 		@cur_user = @info[:login_user]
 		@info[:target_user] = @targeted_user
+    @apitoken = "/" + @cur_user[:handle]
     
   end
   erb :timeline, :locals => { :title => 'Home Timeline!' }

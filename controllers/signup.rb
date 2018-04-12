@@ -1,8 +1,8 @@
-get '/signup' do
+get $prefix + "/signup" do
   erb :signup, :locals => { :title => 'Signup' }
 end
 
-post '/signup/submit' do
+post $prefix + "/signup/submit" do
   # Build the user's profile
   # today = Date.today.to_s
 	today = Date.today.strftime("%B %Y")
@@ -17,9 +17,9 @@ post '/signup/submit' do
   # Build the user's account
   @user = User.new(params[:user])
   if @user.save
-    redirect '/login'
+    redirect $prefix + "/login"
   else
     flash[:notice] = 'Signup failed, please try again!'
-    redirect '/signup'
+    redirect $prefix + "/signup"
   end
 end

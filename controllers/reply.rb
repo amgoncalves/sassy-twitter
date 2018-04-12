@@ -1,12 +1,13 @@
-post '/reply' do
+post $prefix + "/:handle/reply" do
   @hashtag_list = Array.new
+  @apitoken = "/" + params[:handle]
 
   # create reply
   params[:reply][:tweet_id] = params[:tweet_id]
   params[:reply][:replier_id] = session[:user_id]
   params[:reply][:replier_handle] = get_user_from_redis[:handle]
-  params[:reply][:content] = generateHashtagTweet(params[:reply][:content])
-  params[:reply][:content] = generateMentionTweet(params[:reply][:content])
+  params[:reply][:content] = generateHashtagTweet(params[:reply][:content], @apitoken)
+  params[:reply][:content] = generateMentionTweet(params[:reply][:content], @apitoken)
   reply = Reply.new(params[:reply])
 
   if reply.save
@@ -28,8 +29,8 @@ post '/reply' do
         Hashtag.where(hashtag_name: hashtag_name, tweets: tweets).create
       end
     end
-
-    redirect "/tweet/#{tweet_id}"
+    
+    redirect $prefix + @apitoken + "/tweet/#{tweet_id}"
     
   else 
     puts "save failed"
@@ -37,8 +38,9 @@ post '/reply' do
   end
 end
 
-get '/reply' do
+get $prefix + "/:handle/reply" do
   @t = Tweet.find(params[:tweet_id])
+  @apitoken = "/" + params[:handle]
   erb :reply, :locals => { :title => 'Reply' }
 end
 

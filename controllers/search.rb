@@ -1,4 +1,4 @@
-post '/search' do
+post $prefix + "/:handle/search" do
   @hide_tweets = false
   @hide_users = false
   @user_results = Array.new
@@ -17,10 +17,11 @@ post '/search' do
   @info = Hash.new
   # @info[:target_user] = get_user_from_session
   @info[:target_user] = get_user_from_redis()
+  @apitoken = "/" + params[:handle]
   erb :results, :locals => { :title => 'Search Results' }
 end
 
-get '/search/hashtag' do
+get $prefix + "/:handle/search/hashtag" do
   @hide_tweets = false
   @hide_users = true
   @user_results = Array.new
@@ -38,5 +39,6 @@ get '/search/hashtag' do
   @info = Hash.new
   # @info[:target_user] = get_user_from_session
 	@info[:target_user] = get_user_from_redis
+  @apitoken = "/" + params[:handle]
   erb :results, :locals => { :title => 'Search Results' }
 end

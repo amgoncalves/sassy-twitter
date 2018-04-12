@@ -2,7 +2,7 @@
   <div class="col-lg-4"></div>
   <div class="col-lg-4">
     <h3>Edit Profile</h3>
-    <form action="/edit_profile/submit" method="POST">
+    <form action=<%= $prefix + @apitoken + "/edit_profile/submit" %> method="POST">
       <div class="form-group">
 	<label for="name">Name</label>
 	<input type="text", name="profile[name]" id="name" placeholder="Alan Turing" class="form-control" />

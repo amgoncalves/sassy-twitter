@@ -1,11 +1,17 @@
-get '/edit_profile' do
+get $prefix + "/:apitoken/edit_profile" do
+  @apitoken = "/" + params[:apitoken]
   erb :edit_profile, :locals=>{:title=>'Edit profile'}
 end
 
-post '/edit_profile/submit' do
+post $prefix + "/:apitoken/edit_profile/submit" do
 	# params[:profile][:dob] = Date.strptime(params[:profile][:dob],"%Y-%m-%d").to_s
-	dob_date = Date.strptime(params[:profile][:dob],"%Y-%m-%d")
-	params[:profile][:dob] = dob_date.strftime("%B %d, %Y")
+  if params[:profile][:dob] == ""
+    params[:profile][:dob] = ""
+  else
+    dob_date = Date.strptime(params[:profile][:dob],"%Y-%m-%d")
+    params[:profile][:dob] = dob_date.strftime("%B %d, %Y")
+  end
+	
   user_id = session[:user_id]
   # user = User.where(_id: user_id).first
 	
@@ -19,5 +25,6 @@ post '/edit_profile/submit' do
 
   # user.update_profile(@profile)
 
-  redirect "/user/#{user_id}"
+  @apitoken = "/" + params[:apitoken]
+  redirect $prefix + @apitoken + "/user/#{user_id}"
 end

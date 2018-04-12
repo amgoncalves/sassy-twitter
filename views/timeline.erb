@@ -9,7 +9,7 @@
           <%= erb :tweet_stub %>
         </div>
       </div>
-      <a href="/">View All Tweets </a>
+      <a href=<%= $prefix + @apitoken + "/" %>>View All Tweets </a>
       <div class="panel panel-info">
         <div class="panel-body">
           <%= erb :tweets_object %>
