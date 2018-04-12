@@ -1,5 +1,5 @@
 get $prefix + "/:apitoken/user/followeds/" do
-  if is_authenticated? || session[:user_id] == nil
+  if is_authenticated? == false || session[:user_id] == nil
     redirect $prefix + "/"
   end
   

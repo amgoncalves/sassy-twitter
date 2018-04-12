@@ -1,5 +1,5 @@
 post $prefix + "/:handle/search" do
-  if is_authenticated? || session[:user_id] == nil
+  if is_authenticated? == false || session[:user_id] == nil
     redirect $prefix + "/"
   end
 
@@ -33,7 +33,7 @@ post $prefix + "/:handle/search" do
 end
 
 get $prefix + "/:handle/search/hashtag" do
-  if is_authenticated? || session[:user_id] == nil
+  if is_authenticated? == false || session[:user_id] == nil
     redirect $prefix + "/"
   end
   

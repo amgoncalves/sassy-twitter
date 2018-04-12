@@ -1,5 +1,5 @@
 get $prefix + "/:apitoken/edit_profile" do
-  if is_authenticated? || session[:user_id] == nil
+  if is_authenticated? == false || session[:user_id] == nil
     redirect $prefix + "/"
   end
 
@@ -9,7 +9,7 @@ end
 
 post $prefix + "/:apitoken/edit_profile/submit" do
 	# params[:profile][:dob] = Date.strptime(params[:profile][:dob],"%Y-%m-%d").to_s
-  if is_authenticated? || session[:user_id] == nil
+  if is_authenticated? == false || session[:user_id] == nil
     redirect $prefix + "/"
   end
   

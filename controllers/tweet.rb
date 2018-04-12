@@ -1,5 +1,5 @@
 post $prefix + "/:apitoken/tweet/new" do
-  if is_authenticated? || session[:user_id] == nil
+  if is_authenticated? == false || session[:user_id] == nil
     redirect $prefix + "/"
   end
 
@@ -89,7 +89,7 @@ get $prefix + "/tweet/:tweet_id" do
 end
 
 get $prefix + "/:handle/tweet/:tweet_id" do
-  if is_authenticated? || session[:user_id] == nil
+  if is_authenticated? == false || session[:user_id] == nil
     redirect $prefix + "/"
   end
   @apitoken = ""

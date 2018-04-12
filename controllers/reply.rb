@@ -1,5 +1,5 @@
 post $prefix + "/:handle/reply" do
-  if is_authenticated? || session[:user_id] == nil
+  if is_authenticated? == false || session[:user_id] == nil
     redirect $prefix + "/"
   end
 
@@ -43,7 +43,7 @@ post $prefix + "/:handle/reply" do
 end
 
 get $prefix + "/:handle/reply" do
-  if is_authenticated? || session[:user_id] == nil
+  if is_authenticated? == false || session[:user_id] == nil
     redirect $prefix + "/"
   end
   

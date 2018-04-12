@@ -1,5 +1,5 @@
 get $prefix + "/:handle/like" do
-  if is_authenticated? || session[:user_id] == nil
+  if is_authenticated? == false || session[:user_id] == nil
     redirect $prefix + "/"
   end
 
@@ -24,7 +24,7 @@ get $prefix + "/:handle/like" do
 end
 
 get $prefix + "/:handle/unlike" do
-  if is_authenticated? || session[:user_id] == nil
+  if is_authenticated? == false || session[:user_id] == nil
     redirect $prefix + "/"
   end
   

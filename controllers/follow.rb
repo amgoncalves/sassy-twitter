@@ -1,5 +1,5 @@
 post $prefix + "/:apitoken/follow" do
-  if is_authenticated? || session[:user_id] == nil
+  if is_authenticated? == false || session[:user_id] == nil
     redirect $prefix + "/"
   end
   

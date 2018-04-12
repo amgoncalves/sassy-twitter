@@ -1,5 +1,5 @@
 post $prefix + "/:handle/retweet" do
-  if is_authenticated? || session[:user_id] == nil
+  if is_authenticated? == false || session[:user_id] == nil
     redirect $prefix + "/"
   end
   
@@ -55,7 +55,7 @@ post $prefix + "/:handle/retweet" do
 end
 
 get $prefix + "/:handle/retweet" do
-  if is_authenticated? || session[:user_id] == nil
+  if is_authenticated? == false || session[:user_id] == nil
     redirect $prefix + "/"
   end
 
