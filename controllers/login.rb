@@ -1,6 +1,7 @@
 get $prefix + "/login/?" do
   if is_authenticated?
     flash[:notice] = 'You are already logged in.'
+    @apitoken = ""
     redirect $prefix + "/"
   end
   erb :login, :locals => { :title => 'Login' }
@@ -17,6 +18,7 @@ post $prefix + "/login/?" do
   else
 
   flash[:danger] = "Login failed.  Did you remember the correct username and password?"
+  @apitoken = ""
   redirect $prefix + "/login"
   end
 end
