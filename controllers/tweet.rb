@@ -58,6 +58,12 @@ end
 
 get $prefix + "/tweet/:tweet_id", $prefix + "/:handle/tweet/:tweet_id" do
   @apitoken = ""
+  if params[:handle] != nil
+    @apitoken = params[:handle]
+  else
+    @apitoken = "guest"
+  end
+  
   present = Tweet.where(_id: params[:tweet_id]).exists?
 
   if present

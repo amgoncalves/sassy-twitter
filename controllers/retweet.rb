@@ -43,7 +43,6 @@ post $prefix + "/:handle/retweet" do
         Hashtag.where(hashtag_name: hashtag_name, tweets: tweets).create
       end
     end
-
     
     redirect $prefix + @apitoken + "/tweet/#{retweet._id}"
   else
