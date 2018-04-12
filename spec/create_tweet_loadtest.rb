@@ -68,7 +68,9 @@ post '/loadtest/tweet/new' do
   @tweet = Tweet.new(t)
   if @tweet.save
     user = User.where(handle: "test#{user_id}").first
-    $redis.set($currentUser, user.to_json)
+		loginuser_redis_key = session[:user_id].to_s + "loginuser"
+    # $redis.set($currentUser, user.to_json)
+    $redis.set(loginuser_redis_key, user.to_json)
     # set parameters for profile page
     @info = Hash.new
     @info[:login_user] = user

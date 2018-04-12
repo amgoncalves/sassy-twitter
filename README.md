@@ -150,7 +150,7 @@ Brandeis University, Spring 2018
 #### Developer's Log
 
 - [x] Store the logged in user in redis, and make methods to retrive it and save it correctly - Shuai
-- [x] Make sure redis works properly - Shuai
+- [x] Make sure redis works properly (unique key for each logged in user, user deleted in redis when logout) - Shuai
 - [x] Load test for follow using payload file, including one logged in user follows many others, and many users follow many users - Shuai
 - [x] Load test for creating users using playload file - Shuai
 - [x] Change Profile model so that we can make an instance of it by hash parameters - Shuai

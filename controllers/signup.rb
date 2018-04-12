@@ -3,15 +3,15 @@ get $prefix + "/signup" do
 end
 
 post $prefix + "/signup/submit" do
-  # Build the user's profile
-  # today = Date.today.to_s
-	today = Date.today.strftime("%B %Y")
-	# dob = Date.jd(0).to_s
-	dob = "";
-  # today = Date.today
-  # @profile = Profile.new("", dob, today, "", "")
-	profile_hash = {:bio => "", :dob => dob, :date_joined => today, :location => "", :name => ""}
-	@profile = Profile.new(profile_hash)
+  today = Date.today.strftime("%B %Y")
+  profile_hash = {
+    :bio => "",
+    :dob => "",
+    :date_joined => today,
+    :location => "",
+    :name => ""
+  }
+  @profile = Profile.new(profile_hash)
   params[:user][:profile] = @profile
 
   # Build the user's account
@@ -19,7 +19,17 @@ post $prefix + "/signup/submit" do
   if @user.save
     redirect $prefix + "/login"
   else
-    flash[:notice] = 'Signup failed, please try again!'
+    flash[:danger] = "Signup failed: #{build_fail_msg(params)}"
     redirect $prefix + "/signup"
   end
 end
+
+def build_fail_msg(params)
+  msg = Array.new
+  msg.push("email is blank") unless params[:email] != nil
+  msg.push("handle is blank") unless params[:handle] != nil
+  msg.push("password is blank") unless params[:password] != nil
+  msg = msg.map { |s| " #{s}," }.join(' ')
+  msg.truncate(msg.length - 1)
+end
+  

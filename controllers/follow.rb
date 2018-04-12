@@ -21,7 +21,6 @@ post $prefix + "/:apitoken/follow" do
       tweets = target_user.tweets
       old_tweets = $redis.lrange(login_user._id.to_s, 0, -1).reverse
       new_tweets = old_tweets - tweets
-      byebug
       login_user.update_tweets(new_tweets)
     else
 		  # add all tweets of that user to current user timeline

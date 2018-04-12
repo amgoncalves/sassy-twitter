@@ -81,7 +81,6 @@ def generateHashtagTweet(content, apitoken)
   content.gsub!(/#\S+/) { |match|
     hashtag_name = match[1..-1]
     @hashtag_list.push(hashtag_name)
-    byebug
     match = "<a href=" + $prefix + apitoken + "/search/hashtag?query=" + hashtag_name + ">" + match + "</a>"
   }
   return content
@@ -98,7 +97,6 @@ def generateMentionTweet(content, apitoken)
   }
 
   map.keys.each do |match|
-    byebug
     user_link = "<a href=" + $prefix + apitoken + "/user/" + map[match] + ">" + match + "</a>"
     content.gsub!(match, user_link)
   end
