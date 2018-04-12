@@ -12,7 +12,7 @@ post $prefix + "/login/?" do
     add_cookie(user) unless params[:remember] == "off"
     save_user_to_redis(user)
     flash[:notice] = "Welcome back, #{user.handle}!"
-    @apitoken = "/#{user.handle}"
+    @apitoken = "/" + user.handle
     redirect $prefix + @apitoken + "/"
   else
 
