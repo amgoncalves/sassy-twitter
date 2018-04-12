@@ -57,6 +57,7 @@ get '/tweets' do
 end
 
 get $prefix + "/tweet/:tweet_id", $prefix + "/:handle/tweet/:tweet_id" do
+  @apitoken = ""
   present = Tweet.where(_id: params[:tweet_id]).exists?
 
   if present

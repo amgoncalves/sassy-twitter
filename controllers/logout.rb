@@ -7,5 +7,6 @@ post $prefix + "/:handle/logout" do
   session.clear
   cookies.clear
   flash[:notice] = 'You have been signed out.  Goodbye!'
+  @apitoken = ""
   redirect $prefix + "/"
 end

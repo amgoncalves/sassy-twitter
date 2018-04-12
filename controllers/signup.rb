@@ -16,6 +16,7 @@ post $prefix + "/signup/submit" do
 
   # Build the user's account
   @user = User.new(params[:user])
+  @apitoken = ""
   if @user.save
     redirect $prefix + "/login"
   else

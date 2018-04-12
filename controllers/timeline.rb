@@ -1,5 +1,6 @@
 get $prefix + "/:handle/timeline" do
   @ids = User.pluck(:id)
+  @apitoken = ""
   if is_authenticated?
     tweet_ids = $redis.lrange(session[:user_id].to_s, 0, 50)
     @tweets = Tweet.in(_id: tweet_ids)
