@@ -44,21 +44,7 @@
         </div>
   
         <div class="navbar-form navbar-right">
-          <!-- Search form -->
-          <form class="form-inline" action=<%= $prefix + "/" + apitoken + "/search"%> method="POST">
-            <label class="radio-inline">
-              <input type="radio" name="searchRadioOptions" id="inlineRadio1" value="user"> Users
-            </label>
-	     
-            <label class="radio-inline">
-              <input type="radio" name="searchRadioOptions" id="inlineRadio2" value="tweet"> Tweets
-            </label>	  	  
-	     
-            <input type="search" class="form-control" name="query" placeholder="Search...">
-            <button type="submit" class="btn btn-primary">
-              <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-            </button>
-          </form>
+          <%= erb :search_form %>
         </div>
       
       <% else %>
