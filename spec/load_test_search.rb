@@ -1,6 +1,9 @@
-post '/loadtest/search' do
+get '/loadtest/search' do
+  @apitoken = "/mcurie" # alyssa's test user
+  erb :search_form, :locals => { :title => 'Search Load Test'  }
+end
 
-  # search for tweents containin 1 term
+post '/loadtest/search' do
   query = 'lorem'
 
   target_user = get_user_from_redis
