@@ -17,7 +17,6 @@ post $prefix + "/:apitoken/follow" do
 		target_user.toggle_followed(login_id)
 
     if db_login_user.follow?(target_user)
-      byebug
       # add all tweets of that user to current user timeline
       tweets = target_user.tweets
       tweets.each do |tweet_id|
@@ -30,7 +29,6 @@ post $prefix + "/:apitoken/follow" do
       new_tweets = $redis.lrange(login_id.to_s, 0, -1).reverse
       login_user.update_tweets(new_tweets)
     else
-      byebug
       # delete all tweets of that user to current user timeline
       tweets = target_user.tweets
       tweets.each do |tweet_id|
