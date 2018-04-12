@@ -1,5 +1,5 @@
 get $prefix + "/:apitoken/edit_profile" do
-  @apitoken = "/" + params[:apitoken]
+  @apitoken = params[:apitoken]
   erb :edit_profile, :locals=>{:title=>'Edit profile'}
 end
 

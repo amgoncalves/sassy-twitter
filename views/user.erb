@@ -23,11 +23,23 @@
 							</a>
 
 							<div class="media-body">
-								<h4 class="media-heading"><%= @info[:target_user].handle %> </h4>
+								<div class="tweet-date">
+									<%= tweet.time_created.strftime("%b %d %I:%M:%S%p") %>
+								</div>
+
+								<%# <h4 class="media-heading"><%= @info[:target_user].handle %1> </h4> %>
+								<h4 class="media-heading">
+									<% author_id = tweet["author_id"] %>
+									<a href=<%= $prefix + @apitoken + "/user/" + author_id %>> @<%= tweet["author_handle"] %> </a>
+								</h4>
 
 								<p>
 									<%= tweet.content %>
 								</p>
+
+								<% if tweet["original_tweet_id"] != nil %>
+									<a href=<%= $prefix + @apitoken + "/tweet/" + tweet["original_tweet_id"] %>>See original tweet</a>
+								<% end %>
 
 					<ul class="nav nav-pills nav-pills-custom">
 						<% if is_authenticated? && tweet[:author_id] != @info[:login_user]._id %>
