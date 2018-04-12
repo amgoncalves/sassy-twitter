@@ -23,6 +23,7 @@ post $prefix + "/:handle/search" do
 
   @info[:target_user] = target_user
   @info[:login_user] = target_user
+  @cur_user = target_user
 
   erb :results, :locals => { :title => 'Search Results' }
 end
@@ -44,6 +45,7 @@ get $prefix + "/:handle/search/hashtag" do
 
   @apitoken = "/" + params[:handle]
   @info[:target_user] = get_user_from_redis
+  @cur_user = @info[:target_user]
 
   erb :results, :locals => { :title => 'Search Results' }
 end
