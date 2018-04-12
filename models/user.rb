@@ -94,9 +94,9 @@ class User
 		self.set(liked: redis_user.liked)
 	end
 
-	def update_tweets(tweets)
-		self.set(tweets: tweets)
-	end
+  def update_tweets(new_tweets)
+    self.set(tweets: new_tweets)
+  end
 
 	def follow?(target_user)
 		followings.include?(target_user._id.to_s)

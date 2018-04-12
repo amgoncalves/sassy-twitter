@@ -2,84 +2,88 @@
   <div class="container">
     <div class="navbar-collapse navbar-collapse-1 collapse" aria-expanded="true" style="background: none;">
 
-      <!-- Home Icon -->
-      <ul class="nav navbar-nav">
-	<li class="active">
-	  <a href="/"><span class="glyphicon glyphicon-home"></span> Home</a>
-	</li>
-      </ul>
-      
+      <% apitoken = "" %>
       <% if is_authenticated? %>
-      
-      <!-- Drop-down menu for logged-in user -->
-      <div class="nav navbar-nav navbar-right">
-	<ul class="nav navbar-nav">
-	  <li class="nav-item dropdown">
-	    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-	      <% if @cur_user %>
-	        @<%= @cur_user.handle %>
-	      <% elsif @info %>
-	        @<%= @info[:login_user].handle %>
-	      <% end %>
-	    </a>
-	    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-	      <div class="dropdown-item">
-		<form action="/edit_profile" method="GET">
-		  <button type="submit" class="btn btn-link btn-logout">Edit Profile</button>
-		</form>
-	      </div>
-	      <div class="dropdown-divider"></div>
-	      <div class="dropdown-item">
-		<form action="/logout" method='POST'>
-		  <button type="submit" class="btn btn-link btn-logout">Logout</button>
-		</form>
-	      </div>
-	    </div>
-	  </li>
-	</ul>
-      </div>
+        <% if @cur_user %>
+          <% apitoken = @cur_user.handle %>
+        <% elsif @info %>
+          <% apitoken = @info[:login_user].handle %>
+        <% end %>
 
-      <div class="navbar-form navbar-right">
-	<!-- Search form -->
-	<form class="form-inline" action="/search" method="POST">
-	  <label class="radio-inline">
-	    <input type="radio" name="searchRadioOptions" id="inlineRadio1" value="user"> Users
-	  </label>
-	  <label class="radio-inline">
-	    <input type="radio" name="searchRadioOptions" id="inlineRadio2" value="tweet"> Tweets
-	  </label>	  	  
-	  <input type="search" class="form-control" name="query" placeholder="Search...">
-	  <button type="submit" class="btn btn-primary">
-	    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-	  </button>
-	</form>
-	
-	<!-- Tweet Button -->
-<!-- 	<a href="/test">
-	  <button class="btn btn-primary" type="submit">Test Interface</button>
-	</a> -->
-      </div>
+        <!-- Home Icon -->
+        <ul class="nav navbar-nav">
+          <li class="active">
+            <a href=<%= $prefix + "/" + apitoken + "/" %>><span class="glyphicon glyphicon-home"></span> Home</a>
+          </li>
+        </ul>
+      
+        <!-- Drop-down menu for logged-in user -->
+        <div class="nav navbar-nav navbar-right">
+          <ul class="nav navbar-nav">
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">@<%= apitoken %></a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <div class="dropdown-item">
+                  <form action= <%= $prefix + "/" + apitoken + "/edit_profile" %> method="GET">
+                    <button type="submit" class="btn btn-link btn-logout">Edit Profile</button>
+		              </form>
+                </div>
+	       
+                <div class="dropdown-divider"></div>
+	          
+                <div class="dropdown-item">
+		              <form action=<%= $prefix + "/" + apitoken + "/logout" %> method='POST'>
+		                <button type="submit" class="btn btn-link btn-logout">Logout</button>
+		              </form>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+  
+        <div class="navbar-form navbar-right">
+          <!-- Search form -->
+          <form class="form-inline" action=<%= $prefix + "/" + apitoken + "/search"%> method="POST">
+            <label class="radio-inline">
+              <input type="radio" name="searchRadioOptions" id="inlineRadio1" value="user"> Users
+            </label>
+	     
+            <label class="radio-inline">
+              <input type="radio" name="searchRadioOptions" id="inlineRadio2" value="tweet"> Tweets
+            </label>	  	  
+	     
+            <input type="search" class="form-control" name="query" placeholder="Search...">
+            <button type="submit" class="btn btn-primary">
+              <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+            </button>
+          </form>
+        </div>
       
       <% else %>
+        <!-- Home Icon -->
+        <ul class="nav navbar-nav">
+          <li class="active">
+            <a href=<%= $prefix + "/"%>><span class="glyphicon glyphicon-home"></span> Home</a>
+          </li>
+        </ul>
       
-      <div class="navbar-form navbar-right" style="padding-left: 0px;">
-	<form action="/signup" method="GET">
-	  <button class="btn btn-primary" type="submit" aria-label="Left Align">
-	    Signup
-	  </button>
-	  </form>
-      </div>
-
-      <!-- Login form -->
-      <div class="navbar-form navbar-right">
-	<form action="/login" method="POST">
-	  <input name="remember" type="checkbox" class="form-check-input form-inline" id="remember">
-	  <label class="form-check-label form-inline" for="remember">&nbsp;Remember Me&nbsp;</label>
-	  <input id="email" name="email" type="text" placeholder="Email" class="form-control form-inline">
-	  <input name="password" type="password" placeholder="Password" class="form-control form-inline">
-	  <button type="submit" class="btn btn-primary">Sign in</button>	  
-	</form>
-      </div>
+        <div class="navbar-form navbar-right" style="padding-left: 0px;">
+          <form action= <%= $prefix + "/signup" %> method="GET">
+            <button class="btn btn-primary" type="submit" aria-label="Left Align">Signup</button>
+          </form>
+        </div>
+  
+        <!-- Login form -->
+        <div class="navbar-form navbar-right">
+          <form action=<%= $prefix + "/login" %> method="POST">
+            <input name="remember" type="checkbox" class="form-check-input form-inline" id="remember">
+            <label class="form-check-label form-inline" for="remember">&nbsp;Remember Me&nbsp;</label>
+            <input id="email" name="email" type="text" placeholder="Email" class="form-control form-inline">
+            <input name="password" type="password" placeholder="Password" class="form-control form-inline">
+            <button type="submit" class="btn btn-primary">Sign in</button>
+          </form>
+        </div>
+      
       <% end %>
     </div> <!-- /navbar-collapse -->
   </div><!-- /container -->

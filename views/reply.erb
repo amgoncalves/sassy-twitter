@@ -12,7 +12,7 @@
     </div>
     
     <div class="modal-body">
-      <form action="/reply?tweet_id=<%= @t['_id'] %>" method="POST">
+      <form action=<%= $prefix + @apitoken + "/reply?tweet_id=" + @t['_id'] %> method="POST">
         <div class="form-group">
           <input class="form-control" type="text" name="reply[content]" placeholder="Reply to this tweet">
         </div>

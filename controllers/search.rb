@@ -1,4 +1,9 @@
-post '/search' do
+post $prefix + "/:handle/search" do
+  target_user = get_user_from_redis
+  if target_user == nil
+    redirect $prefix + "/login"
+  end
+
   @hide_tweets = false
   @hide_users = false
   @user_results = Array.new
@@ -13,14 +18,16 @@ post '/search' do
     @user_results = User.search(params[:query]) unless params[:query].blank?
     @tweet_results = Tweet.search(params[:query]) unless params[:query].blank?
   end
-  # get_targeted_user
   @info = Hash.new
-  # @info[:target_user] = get_user_from_session
-  @info[:target_user] = get_user_from_redis()
+  @apitoken = "/" + params[:handle]
+
+  @info[:target_user] = target_user
+  @info[:login_user] = target_user
+
   erb :results, :locals => { :title => 'Search Results' }
 end
 
-get '/search/hashtag' do
+get $prefix + "/:handle/search/hashtag" do
   @hide_tweets = false
   @hide_users = true
   @user_results = Array.new
@@ -32,11 +39,11 @@ get '/search/hashtag' do
     tweets = hashtag[:tweets]
     @tweet_results = Tweet.in(_id: tweets)
   end
-  # @tweet_results = Tweet.search(params[:query]) unless params[:query].blank?
 
-  # get_targeted_user
   @info = Hash.new
-  # @info[:target_user] = get_user_from_session
-	@info[:target_user] = get_user_from_redis
+
+  @apitoken = "/" + params[:handle]
+  @info[:target_user] = get_user_from_redis
+
   erb :results, :locals => { :title => 'Search Results' }
 end
