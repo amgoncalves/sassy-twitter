@@ -18,7 +18,7 @@
 
     <p><%= @t["content"] %></p>
     <% if @t["original_tweet_id"] != nil %>
-    <a href=<%= $prefix + @apitoken + "/tweet/" + @t["original_tweet_id"] %>>this tweet retweeted this tweet</a>
+    <a href=<%= $prefix + @apitoken + "/tweet/" + @t["original_tweet_id"] %>>See original tweet</a>
     <% end %>
     
     <ul class="nav nav-pills nav-pills-custom">
