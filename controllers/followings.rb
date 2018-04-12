@@ -1,4 +1,4 @@
-get '/user/followings/' do
+get $prefix + "/:apitoken/user/followings/" do
   targeted_id = BSON::ObjectId.from_string(params[:targeted_id])
 	query_res = User.where(_id: targeted_id)
 	target_exist = query_res.exists?
@@ -17,6 +17,7 @@ get '/user/followings/' do
 		@info[:target_user] = target_user
 		@info[:isfollowing] = isfollowing
 		@info[:target_followings] = target_followings
+    @apitoken = "/" + login_user.APItoken
     erb :followings, :locals => { :title => 'Followings' }
 	end
 end

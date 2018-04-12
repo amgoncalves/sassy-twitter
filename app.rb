@@ -4,6 +4,7 @@ require 'mongo'
 require 'sinatra'
 require 'sinatra/cookies'
 require 'sinatra/flash'
+require 'sinatra/multi_route'
 require 'redis'
 #require 'sinatra/sessionshelper'
 require_relative './models/user'
@@ -58,12 +59,13 @@ set :views, Proc.new { File.join(root, "views") }
 
 set :public_folder, Proc.new { File.join(root, "public") }
 
-get '/' do
+get "#{$prefix}/:apitoken/", "#{$prefix}/", "/" do
+  @apitoken = "" 
   if is_authenticated?
     if session[:user_id] == nil
       session.clear
       cookies.clear
-      redirect '/'
+      redirect "#{$prefix}/"
     end
 
     @tweets = $redis.lrange($globalTL,0, 50).reverse
@@ -83,7 +85,9 @@ get '/' do
 		@info[:login_user] = @cur_user
 		@info[:target_user] = @targeted_user
 		@info[:target_tweets] = @tweets
-  else 
+
+    @apitoken = "/" + @cur_user[:APItoken]
+  else
     @tweets = $redis.lrange($globalTL, 0, 50).reverse
   end
   erb :index, :locals => { :title => 'Welcome!' }
@@ -98,6 +102,7 @@ get '/reset/all' do
   Mongoid.purge!
   # delete everything in redis
   $redis.flushall
+  # clean session and cookie
   session.clear
   cookies.clear
 end

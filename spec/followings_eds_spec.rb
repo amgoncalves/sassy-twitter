@@ -27,7 +27,7 @@ class FollowPageTest < MiniTest::Unit::TestCase
 		@id_shuai = @targeted._id
 
 		# log in as shuai, follow other users
-		post '/login?', @params[:user]
+		post '/api/v1/login?', @params[:user]
 
 		@params[:user] = { :handle => 'alyssa',
 										:email => 'alyssa@brandeis.edu',
@@ -43,8 +43,9 @@ class FollowPageTest < MiniTest::Unit::TestCase
 		@targeted.save
 		@id_alyssa = @targeted._id
 		@params[:targeted_id] = @id_alyssa.to_s
+		# log in as shuaiyu8
 		# follow alyssa
-		post 'follow', @params
+		post '/api/v1/shuaiyu8/follow', @params
 
 		@params[:user] = { :handle => 'sichen',
 						 :email => 'sichen@brandeis.edu',
@@ -60,20 +61,21 @@ class FollowPageTest < MiniTest::Unit::TestCase
 		@targeted.save
 		@id_si = @targeted._id
 		@params[:targeted_id] = @id_si.to_s
+		# log in as shuaiyu8
 		# follow si
-		post '/follow', @params
+		post '/api/v1/shuaiyu8/follow', @params
 
-		post '/logout'
+		post '/api/v1/shuaiyu8/logout'
 		# login as user 'sichen'
-		post '/login?', @params[:user]
+		post '/api/v1/login?', @params[:user]
 		@params[:targeted_id] = @id_shuai.to_s
 		# sichen follows shuai
-		post '/follow', @params
+		post '/api/v1/sichen/follow', @params
 	end
 
 	def test_user
 		# logged in as sichen, visit shuai's user page
-		res = get "/user/#{@id_shuai.to_s}"
+		res = get "/api/v1/sichen/user/#{@id_shuai.to_s}"
 		assert res.ok?
 		# handle of logged in user
 		assert res.body.include?('sichen') 
@@ -93,7 +95,7 @@ class FollowPageTest < MiniTest::Unit::TestCase
 
 	def test_following
 		@params[:targeted_id] = @id_shuai.to_s
-		res = get "/user/followings/", @params
+		res = get "/api/v1/sichen/user/followings/", @params
 		assert res.ok?
 		#handle of logged in user
 		assert res.body.include?('sichen')
@@ -109,7 +111,7 @@ class FollowPageTest < MiniTest::Unit::TestCase
 
 	def test_followed
 		@params[:targeted_id] = @id_shuai.to_s
-		res = get "/user/followeds/", @params
+		res = get "/api/v1/sichen/user/followeds/", @params
 		assert res.ok?
 		#handle of logged in user
 		assert res.body.include?('sichen')

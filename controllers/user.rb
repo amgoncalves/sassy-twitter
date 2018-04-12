@@ -1,4 +1,4 @@
-get '/user/:targeted_id' do
+get $prefix + "/:apitoken/user/:targeted_id" do
   targeted_id = BSON::ObjectId.from_string(params[:targeted_id])
   query_res = User.where(_id: targeted_id)
   target_exist = query_res.exists?
@@ -14,12 +14,15 @@ get '/user/:targeted_id' do
       target_tweets = Tweet.in(_id: target_user[:tweets])
       target_tweets = target_tweets.reverse
     end
+
     @info[:login_user] = login_user
     @info[:target_user] = target_user
     @info[:isfollowing] = isfollowing
     @info[:target_tweets] = target_tweets
     @tweets = @info[:target_tweets]
     set_user_globals
+
+    @apitoken = "/" + login_user.APItoken
     erb :user, :locals => { :title => "#{target_user.handle}" }
   end
 end

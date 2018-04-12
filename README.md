@@ -157,6 +157,7 @@ Brandeis University, Spring 2018
 - [x] Benchmark load test (redis part) for comparison between mongo and redis - Shuai
 - [x] Did experiments about using Bcrypt or not - Si and Shuai
 - [x] Did experiments about including Profile in user model or not - Shuai
+- [x] Changed the global redis key for user from currentUser to unique one for each user - Shuai
 
 ## Documentation
 

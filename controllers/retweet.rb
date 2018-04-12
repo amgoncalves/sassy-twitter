@@ -1,13 +1,14 @@
-post '/retweet' do
+post $prefix + "/:handle/retweet" do
   @hashtag_list = Array.new
+  @apitoken = "/" + params[:handle]
 
   # create retweet tweet
   author_id = session[:user_id]
   # author_handle = get_user_from_session.handle
   author_handle = get_user_from_redis.handle
   original_tweet_id = BSON::ObjectId.from_string(params[:tweet_id])
-  content = generateHashtagTweet(params[:retweet][:content])
-  content = generateMentionTweet(params[:retweet][:content])
+  content = generateHashtagTweet(params[:retweet][:content], @apitoken)
+  content = generateMentionTweet(params[:retweet][:content], @apitoken)
   retweet = Tweet.new(author_id: author_id, original_tweet_id: original_tweet_id, author_handle: author_handle, content: content)
 
   if retweet.save
@@ -42,16 +43,17 @@ post '/retweet' do
         Hashtag.where(hashtag_name: hashtag_name, tweets: tweets).create
       end
     end
-
-    redirect "/tweet/#{retweet._id}"
+    
+    redirect $prefix + @apitoken + "/tweet/#{retweet._id}"
   else
-    byebug
     flash[:warning] = 'Create tweet failed'
   end
 end
 
-get '/retweet' do
+get $prefix + "/:handle/retweet" do
   @t = Tweet.find(params[:tweet_id])
+  @apitoken = "/" + params[:handle]
+  @cur_user = get_user_from_redis
   erb :retweet, :locals => { :title => 'Retweet' }
 end
 

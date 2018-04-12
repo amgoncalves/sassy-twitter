@@ -1,4 +1,4 @@
-get '/like' do
+get $prefix + "/:handle/like" do
   # update corresponding tweet
   tweet_id = params[:tweet_id]
   # cur_user = get_user_from_session
@@ -14,11 +14,12 @@ get '/like' do
     save_user_to_redis(cur_user)
   end
 
+  @apitoken = "/" + params[:handle]
   redirect back
 
 end
 
-get '/unlike' do
+get $prefix + "/:handle/unlike" do
   # update corresponding tweet
   tweet_id = params[:tweet_id]
   # cur_user = get_user_from_session
@@ -34,6 +35,7 @@ get '/unlike' do
     save_user_to_redis(cur_user)
   end
 
+  @apitoken = "/" + params[:handle]
   redirect back
 
 end

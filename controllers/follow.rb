@@ -1,4 +1,4 @@
-post '/follow' do
+post $prefix + "/:apitoken/follow" do
   target_id = BSON::ObjectId.from_string(params[:targeted_id])
 	query_res = User.where(_id: target_id)
 	
@@ -16,14 +16,28 @@ post '/follow' do
 
 		target_user.toggle_followed(login_id)
 
-		# add all tweets of that user to current user timeline
-		tweets = target_user.tweets
-		tweets.each do |tweet_id|
-			$redis.rpush(login_id.to_s, tweet_id)
-			if $redis.llen(login_id.to_s) > 50
-				$redis.rpop(login_id.to_s)
-			end
-		end
+    if db_login_user.follow?(target_user)
+      # add all tweets of that user to current user timeline
+      tweets = target_user.tweets
+      tweets.each do |tweet_id|
+        $redis.rpush(login_id.to_s, tweet_id)
+        if $redis.llen(login_id.to_s) > 100
+          $redis.rpop(login_id.to_s)
+        end
+      end
+      #store in mongodb
+      new_tweets = $redis.lrange(login_id.to_s, 0, -1).reverse
+      login_user.update_tweets(new_tweets)
+    else
+      # delete all tweets of that user to current user timeline
+      tweets = target_user.tweets
+      tweets.each do |tweet_id|
+        $redis.lrem(login_id.to_s, 0, tweet_id.to_s)
+      end
+      # store in mongodb
+      new_tweets = $redis.lrange(login_id.to_s, 0, -1).reverse
+      login_user.update_tweets(new_tweets)
+    end
 
 		# response['Cache-Control'] =  "public, max-age=0, must-revalidate"
 		# redirect back

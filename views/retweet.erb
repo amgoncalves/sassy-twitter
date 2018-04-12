@@ -13,7 +13,7 @@
     </div>
     
     <div class="modal-body">
-      <form action="/retweet?tweet_id=<%= @t['_id'] %>" method="POST">
+      <form action=<%= $prefix + @apitoken + "/retweet?tweet_id=" + @t['_id'] %> method="POST">
         <div class="form-group">
           <input class="form-control" type="text" name="retweet[content]" placeholder="Retweet this tweet">
         </div>
