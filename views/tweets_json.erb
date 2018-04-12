@@ -20,6 +20,9 @@
       <% elsif is_authenticated? == false %>
         @<%= @t["author_handle"] %>
       <% else %>
+        <% if @apitoken == nil %>
+          <% @apitoken = "" %>
+        <% end %>
         <a href=<%= $prefix + @apitoken + "/user/" +  author_id %>> @<%= @t["author_handle"] %> </a>
       <% end %> 
     </h4>
