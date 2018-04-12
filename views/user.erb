@@ -34,7 +34,7 @@
 							<li><a href=<%= $prefix + @apitoken + "/reply?tweet_id=" + tweet['_id'] %>><span class="glyphicon glyphicon-share-alt"></span></a></li>
               <li><a href=<%= $prefix + @apitoken + "/retweet?tweet_id=" + tweet['_id'] %>><span class="glyphicon glyphicon-retweet"></span></a></li>
               <li>
-                <% if @info[:target_user].like?(tweet._id.to_s) %>
+                <% if @info[:login_user].like?(tweet._id.to_s) %>
                 <a href=<%= $prefix + @apitoken + "/unlike?tweet_id=" + tweet['_id'] %>><span class="glyphicon glyphicon-star" style="color:red"></span></a>
                 <% else %>
                   <a href=<%= $prefix + @apitoken + "/like?tweet_id=" + tweet['_id'] %>><span class="glyphicon glyphicon-star"></span></a>
