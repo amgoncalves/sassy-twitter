@@ -56,7 +56,7 @@ get '/tweets' do
   erb :tweets, :locals => { :title => 'Tweets' }
 end
 
-get $prefix + "/:handle/tweet/:tweet_id" do
+get $prefix + "/tweet/:tweet_id", $prefix + "/:handle/tweet/:tweet_id" do
   present = Tweet.where(_id: params[:tweet_id]).exists?
 
   if present

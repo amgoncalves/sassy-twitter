@@ -47,7 +47,6 @@ post $prefix + "/:handle/retweet" do
     
     redirect $prefix + @apitoken + "/tweet/#{retweet._id}"
   else
-    byebug
     flash[:warning] = 'Create tweet failed'
   end
 end

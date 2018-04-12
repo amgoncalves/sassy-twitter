@@ -14,7 +14,7 @@ get $prefix + "/:apitoken/user/:targeted_id" do
       target_tweets = Tweet.in(_id: target_user[:tweets])
       target_tweets = target_tweets.reverse
     end
-    
+
     @info[:login_user] = login_user
     @info[:target_user] = target_user
     @info[:isfollowing] = isfollowing

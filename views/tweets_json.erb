@@ -14,7 +14,11 @@
     
     <h4 class="media-heading">
       <% author_id = @t["author_id"]["$oid"] %>
-      <a href=<%= $prefix + @apitoken + "/user/" +  author_id %>> @<%= @t["author_handle"] %> </a> 
+      <% if @apitoken == nil || is_authenticated? == false %>
+        @<%= @t["author_handle"] %>
+      <% else %>
+        <a href=<%= $prefix + @apitoken + "/user/" +  author_id %>> @<%= @t["author_handle"] %> </a>
+      <% end %> 
     </h4>
 
     <p><%= @t["content"] %></p>
