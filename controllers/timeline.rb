@@ -1,4 +1,8 @@
 get $prefix + "/:handle/timeline" do
+  if is_authenticated? == false || session[:user_id] == nil
+    redirect $prefix + "/"
+  end
+  
   @ids = User.pluck(:id)
   @apitoken = ""
   if is_authenticated?

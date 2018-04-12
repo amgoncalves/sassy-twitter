@@ -1,4 +1,8 @@
 get $prefix + "/:apitoken/user/followings/" do
+  if is_authenticated? == false || session[:user_id] == nil
+    redirect $prefix + "/"
+  end
+  
   targeted_id = BSON::ObjectId.from_string(params[:targeted_id])
 	query_res = User.where(_id: targeted_id)
 	target_exist = query_res.exists?

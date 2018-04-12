@@ -1,4 +1,8 @@
 post $prefix + "/:handle/search" do
+  if is_authenticated? == false || session[:user_id] == nil
+    redirect $prefix + "/"
+  end
+
   target_user = get_user_from_redis
   if target_user == nil
     redirect $prefix + "/login"
@@ -29,6 +33,10 @@ post $prefix + "/:handle/search" do
 end
 
 get $prefix + "/:handle/search/hashtag" do
+  if is_authenticated? == false || session[:user_id] == nil
+    redirect $prefix + "/"
+  end
+  
   @hide_tweets = false
   @hide_users = true
   @user_results = Array.new
@@ -46,6 +54,7 @@ get $prefix + "/:handle/search/hashtag" do
   @apitoken = "/" + params[:handle]
   @info[:target_user] = get_user_from_redis
   @cur_user = @info[:target_user]
+  @info[:login_user] = @info[:target_user]
 
   erb :results, :locals => { :title => 'Search Results' }
 end

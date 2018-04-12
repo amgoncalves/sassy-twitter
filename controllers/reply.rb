@@ -1,4 +1,8 @@
 post $prefix + "/:handle/reply" do
+  if is_authenticated? == false || session[:user_id] == nil
+    redirect $prefix + "/"
+  end
+
   @hashtag_list = Array.new
   @apitoken = "/" + params[:handle]
 
@@ -39,6 +43,10 @@ post $prefix + "/:handle/reply" do
 end
 
 get $prefix + "/:handle/reply" do
+  if is_authenticated? == false || session[:user_id] == nil
+    redirect $prefix + "/"
+  end
+  
   @t = Tweet.find(params[:tweet_id])
   @apitoken = "/" + params[:handle]
   @cur_user = get_user_from_redis
