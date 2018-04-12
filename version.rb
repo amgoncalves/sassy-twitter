@@ -4,7 +4,7 @@ module Nanotwitter
   end
 
   module VERSION
-    MAJOR = 5
+    MAJOR = 6
     MINOR = 0
     TINY = 0
     PRE = "pre-alpha"

@@ -168,6 +168,10 @@ Brandeis University, Spring 2018
 - [x] Benchmark load test (mongo) with inplementing new modles and test interfaces and load test with creating 1000 user and 10000 tweets in mongodb for comparison CRUD between mongo and redis - Si
 - [x] Benchmark load test (redis part) with inplementing new modles and test interfaces and load test with creating 1000 user and 10000 tweets in redis for comparison CRUD between mongo and redis - Si
 - [x] Modified User handle link not show in unlogged in index - Si
+- [x] Switched sessions and cookies to store user id instead of the entire user document - Alyssa
+- [x] Search page fixes: removed follow buton from users list, adjusted template to fit new variables - Alyssa
+- [x] Load test for searching for tweets 250 clients per min - Alyssa
+- [x] Added a worker to launch a small Rake background task for microservice experiment - Alyssa
 
 ## Documentation
 
