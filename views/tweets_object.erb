@@ -31,7 +31,7 @@
     <% end %>
     
     <ul class="nav nav-pills nav-pills-custom">
-      <% if is_authenticated? && author_id != @cur_user._id %>
+      <% if is_authenticated? && author_id != @info[:login_user]._id %>
         <li><a href=<%= $prefix + @apitoken + "/reply?tweet_id=" + @t['_id'] %>><span class="glyphicon glyphicon-share-alt"></span></a></li>
         <li><a href=<%= $prefix + @apitoken + "/retweet?tweet_id=" + @t['_id'] %>><span class="glyphicon glyphicon-retweet"></span></a></li>
         <li>

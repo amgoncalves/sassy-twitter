@@ -6,21 +6,10 @@
   <div class="media-body">
     <h4 class="media-heading">
      <%= user.profile[:name] %><br/>
-     <a href="/user/<%= user._id %>">@<%= user.handle %></a>
+     <a href=<%= $prefix + @apitoken + "/user/" + user._id %>>@<%= user.handle %></a>
     </h4>
     <% unless user.profile[:bio].empty? %>
       <div>Bio: <%= user.profile[:bio] %></div>
-    <% end %>
-    <% if user != @info[:login_user] %>
-      <div>
-        <button id="follow-button" class="btn btn-primary">
-	  <% if @isfollowing == true %>
-	    Following
-	  <% else %>
-	    + Follow
-	  <% end %>
-	</button>
-      </div>
     <% end %>
   </div><!-- ./media-body -->
 </div><!-- ./media -->

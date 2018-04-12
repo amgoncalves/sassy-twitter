@@ -22,7 +22,8 @@ $(document).ready(function() {
 	// check if nfollowed changed 
 	// if so, post 
 	// if not, do nothing
-	$(window).on('beforeunload', function() {
+    $(window).on('beforeunload', function() {
+	console.log("#targeted-id");
 		var $nfollowed = parseInt($('a#nfollowed').text());
 		if (orig_nfollowed !== $nfollowed) {
 			$.ajax({
