@@ -8,22 +8,22 @@ info:
   title: NanoTwitter
   contact:
     name: Sassy
-    email: temp@gmail.com
   license:
     name: Apache 2.0
     url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
-host: localhost
-basePath: /v1
+host: 'sassy-nanotwitter.herokuapp.com'
+basePath: /api/v1
+
 tags:
-  - name: api
+  - name: /
     description: Service Functionality
   - name: profile
     description: Operations about profile
-  - name: user
+  - name: /:apitoken/user
     description: Operations about user
   - name: tweet
     description: Operations about tweet
-  - name: search
+  - name: /:apitoken/search
     description: Operations of searches
 schemes:
   - http
@@ -31,7 +31,7 @@ paths:
   /:
     get:
       tags:
-        - api
+        - /
       summary: Index for unlogged in user
       description: ' '
       responses:
@@ -41,10 +41,10 @@ paths:
             type: array
             items:
               $ref: '#/definitions/Tweet'
-  /apitoken:
+  /:apitoken:
     get:
       tags:
-        - api
+        - /
       summary: Index for logged in user
       description: ' '
       responses:
@@ -57,7 +57,7 @@ paths:
   /login:
     post:
       tags:
-        - api
+        - /
       summary: Process login for user
       description: ' '
       parameters:
@@ -76,26 +76,40 @@ paths:
           description: Succefully Logged In
           schema:
             $ref: '#/definitions/User'
-  /logout:
-    post:
+    get:
       tags:
-        - api
-      summary: Process logout for user
+        - /
+      summary: Get the login page
       description: ' '
       parameters:
-        - name: user_id
+        - name: email
           in: path
-          description: id of user
+          description: email of user
           required: true
           type: string
-          format: ObjectId
+        - name: password
+          in: path
+          description: password of user
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Succefully Logged In
+          schema:
+            $ref: '#/definitions/User'
+  /:apitoken/logout:
+    post:
+      tags:
+        - /
+      summary: Process logout for user
+      description: ' '
       responses:
         '202':
           description: Succefully Logged Out
   /signup:
     post:
       tags:
-        - api
+        - /
       summary: Process signup for user
       description: ' '
       parameters:
@@ -116,22 +130,22 @@ paths:
             type: array
             items:
               - $ref: '#/definitions/User'
-  /users:
-    get:
-      tags:
-        - api
-      summary: Find all users
-      responses:
-        '200':
-          description: successful operation
-          schema:
-            type: array
-            items:
-              $ref: '#/definitions/User'
-  /follow:
+  # /users:
+  #   get:
+  #     tags:
+  #       - api/v1/
+  #     summary: Find all users
+  #     responses:
+  #       '200':
+  #         description: successful operation
+  #         schema:
+  #           type: array
+  #           items:
+  #             $ref: '#/definitions/User'
+  /:apitoken/follow:
     post:
       tags:
-        - api
+        - /
       summary: Construct the follow relationship between user and targted user
       parameters:
         - name: targeted_id
@@ -142,6 +156,22 @@ paths:
         - name: user_id
           in: path
           description: user id of current user
+          required: true
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/User'
+  /:apitoken/timeline:
+    get:
+      tags:
+        - /
+      summary: Show the timeline of each user
+      parameters:
+        - name: login_user.id
+          in: path
+          description: current Logged-in user id
           required: true
           type: string
       responses:
@@ -181,10 +211,10 @@ paths:
           description: Profile not found
         '405':
           description: Validation exception
-  '/:target_id':
+  /:target_id:
     get:
       tags:
-        - user
+        - /:apitoken/user
       summary: Finds user by id
       description: ''
       operationId: findUserById
@@ -203,7 +233,7 @@ paths:
   /new_tweets:
     get:
       tags:
-        - user
+        - /:apitoken/user
       summary: List of 50 newest tweets of users followed by this user
       parameters:
         - name: user_id
@@ -222,7 +252,7 @@ paths:
   /followings:
     get:
       tags:
-        - user
+        - /:apitoken/user
       summary: Find followings of user
       parameters:
         - name: user_id
@@ -238,10 +268,10 @@ paths:
             type: array
             items:
               $ref: '#/definitions/User'
-  /followed:
+  /followeds:
     get:
       tags:
-        - user
+        - /:apitoken/user
       summary: Find followeds of user
       parameters:
         - name: user_id
@@ -257,25 +287,25 @@ paths:
             type: array
             items:
               $ref: '#/definitions/User'
-  /posted:
-    get:
-      tags:
-        - user
-      summary: Find posted tweets of user
-      parameters:
-        - name: user_id
-          in: query
-          description: ID of user to find the posted tweets
-          required: true
-          type: string
-          format: ObjectId
-      responses:
-        '200':
-          description: successful operation
-          schema:
-            type: array
-            items:
-              $ref: '#/definitions/Tweet'
+  # /posted:
+  #   get:
+  #     tags:
+  #       - /:apitoken/user
+  #     summary: Find posted tweets of user
+  #     parameters:
+  #       - name: user_id
+  #         in: query
+  #         description: ID of user to find the posted tweets
+  #         required: true
+  #         type: string
+  #         format: ObjectId
+  #     responses:
+  #       '200':
+  #         description: successful operation
+  #         schema:
+  #           type: array
+  #           items:
+  #             $ref: '#/definitions/Tweet'
   /new:
     post:
       tags:
@@ -316,10 +346,10 @@ paths:
           description: successful operation
           schema:
             $ref: '#/definitions/Tweet'
-  /like:
-    post:
+  /:apitoken/like:
+    get:
       tags:
-        - tweet
+        - /
       summary: Construct like relationship betweetn tweet and user
       parameters:
         - name: user_id
@@ -333,17 +363,16 @@ paths:
           required: true
           type: string
       responses:
-        '202':
+        '200':
           description: Succefully Created Tweet
           schema:
             items:
               $ref: '#/definitions/User'
-  /retweet:
-    post:
+  /:apitoken/unlike:
+    get:
       tags:
-        - tweet
-      summary: Create a retweet for another tweet
-      description: ' '
+        - /
+      summary: Release like relationship betweetn tweet and user
       parameters:
         - name: user_id
           in: path
@@ -352,23 +381,19 @@ paths:
           type: string
         - name: tweet_id
           in: path
-          description: id of original tweet
-          required: true
-          type: string
-        - name: content
-          in: path
-          description: content of tweet
+          description: id of tweet
           required: true
           type: string
       responses:
-        '202':
-          description: Succefully Created ReTweet
+        '200':
+          description: Succefully Created Tweet
           schema:
-            $ref: '#/definitions/Tweet'
-  /reply:
+            items:
+              $ref: '#/definitions/User'
+  /:apitoken/reply:
     post:
       tags:
-        - reply
+        - /
       summary: Create a reply for another tweet
       description: ' '
       parameters:
@@ -387,10 +412,91 @@ paths:
           description: Succefully Created Reply
           schema:
             $ref: '#/definitions/Reply'
-  /:hashtag_id:
     get:
       tags:
-        - search
+        - /
+      summary: Get reply page
+      description: ' '
+      parameters:
+        - name: tweet_id
+          in: path
+          description: id of user
+          required: true
+          type: string
+        - name: content
+          in: path
+          description: content of tweet
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Succefully Get Reply Page
+            
+  /:apitoken/retweet:
+    post:
+      tags:
+        - /
+      summary: Create a retweet for another tweet
+      description: ' '
+      parameters:
+        - name: tweet_id
+          in: path
+          description: id of user
+          required: true
+          type: string
+        - name: content
+          in: path
+          description: content of tweet
+          required: true
+          type: string
+      responses:
+        '202':
+          description: Succefully Created Reply
+          schema:
+            $ref: '#/definitions/Tweet'
+    get:
+      tags:
+        - /
+      summary: Get retweet page
+      description: ' '
+      parameters:
+        - name: tweet_id
+          in: path
+          description: id of user
+          required: true
+          type: string
+        - name: content
+          in: path
+          description: content of tweet
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Succefully Get Reply Page
+     
+  /:SearchRadioOptions/:Query:
+    post:
+      tags:
+        - /:apitoken/search
+      summary: Search tweets by hashtag
+      parameters:
+        - name: hashtag_id
+          in: query
+          description: Hashtag id to filter by
+          required: true
+          type: string
+          format: ObejctId
+      responses:
+        '202':
+          description: successful operation
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Tweet'  
+  /hashtag:
+    get:
+      tags:
+        - /:apitoken/search
       summary: Search tweets by hashtag
       parameters:
         - name: hashtag_id
@@ -406,41 +512,41 @@ paths:
             type: array
             items:
               $ref: '#/definitions/Tweet'
-  /:user_id:
-    get:
-      tags:
-        - search
-      summary: Search user by user id
-      parameters:
-        - name: user_id
-          in: query
-          description: User id to filter by
-          required: true
-          type: string
-          format: ObejctId
-      responses:
-        '200':
-          description: successful operation
-          schema:
-            $ref: '#/definitions/User'
-  /:keyword:
-    get:
-      tags:
-        - search
-      summary: Search tweets by keyword
-      parameters:
-        - name: keyword
-          in: query
-          description: keyword to filter by
-          required: true
-          type: string
-      responses:
-        '200':
-          description: successful operation
-          schema:
-            type: array
-            items:
-              $ref: '#/definitions/Tweet'
+  # /:user_id:
+  #   get:
+  #     tags:
+  #       - search
+  #     summary: Search user by user id
+  #     parameters:
+  #       - name: user_id
+  #         in: query
+  #         description: User id to filter by
+  #         required: true
+  #         type: string
+  #         format: ObejctId
+  #     responses:
+  #       '200':
+  #         description: successful operation
+  #         schema:
+  #           $ref: '#/definitions/User'
+  # /:keyword:
+  #   get:
+  #     tags:
+  #       - search
+  #     summary: Search tweets by keyword
+  #     parameters:
+  #       - name: keyword
+  #         in: query
+  #         description: keyword to filter by
+  #         required: true
+  #         type: string
+  #     responses:
+  #       '200':
+  #         description: successful operation
+  #         schema:
+  #           type: array
+  #           items:
+  #             $ref: '#/definitions/Tweet'
 definitions:
   User:
     type: object
