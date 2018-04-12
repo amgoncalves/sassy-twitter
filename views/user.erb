@@ -31,24 +31,22 @@
 
 					<ul class="nav nav-pills nav-pills-custom">
 						<% if is_authenticated? && tweet[:author_id] != @info[:login_user]._id %>
-							<li><a href="/reply?tweet_id=<%= tweet['_id'] %>"><span class="glyphicon glyphicon-share-alt"></span></a></li>
-							<li><a href="/retweet?tweet_id=<%= tweet['_id'] %>"><span class="glyphicon glyphicon-retweet"></span></a></li>
-							<li>
-								<% if @info[:login_user].like?(tweet._id.to_s) %>
-									<a href="/unlike?tweet_id=<%= tweet['_id'] %>"><span class="glyphicon glyphicon-star" style="color:red"></span></a>
-								<% else %>
-									<a href="/like?tweet_id=<%= tweet['_id'] %>"><span class="glyphicon glyphicon-star"></span></a>
-								<% end %>
-							</li>
+							<li><a href=<%= $prefix + @apitoken + "/reply?tweet_id=" + tweet['_id'] %>><span class="glyphicon glyphicon-share-alt"></span></a></li>
+              <li><a href=<%= $prefix + @apitoken + "/retweet?tweet_id=" + tweet['_id'] %>><span class="glyphicon glyphicon-retweet"></span></a></li>
+              <li>
+                <% if @info[:target_user].like?(tweet._id.to_s) %>
+                <a href=<%= $prefix + @apitoken + "/unlike?tweet_id=" + tweet['_id'] %>><span class="glyphicon glyphicon-star" style="color:red"></span></a>
+                <% else %>
+                  <a href=<%= $prefix + @apitoken + "/like?tweet_id=" + tweet['_id'] %>><span class="glyphicon glyphicon-star"></span></a>
+                <% end %>
+              </li>
 						<% else %>
 							<li><a name="#"><span class="glyphicon glyphicon-share-alt" style="color:grey"></span></a></li>
 							<li><a name="#"><span class="glyphicon glyphicon-retweet" style="color:grey"></span></a></li>
 							<li><a name="#"><span class="glyphicon glyphicon-star" style="color:grey"></span></a></li>
 						<% end %>
-						<li><a href="/tweet/<%= tweet['_id'] %>"><span class="glyphicon glyphicon-option-horizontal"></span></a></li>
+						<li><a href=<%= $prefix + @apitoken + "/tweet/" + tweet['_id'] %>><span class="glyphicon glyphicon-option-horizontal"></span></a></li>
 					</ul>
-
-
 
 								<%# <ul class="nav nav-pills nav-pills-custom"> %>
 								<%# 	<li><a href="#"><span class="glyphicon glyphicon-share-alt"></span></a></li> %>
