@@ -50,6 +50,7 @@ else
 end
 
 configure :production do
+  ruby '2.3.3', :engine => 'jruby', :engine_version => '9.1.15.0'
   require 'newrelic_rpm'
 end
 
