@@ -4,12 +4,19 @@ NanoTwitter
 
 **Version:** 1.0.0
 
-**Contact information:**  
-Sassy  
+**Team:**  
+Sassy
+
+**Team Member:**
+Si, Shuai, Alyssa
 
 **License:** [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.html)
 
 [Find out more about Swagger](http://swagger.io)
+
+**URL Prefix:**
+/api/v1
+
 ### /
 ---
 ##### ***GET***
@@ -142,7 +149,7 @@ Sassy
 | ---- | ----------- | ------ |
 | 200 | successful operation | [User](#user) |
 
-### /edit
+### /edit_profile
 ---
 ##### ***GET***
 **Summary:** Profile edit page
@@ -155,7 +162,7 @@ Sassy
 | ---- | ----------- | ------ |
 | 200 | successful operation | [Profile](#profile) |
 
-### /edit/submit
+### /edit_profile/submit
 ---
 ##### ***POST***
 **Summary:** Update an existing profile
@@ -176,7 +183,7 @@ Sassy
 | 404 | Profile not found |
 | 405 | Validation exception |
 
-### /:target_id
+### /:apitoken/user/:target_id
 ---
 ##### ***GET***
 **Summary:** Finds user by id
@@ -195,7 +202,7 @@ Sassy
 | ---- | ----------- | ------ |
 | 200 | successful operation | [User](#user) |
 
-### /new_tweets
+### /:apitoken/user/new_tweets
 ---
 ##### ***GET***
 **Summary:** List of 50 newest tweets of users followed by this user
@@ -212,7 +219,7 @@ Sassy
 | ---- | ----------- | ------ |
 | 200 | successful operation | [ [Tweet](#tweet) ] |
 
-### /followings
+### /:apitoken/user/followings
 ---
 ##### ***GET***
 **Summary:** Find followings of user
@@ -229,7 +236,7 @@ Sassy
 | ---- | ----------- | ------ |
 | 200 | successful operation | [ [User](#user) ] |
 
-### /followeds
+### /:apitoken/user/followeds
 ---
 ##### ***GET***
 **Summary:** Find followeds of user
@@ -246,7 +253,7 @@ Sassy
 | ---- | ----------- | ------ |
 | 200 | successful operation | [ [User](#user) ] |
 
-### /new
+### /:apitoken/tweet/new
 ---
 ##### ***POST***
 **Summary:** Create a new tweet
@@ -266,7 +273,7 @@ Sassy
 | ---- | ----------- | ------ |
 | 202 | Succefully Created Tweet | [Tweet](#tweet) |
 
-### /:tweet_id
+### /tweet/:tweet_id
 ---
 ##### ***GET***
 **Summary:** Finds tweet by id
