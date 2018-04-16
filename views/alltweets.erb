@@ -9,8 +9,12 @@
           <%= erb :tweet_stub %>
         </div>
       </div>
-      <a href=<%= $prefix + @apitoken + "/timeline"%>>View Timeline </a>
+
       <div class="panel panel-info">
+        <div class="topnav">
+          <a class="active" href=<%= $prefix + @apitoken + "/"%>>Latest Happened Around You</a>
+          <a href=<%= $prefix + @apitoken + "/timeline"%>>Your Timeline</a>
+        </div>
         <div class="panel-body">
           <%= erb :tweets_json %>
         </div>

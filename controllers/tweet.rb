@@ -52,6 +52,7 @@ post $prefix + "/:apitoken/tweet/new" do
     redirect back
   else
     flash[:warning] = 'Create tweet failed'
+    redirect back
   end
 end
 
@@ -85,6 +86,7 @@ get $prefix + "/tweet/:tweet_id" do
     erb :tweet, :locals => { :title => 'Tweet' }
   else
     flash[:warning] = 'Can not find tweet!'
+    redirect back
   end
 end
 
@@ -116,6 +118,7 @@ get $prefix + "/:handle/tweet/:tweet_id" do
     erb :tweet, :locals => { :title => 'Tweet' }
   else
     flash[:warning] = 'Can not find tweet!'
+    redirect back
   end
 end
 
