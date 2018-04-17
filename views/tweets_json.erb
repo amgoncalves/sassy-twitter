@@ -43,13 +43,13 @@
     
     <ul class="nav nav-pills nav-pills-custom">
       <% if is_authenticated? && author_id != @cur_user._id.to_s %>
-        <li><a href=<%= $prefix + @apitoken + "/reply?tweet_id=" + @t['_id']["$oid"] %>><span class="glyphicon glyphicon-share-alt"></span></a></li>
-        <li><a href=<%= $prefix + @apitoken + "/retweet?tweet_id=" + @t['_id']["$oid"] %>><span class="glyphicon glyphicon-retweet"></span></a></li>
+        <li><a href=<%= $prefix + @apitoken + "/reply?tweet_id=" + @t['_id']["$oid"] %> title="reply"><span class="glyphicon glyphicon-share-alt"></span></a></li>
+        <li><a href=<%= $prefix + @apitoken + "/retweet?tweet_id=" + @t['_id']["$oid"] %> title="retweet"><span class="glyphicon glyphicon-retweet"></span></a></li>
         <li>
           <% if @cur_user.like?(@t["_id"]["$oid"].to_s) %>
-            <a href=<%= $prefix + @apitoken + "/unlike?tweet_id=" + @t['_id']["$oid"] %>><span class="glyphicon glyphicon-star" style="color:red"></span></a>
+            <a href=<%= $prefix + @apitoken + "/unlike?tweet_id=" + @t['_id']["$oid"] %> title="unlike"><span class="glyphicon glyphicon-star" style="color:red"></span></a>
           <% else %>
-            <a href=<%= $prefix + @apitoken + "/like?tweet_id=" + @t['_id']["$oid"] %>><span class="glyphicon glyphicon-star"></span></a>
+            <a href=<%= $prefix + @apitoken + "/like?tweet_id=" + @t['_id']["$oid"] %> title="like"><span class="glyphicon glyphicon-star"></span></a>
           <% end %>
         </li>
       <% else %>
@@ -57,7 +57,7 @@
         <li><a name="#"><span class="glyphicon glyphicon-retweet" style="color:grey"></span></a></li>
         <li><a name="#"><span class="glyphicon glyphicon-star" style="color:grey"></span></a></li>
       <% end %>
-      <li><a href=<%= $prefix + @apitoken + "/tweet/" + @t['_id']["$oid"] %>><span class="glyphicon glyphicon-option-horizontal"></span></a></li>
+      <li><a href=<%= $prefix + @apitoken + "/tweet/" + @t['_id']["$oid"] %> title="tweet detail"><span class="glyphicon glyphicon-option-horizontal"></span></a></li>
     </ul>
   </div>
 </div>

@@ -1,4 +1,8 @@
 get $prefix + "/:handle/like" do
+  if !is_authenticated?
+    redirect $prefix + "/"
+  end
+
   # update corresponding tweet
   tweet_id = params[:tweet_id]
   # cur_user = get_user_from_session
@@ -20,6 +24,10 @@ get $prefix + "/:handle/like" do
 end
 
 get $prefix + "/:handle/unlike" do
+  if is_authenticated? == false || session[:user_id] == nil
+    redirect $prefix + "/"
+  end
+  
   # update corresponding tweet
   tweet_id = params[:tweet_id]
   # cur_user = get_user_from_session

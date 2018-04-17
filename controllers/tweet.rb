@@ -1,4 +1,8 @@
 post $prefix + "/:apitoken/tweet/new" do
+  if !is_authenticated?
+    redirect $prefix + "/"
+  end
+
   @hashtag_list = Array.new
   @apitoken = "/" + params[:apitoken]
 
@@ -48,6 +52,7 @@ post $prefix + "/:apitoken/tweet/new" do
     redirect back
   else
     flash[:warning] = 'Create tweet failed'
+    redirect back
   end
 end
 
@@ -56,7 +61,7 @@ get '/tweets' do
   erb :tweets, :locals => { :title => 'Tweets' }
 end
 
-get $prefix + "/tweet/:tweet_id", $prefix + "/:handle/tweet/:tweet_id" do
+get $prefix + "/tweet/:tweet_id" do
   @apitoken = ""
   if params[:handle] != nil
     @apitoken = params[:handle]
@@ -81,6 +86,39 @@ get $prefix + "/tweet/:tweet_id", $prefix + "/:handle/tweet/:tweet_id" do
     erb :tweet, :locals => { :title => 'Tweet' }
   else
     flash[:warning] = 'Can not find tweet!'
+    redirect back
+  end
+end
+
+get $prefix + "/:handle/tweet/:tweet_id" do
+  if is_authenticated? == false || session[:user_id] == nil
+    redirect $prefix + "/"
+  end
+  @apitoken = ""
+  if params[:handle] != nil
+    @apitoken = params[:handle]
+  else
+    @apitoken = "guest"
+  end
+  
+  present = Tweet.where(_id: params[:tweet_id]).exists?
+
+  if present
+    @tweet = Tweet.where(_id: params[:tweet_id]).first
+    @replys = Array.new
+
+    if @tweet[:replys].length > 0
+      @replys = Reply.in(_id: @tweet[:replys])
+    end
+
+    if @tweet[:original_tweet_id] != nil
+      @ot = Tweet.find(@tweet[:original_tweet_id])
+    end
+    
+    erb :tweet, :locals => { :title => 'Tweet' }
+  else
+    flash[:warning] = 'Can not find tweet!'
+    redirect back
   end
 end
 

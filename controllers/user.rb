@@ -1,4 +1,8 @@
 get $prefix + "/:apitoken/user/:targeted_id" do
+  if !is_authenticated?
+    redirect $prefix + "/"
+  end
+  
   targeted_id = BSON::ObjectId.from_string(params[:targeted_id])
   query_res = User.where(_id: targeted_id)
   target_exist = query_res.exists?

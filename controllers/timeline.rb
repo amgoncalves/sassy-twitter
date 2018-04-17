@@ -1,4 +1,8 @@
 get $prefix + "/:handle/timeline" do
+  if !is_authenticated?
+    redirect $prefix + "/"
+  end
+  
   @ids = User.pluck(:id)
   @apitoken = ""
   if is_authenticated?

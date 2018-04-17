@@ -7,7 +7,7 @@ def redirect_to_original_request
 end
 
 def is_authenticated?
-  return !!session[:user_id]
+  return session[:user_id] != nil
 end
 
 def set_user_globals

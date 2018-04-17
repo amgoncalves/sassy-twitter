@@ -1,8 +1,9 @@
 source 'https://rubygems.org'
 ruby '2.5.0'
+# ruby '2.3.3', :engine => 'jruby', :engine_version => '9.1.15.0'
 
 gem 'bcrypt',        '~> 3.1', '>= 3.1.11'
-gem 'byebug'
+# gem 'byebug'
 gem 'database_cleaner'
 gem 'foreman'
 gem 'minitest',      '~> 5.8', '>= 5.8.4'

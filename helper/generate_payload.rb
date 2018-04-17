@@ -1,5 +1,5 @@
 require 'json'
-require 'byebug'
+# require 'byebug'
 require 'csv'
 
 filename = './seeds/tweets.csv'
