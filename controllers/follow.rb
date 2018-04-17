@@ -29,8 +29,8 @@ post $prefix + "/:apitoken/follow" do
         end
       end
       #store in mongodb
-      new_tweets = $redis.lrange(login_id.to_s, 0, -1).reverse
-      login_user.update_tweets(new_tweets)
+      # new_tweets = $redis.lrange(login_id.to_s, 0, -1).reverse
+      # login_user.update_tweets(new_tweets)
     else
       # delete all tweets of that user to current user timeline
       tweets = target_user.tweets
@@ -38,8 +38,8 @@ post $prefix + "/:apitoken/follow" do
         $redis.lrem(login_id.to_s, 0, tweet_id.to_s)
       end
       # store in mongodb
-      new_tweets = $redis.lrange(login_id.to_s, 0, -1).reverse
-      login_user.update_tweets(new_tweets)
+      # new_tweets = $redis.lrange(login_id.to_s, 0, -1).reverse
+      # login_user.update_tweets(new_tweets)
     end
   end
 end
