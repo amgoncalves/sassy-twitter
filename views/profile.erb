@@ -28,7 +28,7 @@
 
 
     <% unless @info[:target_user].profile[:date_joined].empty? %>
-    <div>	
+    <div>  
       <span class="glyphicon glyphicon-calendar"></span> Joined <%= @info[:target_user].profile[:date_joined] %>
     </div>
     <% end %>
@@ -42,48 +42,48 @@
     <!-- User Statistics -->
     <div class="row">
       <div class="col-xs-3">
-				<h5>
-					<small>TWEETS</small>
-					<br>
-					<a href=<%= $prefix + @apitoken + "/user/" + @info[:target_user]._id %>>
-						<%= @info[:target_user].ntweets %>
-					</a>
-				</h5>
+        <h5>
+          <small>TWEETS</small>
+          <br>
+          <a href=<%= $prefix + @apitoken + "/user/" + @info[:target_user]._id %>>
+            <%= @info[:target_user].ntweets %>
+          </a>
+        </h5>
       </div> <!-- col-xs-3 -->
 
       <div class="col-xs-4">
-				<h5>
-					<small>FOLLOWING</small>
-					<br>
-					<a id='nfollowing' href=<%= $prefix + @apitoken + "/user/followings/?targeted_id=" + @info[:target_user]._id%>>
-						<%= @info[:target_user].nfollowings %>
-					</a>
-				</h5>
+        <h5>
+          <small>FOLLOWING</small>
+          <br>
+          <a id='nfollowing' href=<%= $prefix + @apitoken + "/user/followings/?targeted_id=" + @info[:target_user]._id%>>
+            <%= @info[:target_user].nfollowings %>
+          </a>
+        </h5>
       </div> <!-- col-xs-4 -->
 
       <div class="col-xs-5">
-				<h5>
-					<small>FOLLOWERS&nbsp;</small>
-					<br>
-					<a id='nfollowed' href=<%= $prefix + @apitoken + "/user/followeds/?targeted_id=" + @info[:target_user]._id%>>
-						<%= @info[:target_user].nfolloweds %>
-					</a>
-				</h5>
-			</div> <!-- col-xs-5 -->
-		</div> <!-- row -->
+        <h5>
+          <small>FOLLOWERS&nbsp;</small>
+          <br>
+          <a id='nfollowed' href=<%= $prefix + @apitoken + "/user/followeds/?targeted_id=" + @info[:target_user]._id%>>
+            <%= @info[:target_user].nfolloweds %>
+          </a>
+        </h5>
+      </div> <!-- col-xs-5 -->
+    </div> <!-- row -->
 
-		<a id="follow-direct" type="hidden" href=<%= $prefix + @apitoken + "/follow" %>>
-		</a>
-		<input id="targeted-id" type="hidden" value="<%= @info[:target_user]._id %>">
-		</input>
-			
+    <a id="follow-direct" type="hidden" href=<%= $prefix + @apitoken + "/follow" %>>
+    </a>
+    <input id="targeted-id" type="hidden" value="<%= @info[:target_user]._id %>">
+    </input>
+      
     <!-- Follow Button -->
-		<% if is_authenticated? %>
-		<% if @info[:target_user]._id != @info[:login_user]._id %>
-		<div>
-		  <button id="follow-button" class="btn btn-primary"><% if @info[:isfollowing] == true %>Following<% else %>+ Follow<% end %></button>
-		</div>
-		<% end %>
-		<% end %>
+    <% if is_authenticated? %>
+    <% if @info[:target_user]._id != @info[:login_user]._id %>
+    <div>
+      <button id="follow-button" class="btn btn-primary"><% if @info[:isfollowing] == true %>Following<% else %>+ Follow<% end %></button>
+    </div>
+    <% end %>
+    <% end %>
   </div><!-- ./panel-body -->
 </div><!-- ./panel-default -->

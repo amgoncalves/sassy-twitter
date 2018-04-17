@@ -8,8 +8,8 @@
           <% apitoken = @cur_user.handle %>
         <% elsif @info %>
           <% apitoken = @info[:login_user].handle %>
-				<% else %>
-					<% apitoken = @apitoken %>
+        <% else %>
+          <% apitoken = @apitoken %>
         <% end %>
 
         <!-- Home Icon -->
@@ -28,15 +28,15 @@
                 <div class="dropdown-item">
                   <form action= <%= $prefix + "/" + apitoken + "/edit_profile" %> method="GET">
                     <button type="submit" class="btn btn-link btn-logout">Edit Profile</button>
-		              </form>
+                  </form>
                 </div>
-	       
+         
                 <div class="dropdown-divider"></div>
-	          
+            
                 <div class="dropdown-item">
-		              <form action=<%= $prefix + "/" + apitoken + "/logout" %> method='POST'>
-		                <button type="submit" class="btn btn-link btn-logout">Logout</button>
-		              </form>
+                  <form action=<%= $prefix + "/" + apitoken + "/logout" %> method='POST'>
+                    <button type="submit" class="btn btn-link btn-logout">Logout</button>
+                  </form>
                 </div>
               </div>
             </li>

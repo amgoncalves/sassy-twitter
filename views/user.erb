@@ -1,49 +1,49 @@
 <div class="container">
   <div class="row">
     <div class="col-sm-3">
-			<%= erb :profile  %>
+      <%= erb :profile  %>
     </div>
     
     <div class="col-sm-6">
       <div class="panel panel-info">
-				<br>
-				<%# <div class="panel-body"> %>
-					<div class="panel-body" >
-					<% @info[:target_tweets].each do |tweet| %>
+        <br>
+        <%# <div class="panel-body"> %>
+          <div class="panel-body" >
+          <% @info[:target_tweets].each do |tweet| %>
 
-						<%# <div class="miniprofile-container"> %>
-						<%# 	<div class="miniprofile"> %>
-						<%# 		<%= erb :miniprofile, :locals=>{:f=>@info[:target_user]} %1> %>
-						<%# 	</div> <1%# end of div miniprofile %1> %>
-						<%# </div> <1%# end of div miniprofile-container %1> %>
+            <%# <div class="miniprofile-container"> %>
+            <%#   <div class="miniprofile"> %>
+            <%#     <%= erb :miniprofile, :locals=>{:f=>@info[:target_user]} %1> %>
+            <%#   </div> <1%# end of div miniprofile %1> %>
+            <%# </div> <1%# end of div miniprofile-container %1> %>
 
-						<div class="media">
-							<a class="media-left" href="#fake">
-								<img alt="" id='profile_in_tweet' class="media-object img-rounded" src="/images/profile_64x64.png">
-							</a>
+            <div class="media">
+              <a class="media-left" href="#fake">
+                <img alt="" id='profile_in_tweet' class="media-object img-rounded" src="/images/profile_64x64.png">
+              </a>
 
-							<div class="media-body">
-								<div class="tweet-date">
-									<%= tweet.time_created.strftime("%b %d %I:%M:%S%p") %>
-								</div>
+              <div class="media-body">
+                <div class="tweet-date">
+                  <%= tweet.time_created.strftime("%b %d %I:%M:%S%p") %>
+                </div>
 
-								<%# <h4 class="media-heading"><%= @info[:target_user].handle %1> </h4> %>
-								<h4 class="media-heading">
-									<% author_id = tweet["author_id"] %>
-									<a href=<%= $prefix + @apitoken + "/user/" + author_id %>> @<%= tweet["author_handle"] %> </a>
-								</h4>
+                <%# <h4 class="media-heading"><%= @info[:target_user].handle %1> </h4> %>
+                <h4 class="media-heading">
+                  <% author_id = tweet["author_id"] %>
+                  <a href=<%= $prefix + @apitoken + "/user/" + author_id %>> @<%= tweet["author_handle"] %> </a>
+                </h4>
 
-								<p>
-									<%= tweet.content %>
-								</p>
+                <p>
+                  <%= tweet.content %>
+                </p>
 
-								<% if tweet["original_tweet_id"] != nil %>
-									<a href=<%= $prefix + @apitoken + "/tweet/" + tweet["original_tweet_id"] %>>See original tweet</a>
-								<% end %>
+                <% if tweet["original_tweet_id"] != nil %>
+                  <a href=<%= $prefix + @apitoken + "/tweet/" + tweet["original_tweet_id"] %>>See original tweet</a>
+                <% end %>
 
-					<ul class="nav nav-pills nav-pills-custom">
-						<% if is_authenticated? && tweet[:author_id] != @info[:login_user]._id %>
-							<li><a href=<%= $prefix + @apitoken + "/reply?tweet_id=" + tweet['_id'] %> title="reply"><span class="glyphicon glyphicon-share-alt"></span></a></li>
+          <ul class="nav nav-pills nav-pills-custom">
+            <% if is_authenticated? && tweet[:author_id] != @info[:login_user]._id %>
+              <li><a href=<%= $prefix + @apitoken + "/reply?tweet_id=" + tweet['_id'] %> title="reply"><span class="glyphicon glyphicon-share-alt"></span></a></li>
               <li><a href=<%= $prefix + @apitoken + "/retweet?tweet_id=" + tweet['_id'] %> title="retweet"><span class="glyphicon glyphicon-retweet"></span></a></li>
               <li>
                 <% if @info[:login_user].like?(tweet._id.to_s) %>
@@ -52,31 +52,31 @@
                   <a href=<%= $prefix + @apitoken + "/like?tweet_id=" + tweet['_id'] %> title="like"><span class="glyphicon glyphicon-star"></span></a>
                 <% end %>
               </li>
-						<% else %>
-							<li><a name="#"><span class="glyphicon glyphicon-share-alt" style="color:grey"></span></a></li>
-							<li><a name="#"><span class="glyphicon glyphicon-retweet" style="color:grey"></span></a></li>
-							<li><a name="#"><span class="glyphicon glyphicon-star" style="color:grey"></span></a></li>
-						<% end %>
-						<li><a href=<%= $prefix + @apitoken + "/tweet/" + tweet['_id'] %> title="tweet detail"><span class="glyphicon glyphicon-option-horizontal"></span></a></li>
-					</ul>
+            <% else %>
+              <li><a name="#"><span class="glyphicon glyphicon-share-alt" style="color:grey"></span></a></li>
+              <li><a name="#"><span class="glyphicon glyphicon-retweet" style="color:grey"></span></a></li>
+              <li><a name="#"><span class="glyphicon glyphicon-star" style="color:grey"></span></a></li>
+            <% end %>
+            <li><a href=<%= $prefix + @apitoken + "/tweet/" + tweet['_id'] %> title="tweet detail"><span class="glyphicon glyphicon-option-horizontal"></span></a></li>
+          </ul>
 
-								<%# <ul class="nav nav-pills nav-pills-custom"> %>
-								<%# 	<li><a href="#"><span class="glyphicon glyphicon-share-alt"></span></a></li> %>
-								<%# 	<li><a href="#"><span class="glyphicon glyphicon-retweet"></span></a></li> %>
-								<%# 	<li><a href="#"><span class="glyphicon glyphicon-star"></span></a></li> %>
-								<%# 	<li><a href="#"><span class="glyphicon glyphicon-option-horizontal"></span></a></li> %>
-								<%# </ul> %>
+                <%# <ul class="nav nav-pills nav-pills-custom"> %>
+                <%#   <li><a href="#"><span class="glyphicon glyphicon-share-alt"></span></a></li> %>
+                <%#   <li><a href="#"><span class="glyphicon glyphicon-retweet"></span></a></li> %>
+                <%#   <li><a href="#"><span class="glyphicon glyphicon-star"></span></a></li> %>
+                <%#   <li><a href="#"><span class="glyphicon glyphicon-option-horizontal"></span></a></li> %>
+                <%# </ul> %>
 
-					</div> <!-- end of div class="media-body" -->
-					</div> <%# end of div class="media"%>
-					<hr>
-					<% end %>
+          </div> <!-- end of div class="media-body" -->
+          </div> <%# end of div class="media"%>
+          <hr>
+          <% end %>
 
 
 
-					</div> <%# end of div panel body %>
-			</div> <%# end of div panel panel panel-info %>
-		</div> <%# end of div col-sm-6 %>
-	<%= erb :ad%>
-	</div> <%# end of div row %>
+          </div> <%# end of div panel body %>
+      </div> <%# end of div panel panel panel-info %>
+    </div> <%# end of div col-sm-6 %>
+  <%= erb :ad%>
+  </div> <%# end of div row %>
 </div> <%# end of div container %>
