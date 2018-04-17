@@ -1,24 +1,23 @@
 post $prefix + "/:apitoken/follow" do
-  if is_authenticated? == false || session[:user_id] == nil
+  if !is_authenticated?
     redirect $prefix + "/"
   end
   
   target_id = BSON::ObjectId.from_string(params[:targeted_id])
-	query_res = User.where(_id: target_id)
-	
-	if query_res.exists?
-		# target_user = User.where(_id: target_id).first
-		target_user = query_res.first
-		login_user = get_user_from_redis
-		login_id = login_user._id
-		login_user.toggle_following(target_id)
+  query_res = User.where(_id: target_id)
+  
+  if query_res.exists?
+    target_user = query_res.first
+    login_user = get_user_from_redis
+    login_id = login_user._id
+    login_user.toggle_following(target_id)
 
-		save_user_to_redis(login_user)
+    save_user_to_redis(login_user)
 
-		db_login_user = get_user_from_mongo
-		db_login_user.toggle_following(target_id)
+    db_login_user = get_user_from_mongo
+    db_login_user.toggle_following(target_id)
 
-		target_user.toggle_followed(login_id)
+    target_user.toggle_followed(login_id)
 
     if db_login_user.follow?(target_user)
       # add all tweets of that user to current user timeline
@@ -42,9 +41,5 @@ post $prefix + "/:apitoken/follow" do
       new_tweets = $redis.lrange(login_id.to_s, 0, -1).reverse
       login_user.update_tweets(new_tweets)
     end
-
-		# response['Cache-Control'] =  "public, max-age=0, must-revalidate"
-		# redirect back
-		# erb :user, :locals => { :title => "#{target_user.handle}"}
-	end
+  end
 end

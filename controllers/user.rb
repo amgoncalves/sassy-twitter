@@ -1,5 +1,5 @@
 get $prefix + "/:apitoken/user/:targeted_id" do
-  if is_authenticated? == false || session[:user_id] == nil
+  if !is_authenticated?
     redirect $prefix + "/"
   end
   

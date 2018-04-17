@@ -1,5 +1,5 @@
 get $prefix + "/:handle/timeline" do
-  if is_authenticated? == false || session[:user_id] == nil
+  if !is_authenticated?
     redirect $prefix + "/"
   end
   
