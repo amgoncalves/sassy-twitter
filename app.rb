@@ -37,6 +37,7 @@ require_relative './spec/follow_loadtest.rb'
 require_relative './spec/demo_redis.rb'
 require_relative './spec/reply_loadtest.rb'
 require_relative './spec/load_test_search.rb'
+require_relative './helper/user_access.rb'
 
 enable :sessions
 

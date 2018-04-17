@@ -1,4 +1,5 @@
 $(document).ready(function() {
+	init();
 	var orig_nfollowed = parseInt($('a#nfollowed').text());
 
 	$("#follow-button").click(function(){
