@@ -1,16 +1,16 @@
 <div class="container">
-	<div class="row">
-		<div class="col-sm-3">
-			<%= erb :profile %>
-		</div>
+  <div class="row">
+    <div class="col-sm-3">
+      <%= erb :profile %>
+    </div>
 
-		<div class="col-sm-6">
-				<div class="gallery">
-					<% @info[:target_followeds].each do |f| %>
-						<%= erb :miniprofile, :locals=> {:f => f} %>
-					<% end %>
-				</div> <! -- gallery -->
-		</div> <!-- col-sm-6 -->
-		<%= erb :ad%>
-	</div> <!-- row -->
+    <div class="col-sm-6">
+        <div class="gallery">
+          <% @info[:target_followeds].each do |f| %>
+            <%= erb :miniprofile, :locals=> {:f => f} %>
+          <% end %>
+        </div> <! -- gallery -->
+    </div> <!-- col-sm-6 -->
+    <%= erb :ad%>
+  </div> <!-- row -->
 </div> <!-- container -->
