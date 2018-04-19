@@ -17,4 +17,4 @@ gem 'sinatra',       '2.0.1'
 gem 'sinatra-contrib'
 gem 'sinatra-flash', '~> 0.3.0'
 gem 'redis'
-
+gem 'sidekiq'

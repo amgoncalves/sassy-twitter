@@ -6,6 +6,8 @@ require 'sinatra/cookies'
 require 'sinatra/flash'
 require 'sinatra/multi_route'
 require 'redis'
+require 'sidekiq'
+require 'sidekiq/api'
 #require 'sinatra/sessionshelper'
 require_relative './models/user'
 require_relative './models/userd'
@@ -103,6 +105,7 @@ get '/reset/all' do
   # delete everything in redis
   $redis.flushall
   # clean session and cookie
+	Sidekiq::Queue.new.clear
   session.clear
   cookies.clear
 end
