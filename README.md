@@ -96,7 +96,7 @@ Open a web browser and navigate to ```localhost:4567```.  You should see the nan
 
 ## Documentation
 
-This Github has a [developer's Wiki](https://github.com/amgoncalves/sassy-twitter/wiki).
+This project has a [developer's Wiki](https://github.com/amgoncalves/sassy-twitter/wiki).
 
 ## Version
 
@@ -106,9 +106,9 @@ nT1.0
 
 This project is licensed under the [MIT License](https://github.com/amgoncalves/sassy-twitter/blob/master/license.txt).
 
-## Acknnowledgments
+## Acknowledgments
 
-We would like to thank Professor Pito Salas, Zach Weis, and Ian Leeds for their invaluable guidance.
+We would like to thank Professor Pito Salas, Zach Weis, and Ian Leeds for their invaluable guidance in the completion of this project.
 
 ## Last Modified
 
