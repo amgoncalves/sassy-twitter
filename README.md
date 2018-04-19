@@ -83,7 +83,7 @@ redis> lrange "key" 0 -1          # show all elements stored in the "key" as a l
 
 ### Sinatra Setup
 
-Download this repo.  Use [Bundler](http://bundler.io/) to install the required project Gems by running the following command from the project's root directory:
+Download the [repo](https://github.com/amgoncalves/sassy-twitter).  Use [Bundler](http://bundler.io/) to install the required project Gems by running the following command from the project's root directory:
 
 ```$ bundle install```
 
