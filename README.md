@@ -24,13 +24,79 @@ nanoTwitter is written in [Sinatra](http://sinatrarb.com/) and runs on the [JRub
 
 Application data is stored in a [MongoDB Community Server](https://www.mongodb.com/) database and uses the [mLab](https://mlab.com/) service on the production server.  The [Mongoid](https://docs.mongodb.com/mongoid/master/#ruby-mongoid-tutorial) ODM (Object-Document-Mapper) is used to convert between Sinatra-compatable abstract data types and MongoDB documents.  Data is cached in-memory using [Redis](https://redis.io/).
 
-The UI uses a combination of HTML and [embedded Ruby](https://ruby-doc.com/docs/ProgrammingRuby/html/web.html).  Elements are styled in CSS using [Bootstrap](https://getbootstrap.com/). [JQuery](https://jquery.com/) is used to give some UI elements additional functionality.
+The UI uses a combination of HTML and [embedded Ruby](https://ruby-doc.com/docs/ProgrammingRuby/html/web.html).  Elements are styled in CSS using [Bootstrap](https://getbootstrap.com/). [JQuery](https://jquery.com/) is used to provide additional functionality to certain UI elements.
 
 ## Notable Engineering
 
 ## Scalability Test Data and Results
 
 ## Installation and Setup
+
+### MongoDB Setup
+
+Install [MongoDB Community Edition](https://docs.mongodb.com/manual/administration/install-community/).  The installation guide for nanoTwitter uses MacOS instructions in the examples.  See the relevant installation pages to find equivalent installation and operation instructions for [Windows](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-windows/) and [Linux](https://docs.mongodb.com/manual/administration/install-on-linux/).
+ 
+To start, run MongoDB in the shell using one of the following three options:
+
+* ```$ mongod``` to run without specifying paths.
+
+* ```$ <path to binary>/mongod``` if your system PATH does not include the location of the MongoDB binary.
+
+* ```$ mongod --dbpath <path to data directory>``` if you chose to use a custom data directory path during installation.
+
+MongoDB must be running on the development machine for the app to work locally.  If MongoDB has started successfully, the following line will appear in the process output:
+
+```[initandlisten] waiting for connections on port 27017```
+
+Create a new development database.  Open a new shell and start the MongoDB shell:
+
+```$ mongo --host 127.0.0.1:27017```
+
+In the MongoDB shell, create a new database named ```nanotwitter-test```:
+
+```
+>use nanotwitter-test
+switched to db nanotwitter-test
+```
+
+The default configuration of the development database is contained in the file config/mongoid.yml.  If you'd like to use a custom development setup, you can edit mongoid.yml and add config/mongoid.yml to your .gitignore file.
+
+### Redis Setup
+* [Download](https://redis.io/download), extract and compile Redis with:
+````
+$ tar xzf redis-4.0.8.tar.gz
+$ cd redis-4.0.8
+$ make
+````
+* The binaries compiled are available in the src directory. Run Redis with:
+````
+$ src/redis-server
+````
+* You can interact with Redis using the built-in client:
+````
+$ src/redis-cli
+redis> flushall       # delete all data in redis
+OK
+redis> keys *         # show all keys stored in redis
+redis> lrange "key" 0 -1          # show all elements stored in the "key" as a list
+````
+
+### Sinatra Setup
+
+Download this repo.  Use [Bundler](http://bundler.io/) to install the required project Gems by running the following command from the project's root directory:
+
+```$ bundle install```
+
+Make sure MongoDB is running according to the instructions given in **MongoDB Setup**.  To launch the app, run the following command in the project's root directory:
+
+```$ ruby app.rb```
+
+Open a web browser and navigate to ```localhost:4567```.  You should see the nanoTwitter homepage.
+
+
+## Documentation
+
+This Github has a [developer's Wiki](https://github.com/amgoncalves/sassy-twitter/wiki).
 
 ## Version
 
@@ -41,6 +107,8 @@ nT1.0
 This project is licensed under the [MIT License](https://github.com/amgoncalves/sassy-twitter/blob/master/license.txt).
 
 ## Acknnowledgments
+
+We would like to thank Professor Pito Salas, Zach Weis, and Ian Leeds for their invaluable guidance.
 
 ## Last Modified
 
