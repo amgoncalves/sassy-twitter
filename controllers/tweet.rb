@@ -6,20 +6,25 @@ post $prefix + "/:apitoken/tweet/new" do
   @hashtag_list = Array.new
   @apitoken = "/" + params[:apitoken]
 
-  user_id = session[:user_id]
-  params[:tweet][:author_id] = user_id
-  # params[:tweet][:author_handle] = get_user_from_session.handle
-  params[:tweet][:author_handle] = get_user_from_redis.handle
+  # get the current login user
+  redis_login_user = get_user_from_redis
+
+  params[:tweet][:author_id] = redis_login_user._id
+  params[:tweet][:author_handle] = redis_login_user.handle
   params[:tweet][:content] = generateHashtagTweet(params[:tweet][:content], @apitoken)
   params[:tweet][:content] = generateMentionTweet(params[:tweet][:content], @apitoken)
   tweet = Tweet.new(params[:tweet])
   if tweet.save
-    db_login_user = User.where(_id: user_id).first
-		redis_login_user = get_user_from_redis
-    tweet_id = tweet._id
-    db_login_user.add_tweet(tweet_id)
-		redis_login_user.add_tweet(tweet_id)
 
+    tweet_id = tweet._id
+    login_user_id = redis_login_user._id
+
+    # update db
+    db_login_user = User.where(_id: login_user_id).first
+    db_login_user.add_tweet(tweet_id)
+    
+    # update redis
+    redis_login_user.add_tweet(tweet_id)
 		save_user_to_redis(redis_login_user)
 
     # spread this tweet to all followers
@@ -48,7 +53,6 @@ post $prefix + "/:apitoken/tweet/new" do
         Hashtag.where(hashtag_name: hashtag_name, tweets: tweets).create
       end
     end
-
     redirect back
   else
     flash[:warning] = 'Create tweet failed'
