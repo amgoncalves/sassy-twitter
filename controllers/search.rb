@@ -1,11 +1,11 @@
-post $prefix + "/:handle/search" do
+post "/search" do
   if !is_authenticated?
-    redirect $prefix + "/"
+    redirect "/"
   end
 
   target_user = get_user_from_redis
   if target_user == nil
-    redirect $prefix + "/login"
+    redirect "/login"
   end
 
   @hide_tweets = false
@@ -23,7 +23,6 @@ post $prefix + "/:handle/search" do
     @tweet_results = Tweet.search(params[:query]) unless params[:query].blank?
   end
   @info = Hash.new
-  @apitoken = "/" + params[:handle]
 
   @info[:target_user] = target_user
   @info[:login_user] = target_user
@@ -32,9 +31,9 @@ post $prefix + "/:handle/search" do
   erb :results, :locals => { :title => 'Search Results' }
 end
 
-get $prefix + "/:handle/search/hashtag" do
+get "/search/hashtag" do
   if !is_authenticated?
-    redirect $prefix + "/"
+    redirect "/"
   end
   
   @hide_tweets = false
@@ -51,7 +50,6 @@ get $prefix + "/:handle/search/hashtag" do
 
   @info = Hash.new
 
-  @apitoken = "/" + params[:handle]
   @info[:target_user] = get_user_from_redis
   @cur_user = @info[:target_user]
   @info[:login_user] = @info[:target_user]

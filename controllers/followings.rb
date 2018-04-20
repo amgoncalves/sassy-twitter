@@ -1,6 +1,6 @@
-get $prefix + "/:apitoken/user/followings/" do
+get "/user/followings/" do
   if !is_authenticated?
-    redirect $prefix + "/"
+    redirect "/"
   end
   
   targeted_id = BSON::ObjectId.from_string(params[:targeted_id])
@@ -21,7 +21,6 @@ get $prefix + "/:apitoken/user/followings/" do
     @info[:target_user] = target_user
     @info[:isfollowing] = isfollowing
     @info[:target_followings] = target_followings
-    @apitoken = "/" + login_user.APItoken
     erb :followings, :locals => { :title => 'Followings' }
   end
 end

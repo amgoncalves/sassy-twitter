@@ -16,7 +16,7 @@
     <div style="margin-top:-15px;">
       <span>
         <%# <a href="/user/<%= f._id.to_s %1>"> %>
-        <a href = <%= $prefix + "/" + @info[:login_user].handle + "/user/" + f._id.to_s %>>
+        <a href=<%= "/" + @info[:login_user].handle + "/user/" + f._id.to_s %>>
           @<span><%= f.handle %></span>
         </a>
       </span>

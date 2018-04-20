@@ -1,10 +1,10 @@
-get $prefix + "/:handle/timeline" do
+get "/timeline" do
   if !is_authenticated?
-    redirect $prefix + "/"
+    redirect "/"
   end
   
   @ids = User.pluck(:id)
-  @apitoken = ""
+
   if is_authenticated?
     tweet_ids = $redis.lrange(session[:user_id].to_s, 0, 50)
     @tweets = Tweet.in(_id: tweet_ids)
@@ -20,13 +20,12 @@ get $prefix + "/:handle/timeline" do
       @targeted_following = User.in(_id: @targeted_user[:followings])
     end
 
-		# code added by Shuai at Mar 23
-		@info = Hash.new
-		# @info[:login_user] = @cur_user
-		@info[:login_user] = get_user_from_redis()
-		@cur_user = @info[:login_user]
-		@info[:target_user] = @targeted_user
-    @apitoken = "/" + @cur_user[:handle]
+    # code added by Shuai at Mar 23
+    @info = Hash.new
+    # @info[:login_user] = @cur_user
+    @info[:login_user] = get_user_from_redis()
+    @cur_user = @info[:login_user]
+    @info[:target_user] = @targeted_user
     
   end
   erb :timeline, :locals => { :title => 'Home Timeline!' }

@@ -1,17 +1,12 @@
-get $prefix + "/:apitoken/edit_profile" do
+get "/edit_profile" do
   if !is_authenticated?
-    redirect $prefix + "/"
+    redirect "/"
   end
-
-  @apitoken = params[:apitoken]
-  erb :edit_profile, :locals=>{:title=>'Edit profile'}
+  erb :edit_profile, :locals => { :title => 'Edit profile' }
 end
 
-post $prefix + "/:apitoken/edit_profile/submit" do
-	# params[:profile][:dob] = Date.strptime(params[:profile][:dob],"%Y-%m-%d").to_s
-  if is_authenticated? == false || session[:user_id] == nil
-    redirect $prefix + "/"
-  end
+post "/edit_profile/submit" do
+  redirect "/" unless is_authenticated?
   
   loginuser_redis_key = session[:user_id].to_s + "loginuser"
 
@@ -23,18 +18,14 @@ post $prefix + "/:apitoken/edit_profile/submit" do
   end
 
   user_id = session[:user_id]
-  # user = User.where(_id: user_id).first
-	
-	user_hash = JSON.parse($redis.get(loginuser_redis_key))
-	params[:profile][:date_joined] = user_hash["profile"]["date_joined"]
-	@profile = Profile.new(params[:profile])
-	User.where(_id: user_id).update(profile: @profile)
+  
+  user_hash = JSON.parse($redis.get(loginuser_redis_key))
+  params[:profile][:date_joined] = user_hash["profile"]["date_joined"]
+  @profile = Profile.new(params[:profile])
+  User.where(_id: user_id).update(profile: @profile)
 
-	user_hash["profile"] = @profile
-	$redis.set(loginuser_redis_key, user_hash.to_json)
+  user_hash["profile"] = @profile
+  $redis.set(loginuser_redis_key, user_hash.to_json)
 
-  # user.update_profile(@profile)
-
-  @apitoken = "/" + params[:apitoken]
-  redirect $prefix + @apitoken + "/user/#{user_id}"
+  redirect "/user/#{user_id}"
 end

@@ -1,4 +1,4 @@
-require 'byebug'
+#require 'byebug'
 require 'json'
 require 'mongoid'
 require 'mongo'
@@ -68,13 +68,12 @@ set :views, Proc.new { File.join(root, "views") }
 
 set :public_folder, Proc.new { File.join(root, "public") }
 
-get "#{$prefix}/:apitoken/", "#{$prefix}/", "/" do
-  @apitoken = ""
+get "/" do
   if is_authenticated?
     if session[:user_id] == nil
       session.clear
       cookies.clear
-      redirect "#{$prefix}/"
+      redirect "/"
     end
 
     @tweets = $redis.lrange($globalTL,0, 50).reverse
@@ -94,8 +93,6 @@ get "#{$prefix}/:apitoken/", "#{$prefix}/", "/" do
     @info[:login_user] = @cur_user
     @info[:target_user] = @targeted_user
     @info[:target_tweets] = @tweets
-
-    @apitoken = "/" + @cur_user[:APItoken]
   else
     @tweets = $redis.lrange($globalTL, 0, 50).reverse
   end

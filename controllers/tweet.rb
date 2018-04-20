@@ -1,31 +1,30 @@
 class TweetMongoWorker 
-	require_relative './user.rb'
-	include Sidekiq::Worker
+  require_relative './user.rb'
+  include Sidekiq::Worker
 
-	def perform(login_user_id, tweet_id)
-		login_user_id = BSON::ObjectId.from_string(login_user_id)
-		user_id = BSON::ObjectId.from_string(tweet_id)
-		db_login_user = User.where(_id: login_user_id).first
-		db_login_user.add_tweet(tweet_id)
-		db_login_user
-	end
+  def perform(login_user_id, tweet_id)
+    login_user_id = BSON::ObjectId.from_string(login_user_id)
+    user_id = BSON::ObjectId.from_string(tweet_id)
+    db_login_user = User.where(_id: login_user_id).first
+    db_login_user.add_tweet(tweet_id)
+    db_login_user
+  end
 end
 
-post $prefix + "/:apitoken/tweet/new" do
+post "/tweet/new" do
   if !is_authenticated?
-    redirect $prefix + "/"
+    redirect "/"
   end
 
   @hashtag_list = Array.new
-  @apitoken = "/" + params[:apitoken]
 
   # get the current login user
   redis_login_user = get_user_from_redis
 
   params[:tweet][:author_id] = redis_login_user._id
   params[:tweet][:author_handle] = redis_login_user.handle
-  params[:tweet][:content] = generateHashtagTweet(params[:tweet][:content], @apitoken)
-  params[:tweet][:content] = generateMentionTweet(params[:tweet][:content], @apitoken)
+  params[:tweet][:content] = generateHashtagTweet(params[:tweet][:content])
+  params[:tweet][:content] = generateMentionTweet(params[:tweet][:content])
   tweet = Tweet.new(params[:tweet])
   if tweet.save
 
@@ -35,11 +34,11 @@ post $prefix + "/:apitoken/tweet/new" do
     # # update db
     # db_login_user = User.where(_id: login_user_id).first
     # db_login_user.add_tweet(tweet_id)
-		#
-		TweetMongoWorker.perform_async(login_user_id.to_s, tweet_id.to_s)
+    #
+    TweetMongoWorker.perform_async(login_user_id.to_s, tweet_id.to_s)
     # update redis
     redis_login_user.add_tweet(tweet_id)
-		save_user_to_redis(redis_login_user)
+    save_user_to_redis(redis_login_user)
 
     # spread this tweet to all followers
     # followers = db_login_user.followeds
@@ -80,12 +79,31 @@ get '/tweets' do
   erb :tweets, :locals => { :title => 'Tweets' }
 end
 
-get $prefix + "/tweet/:tweet_id" do
-  @apitoken = ""
-  if params[:handle] != nil
-    @apitoken = params[:handle]
+get "/tweet/:tweet_id" do  
+  present = Tweet.where(_id: params[:tweet_id]).exists?
+
+  if present
+    @tweet = Tweet.where(_id: params[:tweet_id]).first
+    @replys = Array.new
+
+    if @tweet[:replys].length > 0
+      @replys = Reply.in(_id: @tweet[:replys])
+    end
+
+    if @tweet[:original_tweet_id] != nil
+      @ot = Tweet.find(@tweet[:original_tweet_id])
+    end
+    
+    erb :tweet, :locals => { :title => 'Tweet' }
   else
-    @apitoken = "guest"
+    flash[:warning] = 'Can not find tweet!'
+    redirect back
+  end
+end
+
+get "/tweet/:tweet_id" do
+  if !is_authenticated?
+    redirect "/"
   end
   
   present = Tweet.where(_id: params[:tweet_id]).exists?
@@ -109,48 +127,16 @@ get $prefix + "/tweet/:tweet_id" do
   end
 end
 
-get $prefix + "/:handle/tweet/:tweet_id" do
-  if is_authenticated? == false || session[:user_id] == nil
-    redirect $prefix + "/"
-  end
-  @apitoken = ""
-  if params[:handle] != nil
-    @apitoken = params[:handle]
-  else
-    @apitoken = "guest"
-  end
-  
-  present = Tweet.where(_id: params[:tweet_id]).exists?
-
-  if present
-    @tweet = Tweet.where(_id: params[:tweet_id]).first
-    @replys = Array.new
-
-    if @tweet[:replys].length > 0
-      @replys = Reply.in(_id: @tweet[:replys])
-    end
-
-    if @tweet[:original_tweet_id] != nil
-      @ot = Tweet.find(@tweet[:original_tweet_id])
-    end
-    
-    erb :tweet, :locals => { :title => 'Tweet' }
-  else
-    flash[:warning] = 'Can not find tweet!'
-    redirect back
-  end
-end
-
-def generateHashtagTweet(content, apitoken)
+def generateHashtagTweet(content)
   content.gsub!(/#\S+/) { |match|
     hashtag_name = match[1..-1]
     @hashtag_list.push(hashtag_name)
-    match = "<a href=" + $prefix + apitoken + "/search/hashtag?query=" + hashtag_name + ">" + match + "</a>"
+    match = "<a href=/search/hashtag?query=" + hashtag_name + ">" + match + "</a>"
   }
   return content
 end
 
-def generateMentionTweet(content, apitoken)
+def generateMentionTweet(content)
   map = Hash.new
   content.gsub(/@\S+/) { |match|
     user_handle = match[1..-1]
@@ -161,7 +147,7 @@ def generateMentionTweet(content, apitoken)
   }
 
   map.keys.each do |match|
-    user_link = "<a href=" + $prefix + apitoken + "/user/" + map[match] + ">" + match + "</a>"
+    user_link = "<a href=/user/" + map[match] + ">" + match + "</a>"
     content.gsub!(match, user_link)
   end
 

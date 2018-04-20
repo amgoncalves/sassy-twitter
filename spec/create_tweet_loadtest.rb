@@ -58,7 +58,6 @@ end
 
 post '/loadtest/tweet/new' do
   @hashtag_list = Array.new
-  @apitoken = "/"
   user_id = rand(100).to_s
 
   # get the current login user
@@ -77,8 +76,8 @@ post '/loadtest/tweet/new' do
   else 
     t[:content] = params[:tweet]
   end
-  t[:content] = generateHashtagTweet(t[:content], @apitoken)
-  t[:content] = generateMentionTweet(t[:content], @apitoken)
+  t[:content] = generateHashtagTweet(t[:content])
+  t[:content] = generateMentionTweet(t[:content])
   tweet = Tweet.new(t)
   if tweet.save
     tweet_id = tweet._id

@@ -1,6 +1,6 @@
-get $prefix + "/:handle/like" do
+get "/like" do
   if !is_authenticated?
-    redirect $prefix + "/"
+    redirect "/"
   end
 
   # update corresponding tweet
@@ -17,15 +17,13 @@ get $prefix + "/:handle/like" do
     cur_user.like(tweet_id)
     save_user_to_redis(cur_user)
   end
-
-  @apitoken = "/" + params[:handle]
+  
   redirect back
-
 end
 
-get $prefix + "/:handle/unlike" do
-  if is_authenticated? == false || session[:user_id] == nil
-    redirect $prefix + "/"
+get "/unlike" do
+  if !is_authenticated?
+    redirect "/"
   end
   
   # update corresponding tweet
@@ -43,9 +41,5 @@ get $prefix + "/:handle/unlike" do
     save_user_to_redis(cur_user)
   end
 
-  @apitoken = "/" + params[:handle]
   redirect back
-
 end
-
-

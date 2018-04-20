@@ -11,7 +11,7 @@
     <% end %>
 
     <div>
-      <a href=<%= $prefix + @apitoken + "/user/" + @info[:target_user]._id %>>@<%= @info[:target_user].handle %></a>
+      <a href=<%= "/user/" + @info[:target_user]._id %>>@<%= @info[:target_user].handle %></a>
     </div>
 
     <% unless @info[:target_user].profile[:bio].empty? %>
@@ -45,7 +45,7 @@
         <h5>
           <small>TWEETS</small>
           <br>
-          <a href=<%= $prefix + @apitoken + "/user/" + @info[:target_user]._id %>>
+          <a href=<%= "/user/" + @info[:target_user]._id %>>
             <%= @info[:target_user].ntweets %>
           </a>
         </h5>
@@ -55,7 +55,7 @@
         <h5>
           <small>FOLLOWING</small>
           <br>
-          <a id='nfollowing' href=<%= $prefix + @apitoken + "/user/followings/?targeted_id=" + @info[:target_user]._id%>>
+          <a id='nfollowing' href=<%= "/user/followings/?targeted_id=" + @info[:target_user]._id%>>
             <%= @info[:target_user].nfollowings %>
           </a>
         </h5>
@@ -65,14 +65,14 @@
         <h5>
           <small>FOLLOWERS&nbsp;</small>
           <br>
-          <a id='nfollowed' href=<%= $prefix + @apitoken + "/user/followeds/?targeted_id=" + @info[:target_user]._id%>>
+          <a id='nfollowed' href=<%= "/user/followeds/?targeted_id=" + @info[:target_user]._id%>>
             <%= @info[:target_user].nfolloweds %>
           </a>
         </h5>
       </div> <!-- col-xs-5 -->
     </div> <!-- row -->
 
-    <a id="follow-direct" type="hidden" href=<%= $prefix + @apitoken + "/follow" %>>
+    <a id="follow-direct" type="hidden" href=<%= "/follow" %>>
     </a>
     <input id="targeted-id" type="hidden" value="<%= @info[:target_user]._id %>">
     </input>

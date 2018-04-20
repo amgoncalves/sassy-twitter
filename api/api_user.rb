@@ -1,3 +1,4 @@
+# Returns a users
 get "/api/v2/:apitoken/users/:key" do
   user = nil
   if params[:input_type] == "id"
@@ -10,4 +11,9 @@ get "/api/v2/:apitoken/users/:key" do
   else
     error 404, { :error => "User #{:key} not found." }.to_json
   end
+end
+
+# Returns a users most recent tweets
+get "/api/v2/:apitoken/users/:key/tweets" do
+  
 end
