@@ -6,7 +6,6 @@ require 'sinatra/flash'
 require 'erb'
 require 'time'
 require 'csv'
-require 'byebug'
 require_relative '../models/user'
 require_relative '../models/tweet'
 require_relative '../models/reply'
@@ -15,29 +14,6 @@ require_relative '../models/reply'
 get '/test' do
   # Mongoid::Config.connect_to('nanotwitter-loadtest')
   erb :test_interface, :locals => { :title => 'Test Interface' }
-end
-
-# get the user page for test user
-get '/user/testuser/' do
-
-	targeted_id = xxx;
-
-  query_res = User.where(_id: targeted_id)
-  target_exist = query_res.exists?
-
-  if target_exist
-    # login_user = get_user_from_redis
-
-    target_user = query_res.first
-    isfollowing = login_user.follow?(target_user)
-    target_tweets = Array.new
-
-    if target_user.ntweets > 0
-      target_tweets = Tweet.in(_id: target_user[:tweets])
-      target_tweets = target_tweets.reverse
-    end
-	end
-
 end
 
 # delete everything and recreate test uesr
@@ -70,7 +46,7 @@ post '/test/reset/all' do
     profile: profile)
   # store TestUser in session
   session[:testuser] = user
-  $redis.set("testuser", user.to_json)
+  $redis.set("testuser", user._id.to_s)
 
   erb "All reset", :locals => { :title => 'Test Status' }
 end
@@ -120,7 +96,7 @@ post '/test/reset/testuser' do
     profile: profile)
   # renew TestUser in session
   session[:testuser] = user
-  $redis.set("testuser", user.to_json)
+  $redis.set("testuser", user._id.to_s)
 
 end
 
@@ -196,7 +172,7 @@ post '/test/reset/standard' do
     password: "password",
     profile: profile)
   session[:testuser] = user
-  $redis.set("testuser", user.to_json)
+  $redis.set("testuser", user._id.to_s)
 
   # if session[:map] == nil
   #   session[:map] = Hash.new
@@ -410,11 +386,15 @@ post "/test/user/:user/follow" do
     if User.count < 2
       erb "Run post '/test/reset/standard' first!", :locals => { :title => 'Test Interface' }
     else
-      users = User.all
+      users = (1..1000).to_a
+      if params[:user] != "testuser"
+        users.delete(params[:user].to_i)
+      end
   
-      users.sample(n).each do |follower_user|
-        user.toggle_followed(follower_user._id)
-        follower_user.toggle_following(user._id)
+      users.sample(n).each do |user_id|
+        tmp_user = User.where(id: user_id.to_s).first
+        user.toggle_followed(tmp_user._id)
+        tmp_user.toggle_following(user._id)
       end
       # show the result
       erb "For user<br>
