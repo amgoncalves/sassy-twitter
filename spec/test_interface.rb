@@ -6,6 +6,7 @@ require 'sinatra/flash'
 require 'erb'
 require 'time'
 require 'csv'
+require 'byebug'
 require_relative '../models/user'
 require_relative '../models/tweet'
 require_relative '../models/reply'
@@ -46,7 +47,7 @@ post '/test/reset/all' do
     profile: profile)
   # store TestUser in session
   session[:testuser] = user
-  $redis.set("testuser", user._id.to_s)
+  $redis.set("testuser", user.to_json)
 
   erb "All reset", :locals => { :title => 'Test Status' }
 end
@@ -96,7 +97,7 @@ post '/test/reset/testuser' do
     profile: profile)
   # renew TestUser in session
   session[:testuser] = user
-  $redis.set("testuser", user._id.to_s)
+  $redis.set("testuser", user.to_json)
 
 end
 
@@ -172,7 +173,7 @@ post '/test/reset/standard' do
     password: "password",
     profile: profile)
   session[:testuser] = user
-  $redis.set("testuser", user._id.to_s)
+  $redis.set("testuser", user.to_json)
 
   # if session[:map] == nil
   #   session[:map] = Hash.new
@@ -386,15 +387,11 @@ post "/test/user/:user/follow" do
     if User.count < 2
       erb "Run post '/test/reset/standard' first!", :locals => { :title => 'Test Interface' }
     else
-      users = (1..1000).to_a
-      if params[:user] != "testuser"
-        users.delete(params[:user].to_i)
-      end
+      users = User.all
   
-      users.sample(n).each do |user_id|
-        tmp_user = User.where(id: user_id.to_s).first
-        user.toggle_followed(tmp_user._id)
-        tmp_user.toggle_following(user._id)
+      users.sample(n).each do |follower_user|
+        user.toggle_followed(follower_user._id)
+        follower_user.toggle_following(user._id)
       end
       # show the result
       erb "For user<br>
