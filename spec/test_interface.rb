@@ -46,6 +46,7 @@ post '/test/reset/all' do
     profile: profile)
   # store TestUser in session
   session[:testuser] = user
+  $redis.set("testuser", user._id.to_s)
 
   erb "All reset", :locals => { :title => 'Test Status' }
 end
@@ -95,6 +96,7 @@ post '/test/reset/testuser' do
     profile: profile)
   # renew TestUser in session
   session[:testuser] = user
+  $redis.set("testuser", user._id.to_s)
 
 end
 
@@ -170,6 +172,7 @@ post '/test/reset/standard' do
     password: "password",
     profile: profile)
   session[:testuser] = user
+  $redis.set("testuser", user._id.to_s)
 
   # if session[:map] == nil
   #   session[:map] = Hash.new
