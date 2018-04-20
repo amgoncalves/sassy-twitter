@@ -211,6 +211,7 @@ post "/test/user/:user/tweets" do
   user = nil
   tweets_count = 0
   # botain user from database
+  # TODO: store the testuser with id of testuser into db too
   if params[:user] == "testuser"
     user = session[:testuser]
   elsif User.where(_id: params[:user]).exists?
