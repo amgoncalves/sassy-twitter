@@ -18,7 +18,7 @@ Users who register for an account can broadcast short 280-character messages to 
 
 This application is optimized to scale with the load of user activity.  Caching, multi-threading, and a lightweight NoSQL database with in-memory data caching are employed to manage scalability problems.
 
-nanoTwitter has a REST API that can be utilized with the [nanoTwitter Client Library](https://github.com/amgoncalves/nt-client).
+nanoTwitter has a REST API that can be utilized with the [nanoTwitter Client Library](https://github.com/amgoncalves/nt-client) for client applications written in Ruby.
 
 ## Technology
 

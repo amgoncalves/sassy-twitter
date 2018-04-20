@@ -1,4 +1,4 @@
-#require 'byebug'
+require 'byebug'
 require 'json'
 require 'mongoid'
 require 'mongo'
@@ -43,6 +43,7 @@ require_relative './spec/reply_loadtest.rb'
 require_relative './spec/load_test_search.rb'
 require_relative './helper/user_related.rb'
 require_relative './api/api_user.rb'
+require_relative './api/api_tweet.rb'
 
 enable :sessions
 
@@ -56,6 +57,9 @@ end
 configure :production do
   require 'newrelic_rpm'
 end
+
+# Sets level for Mongo messages.  Set to DEBUG to see all messages.
+Mongo::Logger.logger.level = Logger::FATAL
 
 # sets root as the parent-directory of the current file
 set :root, File.join(File.dirname(__FILE__), '')
@@ -86,10 +90,10 @@ get "#{$prefix}/:apitoken/", "#{$prefix}/", "/" do
     @targeted_user = @cur_user
     @targeted_id = @targeted_user._id
 
-		@info = Hash.new
-		@info[:login_user] = @cur_user
-		@info[:target_user] = @targeted_user
-		@info[:target_tweets] = @tweets
+    @info = Hash.new
+    @info[:login_user] = @cur_user
+    @info[:target_user] = @targeted_user
+    @info[:target_tweets] = @tweets
 
     @apitoken = "/" + @cur_user[:APItoken]
   else
@@ -108,7 +112,7 @@ get '/reset/all' do
   # delete everything in redis
   $redis.flushall
   # clean session and cookie
-	Sidekiq::Queue.new.clear
+  Sidekiq::Queue.new.clear
   session.clear
   cookies.clear
 end
