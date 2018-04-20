@@ -13,23 +13,23 @@
     
     <h4 class="media-heading">
       <% author_id = @t["author_id"] %>
-      <a href=<%= $prefix + @apitoken + "/user/" +  author_id %>> @<%= @t["author_handle"] %> </a> 
+      <a href=<%= "/user/" +  author_id %>> @<%= @t["author_handle"] %> </a> 
     </h4>
 
     <p><%= @t["content"] %></p>
     <% if @t["original_tweet_id"] != nil %>
-    <a href=<%= $prefix + @apitoken + "/tweet/" + @t["original_tweet_id"] %>>See original tweet</a>
+    <a href=<%= "/tweet/" + @t["original_tweet_id"] %>>See original tweet</a>
     <% end %>
     
     <ul class="nav nav-pills nav-pills-custom">
       <% if is_authenticated? && author_id != @info[:login_user]._id %>
-        <li><a href=<%= $prefix + @apitoken + "/reply?tweet_id=" + @t['_id'] %> title="reply"><span class="glyphicon glyphicon-share-alt"></span></a></li>
-        <li><a href=<%= $prefix + @apitoken + "/retweet?tweet_id=" + @t['_id'] %> title="retweet"><span class="glyphicon glyphicon-retweet"></span></a></li>
+        <li><a href=<%= "/reply?tweet_id=" + @t['_id'] %> title="reply"><span class="glyphicon glyphicon-share-alt"></span></a></li>
+        <li><a href=<%= "/retweet?tweet_id=" + @t['_id'] %> title="retweet"><span class="glyphicon glyphicon-retweet"></span></a></li>
         <li>
           <% if @info[:login_user].like?(@t._id.to_s) %>
-            <a href=<%= $prefix + @apitoken + "/unlike?tweet_id=" + @t['_id'] %> title="unlike"><span class="glyphicon glyphicon-star" style="color:red"></span></a>
+            <a href=<%= "/unlike?tweet_id=" + @t['_id'] %> title="unlike"><span class="glyphicon glyphicon-star" style="color:red"></span></a>
           <% else %>
-            <a href=<%= $prefix + @apitoken + "/like?tweet_id=" + @t['_id'] %> title="like"><span class="glyphicon glyphicon-star"></span></a>
+            <a href=<%= "/like?tweet_id=" + @t['_id'] %> title="like"><span class="glyphicon glyphicon-star"></span></a>
           <% end %>
         </li>
       <% else %>
@@ -37,7 +37,7 @@
         <li><a name="#"><span class="glyphicon glyphicon-retweet" style="color:grey"></span></a></li>
         <li><a name="#"><span class="glyphicon glyphicon-star" style="color:grey"></span></a></li>
       <% end %>
-      <li><a href=<%= $prefix + @apitoken + "/tweet/" + @t['_id'] %> title="tweet detail"><span class="glyphicon glyphicon-option-horizontal"></span></a></li>
+      <li><a href=<%= "/tweet/" + @t['_id'] %> title="tweet detail"><span class="glyphicon glyphicon-option-horizontal"></span></a></li>
     </ul>
   </div>
 </div>

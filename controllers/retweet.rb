@@ -1,18 +1,17 @@
-post $prefix + "/:handle/retweet" do
+post "/retweet" do
   if !is_authenticated?
-    redirect $prefix + "/"
+    redirect "/"
   end
   
   @hashtag_list = Array.new
-  @apitoken = "/" + params[:handle]
 
   # create retweet tweet
   author_id = session[:user_id]
   # author_handle = get_user_from_session.handle
   author_handle = get_user_from_redis.handle
   original_tweet_id = BSON::ObjectId.from_string(params[:tweet_id])
-  content = generateHashtagTweet(params[:retweet][:content], @apitoken)
-  content = generateMentionTweet(params[:retweet][:content], @apitoken)
+  content = generateHashtagTweet(params[:retweet][:content])
+  content = generateMentionTweet(params[:retweet][:content])
   retweet = Tweet.new(author_id: author_id, original_tweet_id: original_tweet_id, author_handle: author_handle, content: content)
 
   if retweet.save
@@ -48,19 +47,17 @@ post $prefix + "/:handle/retweet" do
       end
     end
     
-    redirect $prefix + @apitoken + "/tweet/#{retweet._id}"
+    redirect "/tweet/#{retweet._id}"
   else
     flash[:warning] = 'Create tweet failed'
   end
 end
 
-get $prefix + "/:handle/retweet" do
-  if is_authenticated? == false || session[:user_id] == nil
-    redirect $prefix + "/"
+get "/retweet" do
+  if !is_authenticated?
+    redirect "/"
   end
-
   @t = Tweet.find(params[:tweet_id])
-  @apitoken = "/" + params[:handle]
   @cur_user = get_user_from_redis
   erb :retweet, :locals => { :title => 'Retweet' }
 end

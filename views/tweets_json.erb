@@ -1,14 +1,6 @@
 <% @tweets.each do |tweet| %>
 <% @t = JSON.parse(tweet) %>
 
-<%# <% if @info and @info[:target_user] %1> %>
-<%# 	<div class="miniprofile-container"> %>
-<%# 		<div class="miniprofile"> %>
-<%# 			<%= erb :miniprofile, :locals=>{:f=>@info[:target_user]} %1> %>
-<%# 		</div> %>
-<%# 	</div> %>
-<%# <% end %1> %>
-
 <div class="media">
   
   <a class="media-left" href="#fake">
@@ -23,33 +15,27 @@
     
     <h4 class="media-heading">
       <% author_id = @t["author_id"]["$oid"] %>
-      <% if @apitoken == nil %>
-        <% @apitoken = "" %>
-        @<%= @t["author_handle"] %>
-      <% elsif is_authenticated? == false %>
-        @<%= @t["author_handle"] %>
+      <% if is_authenticated? %>
+        <a href=<%= "/user/" +  author_id %>> @<%= @t["author_handle"] %> </a>      
       <% else %>
-        <% if @apitoken == nil %>
-          <% @apitoken = "" %>
-        <% end %>
-        <a href=<%= $prefix + @apitoken + "/user/" +  author_id %>> @<%= @t["author_handle"] %> </a>
+        @<%= @t["author_handle"] %>      
       <% end %> 
     </h4>
 
     <p><%= @t["content"] %></p>
     <% if @t["original_tweet_id"] != nil %>
-    <a href=<%= $prefix + @apitoken + "/tweet/" + @t["original_tweet_id"]["$oid"] %>>See original tweet</a>
+    <a href=<%= "/tweet/" + @t["original_tweet_id"]["$oid"] %>>See original tweet</a>
     <% end %>
     
     <ul class="nav nav-pills nav-pills-custom">
       <% if is_authenticated? && author_id != @cur_user._id.to_s %>
-        <li><a href=<%= $prefix + @apitoken + "/reply?tweet_id=" + @t['_id']["$oid"] %> title="reply"><span class="glyphicon glyphicon-share-alt"></span></a></li>
-        <li><a href=<%= $prefix + @apitoken + "/retweet?tweet_id=" + @t['_id']["$oid"] %> title="retweet"><span class="glyphicon glyphicon-retweet"></span></a></li>
+        <li><a href=<%= "/reply?tweet_id=" + @t['_id']["$oid"] %> title="reply"><span class="glyphicon glyphicon-share-alt"></span></a></li>
+        <li><a href=<%= "/retweet?tweet_id=" + @t['_id']["$oid"] %> title="retweet"><span class="glyphicon glyphicon-retweet"></span></a></li>
         <li>
           <% if @cur_user.like?(@t["_id"]["$oid"].to_s) %>
-            <a href=<%= $prefix + @apitoken + "/unlike?tweet_id=" + @t['_id']["$oid"] %> title="unlike"><span class="glyphicon glyphicon-star" style="color:red"></span></a>
+            <a href=<%= "/unlike?tweet_id=" + @t['_id']["$oid"] %> title="unlike"><span class="glyphicon glyphicon-star" style="color:red"></span></a>
           <% else %>
-            <a href=<%= $prefix + @apitoken + "/like?tweet_id=" + @t['_id']["$oid"] %> title="like"><span class="glyphicon glyphicon-star"></span></a>
+            <a href=<%= "/like?tweet_id=" + @t['_id']["$oid"] %> title="like"><span class="glyphicon glyphicon-star"></span></a>
           <% end %>
         </li>
       <% else %>
@@ -57,7 +43,7 @@
         <li><a name="#"><span class="glyphicon glyphicon-retweet" style="color:grey"></span></a></li>
         <li><a name="#"><span class="glyphicon glyphicon-star" style="color:grey"></span></a></li>
       <% end %>
-      <li><a href=<%= $prefix + @apitoken + "/tweet/" + @t['_id']["$oid"] %> title="tweet detail"><span class="glyphicon glyphicon-option-horizontal"></span></a></li>
+      <li><a href=<%= "/tweet/" + @t['_id']["$oid"] %> title="tweet detail"><span class="glyphicon glyphicon-option-horizontal"></span></a></li>
     </ul>
   </div>
 </div>

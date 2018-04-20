@@ -1,6 +1,6 @@
-post $prefix + "/:apitoken/follow" do
+post "/follow" do
   if !is_authenticated?
-    redirect $prefix + "/"
+    redirect "/"
   end
   
   target_id = BSON::ObjectId.from_string(params[:targeted_id])
