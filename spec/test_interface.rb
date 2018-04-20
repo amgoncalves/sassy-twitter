@@ -12,26 +12,47 @@ require_relative '../models/reply'
 
 # get the test home page for all test interface
 get '/test' do
-  Mongoid::Config.connect_to('nanotwitter-loadtest')
+  # Mongoid::Config.connect_to('nanotwitter-loadtest')
   erb :test_interface, :locals => { :title => 'Test Interface' }
 end
 
 # delete everything and recreate test uesr
 post '/test/reset/all' do
-  Mongoid::Config.connect_to('nanotwitter-loadtest')
+  # Mongoid::Config.connect_to('nanotwitter-loadtest')
   # delete everything
+  # delete db
   Mongoid.purge!
+  # delete redis
+  $redis.flushall
+  # clean session and cookie
+  Sidekiq::Queue.new.clear
+  session.clear
+  cookies.clear
+
   #create test user
-  user = User.create(handle: "testuser", 
+  today = Date.today.strftime("%B %Y")
+  profile_hash = {
+    :bio => "",
+    :dob => "",
+    :date_joined => today,
+    :location => "",
+    :name => ""
+  }
+  profile = Profile.new(profile_hash)
+  user = User.create(
+    handle: "testuser", 
     email: "testuser@sample.com", 
-    password: "password")
+    password: "password",
+    profile: profile)
   # store TestUser in session
   session[:testuser] = user
+
+  erb "All reset", :locals => { :title => 'Test Status' }
 end
 
 # delete and recreate TestUser
 post '/test/reset/testuser' do
-  Mongoid::Config.connect_to('nanotwitter-loadtest')
+  # Mongoid::Config.connect_to('nanotwitter-loadtest')
   user = session[:testuser]
   # remove the following relationship of followed users
   user.followed.each do |followed_id|
@@ -57,9 +78,21 @@ post '/test/reset/testuser' do
   User.where(_id: user._id).delete
 
   # recreate new TestUser
-  user = User.create(handle: "testuser", 
+  #create test user
+  today = Date.today.strftime("%B %Y")
+  profile_hash = {
+    :bio => "",
+    :dob => "",
+    :date_joined => today,
+    :location => "",
+    :name => ""
+  }
+  profile = Profile.new(profile_hash)
+  user = User.create(
+    handle: "testuser", 
     email: "testuser@sample.com", 
-    password: "password")
+    password: "password",
+    profile: profile)
   # renew TestUser in session
   session[:testuser] = user
 
@@ -67,7 +100,7 @@ end
 
 # One page “report” of collections status
 get '/test/status' do
-  Mongoid::Config.connect_to('nanotwitter-loadtest')
+  # Mongoid::Config.connect_to('nanotwitter-loadtest')
   # How many users and follows
   user_num = 0
   follow_num = 0
@@ -75,7 +108,7 @@ get '/test/status' do
     user_num = User.count
     # extract follow relationship from each user
     User.each do |user|
-      follow_num += user.following.length
+      follow_num += user.nfollowings
     end
   end
   # How many tweets
@@ -84,16 +117,25 @@ get '/test/status' do
     tweet_num = Tweet.count
   end
 
+  if session[:testuser] != nil
+    testuser_id = session[:testuser]._id.to_s
+  elsif User.where(handle: "testuser").exists?
+    testuser_id = User.where(handle: "testuser").first._id.to_s
+  else
+    testuser_id = "There not exists testuser!"
+  end
+
   erb "User Number: #{user_num} <br>
         Follow Number: #{follow_num} <br>
-        Tweet Number: #{tweet_num}",
-        :locals => { :title => 'Test Interface' }
+        Tweet Number: #{tweet_num} <br><br>
+        Testuser id: #{testuser_id}",
+        :locals => { :title => 'Test Status' }
 end
 
 # display version number of this build
 get '/test/version' do
-  Mongoid::Config.connect_to('nanotwitter-loadtest')
-  erb "version: 0.5", :locals => { :title => 'Test Interface' }
+  # Mongoid::Config.connect_to('nanotwitter-loadtest')
+  erb "version: 1.0", :locals => { :title => 'Test Version' }
 end
 
 # reset the database by deleting all users, tweets and follows
@@ -101,20 +143,37 @@ end
 # load n tweets from seed data if tweets parameter exists
 # otherwise load all tweets from seed data
 post '/test/reset/standard' do
-  Mongoid::Config.connect_to('nanotwitter-loadtest')
+  # Mongoid::Config.connect_to('nanotwitter-loadtest')
   starttime = Time.now
 
-  # reset database and delete everything
+  # clean all data storage and state
   Mongoid.purge!
+  $redis.flushall
+  Sidekiq::Queue.new.clear
+  session.clear
+  cookies.clear
+
   # Recreate TestUser
-  user = User.create(handle: "testuser", 
+  #create test user
+  today = Date.today.strftime("%B %Y")
+  profile_hash = {
+    :bio => "",
+    :dob => "",
+    :date_joined => today,
+    :location => "",
+    :name => ""
+  }
+  profile = Profile.new(profile_hash)
+  user = User.create(
+    handle: "testuser", 
     email: "testuser@sample.com", 
-    password: "password")
+    password: "password",
+    profile: profile)
   session[:testuser] = user
 
-  if session[:map] == nil
-    session[:map] = Hash.new
-  end
+  # if session[:map] == nil
+  #   session[:map] = Hash.new
+  # end
 
   # load all users
   user_text = File.read("seeds/users.csv")
@@ -123,10 +182,21 @@ post '/test/reset/standard' do
     if row.size == 2
       id = row[0]
       handle = row[1]
-      new_user = User.create(id: id,
+      today = Date.today.strftime("%B %Y")
+      seed_profile_hash = {
+        :bio => "",
+        :dob => "",
+        :date_joined => today,
+        :location => "",
+        :name => ""
+      }
+      seed_profile = Profile.new(seed_profile_hash)
+      new_user = User.create(
+        id: id,
         handle: handle,
         email: "#{handle}@sample.com",
-        password: "password")
+        password: "password",
+        profile: seed_profile)
     end
   end
 
@@ -165,28 +235,38 @@ end
 
 # create u (integer) fake Users using faker. Defaults to 1
 post '/test/users/create' do
-  Mongoid::Config.connect_to('nanotwitter-loadtest')
+  # Mongoid::Config.connect_to('nanotwitter-loadtest')
   starttime = Time.now
 
   user_count = 1
   tweets_count = 0
 
   if params[:count] != nil
-    user_count = params[:count] 
+    user_count = params[:count].to_i 
   end
 
   if params[:tweets] != nil
-    tweets_count = params[:tweets] 
+    tweets_count = params[:tweets].to_i 
   end
 
   # for i users, each user create j tweets
   i = 0
-  while i < user_count.to_i do
+  while i < user_count do
+    today = Date.today.strftime("%B %Y")
+    profile_hash = {
+      :bio => "",
+      :dob => "",
+      :date_joined => today,
+      :location => "",
+      :name => ""
+    }
+    profile = Profile.new(profile_hash)
     user = User.create(handle: "testuser#{i}", 
       email: "testuser#{i}@sample.com",
-      password: "password#{i}")
+      password: "password#{i}",
+      profile: profile)
     j = 0
-    while j < tweets_count.to_i do
+    while j < tweets_count do
       tweet = Tweet.create(content: "no.#{j} tweet",
         author_id: user._id)
       user.add_tweet(tweet._id)
@@ -206,14 +286,18 @@ end
 # user u generates t(integer) new fake tweets
 # if u=”testuser” then this refers to the TestUser
 post "/test/user/:user/tweets" do
-  Mongoid::Config.connect_to('nanotwitter-loadtest')
+  # Mongoid::Config.connect_to('nanotwitter-loadtest')
   # initialize variables
   user = nil
   tweets_count = 0
   # botain user from database
   # TODO: store the testuser with id of testuser into db too
   if params[:user] == "testuser"
-    user = session[:testuser]
+    if session[:testuser] != nil
+      user = session[:testuser]
+    else
+      user = User.where(handle: "testuser").first
+    end
   elsif User.where(_id: params[:user]).exists?
     user = User.where(_id: params[:user]).first
   end
@@ -239,9 +323,9 @@ end
 # n (integer) randomly selected users follow 
 # ‘n’ (integer) different randomly seleted users.
 post '/test/user/follow' do
-  Mongoid::Config.connect_to('nanotwitter-loadtest')
+  # Mongoid::Config.connect_to('nanotwitter-loadtest')
   if User.count < 2
-    erb "Run post '/test/reset/standard' first!"
+    erb "Run post '/test/reset/standard' first!", :locals => { :title => 'Test Interface' }
   else
     n = 1 # default 1
     if params[:count] != nil
@@ -273,13 +357,17 @@ end
 # n (integer) randomly selected users follow user u (integer)
 # if u=”testuser” then this refers to the TestUser
 post "/test/user/:user/follow" do
-  Mongoid::Config.connect_to('nanotwitter-loadtest')
+  # Mongoid::Config.connect_to('nanotwitter-loadtest')
   # initialize variables
   user = nil
   n = 0
   # botain user from database
   if params[:user] == "testuser"
-    user = session[:testuser]
+    if session[:testuser] != nil
+      user = session[:testuser]
+    else
+      user = User.where(handle: "testuser").first
+    end
   elsif User.where(_id: params[:user]).exists?
     user = User.where(_id: params[:user]).first
   end
@@ -287,6 +375,7 @@ post "/test/user/:user/follow" do
   if params[:count] != nil
     n = params[:count].to_i
   end
+
   # select n randomly users to follow user u
   if user != nil
     # select n randomly followeds of this user
@@ -296,7 +385,7 @@ post "/test/user/:user/follow" do
     else
       users = (1..1000).to_a
       if params[:user] != "testuser"
-        users.delete(params[:users].to_i)
+        users.delete(params[:user].to_i)
       end
   
       users.sample(n).each do |user_id|
@@ -307,7 +396,7 @@ post "/test/user/:user/follow" do
       # show the result
       erb "For user<br>
         handle: #{user.handle}<br>
-        #{user.followed.to_a.to_s}"
+        #{user.followeds.to_a.to_s}", :locals => { :title => 'Test Interface' }
     end
   else
     erb "User #{params[:user]} doen't exist in database", :locals => { :title => 'Test Interface' }
