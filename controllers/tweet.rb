@@ -141,6 +141,76 @@ get $prefix + "/:handle/tweet/:tweet_id" do
   end
 end
 
+post '/user/testuser/tweet' do
+  @hashtag_list = Array.new
+  @apitoken = "/"
+
+  if $redis.exists("testuser")
+    user_hash = JSON.parse($redis.get("testuser"))
+    profile_hash = user_hash["profile"]
+    profile = Profile.new(profile_hash)
+    user_hash["profile"] = profile
+    redis_login_user = User.new(user_hash)
+  else
+    redis_login_user = User.where(handle: "testuser").first._id.to_s
+  end
+
+  t = Hash.new
+  t[:author_id] = redis_login_user._id
+  t[:author_handle] = "testuser"
+  if params[:tweet] == nil
+    t[:content] = "test tweet by testuser"
+  else 
+    t[:content] = params[:tweet]
+  end
+  t[:content] = generateHashtagTweet(t[:content], @apitoken)
+  t[:content] = generateMentionTweet(t[:content], @apitoken)
+  tweet = Tweet.new(t)
+  if tweet.save
+    tweet_id = tweet._id
+    login_user_id = redis_login_user._id
+
+    # update db
+    db_login_user = User.where(_id: login_user_id).first
+    db_login_user.add_tweet(tweet_id)
+    
+    # update redis
+    redis_login_user.add_tweet(tweet_id)
+    save_user_to_redis(redis_login_user)
+
+    # spread this tweet to all followers
+    followers = db_login_user.followeds
+    followers.each do |follower|
+      $redis.rpush(follower.to_s, tweet_id)
+      if $redis.llen(follower.to_s) > 50
+        $redis.rpop(follower.to_s)
+      end
+    end
+
+    # save this tweet in global timeline
+    $redis.rpush($globalTL, tweet.to_json)
+    if $redis.llen($globalTL) > 50
+      $redis.rpop($globalTL)
+    end
+
+    # store the hashtag
+    @hashtag_list.each do |hashtag_name| 
+      if Hashtag.exists? && Hashtag.where(hashtag_name: hashtag_name).exists?
+        hashtag = Hashtag.where(hashtag_name: hashtag_name).first
+        hashtag.add_tweet(tweet_id) 
+      else
+        tweets = Set.new
+        tweets.add(tweet_id)
+        Hashtag.where(hashtag_name: hashtag_name, tweets: tweets).create
+      end
+    end
+    # erb :alltweets, :locals => { :title => 'all tweets' }
+  else
+    flash[:warning] = 'Create tweet failed'
+    # redirect back
+  end
+end
+
 def generateHashtagTweet(content, apitoken)
   content.gsub!(/#\S+/) { |match|
     hashtag_name = match[1..-1]
