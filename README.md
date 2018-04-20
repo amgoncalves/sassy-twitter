@@ -18,6 +18,8 @@ Users who register for an account can broadcast short 280-character messages to 
 
 This application is optimized to scale with the load of user activity.  Caching, multi-threading, and a lightweight NoSQL database with in-memory data caching are employed to manage scalability problems.
 
+nanoTwitter has a REST API that can be utilized with the [nanoTwitter Client Library](https://github.com/amgoncalves/nt-client).
+
 ## Technology
 
 nanoTwitter is written in [Sinatra](http://sinatrarb.com/) and runs on the [JRuby](http://jruby.org/) engine.  [Git](https://git-scm.com/) and [Github](https://github.com/amgoncalves/sassy-twitter) are used for version control.  The application is hosted on a [Heroku](https://www.heroku.com/) server at [https://sassy-nanotwitter.herokuapp.com/](https://sassy-nanotwitter.herokuapp.com/).  [Codeship](https://codeship.com/) is used to automate testing and deployment from Github.
