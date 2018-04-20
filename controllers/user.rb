@@ -1,6 +1,6 @@
-get $prefix + "/:apitoken/user/:targeted_id" do
+get "/user/:targeted_id" do
   if !is_authenticated?
-    redirect $prefix + "/"
+    redirect "/"
   end
   
   targeted_id = BSON::ObjectId.from_string(params[:targeted_id])
@@ -26,7 +26,6 @@ get $prefix + "/:apitoken/user/:targeted_id" do
     @tweets = @info[:target_tweets]
     set_user_globals
 
-    @apitoken = "/" + login_user.APItoken
     erb :user, :locals => { :title => "#{target_user.handle}" }
   end
 end

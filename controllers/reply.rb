@@ -1,17 +1,16 @@
-post $prefix + "/:handle/reply" do
+post "/reply" do
   if !is_authenticated?
-    redirect $prefix + "/"
+    redirect "/"
   end
 
   @hashtag_list = Array.new
-  @apitoken = "/" + params[:handle]
 
   # create reply
   params[:reply][:tweet_id] = params[:tweet_id]
   params[:reply][:replier_id] = session[:user_id]
   params[:reply][:replier_handle] = get_user_from_redis[:handle]
-  params[:reply][:content] = generateHashtagTweet(params[:reply][:content], @apitoken)
-  params[:reply][:content] = generateMentionTweet(params[:reply][:content], @apitoken)
+  params[:reply][:content] = generateHashtagTweet(params[:reply][:content])
+  params[:reply][:content] = generateMentionTweet(params[:reply][:content])
   reply = Reply.new(params[:reply])
 
   if reply.save
@@ -34,7 +33,7 @@ post $prefix + "/:handle/reply" do
       end
     end
     
-    redirect $prefix + @apitoken + "/tweet/#{tweet_id}"
+    redirect "/tweet/#{tweet_id}"
     
   else 
     puts "save failed"
@@ -42,14 +41,11 @@ post $prefix + "/:handle/reply" do
   end
 end
 
-get $prefix + "/:handle/reply" do
-  if is_authenticated? == false || session[:user_id] == nil
-    redirect $prefix + "/"
+get "/reply" do
+  if !is_authenticated?
+    redirect "/"
   end
-  
   @t = Tweet.find(params[:tweet_id])
-  @apitoken = "/" + params[:handle]
   @cur_user = get_user_from_redis
   erb :reply, :locals => { :title => 'Reply' }
 end
-
