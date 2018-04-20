@@ -16,6 +16,29 @@ get '/test' do
   erb :test_interface, :locals => { :title => 'Test Interface' }
 end
 
+# get the user page for test user
+get '/user/testuser/' do
+
+	targeted_id = xxx;
+
+  query_res = User.where(_id: targeted_id)
+  target_exist = query_res.exists?
+
+  if target_exist
+    # login_user = get_user_from_redis
+
+    target_user = query_res.first
+    isfollowing = login_user.follow?(target_user)
+    target_tweets = Array.new
+
+    if target_user.ntweets > 0
+      target_tweets = Tweet.in(_id: target_user[:tweets])
+      target_tweets = target_tweets.reverse
+    end
+	end
+
+end
+
 # delete everything and recreate test uesr
 post '/test/reset/all' do
   # Mongoid::Config.connect_to('nanotwitter-loadtest')
