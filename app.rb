@@ -1,8 +1,10 @@
-# require 'byebug'
+#require 'byebug'
+require 'json'
 require 'mongoid'
 require 'mongo'
 require 'sinatra'
 require 'sinatra/cookies'
+require 'sinatra/json'
 require 'sinatra/flash'
 require 'sinatra/multi_route'
 require 'redis'
@@ -38,6 +40,7 @@ require_relative './spec/demo_redis.rb'
 require_relative './spec/reply_loadtest.rb'
 require_relative './spec/load_test_search.rb'
 require_relative './helper/user_related.rb'
+require_relative './api/api_user.rb'
 
 enable :sessions
 
@@ -60,7 +63,7 @@ set :views, Proc.new { File.join(root, "views") }
 set :public_folder, Proc.new { File.join(root, "public") }
 
 get "#{$prefix}/:apitoken/", "#{$prefix}/", "/" do
-  @apitoken = "" 
+  @apitoken = ""
   if is_authenticated?
     if session[:user_id] == nil
       session.clear
