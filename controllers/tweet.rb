@@ -2,12 +2,46 @@ class TweetMongoWorker
   require_relative './user.rb'
   include Sidekiq::Worker
 
-  def perform(login_user_id, tweet_id)
+  def perform(tweet_id, redis_login_user)
+    login_user_id = redis_login_user._id
+
     login_user_id = BSON::ObjectId.from_string(login_user_id)
     user_id = BSON::ObjectId.from_string(tweet_id)
     db_login_user = User.where(_id: login_user_id).first
     db_login_user.add_tweet(tweet_id)
-    db_login_user
+    # db_login_user
+
+    # update redis
+    redis_login_user.add_tweet(tweet_id)
+    save_user_to_redis(redis_login_user)
+
+    # spread this tweet to all followers
+    # followers = db_login_user.followeds
+    followers = redis_login_user.followeds
+    followers.each do |follower|
+      $redis.rpush(follower.to_s, tweet_id)
+      if $redis.llen(follower.to_s) > 50
+        $redis.rpop(follower.to_s)
+      end
+    end
+
+    # save this tweet in global timeline
+    $redis.rpush($globalTL, tweet.to_json)
+    if $redis.llen($globalTL) > 50
+      $redis.rpop($globalTL)
+    end
+
+    # store the hashtag
+    @hashtag_list.each do |hashtag_name| 
+      if Hashtag.exists? && Hashtag.where(hashtag_name: hashtag_name).exists?
+        hashtag = Hashtag.where(hashtag_name: hashtag_name).first
+        hashtag.add_tweet(tweet_id) 
+      else
+        tweets = Set.new
+        tweets.add(tweet_id)
+        Hashtag.where(hashtag_name: hashtag_name, tweets: tweets).create
+      end
+    end
   end
 end
 
@@ -154,44 +188,45 @@ post '/user/testuser/tweet' do
   tweet = Tweet.new(t)
   if tweet.save
     tweet_id = tweet._id
-    login_user_id = redis_login_user._id
+    TweetMongoWorker.perform_async(tweet_id)
+    # login_user_id = redis_login_user._id
 
     # update db
     # db_login_user = User.where(_id: login_user_id).first
     # db_login_user.add_tweet(tweet_id)
-    TweetMongoWorker.perform_async(login_user_id.to_s, tweet_id.to_s)
+    # TweetMongoWorker.perform_async(login_user_id.to_s, tweet_id.to_s)
     
     # update redis
-    redis_login_user.add_tweet(tweet_id)
-    save_user_to_redis(redis_login_user)
+  #   redis_login_user.add_tweet(tweet_id)
+  #   save_user_to_redis(redis_login_user)
 
-    # spread this tweet to all followers
-    # followers = db_login_user.followeds
-		followers = redis_login_user.followeds
-    followers.each do |follower|
-      $redis.rpush(follower.to_s, tweet_id)
-      if $redis.llen(follower.to_s) > 50
-        $redis.rpop(follower.to_s)
-      end
-    end
+  #   # spread this tweet to all followers
+  #   # followers = db_login_user.followeds
+		# followers = redis_login_user.followeds
+  #   followers.each do |follower|
+  #     $redis.rpush(follower.to_s, tweet_id)
+  #     if $redis.llen(follower.to_s) > 50
+  #       $redis.rpop(follower.to_s)
+  #     end
+  #   end
 
-    # save this tweet in global timeline
-    $redis.rpush($globalTL, tweet.to_json)
-    if $redis.llen($globalTL) > 50
-      $redis.rpop($globalTL)
-    end
+  #   # save this tweet in global timeline
+  #   $redis.rpush($globalTL, tweet.to_json)
+  #   if $redis.llen($globalTL) > 50
+  #     $redis.rpop($globalTL)
+  #   end
 
-    # store the hashtag
-    @hashtag_list.each do |hashtag_name| 
-      if Hashtag.exists? && Hashtag.where(hashtag_name: hashtag_name).exists?
-        hashtag = Hashtag.where(hashtag_name: hashtag_name).first
-        hashtag.add_tweet(tweet_id) 
-      else
-        tweets = Set.new
-        tweets.add(tweet_id)
-        Hashtag.where(hashtag_name: hashtag_name, tweets: tweets).create
-      end
-    end
+  #   # store the hashtag
+  #   @hashtag_list.each do |hashtag_name| 
+  #     if Hashtag.exists? && Hashtag.where(hashtag_name: hashtag_name).exists?
+  #       hashtag = Hashtag.where(hashtag_name: hashtag_name).first
+  #       hashtag.add_tweet(tweet_id) 
+  #     else
+  #       tweets = Set.new
+  #       tweets.add(tweet_id)
+  #       Hashtag.where(hashtag_name: hashtag_name, tweets: tweets).create
+  #     end
+  #   end
     # erb :alltweets, :locals => { :title => 'all tweets' }
   else
     flash[:warning] = 'Create tweet failed'
