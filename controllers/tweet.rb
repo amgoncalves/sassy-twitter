@@ -148,8 +148,8 @@ post '/user/testuser/tweet' do
   else 
     t[:content] = params[:tweet]
   end
-  t[:content] = generateHashtagTweet(t[:content], @apitoken)
-  t[:content] = generateMentionTweet(t[:content], @apitoken)
+  t[:content] = generateHashtagTweet(t[:content])
+  t[:content] = generateMentionTweet(t[:content])
   tweet = Tweet.new(t)
   if tweet.save
     tweet_id = tweet._id
