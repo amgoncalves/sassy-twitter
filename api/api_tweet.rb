@@ -14,6 +14,8 @@ post "/api/v1/:apitoken/tweets/new" do
   user = get_user("handle", params[:apitoken])
   return nil unless user != nil
 
+  @hashtag_list = Array.new
+  
   # Build Tweet content
   params[:tweet][:author_id] = user._id
   params[:tweet][:author_handle] = user.handle
@@ -47,7 +49,6 @@ post "/api/v1/:apitoken/tweets/new" do
   end
 
   # store the hashtag
-  @hashtag_list = Array.new  
   @hashtag_list.each do |hashtag_name| 
     if Hashtag.exists? && Hashtag.where(hashtag_name: hashtag_name).exists?
       hashtag = Hashtag.where(hashtag_name: hashtag_name).first
