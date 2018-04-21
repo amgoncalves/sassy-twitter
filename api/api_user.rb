@@ -1,4 +1,4 @@
-# Returns a users
+# Returns a user by key.  Key type (handle or id) is specified by param[:input_type].
 get "/api/v1/:apitoken/users/:key" do
   user = get_user(params[:input_type], params[:key])
   if user
