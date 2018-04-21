@@ -11,6 +11,7 @@ require 'redis'
 require 'sidekiq'
 require 'sidekiq/api'
 require 'rack-timeout'
+require 'sinatra/cache'
 #require 'sinatra/sessionshelper'
 require_relative './models/user'
 require_relative './models/userd'
@@ -67,7 +68,7 @@ Mongo::Logger.logger.level = Logger::FATAL
 set :root, File.join(File.dirname(__FILE__), '')
 # sets the view directory correctly
 set :views, Proc.new { File.join(root, "views") }
-
+set :cache_enabled, true
 set :public_folder, Proc.new { File.join(root, "public") }
 
 get "/" do
