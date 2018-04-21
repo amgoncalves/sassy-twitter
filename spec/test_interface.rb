@@ -192,15 +192,15 @@ get '/test/status' do
   if session[:testuser] != nil
     testuser = session[:testuser]
     testuser_id = testuser._id
-  elsif $redis.exists("testuser")
-    user_hash = JSON.parse($redis.get("testuser"))
-    profile_hash = user_hash["profile"]
-    profile = Profile.new(profile_hash)
-    user_hash["profile"] = profile
-    testuser = User.new(user_hash)
-    testuser_id = testuser._id
+  # elsif $redis.exists("testuser")
+  #   user_hash = JSON.parse($redis.get("testuser"))
+  #   profile_hash = user_hash["profile"]
+  #   profile = Profile.new(profile_hash)
+  #   user_hash["profile"] = profile
+  #   testuser = User.new(user_hash)
+  #   testuser_id = testuser._id
   elsif User.where(handle: "testuser").exists?
-    testuser = User.where(handle: "testuser").first._id
+    testuser = User.where(handle: "testuser").first
     testuser_id = testuser._id
   else
     testuser_id = "There not exists testuser!"
