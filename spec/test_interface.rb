@@ -6,9 +6,79 @@ require 'sinatra/flash'
 require 'erb'
 require 'time'
 require 'csv'
+require 'sidekiq'
+require 'sidekiq/api'
+require 'rack-timeout'
 require_relative '../models/user'
 require_relative '../models/tweet'
 require_relative '../models/reply'
+
+class ResetStandard
+
+  def self.perform(params)
+    # Mongoid::Config.connect_to('nanotwitter-loadtest')
+    starttime = Time.now
+  
+    # load all users
+    user_text = File.read("seeds/users.csv")
+    user_csv = CSV.parse(user_text, :headers => false)
+    user_csv.each do |row|
+      if row.size == 2
+        id = row[0]
+        handle = row[1]
+        today = Date.today.strftime("%B %Y")
+        seed_profile_hash = {
+          :bio => "",
+          :dob => "",
+          :date_joined => today,
+          :location => "",
+          :name => ""
+        }
+        seed_profile = Profile.new(seed_profile_hash)
+        new_user = User.create(
+          id: id,
+          handle: handle,
+          email: "#{handle}@sample.com",
+          password: "password",
+          profile: seed_profile)
+      end
+    end
+  
+    # load tweets from seeds
+    n = 100175
+    i = 0
+    if params.has_key?("tweets")
+      n = params[:tweets].to_i
+    end
+  
+    # CSV.foreach('../seeds/tweets.csv') do |row|
+    tweets_text = File.read("seeds/tweets.csv")
+    tweets_csv = CSV.parse(tweets_text, :headers => false)
+    tweets_csv.each do |row|
+      if i >= n then break end
+      if row.size == 3
+        # obtain the author
+        author_id = row[0]
+        author = User.where(_id: author_id).first
+        # create new tweet
+        content = row[1]
+        time_created = Time.parse(row[2])
+        tweet = Tweet.create(author_id: author_id,
+          content: content,
+          time_created: time_created)
+        # add tweet under user
+        author.add_tweet(tweet._id)
+      end
+      i = i + 1
+    end
+  
+    endtime = Time.now
+    puts endtime - starttime
+    # erb "process time: #{endtime - starttime} seconds",
+    # :locals => { :title => 'Test Interface' }
+  end
+end
+
 
 # get the test home page for all test interface
 get '/test' do
@@ -44,9 +114,9 @@ post '/test/reset/all' do
     email: "testuser@sample.com", 
     password: "password",
     profile: profile)
-  # store TestUser in session
+  # store TestUser in session and redis
   session[:testuser] = user
-  $redis.set("testuser", user._id.to_s)
+  $redis.set("testuser", user.to_json)
 
   erb "All reset", :locals => { :title => 'Test Status' }
 end
@@ -96,7 +166,7 @@ post '/test/reset/testuser' do
     profile: profile)
   # renew TestUser in session
   session[:testuser] = user
-  $redis.set("testuser", user._id.to_s)
+  $redis.set("testuser", user.to_json)
 
 end
 
@@ -120,9 +190,18 @@ get '/test/status' do
   end
 
   if session[:testuser] != nil
-    testuser_id = session[:testuser]._id.to_s
+    testuser = session[:testuser]
+    testuser_id = testuser._id
+  elsif $redis.exists("testuser")
+    user_hash = JSON.parse($redis.get("testuser"))
+    profile_hash = user_hash["profile"]
+    profile = Profile.new(profile_hash)
+    user_hash["profile"] = profile
+    testuser = User.new(user_hash)
+    testuser_id = testuser._id
   elsif User.where(handle: "testuser").exists?
-    testuser_id = User.where(handle: "testuser").first._id.to_s
+    testuser = User.where(handle: "testuser").first._id
+    testuser_id = testuser._id
   else
     testuser_id = "There not exists testuser!"
   end
@@ -145,8 +224,6 @@ end
 # load n tweets from seed data if tweets parameter exists
 # otherwise load all tweets from seed data
 post '/test/reset/standard' do
-  # Mongoid::Config.connect_to('nanotwitter-loadtest')
-  starttime = Time.now
 
   # clean all data storage and state
   Mongoid.purge!
@@ -172,68 +249,12 @@ post '/test/reset/standard' do
     password: "password",
     profile: profile)
   session[:testuser] = user
-  $redis.set("testuser", user._id.to_s)
+  $redis.set("testuser", user.to_json)
 
-  # if session[:map] == nil
-  #   session[:map] = Hash.new
-  # end
-
-  # load all users
-  user_text = File.read("seeds/users.csv")
-  user_csv = CSV.parse(user_text, :headers => false)
-  user_csv.each do |row|
-    if row.size == 2
-      id = row[0]
-      handle = row[1]
-      today = Date.today.strftime("%B %Y")
-      seed_profile_hash = {
-        :bio => "",
-        :dob => "",
-        :date_joined => today,
-        :location => "",
-        :name => ""
-      }
-      seed_profile = Profile.new(seed_profile_hash)
-      new_user = User.create(
-        id: id,
-        handle: handle,
-        email: "#{handle}@sample.com",
-        password: "password",
-        profile: seed_profile)
-    end
+  Thread.new do
+    ResetStandard.perform(params)
   end
-
-  # load tweets from seeds
-  n = 100175
-  i = 0
-  if params.has_key?("tweets")
-    n = params[:tweets].to_i
-  end
-
-  # CSV.foreach('../seeds/tweets.csv') do |row|
-  tweets_text = File.read("seeds/tweets.csv")
-  tweets_csv = CSV.parse(tweets_text, :headers => false)
-  tweets_csv.each do |row|
-    if i >= n then break end
-    if row.size == 3
-      # obtain the author
-      author_id = row[0]
-      author = User.where(_id: author_id).first
-      # create new tweet
-      content = row[1]
-      time_created = Time.parse(row[2])
-      tweet = Tweet.create(author_id: author_id,
-        content: content,
-        time_created: time_created)
-      # add tweet under user
-      author.add_tweet(tweet._id)
-    end
-    i = i + 1
-  end
-
-  endtime = Time.now
-  erb "process time: #{endtime - starttime} seconds",
-  :locals => { :title => 'Test Interface' }
+  
 end
 
 # create u (integer) fake Users using faker. Defaults to 1
@@ -252,30 +273,33 @@ post '/test/users/create' do
     tweets_count = params[:tweets].to_i 
   end
 
-  # for i users, each user create j tweets
-  i = 0
-  while i < user_count do
-    today = Date.today.strftime("%B %Y")
-    profile_hash = {
-      :bio => "",
-      :dob => "",
-      :date_joined => today,
-      :location => "",
-      :name => ""
-    }
-    profile = Profile.new(profile_hash)
-    user = User.create(handle: "testuser#{i}", 
-      email: "testuser#{i}@sample.com",
-      password: "password#{i}",
-      profile: profile)
-    j = 0
-    while j < tweets_count do
-      tweet = Tweet.create(content: "no.#{j} tweet",
-        author_id: user._id)
-      user.add_tweet(tweet._id)
-      j = j + 1
+  Thread.new do
+    # for i users, each user create j tweets
+    i = 0
+    while i < user_count do
+      today = Date.today.strftime("%B %Y")
+      profile_hash = {
+        :bio => "",
+        :dob => "",
+        :date_joined => today,
+        :location => "",
+        :name => ""
+      }
+      profile = Profile.new(profile_hash)
+      user = User.create(
+        handle: "testuser#{i}", 
+        email: "testuser#{i}@sample.com",
+        password: "password#{i}",
+        profile: profile)
+      j = 0
+      while j < tweets_count do
+        tweet = Tweet.create(content: "no.#{j} tweet",
+          author_id: user._id)
+        user.add_tweet(tweet._id)
+        j = j + 1
+      end
+      i = i + 1
     end
-    i = i + 1
   end
   endtime = Time.now
 
@@ -298,6 +322,12 @@ post "/test/user/:user/tweets" do
   if params[:user] == "testuser"
     if session[:testuser] != nil
       user = session[:testuser]
+    # elsif $redis.exists("testuser")
+    #   user_hash = JSON.parse($redis.get("testuser"))
+    #   profile_hash = user_hash["profile"]
+    #   profile = Profile.new(profile_hash)
+    #   user_hash["profile"] = profile
+    #   user = User.new(user_hash)
     else
       user = User.where(handle: "testuser").first
     end
@@ -337,15 +367,13 @@ post '/test/user/follow' do
     
     output = ""
 
-    users = (1..1000).to_a
-    users.sample(n).each do |user_id|
-      user = User.where(_id: user_id.to_s).first
-      tmp_users = (1..1000).to_a
-      tmp_users.delete(user_id)
-      tmp_users.sample(n).each do |following_id| 
-        following_user = User.where(_id: following_id.to_s).first
-        user.toggle_following(following_id)
-        following_user.toggle_followed(user_id)
+    users = User.all
+    users.sample(n).each do |user|
+      tmp_users = User.all
+      # tmp_users.delete(user_id)
+      tmp_users.sample(n).each do |following_user| 
+        user.toggle_following(following_user._id)
+        following_user.toggle_followed(user._id)
       end
 
       output += "For user<br>
@@ -368,6 +396,12 @@ post "/test/user/:user/follow" do
   if params[:user] == "testuser"
     if session[:testuser] != nil
       user = session[:testuser]
+    # elsif $redis.exists("testuser")
+    #   user_hash = JSON.parse($redis.get("testuser"))
+    #   profile_hash = user_hash["profile"]
+    #   profile = Profile.new(profile_hash)
+    #   user_hash["profile"] = profile
+    #   user = User.new(user_hash)
     else
       user = User.where(handle: "testuser").first
     end
@@ -386,15 +420,14 @@ post "/test/user/:user/follow" do
     if User.count < 2
       erb "Run post '/test/reset/standard' first!", :locals => { :title => 'Test Interface' }
     else
-      users = (1..1000).to_a
-      if params[:user] != "testuser"
-        users.delete(params[:user].to_i)
-      end
+      users = User.all
+      # if params[:user] != "testuser"
+      #   users.delete(params[:user].to_i)
+      # end
   
-      users.sample(n).each do |user_id|
-        tmp_user = User.where(id: user_id.to_s).first
-        user.toggle_followed(tmp_user._id)
-        tmp_user.toggle_following(user._id)
+      users.sample(n).each do |follower_user|
+        user.toggle_followed(follower_user._id)
+        follower_user.toggle_following(user._id)
       end
       # show the result
       erb "For user<br>
