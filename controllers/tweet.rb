@@ -41,7 +41,8 @@ post "/tweet/new" do
     save_user_to_redis(redis_login_user)
 
     # spread this tweet to all followers
-    followers = db_login_user.followeds
+    # followers = db_login_user.followeds
+		followers = redis_login_user.followeds
     followers.each do |follower|
       $redis.rpush(follower.to_s, tweet_id)
       if $redis.llen(follower.to_s) > 50
@@ -165,7 +166,8 @@ post '/user/testuser/tweet' do
     save_user_to_redis(redis_login_user)
 
     # spread this tweet to all followers
-    followers = db_login_user.followeds
+    # followers = db_login_user.followeds
+		followers = redis_login_user.followeds
     followers.each do |follower|
       $redis.rpush(follower.to_s, tweet_id)
       if $redis.llen(follower.to_s) > 50
