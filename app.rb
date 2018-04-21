@@ -11,7 +11,7 @@ require 'redis'
 require 'sidekiq'
 require 'sidekiq/api'
 require 'rack-timeout'
-# require 'sinatra/cache'
+require 'sinatra/cache'
 #require 'sinatra/sessionshelper'
 require_relative './models/user'
 require_relative './models/userd'
@@ -57,6 +57,13 @@ else
   $redis = Redis.new(url: ENV["REDIS_URL"]) 
 end
 
+configure do
+	register(Sinatra::Cache)
+	set :root, File.dirname(__FILE__)
+	set :cache_enabled, true
+	set :cache_output_dir, Proc.new { File.join(root, 'public', 'cache') }
+end
+
 configure :production do
   require 'newrelic_rpm'
 end
@@ -68,7 +75,6 @@ Mongo::Logger.logger.level = Logger::FATAL
 set :root, File.join(File.dirname(__FILE__), '')
 # sets the view directory correctly
 set :views, Proc.new { File.join(root, "views") }
-# set :cache_enabled, true
 set :public_folder, Proc.new { File.join(root, "public") }
 
 get "/" do
