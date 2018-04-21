@@ -254,6 +254,8 @@ post '/test/reset/standard' do
   Thread.new do
     ResetStandard.perform(params)
   end
+
+  erb "This operation takes about 60 seconds, please wait and check status page <br>", :locals => { :title => 'Test Interface' }
   
 end
 
@@ -423,7 +425,8 @@ post "/test/user/:user/follow" do
         end
       end
       # show the result
-      erb "For user<br>
+      erb " This operation takes about 60 seconds, please wait and check status page <br>
+        For user<br>
         handle: #{user.handle}<br>
         #{user.followeds.to_a.to_s}", :locals => { :title => 'Test Interface' }
     end
