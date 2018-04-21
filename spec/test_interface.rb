@@ -322,12 +322,6 @@ post "/test/user/:user/tweets" do
   if params[:user] == "testuser"
     if session[:testuser] != nil
       user = session[:testuser]
-    # elsif $redis.exists("testuser")
-    #   user_hash = JSON.parse($redis.get("testuser"))
-    #   profile_hash = user_hash["profile"]
-    #   profile = Profile.new(profile_hash)
-    #   user_hash["profile"] = profile
-    #   user = User.new(user_hash)
     else
       user = User.where(handle: "testuser").first
     end
@@ -338,13 +332,16 @@ post "/test/user/:user/tweets" do
   if params[:count] != nil
     tweets_count = params[:count].to_i
   end
+
   # create t tweets for this user
   if user != nil 
-    i = 0
-    while i < tweets_count.to_i do
-      tweet = Tweet.create(content: "no.#{i} fake tweet", author_id: user._id)
-      user.add_tweet(tweet._id)
-      i = i + 1
+    Thread.new do
+      i = 0
+      while i < tweets_count.to_i do
+        tweet = Tweet.create(content: "no.#{i} fake tweet", author_id: user._id)
+        user.add_tweet(tweet._id)
+        i = i + 1
+      end
     end
   else
     erb "User #{params[:user]} doen't exist in database",
@@ -396,12 +393,6 @@ post "/test/user/:user/follow" do
   if params[:user] == "testuser"
     if session[:testuser] != nil
       user = session[:testuser]
-    # elsif $redis.exists("testuser")
-    #   user_hash = JSON.parse($redis.get("testuser"))
-    #   profile_hash = user_hash["profile"]
-    #   profile = Profile.new(profile_hash)
-    #   user_hash["profile"] = profile
-    #   user = User.new(user_hash)
     else
       user = User.where(handle: "testuser").first
     end
@@ -420,14 +411,16 @@ post "/test/user/:user/follow" do
     if User.count < 2
       erb "Run post '/test/reset/standard' first!", :locals => { :title => 'Test Interface' }
     else
-      users = User.all
-      # if params[:user] != "testuser"
-      #   users.delete(params[:user].to_i)
-      # end
-  
-      users.sample(n).each do |follower_user|
-        user.toggle_followed(follower_user._id)
-        follower_user.toggle_following(user._id)
+      Thread.new do
+        users = User.all
+        # if params[:user] != "testuser"
+        #   users.delete(params[:user].to_i)
+        # end
+    
+        users.sample(n).each do |follower_user|
+          user.toggle_followed(follower_user._id)
+          follower_user.toggle_following(user._id)
+        end
       end
       # show the result
       erb "For user<br>
