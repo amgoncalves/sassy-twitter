@@ -65,5 +65,11 @@ get '/user/testuser/' do
       target_tweets = Tweet.in(_id: target_user[:tweets])
       target_tweets = target_tweets.reverse
     end
+    @info[:login_user] = login_user
+    @info[:target_user] = target_user
+    @info[:isfollowing] = isfollowing
+    @info[:target_tweets] = target_tweets
+    @tweets = @info[:target_tweets]
+    erb :user, :locals => { :title => "#{target_user.handle}" }
 	end
 end
