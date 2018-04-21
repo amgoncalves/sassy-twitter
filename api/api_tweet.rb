@@ -1,5 +1,5 @@
-get "/api/v2/:apitoken/tweets/:id" do
-  return get_recent_tweets unless params[:id] != "recent"
+get "/api/v1/:apitoken/tweets/:id" do
+  return build_json_tweets($redis.lrange($globalTL, 0, 50).reverse) unless params[:id] != "recent"
   tweet = Tweet.where(_id: params[:id]).first
   if tweet
     tweet.to_json
@@ -8,13 +8,13 @@ get "/api/v2/:apitoken/tweets/:id" do
   end
 end
 
-def get_recent_tweets
+def build_json_tweets(tweets)
   hash = Hash.new
   count = 1
-  tweets = $redis.lrange($globalTL, 0, 50).reverse
   tweets.each do |tweet|
+    tweet = tweet.to_json unless tweet.class != Tweet    
     hash["#{count}"] = JSON.parse(tweet)
     count += 1
   end
-  hash.to_json
+  hash.to_json  
 end
