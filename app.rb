@@ -10,6 +10,7 @@ require 'sinatra/multi_route'
 require 'redis'
 require 'sidekiq'
 require 'sidekiq/api'
+require 'rack-timeout'
 #require 'sinatra/sessionshelper'
 require_relative './models/user'
 require_relative './models/userd'
@@ -45,6 +46,7 @@ require_relative './helper/user_related.rb'
 require_relative './api/api_user.rb'
 require_relative './api/api_tweet.rb'
 
+use Rack::Timeout, service_timeout: 5, wait_timeout: false
 enable :sessions
 
 if ENV['MONGOID_ENV'] == 'production'

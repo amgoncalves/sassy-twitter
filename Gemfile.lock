@@ -51,6 +51,7 @@ GEM
       rack
     rack-test (0.8.3)
       rack (>= 1.0, < 3)
+    rack-timeout (0.4.2)
     rake (12.3.0)
     redis (4.0.1)
     rest-client (2.0.2)
@@ -101,6 +102,7 @@ DEPENDENCIES
   newrelic_rpm
   puma
   rack-minitest
+  rack-timeout
   rake
   redis
   rest-client
