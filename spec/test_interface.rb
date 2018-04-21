@@ -423,6 +423,8 @@ post "/test/user/:user/follow" do
           user.toggle_followed(follower_user._id)
           follower_user.toggle_following(user._id)
         end
+
+        $redis.set("testuser", user.to_json)
       end
       # show the result
       erb " This operation takes about 60 seconds, please wait and check status page <br>
