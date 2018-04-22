@@ -26,7 +26,7 @@ get "/user/:targeted_id" do
     @tweets = @info[:target_tweets]
     set_user_globals
 
-    erb :user, :locals => { :title => "#{target_user.handle}" }
+    erb :user
   end
 end
 
@@ -34,7 +34,7 @@ end
 get '/users' do
   authenticate!
   @users = User.all
-  erb :users, :locals => { :title => 'All Users' }
+  erb :users
 end
 
 # get the user page for test user
@@ -70,6 +70,6 @@ get '/user/testuser/' do
     # @info[:isfollowing] = isfollowing
     # @info[:target_tweets] = target_tweets
     # @tweets = @info[:target_tweets]
-    # erb :user, :locals => { :title => "#{target_user.handle}" }
+    # erb :user
 	end
 end

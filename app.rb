@@ -105,7 +105,7 @@ get "/" do
   else
     @tweets = $redis.lrange($globalTL, 0, 50).reverse
   end
-  erb :index, :locals => { :title => 'Welcome!' }
+  erb :index
 end
 
 get '/reset/redis' do

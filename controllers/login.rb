@@ -3,7 +3,7 @@ get '/login/?' do
     flash[:notice] = 'You are already logged in.'
     redirect "/"
   end
-  erb :login, :locals => { :title => 'Login' }
+  erb :login
 end
 
 post '/login/?' do

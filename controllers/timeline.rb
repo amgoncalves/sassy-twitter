@@ -28,5 +28,5 @@ get "/timeline" do
     @info[:target_user] = @targeted_user
     
   end
-  erb :timeline, :locals => { :title => 'Home Timeline!' }
+  erb :timeline
 end
