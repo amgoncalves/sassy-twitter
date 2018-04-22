@@ -1,5 +1,3 @@
-require 'byebug'
-
 # Gets a single tweet if one exists with an id = params[:id]
 # To get most recent tweets, set params[:id] = "recent"
 get "/api/v1/:apitoken/tweets/:id" do
