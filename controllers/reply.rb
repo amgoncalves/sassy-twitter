@@ -12,7 +12,7 @@ post "/reply" do
   params[:reply][:content] = generateHashtagTweet(params[:reply][:content])
   params[:reply][:content] = generateMentionTweet(params[:reply][:content])
   reply = Reply.new(params[:reply])
-  byebug
+
   if reply.save
     # update corresponding tweet
     tweet_id = params[:tweet_id]
