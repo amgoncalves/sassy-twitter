@@ -76,7 +76,7 @@ end
 
 get '/tweets' do
   @tweets = Tweet.all
-  erb :tweets, :locals => { :title => 'Tweets' }
+  erb :tweets
 end
 
 get "/tweet/:tweet_id" do  
@@ -94,7 +94,7 @@ get "/tweet/:tweet_id" do
       @ot = Tweet.find(@tweet[:original_tweet_id])
     end
     
-    erb :tweet, :locals => { :title => 'Tweet' }
+    erb :tweet
   else
     flash[:warning] = 'Can not find tweet!'
     redirect back
@@ -120,7 +120,7 @@ get "/tweet/:tweet_id" do
       @ot = Tweet.find(@tweet[:original_tweet_id])
     end
     
-    erb :tweet, :locals => { :title => 'Tweet' }
+    erb :tweet
   else
     flash[:warning] = 'Can not find tweet!'
     redirect back
@@ -195,7 +195,6 @@ post '/user/testuser/tweet' do
       end
     end
     t.join
-    # erb :alltweets, :locals => { :title => 'all tweets' }
   else
     flash[:warning] = 'Create tweet failed'
     # redirect back

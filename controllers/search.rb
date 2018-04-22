@@ -28,7 +28,7 @@ post "/search" do
   @info[:login_user] = target_user
   @cur_user = target_user
 
-  erb :results, :locals => { :title => 'Search Results' }
+  erb :results
 end
 
 get "/search/hashtag" do
@@ -54,5 +54,5 @@ get "/search/hashtag" do
   @cur_user = @info[:target_user]
   @info[:login_user] = @info[:target_user]
 
-  erb :results, :locals => { :title => 'Search Results' }
+  erb :results
 end

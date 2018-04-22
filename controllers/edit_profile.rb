@@ -2,7 +2,7 @@ get "/edit_profile" do
   if !is_authenticated?
     redirect "/"
   end
-  erb :edit_profile, :locals => { :title => 'Edit profile' }
+  erb :edit_profile
 end
 
 post "/edit_profile/submit" do

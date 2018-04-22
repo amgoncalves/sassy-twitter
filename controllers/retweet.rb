@@ -59,7 +59,7 @@ get "/retweet" do
   end
   @t = Tweet.find(params[:tweet_id])
   @cur_user = get_user_from_redis
-  erb :retweet, :locals => { :title => 'Retweet' }
+  erb :retweet
 end
 
 
