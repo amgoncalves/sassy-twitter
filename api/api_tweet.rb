@@ -1,4 +1,7 @@
+require 'byebug'
+
 # Gets a single tweet if one exists with an id = params[:id]
+# To get most recent tweets, set params[:id] = "recent"
 get "/api/v1/:apitoken/tweets/:id" do
   return build_json_tweets($redis.lrange($globalTL, 0, 50).reverse) unless params[:id] != "recent"
   tweet = Tweet.where(_id: params[:id]).first
@@ -65,6 +68,48 @@ post "/api/v1/:apitoken/tweets/new" do
   else
     error 404, { :error => "Tweet not created." }.to_json
   end
+end
+
+# Reply to a tweet with the id :tweet_id
+post "/api/v1/:apitoken/tweets/:tweet_id/reply" do
+  user = get_user("handle", params[:apitoken])
+  return nil unless user != nil
+  
+  @hashtag_list = Array.new
+
+  # create reply
+  params[:reply][:tweet_id] = params[:tweet_id]
+  params[:reply][:replier_id] = user._id
+  params[:reply][:replier_handle] = user.handle
+  params[:reply][:content] = generateHashtagTweet(params[:reply][:content])
+  params[:reply][:content] = generateMentionTweet(params[:reply][:content])
+  reply = Reply.new(params[:reply])
+  return nil unless reply.save
+
+  # update corresponding tweet
+  tweet_id = params[:tweet_id]
+  tweet = Tweet.where(_id: tweet_id).first
+
+  # add reply id to replies
+  tweet.add_reply(reply[:_id])
+
+  # store the hashtag
+  @hashtag_list.each do |hashtag_name| 
+    if Hashtag.exists? && Hashtag.where(hashtag_name: hashtag_name).exists?
+      hashtag = Hashtag.where(hashtag_name: hashtag_name).first
+      hashtag.add_tweet(tweet_id) 
+    else
+      tweets = Set.new
+      tweets.add(tweet_id)
+      Hashtag.where(hashtag_name: hashtag_name, tweets: tweets).create
+    end
+  end
+  
+  if reply
+    reply.to_json
+  else
+    error 404, { :error => "Reply not created." }.to_json
+  end  
 end
 
 # json formatter for returning multiple tweets from api calls
