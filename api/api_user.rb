@@ -19,6 +19,20 @@ get "/api/v1/:apitoken/users/:key/tweets" do
   end  
 end
 
+get "/api/v1/:apitoken/users/:key/followers" do
+  user = get_user("id", params[:key])
+  if user
+    followers = Array.new
+    follower_ids = user.followeds
+    follower_ids.each do |id|
+      followers.push(get_user("id", id))
+    end
+    return followers.to_json
+  else
+    error 404, { :error => "No followers found for user #{:key}." }.to_json
+  end
+end
+
 def get_user(type, key)
   user = nil
   if type == "id"
