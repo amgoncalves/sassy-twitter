@@ -26,6 +26,7 @@ get "/user/:targeted_id" do
     @tweets = @info[:target_tweets]
     set_user_globals
 
+    # erb :user, :locals => { :title => "#{target_user.handle}" }
     erb :user, :locals => { :title => "#{target_user.handle}" }
   end
 end
