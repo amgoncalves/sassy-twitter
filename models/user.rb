@@ -7,6 +7,7 @@ class User
   include BCrypt
   include Mongoid::Document
 
+  field :testid, type: String
   field :handle, type: String
   field :email, type: String
   field :password_hash, type: String

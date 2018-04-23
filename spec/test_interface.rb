@@ -36,7 +36,7 @@ class ResetStandard
         }
         seed_profile = Profile.new(seed_profile_hash)
         new_user = User.create(
-          id: id,
+          testid: id,
           handle: handle,
           email: "#{handle}@sample.com",
           password: "password",
@@ -59,7 +59,7 @@ class ResetStandard
       if row.size == 3
         # obtain the author
         author_id = row[0]
-        author = User.where(_id: author_id).first
+        author = User.where(testid: author_id).first
         # create new tweet
         content = row[1]
         time_created = Time.parse(row[2])
