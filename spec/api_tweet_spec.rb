@@ -1,4 +1,5 @@
 require_relative './spec_helper.rb'
+require 'byebug'
 
 class ApiUserSpec < MiniTest::Unit::TestCase
   def app
@@ -29,7 +30,7 @@ class ApiUserSpec < MiniTest::Unit::TestCase
     post "/api/v1/#{@api_key}/tweets/new", params
     assert_equal(200, last_response.status)
     attributes = JSON.parse(last_response.body)
-    assert_equal(@handle, attributes["author_handle"])
+    assert_equal("hpotter", attributes["author_handle"])
     assert_equal(msg, attributes["content"])
   end
 end
