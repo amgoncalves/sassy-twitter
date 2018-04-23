@@ -27,7 +27,6 @@ class ApiUserSpec < MiniTest::Unit::TestCase
     get "/api/v1/#{@api_key}/users/#{params[:key]}", params
     assert_equal(200, last_response.status)
     attributes = JSON.parse(last_response.body)
-    puts "\n\n\nAttributes: #{attributes}\n\n\n"
     assert_equal("hpotter", attributes["handle"])
     assert_equal("Harry Potter", attributes["profile"]["name"])
   end
