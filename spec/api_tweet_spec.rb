@@ -1,5 +1,4 @@
 require_relative './spec_helper.rb'
-require 'byebug'
 
 class ApiUserSpec < MiniTest::Unit::TestCase
   def app
