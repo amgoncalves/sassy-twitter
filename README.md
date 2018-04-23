@@ -21,14 +21,14 @@ This application is optimized to scale with the load of user activity.  Caching,
 nanoTwitter has a REST API that can be utilized with the [nanoTwitter Client Library](https://github.com/amgoncalves/nt-client) for client applications written in Ruby.
 
 ## Technology
-
-nanoTwitter is written in [Sinatra](http://sinatrarb.com/) and runs on the [JRuby](http://jruby.org/) engine.  [Git](https://git-scm.com/) and [Github](https://github.com/amgoncalves/sassy-twitter) are used for version control.  The application is hosted on a [Heroku](https://www.heroku.com/) server at [https://sassy-nanotwitter.herokuapp.com/](https://sassy-nanotwitter.herokuapp.com/).  [Codeship](https://codeship.com/) is used to automate testing and deployment from Github.
-
-Application data is stored in a [MongoDB Community Server](https://www.mongodb.com/) database and uses the [mLab](https://mlab.com/) service on the production server.  The [Mongoid](https://docs.mongodb.com/mongoid/master/#ruby-mongoid-tutorial) ODM (Object-Document-Mapper) is used to convert between Sinatra-compatable abstract data types and MongoDB documents.  Data is cached in-memory using [Redis](https://redis.io/).
-
-The UI uses a combination of HTML and [embedded Ruby](https://ruby-doc.com/docs/ProgrammingRuby/html/web.html).  Elements are styled in CSS using [Bootstrap](https://getbootstrap.com/). [JQuery](https://jquery.com/) is used to provide additional functionality to certain UI elements.
-
-Load testing was accomplished by using [loader.io](https://loader.io/) to stress the application with thousands of concurrent connections. [New Relic](https://newrelic.com/) was used in part to monitor application performance.
+We build full stack web application in Sinatra framework with high functional data storage system MongoDB and Redis, and frequent intergration of code using Codeship.
+* nanoTwitter is written in [Sinatra](http://sinatrarb.com/) and runs on the [JRuby](http://jruby.org/) engine.  
+* [Git](https://git-scm.com/) and [Github](https://github.com/amgoncalves/sassy-twitter) are used for version control.  
+* The application is hosted on a [Heroku](https://www.heroku.com/) server at [https://sassy-nanotwitter.herokuapp.com/](https://sassy-nanotwitter.herokuapp.com/).  
+* [Codeship](https://codeship.com/) is used to automate testing and deployment from Github.
+* Application data is stored in a [MongoDB Community Server](https://www.mongodb.com/) database and uses the [mLab](https://mlab.com/) service on the production server.  The [Mongoid](https://docs.mongodb.com/mongoid/master/#ruby-mongoid-tutorial) ODM (Object-Document-Mapper) is used to convert between Sinatra-compatable abstract data types and MongoDB documents.  Data is cached in-memory using [Redis](https://redis.io/).
+* The UI uses a combination of HTML and [embedded Ruby](https://ruby-doc.com/docs/ProgrammingRuby/html/web.html).  Elements are styled in CSS using [Bootstrap](https://getbootstrap.com/). [JQuery](https://jquery.com/) is used to provide additional functionality to certain UI elements.
+* Load testing was accomplished by using [loader.io](https://loader.io/) to stress the application with thousands of concurrent connections. [New Relic](https://newrelic.com/) was used in part to monitor application performance.
 
 ## API and Client Library
 
