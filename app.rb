@@ -11,6 +11,7 @@ require 'redis'
 require 'sidekiq'
 require 'sidekiq/api'
 require 'rack-timeout'
+# require 'sinatra/cache'
 #require 'sinatra/sessionshelper'
 require_relative './models/user'
 require_relative './models/userd'
@@ -45,6 +46,7 @@ require_relative './spec/load_test_search.rb'
 require_relative './helper/user_related.rb'
 require_relative './api/api_user.rb'
 require_relative './api/api_tweet.rb'
+require_relative './api/api_search.rb'
 
 use Rack::Timeout, service_timeout: 5, wait_timeout: false
 enable :sessions
@@ -55,6 +57,13 @@ else
   Mongoid::Config.connect_to('nanotwitter-dev') 
   $redis = Redis.new(url: ENV["REDIS_URL"]) 
 end
+
+# configure do
+# 	register(Sinatra::Cache)
+# 	set :root, File.dirname(__FILE__)
+# 	set :cache_enabled, true
+# 	set :cache_output_dir, Proc.new { File.join(root, 'public', 'cache') }
+# end
 
 configure :production do
   require 'newrelic_rpm'
@@ -67,7 +76,6 @@ Mongo::Logger.logger.level = Logger::FATAL
 set :root, File.join(File.dirname(__FILE__), '')
 # sets the view directory correctly
 set :views, Proc.new { File.join(root, "views") }
-
 set :public_folder, Proc.new { File.join(root, "public") }
 
 get "/" do
@@ -99,7 +107,7 @@ get "/" do
   else
     @tweets = $redis.lrange($globalTL, 0, 50).reverse
   end
-  erb :index, :locals => { :title => 'Welcome!' }
+  erb :index
 end
 
 get '/reset/redis' do

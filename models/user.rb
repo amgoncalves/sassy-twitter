@@ -101,6 +101,10 @@ class User
     followings.include?(target_user._id.to_s)
   end
 
+  def followed?(target_user)
+    followeds.include?(target_user._id.to_s)
+  end
+
   def password
     # @password ||= Password.new(password_hash)
     @password ||= password_hash

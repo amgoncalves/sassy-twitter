@@ -21,6 +21,6 @@ get "/user/followings/" do
     @info[:target_user] = target_user
     @info[:isfollowing] = isfollowing
     @info[:target_followings] = target_followings
-    erb :followings, :locals => { :title => 'Followings' }
+    erb :followings
   end
 end

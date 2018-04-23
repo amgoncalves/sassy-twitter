@@ -30,6 +30,39 @@ The UI uses a combination of HTML and [embedded Ruby](https://ruby-doc.com/docs/
 
 Load testing was accomplished by using [loader.io](https://loader.io/) to stress the application with thousands of concurrent connections. [New Relic](https://newrelic.com/) was used in part to monitor application performance.
 
+## API and Client Library
+
+nanoTwitter has a REST API that can be utilized with the [nanoTwitter Client Library](https://github.com/amgoncalves/nt-client) for client applications written in Ruby.  The following routes are implemented in the nanoTwitter API:
+
+Tweet
+
+```
+GET "/api/v1/:apitoken/tweets/:id"
+GET "/api/v1/:apitoken/tweets/recent"
+POST "/api/v1/:apitoken/tweets/new"
+POST "/api/v1/:apitoken/tweets/:id/reply"
+POST "/api/vi/:apitoken/tweets/:id/retweet"
+```
+
+User
+
+```
+GET "/api/v1/:apitoken/users/:key"
+GET "/api/v1/:apitoken/users/:key/tweets"
+GET "/api/v1/:apitoken/users/:key/followers"
+GET "/api/v1/:apitoken/users/:key/following"
+POST "/api/v1/:apitoken/users/:key/follow"
+POST "/api/v1/:apitoken/users/:key/unfollow"
+```
+
+Search:
+
+```
+POST "/api/v1/:apitoken/search/:key/users"
+POST "/api/v1/:apitoken/search/:key/tweets"
+
+```
+
 ## Notable Engineering
 
 ## Scalability Test Data and Results

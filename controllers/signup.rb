@@ -1,5 +1,5 @@
 get "/signup" do
-  erb :signup, :locals => { :title => 'Signup' }
+  erb :signup
 end
 
 post "/signup/submit" do
