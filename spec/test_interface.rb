@@ -63,12 +63,19 @@ class ResetStandard
         # create new tweet
         content = row[1]
         time_created = Time.parse(row[2])
-        tweet = Tweet.create(author_id: author_id,
+        tweet = Tweet.create(author_id: author._id,
           content: content,
           time_created: time_created)
         # add tweet under user
         author.add_tweet(tweet._id)
+
+        # save this tweet in global timeline
+        $redis.rpush($globalTL, tweet.to_json)
+        if $redis.llen($globalTL) > 50
+          $redis.rpop($globalTL)
+        end
       end
+      
       i = i + 1
     end
   
@@ -295,9 +302,26 @@ post '/test/users/create' do
         profile: profile)
       j = 0
       while j < tweets_count do
-        tweet = Tweet.create(content: "no.#{j} tweet",
-          author_id: user._id)
+        tweet = Tweet.create(
+          content: "no.#{j} tweet",
+          author_id: user._id,
+          author_handle: user.handle)
         user.add_tweet(tweet._id)
+        # save this tweet in global timeline
+        $redis.rpush($globalTL, tweet.to_json)
+        if $redis.llen($globalTL) > 50
+          $redis.rpop($globalTL)
+        end
+
+        # spread this tweet to all followers
+        # followers = db_login_user.followeds
+        followers = user.followeds
+        followers.each do |follower|
+          $redis.rpush(follower.to_s, tweet_id)
+          if $redis.llen(follower.to_s) > 50
+            $redis.rpop(follower.to_s)
+          end
+        end
         j = j + 1
       end
       i = i + 1
@@ -340,8 +364,23 @@ post "/test/user/:user/tweets" do
     Thread.new do
       i = 0
       while i < tweets_count.to_i do
-        tweet = Tweet.create(content: "no.#{i} fake tweet", author_id: user._id)
+        tweet = Tweet.create(content: "no.#{i} fake tweet", author_id: user._id, author_handle: user.handle)
         user.add_tweet(tweet._id)
+        # save this tweet in global timeline
+        $redis.rpush($globalTL, tweet.to_json)
+        if $redis.llen($globalTL) > 50
+          $redis.rpop($globalTL)
+        end
+
+        # spread this tweet to all followers
+        # followers = db_login_user.followeds
+        followers = user.followeds
+        followers.each do |follower|
+          $redis.rpush(follower.to_s, tweet_id)
+          if $redis.llen(follower.to_s) > 50
+            $redis.rpop(follower.to_s)
+          end
+        end
         i = i + 1
       end
     end
@@ -418,10 +457,18 @@ post "/test/user/:user/follow" do
         # if params[:user] != "testuser"
         #   users.delete(params[:user].to_i)
         # end
-    
+        tweets = user.tweets
         users.sample(n).each do |follower_user|
           user.toggle_followed(follower_user._id)
           follower_user.toggle_following(user._id)
+
+          tweets.each do |tweet_id|
+          $redis.rpush(follower_user._id.to_s, tweet_id)
+          if $redis.llen(follower_user._id.to_s) > 100
+            $redis.rpop(follower_user._id.to_s)
+          end
+      end
+
         end
 
         $redis.set("testuser", user.to_json)
