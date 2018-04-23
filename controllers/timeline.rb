@@ -2,31 +2,32 @@ get "/timeline" do
   if !is_authenticated?
     redirect "/"
   end
-  
-  @ids = User.pluck(:id)
 
-  if is_authenticated?
-    tweet_ids = $redis.lrange(session[:user_id].to_s, 0, 50)
-    @tweets = Tweet.in(_id: tweet_ids)
-    @tweets = @tweets.reverse
-    # @targeted_user = get_user_from_session
-    @targeted_user = get_user_from_redis
-    @targeted_id = @targeted_user._id
-
-    @ntweets = @targeted_user.ntweets
-    @nfollowed = @targeted_user.nfolloweds
-    @nfollowing = @targeted_user.nfollowings
-    if @nfollowing > 0
-      @targeted_following = User.in(_id: @targeted_user[:followings])
+  if session[:user_id] == nil
+    redirect "/"
+  else
+    loginuser_redis_key = session[:user_id].to_s + "loginuser"
+    if $redis.exists(loginuser_redis_key)
+      @cur_user = get_user_from_redis
+    else
+      @cur_user = get_user_from_mongo
     end
-
-    # code added by Shuai at Mar 23
-    @info = Hash.new
-    # @info[:login_user] = @cur_user
-    @info[:login_user] = get_user_from_redis()
-    @cur_user = @info[:login_user]
-    @info[:target_user] = @targeted_user
-    
   end
+
+  tweet_ids = $redis.lrange(session[:user_id].to_s, 0, 50)
+  @tweets = Tweet.in(_id: tweet_ids)
+  @tweets = @tweets.reverse
+ 
+  @targeted_user = @cur_user
+  @targeted_id = @targeted_user._id
+
+  @ntweets = @targeted_user.ntweets
+  @nfollowed = @targeted_user.nfolloweds
+  @nfollowing = @targeted_user.nfollowings
+
+  @info = Hash.new
+  @info[:login_user] = @cur_user
+  @info[:target_user] = @targeted_user
+    
   erb :timeline, :locals => { :title => 'Home Timeline!' }
 end

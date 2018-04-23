@@ -82,7 +82,8 @@ get "/" do
 
     # if session contains user information extract user from redis
     # otherwise from mongodb
-    if session[:user_id] != nil 
+    loginuser_redis_key = session[:user_id].to_s + "loginuser"
+    if $redis.exists(loginuser_redis_key)
       @cur_user = get_user_from_redis
     else
       @cur_user = get_user_from_mongo
