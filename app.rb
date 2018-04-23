@@ -48,7 +48,7 @@ require_relative './api/api_user.rb'
 require_relative './api/api_tweet.rb'
 require_relative './api/api_search.rb'
 
-use Rack::Timeout, service_timeout: 5, wait_timeout: false
+use Rack::Timeout, service_timeout: 10, wait_timeout: false
 enable :sessions
 
 if ENV['MONGOID_ENV'] == 'production'
