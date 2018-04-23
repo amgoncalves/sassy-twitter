@@ -131,7 +131,8 @@ post '/user/testuser/tweet' do
   @hashtag_list = Array.new
   @apitoken = "/"
 
-  if $redis.exists("testuser")
+  redis_login_user = $redis.get("testuser")
+  if redis_login_user != nil
     user_hash = JSON.parse($redis.get("testuser"))
     profile_hash = user_hash["profile"]
     profile = Profile.new(profile_hash)
@@ -149,8 +150,8 @@ post '/user/testuser/tweet' do
   else 
     t[:content] = params[:tweet]
   end
-  t[:content] = generateHashtagTweet(t[:content])
-  t[:content] = generateMentionTweet(t[:content])
+  # t[:content] = generateHashtagTweet(t[:content])
+  # t[:content] = generateMentionTweet(t[:content])
   tweet = Tweet.new(t)
   if tweet.save
     tweet_id = tweet._id
@@ -166,8 +167,8 @@ post '/user/testuser/tweet' do
     save_user_to_redis(redis_login_user)
 
     # save this tweet in global timeline
-    $redis.rpush($globalTL, tweet.to_json)
-    if $redis.llen($globalTL) > 50
+    globalTL_len = $redis.rpush($globalTL, tweet.to_json)
+    if globalTL_len > 50
       $redis.rpop($globalTL)
     end
 
@@ -175,23 +176,23 @@ post '/user/testuser/tweet' do
     # followers = db_login_user.followeds
     followers = redis_login_user.followeds
     followers.each do |follower|
-      $redis.rpush(follower.to_s, tweet_id)
-      if $redis.llen(follower.to_s) > 50
+      personalTL_len = $redis.rpush(follower.to_s, tweet_id)
+      if personalTL_len > 50
         $redis.rpop(follower.to_s)
       end
     end
 
     # store the hashtag
-    @hashtag_list.each do |hashtag_name| 
-      if Hashtag.exists? && Hashtag.where(hashtag_name: hashtag_name).exists?
-        hashtag = Hashtag.where(hashtag_name: hashtag_name).first
-        hashtag.add_tweet(tweet_id) 
-      else
-        tweets = Set.new
-        tweets.add(tweet_id)
-        Hashtag.where(hashtag_name: hashtag_name, tweets: tweets).create
-      end
-    end
+    # @hashtag_list.each do |hashtag_name| 
+    #   if Hashtag.exists? && Hashtag.where(hashtag_name: hashtag_name).exists?
+    #     hashtag = Hashtag.where(hashtag_name: hashtag_name).first
+    #     hashtag.add_tweet(tweet_id) 
+    #   else
+    #     tweets = Set.new
+    #     tweets.add(tweet_id)
+    #     Hashtag.where(hashtag_name: hashtag_name, tweets: tweets).create
+    #   end
+    # end
   else
     flash[:warning] = 'Create tweet failed'
     # redirect back
