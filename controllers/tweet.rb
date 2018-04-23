@@ -128,7 +128,6 @@ get "/tweet/:tweet_id" do
 end
 
 post '/user/testuser/tweet' do
-  @hashtag_list = Array.new
   @apitoken = "/"
 
   redis_login_user = $redis.get("testuser")
