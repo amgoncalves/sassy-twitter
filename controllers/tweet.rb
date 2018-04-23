@@ -158,7 +158,7 @@ post '/user/testuser/tweet' do
     # update db
     # db_login_user = User.where(_id: login_user_id).first
     # db_login_user.add_tweet(tweet_id)
-    TweetMongoWorker.perform_async(login_user_id.to_s, tweet_id.to_s, redis_login_user._id.to_s)
+    TweetMongoWorker.perform_async(login_user_id.to_s, tweet_id.to_s)
     
     # update redis
     redis_login_user.add_tweet(tweet_id)
