@@ -69,11 +69,11 @@ class ResetStandard
         # add tweet under user
         author.add_tweet(tweet._id)
 
-        # save this tweet in global timeline
-        $redis.rpush($globalTL, tweet.to_json)
-        if $redis.llen($globalTL) > 50
-          $redis.rpop($globalTL)
-        end
+        # # save this tweet in global timeline
+        # $redis.rpush($globalTL, tweet.to_json)
+        # if $redis.llen($globalTL) > 50
+        #   $redis.rpop($globalTL)
+        # end
       end
       
       i = i + 1
