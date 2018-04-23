@@ -2,31 +2,12 @@ class TweetMongoWorker
   require_relative './user.rb'
   include Sidekiq::Worker
 
-  def perform(login_user_id, tweet_id, redis_login_user)
+  def perform(login_user_id, tweet_id)
     login_user_id = BSON::ObjectId.from_string(login_user_id)
     user_id = BSON::ObjectId.from_string(tweet_id)
     db_login_user = User.where(_id: login_user_id).first
     db_login_user.add_tweet(tweet_id)
     db_login_user
-
-    # update redis
-    if redis_login_user != nil
-      redis_login_user.add_tweet(tweet_id)
-      save_user_to_redis(redis_login_user)
-    else
-      redis_login_user = $redis.get("testuser")
-      if redis_login_user != nil
-        user_hash = JSON.parse($redis.get("testuser"))
-        profile_hash = user_hash["profile"]
-        profile = Profile.new(profile_hash)
-        user_hash["profile"] = profile
-        redis_login_user = User.new(user_hash)
-      else
-        redis_login_user = User.where(handle: "testuser").first
-      end
-      redis_login_user.add_tweet(tweet_id)
-      save_user_to_redis(redis_login_user)
-    end
   end
 end
 
@@ -61,7 +42,7 @@ post "/tweet/new" do
 
     # spread this tweet to all followers
     # followers = db_login_user.followeds
-		followers = redis_login_user.followeds
+    followers = redis_login_user.followeds
     followers.each do |follower|
       $redis.rpush(follower.to_s, tweet_id)
       if $redis.llen(follower.to_s) > 50
@@ -177,7 +158,7 @@ post '/user/testuser/tweet' do
     # update db
     # db_login_user = User.where(_id: login_user_id).first
     # db_login_user.add_tweet(tweet_id)
-    TweetMongoWorker.perform_async(login_user_id.to_s, tweet_id.to_s, redis_login_user)
+    TweetMongoWorker.perform_async(login_user_id.to_s, tweet_id.to_s, redis_login_user._id.to_s)
     
     # update redis
     redis_login_user.add_tweet(tweet_id)
@@ -198,18 +179,6 @@ post '/user/testuser/tweet' do
         $redis.rpop(follower.to_s)
       end
     end
-
-    # store the hashtag
-    # @hashtag_list.each do |hashtag_name| 
-    #   if Hashtag.exists? && Hashtag.where(hashtag_name: hashtag_name).exists?
-    #     hashtag = Hashtag.where(hashtag_name: hashtag_name).first
-    #     hashtag.add_tweet(tweet_id) 
-    #   else
-    #     tweets = Set.new
-    #     tweets.add(tweet_id)
-    #     Hashtag.where(hashtag_name: hashtag_name, tweets: tweets).create
-    #   end
-    # end
   else
     flash[:warning] = 'Create tweet failed'
     # redirect back
