@@ -64,6 +64,7 @@ class ResetStandard
         content = row[1]
         time_created = Time.parse(row[2])
         tweet = Tweet.create(author_id: author._id,
+          author_handle: author.handle,
           content: content,
           time_created: time_created)
         # add tweet under user
