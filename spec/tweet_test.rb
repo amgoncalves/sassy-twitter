@@ -31,7 +31,7 @@ class TweetTest < MiniTest::Unit::TestCase
 	end
 
 	def test_rely
-		post '/twet/new', @params
+		post '/tweet/new', @params
 		@reply_content = 'Reply to fist tweet'
 		@params[:reply] = {}
 		@params[:reply][:content] = @reply_content
