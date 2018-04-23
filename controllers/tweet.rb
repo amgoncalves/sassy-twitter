@@ -41,8 +41,8 @@ post "/tweet/new" do
     #
     TweetMongoWorker.perform_async(login_user_id.to_s, tweet_id.to_s)
     # update redis
-    redis_login_user.add_tweet(tweet_id)
-    save_user_to_redis(redis_login_user)
+    # redis_login_user.add_tweet(tweet_id)
+    # save_user_to_redis(redis_login_user)
 
     # spread this tweet to all followers
     # followers = db_login_user.followeds
