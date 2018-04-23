@@ -73,3 +73,34 @@ get '/user/testuser/' do
     # erb :user
 	end
 end
+
+# get the user personal timeline
+get "/following_tweets" do
+  if !is_authenticated?
+    redirect "/"
+  end
+  
+  targeted_id = BSON::ObjectId.from_string(params[:targeted_id])
+  query_res = User.where(_id: targeted_id)
+  target_exist = query_res.exists?
+  @info = Hash.new
+
+  if target_exist
+    login_user = get_user_from_redis
+    target_user = query_res.first
+    isfollowing = login_user.follow?(target_user)
+
+    tweet_ids = $redis.lrange(target_user._id.to_s, 0, 50)
+    target_tweets = Tweet.in(_id: tweet_ids)
+    target_tweets = target_tweets.reverse
+
+    @info[:login_user] = login_user
+    @info[:target_user] = target_user
+    @info[:isfollowing] = isfollowing
+    @info[:target_tweets] = target_tweets
+    @tweets = @info[:target_tweets]
+    set_user_globals
+
+    erb :user
+  end
+end

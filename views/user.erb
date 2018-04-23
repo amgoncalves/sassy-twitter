@@ -6,6 +6,10 @@
     
     <div class="col-sm-6">
       <div class="panel panel-info">
+        <div class="topnav">
+          <a class="active" href=<%= "/user/" + @info[:target_user]._id.to_s %>><u>User's Tweets</u></a>
+          <a class="active" href=<%= "/following_tweets?targeted_id=" + @info[:target_user]._id %>><u>Following Tweets</u></a>
+        </div>
         <br>
         <%# <div class="panel-body"> %>
         <div class="panel-body" >
