@@ -36,7 +36,6 @@ require_relative './controllers/timeline.rb'
 require_relative './controllers/followings.rb'
 require_relative './controllers/followeds.rb'
 require_relative './controllers/search.rb'
-require_relative './controllers/global_timeline.rb'
 require_relative './spec/test_interface.rb'
 require_relative './spec/create_tweet_loadtest.rb'
 require_relative './spec/demo_mongodb.rb'
@@ -77,40 +76,38 @@ Mongo::Logger.logger.level = Logger::FATAL
 set :root, File.join(File.dirname(__FILE__), '')
 # sets the view directory correctly
 set :views, Proc.new { File.join(root, "views") }
+
 set :public_folder, Proc.new { File.join(root, "public") }
 
 get "/" do
   if is_authenticated?
     if session[:user_id] == nil
+      session.clear
+      cookies.clear
       redirect "/"
-    else
-      loginuser_redis_key = session[:user_id].to_s + "loginuser"
-      if $redis.exists(loginuser_redis_key)
-        @cur_user = get_user_from_redis
-      else
-        @cur_user = get_user_from_mongo
-      end
     end
-  
-    tweet_ids = $redis.lrange(session[:user_id].to_s, 0, 50)
-    @tweets = Tweet.in(_id: tweet_ids)
-    @tweets = @tweets.reverse
-  
+
+    @tweets = $redis.lrange($globalTL,0, 50).reverse
+
+    # if session contains user information extract user from redis
+    # otherwise from mongodb
+    if session[:user_id] != nil 
+      @cur_user = get_user_from_redis
+    else
+      @cur_user = get_user_from_mongo
+    end
+
     @targeted_user = @cur_user
     @targeted_id = @targeted_user._id
-  
-    @ntweets = @targeted_user.ntweets
-    @nfollowed = @targeted_user.nfolloweds
-    @nfollowing = @targeted_user.nfollowings
-  
+
     @info = Hash.new
     @info[:login_user] = @cur_user
     @info[:target_user] = @targeted_user
-      
+    @info[:target_tweets] = @tweets
   else
     @tweets = $redis.lrange($globalTL, 0, 50).reverse
   end
-  erb :index
+  erb :index, :locals => { :title => 'Welcome!' }
 end
 
 get '/reset/redis' do
