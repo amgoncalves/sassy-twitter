@@ -12,6 +12,7 @@ COSI-105b Software Engineering for Scalability
 
 Brandeis University, Spring 2018
 
+
 ## Features
 
 Users who register for an account can broadcast short 280-character messages to the site-wide global timeline.  Each user has a unique username, called a handle, and a profile page with a log of their messages.  Users can follow other users to customize what messages they see in their personal feed.  Users have the ability to duplicate or "re-Tweet" any message onto their own timeline with an optional comment.  Prefixing a word with the pound or hashtag (#) symbol makes the term searchable by other users.  Search is available  for other users by their handle or search for tweets by keyword.  Optional cookies are used for persistent user sessions.
@@ -29,6 +30,7 @@ We build full stack web application in Sinatra framework with high functional da
 * Application data is stored in a [MongoDB Community Server](https://www.mongodb.com/) database and uses the [mLab](https://mlab.com/) service on the production server.  The [Mongoid](https://docs.mongodb.com/mongoid/master/#ruby-mongoid-tutorial) ODM (Object-Document-Mapper) is used to convert between Sinatra-compatable abstract data types and MongoDB documents.  Data is cached in-memory using [Redis](https://redis.io/).
 * The UI uses a combination of HTML and [embedded Ruby](https://ruby-doc.com/docs/ProgrammingRuby/html/web.html).  Elements are styled in CSS using [Bootstrap](https://getbootstrap.com/). [JQuery](https://jquery.com/) is used to provide additional functionality to certain UI elements.
 * Load testing was accomplished by using [loader.io](https://loader.io/) to stress the application with thousands of concurrent connections. [New Relic](https://newrelic.com/) was used in part to monitor application performance.
+
 
 ## API and Client Library
 
@@ -63,11 +65,23 @@ POST "/api/v1/:apitoken/search/:key/tweets"
 
 ```
 
+
 ## Notable Engineering
+
+- Mongodb and Mongoid
+- Sidekiq
+- Multithreading and JRuby (attempted, was not successful)
+
 
 ## Scalability Test Data and Results
 
+[TODO]
+
+
 ## Installation and Setup
+
+[TODO]
+
 
 ### MongoDB Setup
 
@@ -135,17 +149,21 @@ Open a web browser and navigate to ```localhost:4567```.  You should see the nan
 
 This project has a [developer's Wiki](https://github.com/amgoncalves/sassy-twitter/wiki).
 
+
 ## Version
 
 nT1.0
+
 
 ## License
 
 This project is licensed under the [MIT License](https://github.com/amgoncalves/sassy-twitter/blob/master/license.txt).
 
+
 ## Acknowledgments
 
 We would like to thank Professor Pito Salas, Zach Weis, and Ian Leeds for their invaluable guidance in the completion of this project.
+
 
 ## Last Modified
 
