@@ -80,9 +80,6 @@ POST "/api/v1/:apitoken/search/:key/tweets"
 
 ## Installation and Setup
 
-[TODO]
-
-
 ### MongoDB Setup
 
 Install [MongoDB Community Edition](https://docs.mongodb.com/manual/administration/install-community/).  The installation guide for nanoTwitter uses MacOS instructions in the examples.  See the relevant installation pages to find equivalent installation and operation instructions for [Windows](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-windows/) and [Linux](https://docs.mongodb.com/manual/administration/install-on-linux/).
