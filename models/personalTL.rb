@@ -15,4 +15,11 @@ class PersonalTL
     self.set(tweets: nxt_tweets)
   end
 
+  def remove_tweet(tweet_id)
+    if tweets.size = 0 || tweets.include?(tweet_id)
+      nxt_tweets = tweets.delete(tweet_id)
+      self.set(tweets: nxt_tweets) 
+    end
+  end
+
 end

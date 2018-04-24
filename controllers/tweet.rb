@@ -193,14 +193,12 @@ post '/user/testuser/tweet' do
         tweets.push(tweet_id.to_s)
         PersonalTL.where(user_id: follower.to_s, tweets: tweets).create
       end
-
     end
   else
     flash[:warning] = 'Create tweet failed'
     # redirect back
   end
 end
-
 
 def generateHashtagTweet(content)
   content.gsub!(/#\S+/) { |match|
