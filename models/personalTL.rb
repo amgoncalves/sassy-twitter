@@ -9,9 +9,10 @@ class PersonalTL
 
   def add_tweet(tweet_id)
     nxt_tweets = tweets.push(tweet_id)
+    if nxt_tweets.size > 50
+      tweets.shift
+    end
     self.set(tweets: nxt_tweets)
-    nxt_ntweets = ntweets + 1
-    self.set(ntweets: nxt_ntweets)
   end
 
 end
