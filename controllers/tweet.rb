@@ -1,13 +1,11 @@
 class TweetMongoWorker 
-  require_relative './user.rb'
   include Sidekiq::Worker
 
   def perform(login_user_id, tweet_id)
     login_user_id = BSON::ObjectId.from_string(login_user_id)
-    user_id = BSON::ObjectId.from_string(tweet_id)
     db_login_user = User.where(_id: login_user_id).first
     db_login_user.add_tweet(tweet_id)
-    db_login_user
+    # db_login_user
   end
 end
 
