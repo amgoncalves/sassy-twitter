@@ -14,7 +14,13 @@ get "/timeline" do
     end
   end
 
-  tweet_ids = $redis.lrange(session[:user_id].to_s, 0, 50)
+  # tweet_ids = $redis.lrange(session[:user_id].to_s, 0, 50)
+  timeline = PersonalTL.where(user_id: session[:user_id].to_s).first
+  if timeline != nil
+    @tweets = timeline.tweets
+  else
+    @tweet = Array.new
+  end
   @tweets = Tweet.in(_id: tweet_ids)
   @tweets = @tweets.reverse
  
