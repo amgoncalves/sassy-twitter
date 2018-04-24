@@ -64,16 +64,17 @@ class ResetStandard
         content = row[1]
         time_created = Time.parse(row[2])
         tweet = Tweet.create(author_id: author._id,
+          author_handle: author.handle,
           content: content,
           time_created: time_created)
         # add tweet under user
         author.add_tweet(tweet._id)
 
-        # save this tweet in global timeline
-        $redis.rpush($globalTL, tweet.to_json)
-        if $redis.llen($globalTL) > 50
-          $redis.rpop($globalTL)
-        end
+        # # save this tweet in global timeline
+        # $redis.rpush($globalTL, tweet.to_json)
+        # if $redis.llen($globalTL) > 50
+        #   $redis.rpop($globalTL)
+        # end
       end
       
       i = i + 1

@@ -88,6 +88,18 @@ POST "/api/v1/:apitoken/search/:key/tweets"
 
 ```
 
+## Notable Engineering
+
+- Mongodb and Mongoid
+- Sidekiq
+- Multithreading and JRuby (attempted, was not successful)
+
+
+## Scalability Test Data and Results
+
+[TODO]
+
+
 ## Installation and Setup
 
 ### MongoDB Setup
@@ -156,17 +168,21 @@ Open a web browser and navigate to ```localhost:4567```.  You should see the nan
 
 This project has a [developer's Wiki](https://github.com/amgoncalves/sassy-twitter/wiki).
 
+
 ## Version
 
 nT1.0
+
 
 ## License
 
 This project is licensed under the [MIT License](https://github.com/amgoncalves/sassy-twitter/blob/master/license.txt).
 
+
 ## Acknowledgments
 
 We would like to thank Professor Pito Salas, Zach Weis, and Ian Leeds for their invaluable guidance in the completion of this project.
+
 
 ## Last Modified
 
