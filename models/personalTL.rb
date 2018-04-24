@@ -4,7 +4,7 @@ require 'mongoid'
 class PersonalTL
   include Mongoid::Document
 
-  field :user_id, type: String
+  field :user_id, type: String, default: String.new
   field :tweets, type: Array, default: Array.new
 
   def add_tweet(tweet_id)

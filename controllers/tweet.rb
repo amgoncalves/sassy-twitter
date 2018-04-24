@@ -173,10 +173,19 @@ post '/user/testuser/tweet' do
     # followers = db_login_user.followeds
     followers = redis_login_user.followeds
     followers.each do |follower|
-      personalTL_len = $redis.rpush(follower.to_s, tweet_id)
-      if personalTL_len > 50
-        $redis.rpop(follower.to_s)
+      # personalTL_len = $redis.rpush(follower.to_s, tweet_id)
+      # if personalTL_len > 50
+      #   $redis.rpop(follower.to_s)
+      # end
+      timeline = PersonalTL.where(user_id: follower.to_s).first
+      if timeline != nil
+        timeline.add_tweet(tweet_id.to_s)
+      else
+        tweets = Array.new
+        tweets.push(tweet_id.to_s)
+        PersonalTL.where(user_id: follower.to_s, tweets: tweets).create
       end
+      
     end
   else
     flash[:warning] = 'Create tweet failed'
