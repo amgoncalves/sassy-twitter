@@ -56,6 +56,7 @@ if ENV['MONGOID_ENV'] == 'production'
 else
   Mongoid::Config.connect_to('nanotwitter-dev') 
   # $redis = Redis.new(url: ENV["REDIS_URL"]) 
+	$redis = Redis.new(:url => ENV["REDIS_URL"], :timeout => 4)
 end
 
 # configure do
