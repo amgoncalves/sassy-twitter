@@ -318,9 +318,13 @@ post '/test/users/create' do
         # followers = db_login_user.followeds
         followers = user.followeds
         followers.each do |follower|
-          $redis.rpush(follower.to_s, tweet_id)
-          if $redis.llen(follower.to_s) > 50
-            $redis.rpop(follower.to_s)
+          timeline = PersonalTL.where(user_id: follower.to_s).first
+          if timeline != nil
+            timeline.add_tweet(tweet_id.to_s)
+          else
+            tweets_timeline = Array.new
+            tweets_timeline.push(tweet_id.to_s)
+            PersonalTL.where(user_id: follower.to_s, tweets: tweets_timeline).create
           end
         end
         j = j + 1
@@ -377,9 +381,13 @@ post "/test/user/:user/tweets" do
         # followers = db_login_user.followeds
         followers = user.followeds
         followers.each do |follower|
-          $redis.rpush(follower.to_s, tweet_id)
-          if $redis.llen(follower.to_s) > 50
-            $redis.rpop(follower.to_s)
+          timeline = PersonalTL.where(user_id: follower.to_s).first
+          if timeline != nil
+            timeline.add_tweet(tweet_id.to_s)
+          else
+            tweets_timeline = Array.new
+            tweets_timeline.push(tweet_id.to_s)
+            PersonalTL.where(user_id: follower.to_s, tweets: tweets_timeline).create
           end
         end
         i = i + 1
