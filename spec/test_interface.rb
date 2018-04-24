@@ -1,5 +1,4 @@
 # coding: utf-8
-require 'byebug'
 require 'mongoid'
 require 'mongo'
 require 'sinatra'
@@ -487,19 +486,15 @@ post "/test/user/:user/follow" do
 end
 
 post "/test/standard" do
-  #byebug
   starttime = Time.now
 
   user_count = 1
-  tweets_count = 0
-  follow_count = 0
+  tweets_count = 1
+  follow_count = 1
   
-  user = nil
-
   user_count = params[:u].to_i unless params[:u] == nil
   tweets_count = params[:t].to_i unless params[:t] == nil
   follow_count = params[:f].to_i unless params[:f] == nil
-
 
   Thread.new do
     # for i users, each user create j tweets
@@ -546,36 +541,28 @@ post "/test/standard" do
       i = i + 1
     end
   end
-
+  
+  n = follow_count # default 1
   Thread.new do
+    # Mongoid::Config.connect_to('nanotwitter-loadtest')
+    if User.count < 2
+      erb "Run post '/test/reset/standard' first!", :locals => { :title => 'Test Interface' }
+    else
 
-    i = 0
-
-    # Create followers
-    while i < follow_count do
-      rand_follower = Random.rand(user_count)
-      rand_following = nil
-      loop do 
-        rand_following = Random.rand(user_count)
-        break if rand_following != rand_follower
+      if params[:f] != nil
+        n = params[:f].to_i
       end
-      
-      # get a random user
-      user_follower = get_user("handle", "testuser#{rand_follower}")
-      user_following = get_user("handle", "testuser#{rand_following}")
-      
-      puts "numer = #{rand_follower}, numing = #{rand_following}"
-      puts "Follower = #{user_follower}, Following = #{user_following}"
-      
-      # select n random users to follow user u
-      if user_follower != nil && user_following != nil
-        user_following.toggle_followed(user_follower._id)
-        user_follower.toggle_following(user_following._id)
+      users = User.all
+      users.sample(n).each do |user|
+        tmp_users = User.all
+        tmp_users.sample(n).each do |following_user| 
+          user.toggle_following(following_user._id)
+          following_user.toggle_followed(user._id)
+        end
       end
-      i = i + 1
     end
   end
-
+  
   endtime = Time.now
 
   erb "Created #{user_count} users <br>
