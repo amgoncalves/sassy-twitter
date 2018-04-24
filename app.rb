@@ -56,7 +56,7 @@ if ENV['MONGOID_ENV'] == 'production'
 else
   Mongoid::Config.connect_to('nanotwitter-dev') 
   # $redis = Redis.new(url: ENV["REDIS_URL"]) 
-	$redis = Redis.new(:url => ENV["REDIS_URL"], :timeout => 4)
+	# $redis = Redis.new(:url => ENV["REDIS_URL"], :timeout => 4)
 end
 
 # configure do
@@ -65,14 +65,12 @@ end
 # 	set :cache_enabled, true
 # 	set :cache_output_dir, Proc.new { File.join(root, 'public', 'cache') }
 # end
-
 configure :production do
-  require 'newrelic_rpm'
-  require 'redis'
-  # uri = URI.parse(ENV["REDISCLOUD_URL"])
-  # $redis = Redis.new(:host => uri.host, :port => uri.port, :password => uri.password)
+	require 'newrelic_rpm'
+end
+
+configure do
 	$redis = Redis.new(:url => ENV["REDIS_URL"], :timeout => 4)
-  # Redis.new(:timeout => 4)
 end
 
 # Sets level for Mongo messages.  Set to DEBUG to see all messages.
