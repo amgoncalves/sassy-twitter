@@ -19,27 +19,48 @@ post "/follow" do
 
     target_user.toggle_followed(login_id)
 
-    if db_login_user.follow?(target_user)
-      # add all tweets of that user to current user timeline
-      tweets = target_user.tweets
-      tweets.each do |tweet_id|
-        $redis.rpush(login_id.to_s, tweet_id)
-        if $redis.llen(login_id.to_s) > 100
-          $redis.rpop(login_id.to_s)
-        end
-      end
-      #store in mongodb
-      # new_tweets = $redis.lrange(login_id.to_s, 0, -1).reverse
-      # login_user.update_tweets(new_tweets)
-    else
-      # delete all tweets of that user to current user timeline
-      tweets = target_user.tweets
-      tweets.each do |tweet_id|
-        $redis.lrem(login_id.to_s, 0, tweet_id.to_s)
-      end
-      # store in mongodb
-      # new_tweets = $redis.lrange(login_id.to_s, 0, -1).reverse
-      # login_user.update_tweets(new_tweets)
-    end
+		
+		login_user_tl = PersonalTL.where(user_id: login_id).first
+		if login_user_tl != nil 
+			tweets = target_user.tweets
+			if db_login_user.follow?(target_user)
+				# add all tweets of that user to current login user timeline
+				tweets.each do |tweet_id|
+					login_user_tl.add_tweet(tweet_id.to_s)
+				end
+			else
+				# delete all tweets of that user to current user timeline
+				tweets.each do |tweet_id|
+					login_user_tl.remove_tweet(tweet_id.to_s)
+				end
+			end
+			# login_user_tl is nil
+		else
+			tweets = target_user.tweets
+			PersonalTL.where(user_id: login_id, tweets: tweets).create
+		end
+
+    # if db_login_user.follow?(target_user)
+    #   # add all tweets of that user to current user timeline
+    #   tweets = target_user.tweets
+    #   tweets.each do |tweet_id|
+    #     $redis.rpush(login_id.to_s, tweet_id)
+    #     if $redis.llen(login_id.to_s) > 100
+    #       $redis.rpop(login_id.to_s)
+    #     end
+    #   end
+    #   #store in mongodb
+    #   # new_tweets = $redis.lrange(login_id.to_s, 0, -1).reverse
+    #   # login_user.update_tweets(new_tweets)
+    # else
+    #   # delete all tweets of that user to current user timeline
+    #   tweets = target_user.tweets
+    #   tweets.each do |tweet_id|
+    #     $redis.lrem(login_id.to_s, 0, tweet_id.to_s)
+    #   end
+    #   # store in mongodb
+    #   # new_tweets = $redis.lrange(login_id.to_s, 0, -1).reverse
+    #   # login_user.update_tweets(new_tweets)
+    # end
   end
 end
