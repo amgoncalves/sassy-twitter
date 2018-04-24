@@ -48,14 +48,15 @@ require_relative './api/api_user.rb'
 require_relative './api/api_tweet.rb'
 require_relative './api/api_search.rb'
 
-# use Rack::Timeout, service_timeout: 5, wait_timeout: false
+use Rack::Timeout, service_timeout: 5, wait_timeout: false
 enable :sessions
 
 if ENV['MONGOID_ENV'] == 'production'
   Mongoid.load!("config/mongoid.yml", :production)
 else
   Mongoid::Config.connect_to('nanotwitter-dev') 
-  $redis = Redis.new(url: ENV["REDIS_URL"]) 
+  # $redis = Redis.new(url: ENV["REDIS_URL"]) 
+	# $redis = Redis.new(:url => ENV["REDIS_URL"], :timeout => 4)
 end
 
 # configure do
@@ -64,9 +65,12 @@ end
 # 	set :cache_enabled, true
 # 	set :cache_output_dir, Proc.new { File.join(root, 'public', 'cache') }
 # end
-
 configure :production do
-  require 'newrelic_rpm'
+	require 'newrelic_rpm'
+end
+
+configure do
+	$redis = Redis.new(:url => ENV["REDIS_URL"], :timeout => 4)
 end
 
 # Sets level for Mongo messages.  Set to DEBUG to see all messages.
