@@ -48,7 +48,7 @@ require_relative './api/api_user.rb'
 require_relative './api/api_tweet.rb'
 require_relative './api/api_search.rb'
 
-# use Rack::Timeout, service_timeout: 5, wait_timeout: false
+use Rack::Timeout, service_timeout: 5, wait_timeout: false
 enable :sessions
 
 if ENV['MONGOID_ENV'] == 'production'
@@ -70,7 +70,7 @@ configure :production do
 end
 
 configure do
-	$redis = Redis.new(:url => ENV["REDIS_URL"], :timeout => 4)
+	$redis = Redis.new(:url => ENV["REDIS_URL"], :timeout => 1)
 end
 
 
