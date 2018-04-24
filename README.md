@@ -36,15 +36,15 @@ We also use Rack Timeout to abort requests which will take more than 5 seconds. 
 
 ## Result of scalability work, timings
 
-![500 clients over 1 min without worker dyno](https://github.com/amgoncalves/sassy-twitter/blob/master/doc/tests/%5B500%5Dcreate_new_tweet_web1thread1.png)
+![500 clients over 1 min without worker dyno](/doc/tests/500_create_new_tweet_web1thread1.png)
 Before adding a worker dyno
-![500 clients over 1 min with worker dyno](/doc/tests/[500]create_new_tweet_web1thread1.png)
+![500 clients over 1 min with worker dyno](/doc/tests/500_create_new_tweet_web1thread2.png)
 After adding a worker dyno
 
-![1000 clients over 1 min with worker dyno, no Rack Timeout](https://github.com/amgoncalves/sassy-twitter/blob/master/doc/tests/%5B1000%5Dcreate_new_tweet_web1worker1thread1_no_timeout.png)
+![1000 clients over 1 min with worker dyno, no Rack Timeout](/doc/tests/1000_create_new_tweet_web1worker1thread1_no_timeout.png)
 Before using Rack Timeout
 
-![1000 clients over 1 min with worker dyno, no Rack Timeout](https://github.com/amgoncalves/sassy-twitter/blob/master/doc/tests/%5B1000%5Dcreate_new_tweet_web1worker1thread1_no_timeout.png)
+![1000 clients over 1 min with worker dyno, no Rack Timeout](/doc/tests/1000_create_new_tweet_web1worker1thread1_timeout.png)
 After using Rack Timeout
 
 ## Team Members
