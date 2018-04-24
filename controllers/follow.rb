@@ -20,7 +20,7 @@ post "/follow" do
     target_user.toggle_followed(login_id)
 
 		
-		login_user_tl = PersonalTL.where(user_id: login_id).first
+		login_user_tl = PersonalTL.where(user_id: login_id.to_s).first
 		if login_user_tl != nil 
 			tweets = target_user.tweets
 			if db_login_user.follow?(target_user)
@@ -40,7 +40,7 @@ post "/follow" do
 		else
 			tweets = target_user.tweets
 			if db_login_user.follow?(target_user)
-				PersonalTL.where(user_id: login_id, tweets: tweets).create
+				PersonalTL.where(user_id: login_id.to_s, tweets: tweets).create
 			end
 		end
 
