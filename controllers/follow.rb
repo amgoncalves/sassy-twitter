@@ -37,7 +37,9 @@ post "/follow" do
 			# login_user_tl is nil
 		else
 			tweets = target_user.tweets
-			PersonalTL.where(user_id: login_id, tweets: tweets).create
+			if db_login_user.follow?(target_user)
+				PersonalTL.where(user_id: login_id, tweets: tweets).create
+			end
 		end
 
     # if db_login_user.follow?(target_user)
