@@ -22,4 +22,14 @@ class PersonalTL
     end
   end
 
+  def add_tweet_list(new_tweets)
+    nxt_tweets = tweets + new_tweets
+    self.set(tweets: nxt_tweets)
+  end
+
+  def remove_tweet_list(remove_tweets)
+    nxt_tweets = tweets - remove_tweets
+    self.set(tweets: nxt_tweets)
+  end
+
 end

@@ -25,14 +25,16 @@ post "/follow" do
 			tweets = target_user.tweets
 			if db_login_user.follow?(target_user)
 				# add all tweets of that user to current login user timeline
-				tweets.each do |tweet_id|
-					login_user_tl.add_tweet(tweet_id.to_s)
-				end
+				# tweets.each do |tweet_id|
+				# 	login_user_tl.add_tweet(tweet_id.to_s)
+				# end
+        login_user_tl.add_tweet_list(tweets)
 			else
 				# delete all tweets of that user to current user timeline
-				tweets.each do |tweet_id|
-					login_user_tl.remove_tweet(tweet_id.to_s)
-				end
+				# tweets.each do |tweet_id|
+				# 	login_user_tl.remove_tweet(tweet_id.to_s)
+				# end
+        login_user_tl.remove_tweet_list(tweets)
 			end
 			# login_user_tl is nil
 		else
