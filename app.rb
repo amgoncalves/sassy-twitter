@@ -55,7 +55,7 @@ if ENV['MONGOID_ENV'] == 'production'
   Mongoid.load!("config/mongoid.yml", :production)
 else
   Mongoid::Config.connect_to('nanotwitter-dev') 
-  $redis = Redis.new(url: ENV["REDIS_URL"]) 
+  # $redis = Redis.new(url: ENV["REDIS_URL"]) 
 end
 
 # configure do
@@ -70,6 +70,7 @@ configure :production do
   require 'redis'
   uri = URI.parse(ENV["REDISCLOUD_URL"])
   $redis = Redis.new(:host => uri.host, :port => uri.port, :password => uri.password)
+  Redis.new(:timeout => 4)
 end
 
 # Sets level for Mongo messages.  Set to DEBUG to see all messages.
