@@ -48,7 +48,7 @@ require_relative './api/api_user.rb'
 require_relative './api/api_tweet.rb'
 require_relative './api/api_search.rb'
 
-# use Rack::Timeout, service_timeout: 5, wait_timeout: false
+use Rack::Timeout, service_timeout: 5, wait_timeout: false
 enable :sessions
 
 if ENV['MONGOID_ENV'] == 'production'
@@ -67,6 +67,9 @@ end
 
 configure :production do
   require 'newrelic_rpm'
+  require 'redis'
+  uri = URI.parse(ENV["REDISCLOUD_URL"])
+  $redis = Redis.new(:host => uri.host, :port => uri.port, :password => uri.password)
 end
 
 # Sets level for Mongo messages.  Set to DEBUG to see all messages.
