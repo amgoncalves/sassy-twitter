@@ -68,9 +68,10 @@ end
 configure :production do
   require 'newrelic_rpm'
   require 'redis'
-  uri = URI.parse(ENV["REDISCLOUD_URL"])
-  $redis = Redis.new(:host => uri.host, :port => uri.port, :password => uri.password)
-  Redis.new(:timeout => 4)
+  # uri = URI.parse(ENV["REDISCLOUD_URL"])
+  # $redis = Redis.new(:host => uri.host, :port => uri.port, :password => uri.password)
+	$redis = Redis.new(:url => ENV["REDIS_URL"], :timeout => 4)
+  # Redis.new(:timeout => 4)
 end
 
 # Sets level for Mongo messages.  Set to DEBUG to see all messages.
