@@ -91,13 +91,13 @@ get "/following_tweets" do
     isfollowing = login_user.follow?(target_user)
 
     # tweet_ids = $redis.lrange(target_user._id.to_s, 0, 50)
-    timeline = PersonalTL.where(user_id: session[:user_id].to_s).first
+    timeline = PersonalTL.where(user_id: target_user._id.to_s).first
     if timeline != nil
       @tl_tweets = timeline.tweets
     else
       @tl_tweets = Array.new
     end
-    target_tweets = Tweet.in(_id: tl_tweets)
+    target_tweets = Tweet.in(_id: @tl_tweets)
     target_tweets = target_tweets.reverse
 
     @info[:login_user] = login_user

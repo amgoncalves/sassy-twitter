@@ -52,9 +52,9 @@ post "/tweet/new" do
       if timeline != nil
         timeline.add_tweet(tweet_id.to_s)
       else
-        tweets = Array.new
-        tweets.push(tweet_id.to_s)
-        PersonalTL.where(user_id: follower.to_s, tweets: tweets).create
+        tweets_timeline = Array.new
+        tweets_timeline.push(tweet_id.to_s)
+        PersonalTL.where(user_id: follower.to_s, tweets: tweets_timeline).create
       end
     end
 
