@@ -19,7 +19,7 @@ get "/timeline" do
   if timeline != nil
     @tweets = timeline.tweets
   else
-    @tweet = Array.new
+    @tweets = Array.new
   end
   @tweets = Tweet.in(_id: tweet_ids)
   @tweets = @tweets.reverse
