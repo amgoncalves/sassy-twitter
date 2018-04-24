@@ -389,7 +389,6 @@ post "/test/user/:user/tweets" do
     erb "User #{params[:user]} doen't exist in database",
     :locals => { :title => 'Test Interface' }
   end
-
 end
 
 # n (integer) randomly selected users follow 

@@ -1,13 +1,31 @@
 class TweetMongoWorker 
-  require_relative './user.rb'
   include Sidekiq::Worker
 
   def perform(login_user_id, tweet_id)
     login_user_id = BSON::ObjectId.from_string(login_user_id)
-    user_id = BSON::ObjectId.from_string(tweet_id)
     db_login_user = User.where(_id: login_user_id).first
     db_login_user.add_tweet(tweet_id)
-    db_login_user
+
+    # # update redis
+    # save_user_to_redis(db_login_user)
+
+    # # save this tweet in global timeline
+    # tweet = Tweet.where(_id: tweet_id).first
+    # globalTL_len = $redis.rpush('globalTL', tweet.to_json)
+    # if globalTL_len > 50
+    #   $redis.rpop('globalTL')
+    # end
+
+    # # spread this tweet to all followers
+    # # followers = db_login_user.followeds
+    # followers = db_login_user.followeds
+    # followers.each do |follower|
+    #   personalTL_len = $redis.rpush(follower.to_s, tweet_id)
+    #   if personalTL_len > 50
+    #     $redis.rpop(follower.to_s)
+    #   end
+    # end
+
   end
 end
 
@@ -128,8 +146,6 @@ get "/tweet/:tweet_id" do
 end
 
 post '/user/testuser/tweet' do
-  @apitoken = "/"
-
   redis_login_user = $redis.get("testuser")
   if redis_login_user != nil
     user_hash = JSON.parse($redis.get("testuser"))
@@ -178,6 +194,7 @@ post '/user/testuser/tweet' do
         $redis.rpop(follower.to_s)
       end
     end
+    $redis.quit
   else
     flash[:warning] = 'Create tweet failed'
     # redirect back
