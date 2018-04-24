@@ -10,7 +10,12 @@ This application is optimized to scale with the load of user activity.  Caching,
 
 nanoTwitter has a REST API that can be utilized with the [nanoTwitter Client Library](https://github.com/amgoncalves/nt-client) for client applications written in Ruby.
 
+
 ## Screenshots
+
+![nanoTwitter Homepage](https://github.com/amgoncalves/sassy-twitter/tree/master/doc/img/screenshot01.png)
+![nanoTwitter User Timeline](https://github.com/amgoncalves/sassy-twitter/tree/master/doc/img/screenshot02.png)
+![nanoTwitter Tweet](https://github.com/amgoncalves/sassy-twitter/tree/master/doc/img/screenshot03.png)
 
 
 ## Technology Description
