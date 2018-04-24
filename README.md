@@ -13,9 +13,11 @@ nanoTwitter has a REST API that can be utilized with the [nanoTwitter Client Lib
 
 ## Screenshots
 
-![nanoTwitter Homepage](https://github.com/amgoncalves/sassy-twitter/tree/master/doc/img/screenshot01.png)
-![nanoTwitter User Timeline](https://github.com/amgoncalves/sassy-twitter/tree/master/doc/img/screenshot02.png)
-![nanoTwitter Tweet](https://github.com/amgoncalves/sassy-twitter/tree/master/doc/img/screenshot03.png)
+![nanoTwitter Homepage](amgoncalves.github.com/amgoncalves/sassy-twitter/tree/master/doc/img/screenshot01.png)
+
+![nanoTwitter User Timeline](amgoncalves.github.com/amgoncalves/sassy-twitter/tree/master/doc/img/screenshot02.png)
+
+![nanoTwitter Tweet](amgoncalves.github.com/sassy-twitter/tree/master/doc/img/screenshot03.png)
 
 
 ## Technology Description
