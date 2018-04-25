@@ -69,13 +69,15 @@ set :views, Proc.new { File.join(root, "views") }
 set :public_folder, Proc.new { File.join(root, "public") }
 
 get "/" do
-  @tweets = $redis.lrange($globalTL,0, 50)
   if is_authenticated?
     if session[:user_id] == nil
       session.clear
       cookies.clear
       redirect "/"
     end
+
+    @tweets = $redis.lrange($globalTL,0, 50)
+
     # if session contains user information extract user from redis
     # otherwise from mongodb
     if session[:user_id] != nil 
@@ -91,8 +93,9 @@ get "/" do
     @info[:login_user] = @cur_user
     @info[:target_user] = @targeted_user
     @info[:target_tweets] = @tweets
+  else
+    @tweets = $redis.lrange($globalTL, 0, 50)
   end
-  $redis.quit
   erb :index, :locals => { :title => 'Welcome!' }
 end
 
