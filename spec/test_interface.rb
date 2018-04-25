@@ -16,7 +16,6 @@ require_relative '../models/reply'
 class ResetStandard
 
   def self.perform(params)
-    # Mongoid::Config.connect_to('nanotwitter-loadtest')
     starttime = Time.now
     
     # load all users
@@ -50,12 +49,6 @@ class ResetStandard
     if params.has_key?("tweets")
       n = params[:tweets].to_i
     end
-<<<<<<< HEAD
-  
-=======
-    
-    # CSV.foreach('../seeds/tweets.csv') do |row|
->>>>>>> fbb4d10f540f877d1b27cae4860eb953cc060072
     tweets_text = File.read("seeds/tweets.csv")
     tweets_csv = CSV.parse(tweets_text, :headers => false)
     tweets_csv.each do |row|
@@ -173,7 +166,6 @@ end
 
 # One page “report” of collections status
 get '/test/status' do
-  # Mongoid::Config.connect_to('nanotwitter-loadtest')
   # How many users and follows
   user_num = 0
   follow_num = 0
@@ -226,7 +218,6 @@ post '/test/reset/standard' do
   cookies.clear
 
   # Recreate TestUser
-  #create test user
   today = Date.today.strftime("%B %Y")
   profile_hash = {
     :bio => "",
@@ -254,7 +245,6 @@ end
 
 # create u (integer) fake Users using faker. Defaults to 1
 post '/test/users/create' do
-  # Mongoid::Config.connect_to('nanotwitter-loadtest')
   starttime = Time.now
 
   user_count = 1
@@ -327,8 +317,7 @@ post "/test/user/:user/tweets" do
   # initialize variables
   user = nil
   tweets_count = 0
-  # botain user from database
-  # TODO: store the testuser with id of testuser into db too
+  # obtain user from database
   if params[:user] == "testuser"
     if session[:testuser] != nil
       user = session[:testuser]
@@ -390,7 +379,6 @@ post '/test/user/follow' do
     users = User.all
     users.sample(n).each do |user|
       tmp_users = User.all
-      # tmp_users.delete(user_id)
       tmp_users.sample(n).each do |following_user| 
         user.toggle_following(following_user._id)
         following_user.toggle_followed(user._id)
@@ -523,7 +511,6 @@ post "/test/standard" do
   
   n = follow_count # default 1
   Thread.new do
-    # Mongoid::Config.connect_to('nanotwitter-loadtest')
     if User.count < 2
       erb "Run post '/test/reset/standard' first!", :locals => { :title => 'Test Interface' }
     else
@@ -551,4 +538,3 @@ post "/test/standard" do
       :locals => { :title => 'Test Interface' }
 
 end
->>>>>>> fbb4d10f540f877d1b27cae4860eb953cc060072
