@@ -18,7 +18,7 @@ class ResetStandard
   def self.perform(params)
     # Mongoid::Config.connect_to('nanotwitter-loadtest')
     starttime = Time.now
-  
+    
     # load all users
     user_text = File.read("seeds/users.csv")
     user_csv = CSV.parse(user_text, :headers => false)
@@ -43,14 +43,19 @@ class ResetStandard
           profile: seed_profile)
       end
     end
-  
+    
     # load tweets from seeds
     n = 100175
     i = 0
     if params.has_key?("tweets")
       n = params[:tweets].to_i
     end
+<<<<<<< HEAD
   
+=======
+    
+    # CSV.foreach('../seeds/tweets.csv') do |row|
+>>>>>>> fbb4d10f540f877d1b27cae4860eb953cc060072
     tweets_text = File.read("seeds/tweets.csv")
     tweets_csv = CSV.parse(tweets_text, :headers => false)
     tweets_csv.each do |row|
@@ -63,16 +68,16 @@ class ResetStandard
         content = row[1]
         time_created = Time.parse(row[2])
         tweet = Tweet.create(author_id: author._id,
-          author_handle: author.handle,
-          content: content,
-          time_created: time_created)
+                             author_handle: author.handle,
+                             content: content,
+                             time_created: time_created)
         # add tweet under user
         author.add_tweet(tweet._id)
       end
       
       i = i + 1
     end
-  
+    
     endtime = Time.now
     puts endtime - starttime
   end
@@ -199,7 +204,7 @@ get '/test/status' do
         Follow Number: #{follow_num} <br>
         Tweet Number: #{tweet_num} <br><br>
         Testuser id: #{testuser_id}",
-        :locals => { :title => 'Test Status' }
+      :locals => { :title => 'Test Status' }
 end
 
 # display version number of this build
@@ -312,7 +317,7 @@ post '/test/users/create' do
   erb "Created #{user_count} users <br>
   For each user created #{tweets_count} tweets <br><br>
   Total processing time: #{endtime - starttime} second",
-  :locals => { :title => 'Test Interface' }
+      :locals => { :title => 'Test Interface' }
 
 end
 
@@ -364,7 +369,7 @@ post "/test/user/:user/tweets" do
     end
   else
     erb "User #{params[:user]} doen't exist in database",
-    :locals => { :title => 'Test Interface' }
+        :locals => { :title => 'Test Interface' }
   end
 
 end
@@ -436,11 +441,11 @@ post "/test/user/:user/follow" do
           follower_user.toggle_following(user._id)
 
           tweets.each do |tweet_id|
-          $redis.rpush(follower_user._id.to_s, tweet_id)
-          if $redis.llen(follower_user._id.to_s) > 100
-            $redis.rpop(follower_user._id.to_s)
+            $redis.rpush(follower_user._id.to_s, tweet_id)
+            if $redis.llen(follower_user._id.to_s) > 100
+              $redis.rpop(follower_user._id.to_s)
+            end
           end
-      end
 
         end
 
@@ -456,3 +461,94 @@ post "/test/user/:user/follow" do
     erb "User #{params[:user]} doen't exist in database", :locals => { :title => 'Test Interface' }
   end
 end
+<<<<<<< HEAD
+=======
+
+post "/test/standard" do
+  starttime = Time.now
+
+  user_count = 1
+  tweets_count = 1
+  follow_count = 1
+  
+  user_count = params[:u].to_i unless params[:u] == nil
+  tweets_count = params[:t].to_i unless params[:t] == nil
+  follow_count = params[:f].to_i unless params[:f] == nil
+
+  Thread.new do
+    # for i users, each user create j tweets
+    i = 0
+    while i < user_count do
+      today = Date.today.strftime("%B %Y")
+      profile_hash = {
+        :bio => "",
+        :dob => "",
+        :date_joined => today,
+        :location => "",
+        :name => ""
+      }
+      profile = Profile.new(profile_hash)
+      user = User.create(
+        handle: "testuser#{i}", 
+        email: "testuser#{i}@sample.com",
+        password: "password#{i}",
+        profile: profile)
+      j = 0
+      while j < tweets_count do
+        tweet = Tweet.create(
+          content: "no.#{j} tweet",
+          author_id: user._id,
+          author_handle: user.handle)
+        user.add_tweet(tweet._id)
+        # save this tweet in global timeline
+        $redis.rpush($globalTL, tweet.to_json)
+        if $redis.llen($globalTL) > 50
+          $redis.rpop($globalTL)
+        end
+
+        # spread this tweet to all followers
+        # followers = db_login_user.followeds
+        followers = user.followeds
+        followers.each do |follower|
+          $redis.rpush(follower.to_s, tweet_id)
+          if $redis.llen(follower.to_s) > 50
+            $redis.rpop(follower.to_s)
+          end
+        end
+        j = j + 1
+      end
+      i = i + 1
+    end
+  end
+  
+  n = follow_count # default 1
+  Thread.new do
+    # Mongoid::Config.connect_to('nanotwitter-loadtest')
+    if User.count < 2
+      erb "Run post '/test/reset/standard' first!", :locals => { :title => 'Test Interface' }
+    else
+
+      if params[:f] != nil
+        n = params[:f].to_i
+      end
+      users = User.all
+      users.sample(n).each do |user|
+        tmp_users = User.all
+        tmp_users.sample(n).each do |following_user| 
+          user.toggle_following(following_user._id)
+          following_user.toggle_followed(user._id)
+        end
+      end
+    end
+  end
+  
+  endtime = Time.now
+
+  erb "Created #{user_count} users <br>
+  For each user created #{tweets_count} tweets <br><br>
+  For each user created #{follow_count} follows <br><br>
+  Total processing time: #{endtime - starttime} second",
+      :locals => { :title => 'Test Interface' }
+
+end
+>>>>>>> fbb4d10f540f877d1b27cae4860eb953cc060072
