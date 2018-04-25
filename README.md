@@ -3,12 +3,9 @@
 [Download repo](https://github.com/amgoncalves/sassy-twitter/archive/master.zip)
 
 
-Sassy nanoTwitter (nT) is a minimal version of [Twitter](https://twitter.com/) built on [Sinatra](http://sinatrarb.com/) and deployed on [heroku](https://www.heroku.com/platform) cloud platform. It can support the basic functions the same as Twitter that it allows user to register an account, build a profile, make a tweet and so on. Even this is a nano version of Twitter, but our main goal to scale this application based on 
+[Sassy nanoTwitter (nT)](https://sassy-nanotwitter.herokuapp.com/) is a minimal version of [Twitter](https://twitter.com/) built on [Sinatra](http://sinatrarb.com/) and deployed on [heroku](https://www.heroku.com/platform) cloud platform.  It can support the basic functions the same as Twitter that it allows user to register an account, build a profile, make a tweet and so on. Even this is a nano version of Twitter, but our main goal to scale this application based on data collected from load tests.
 
 # Summary
-
-[nanoTwitter (nT)](https://sassy-nanotwitter.herokuapp.com/) is a minimal version of [Twitter](https://twitter.com/) built on [Sinatra](http://sinatrarb.com/).
-
 
 Users who register for an account can broadcast short 400-character messages to the site-wide global timeline.  Each user has a unique username, called a handle, and a profile page with a log of their messages.  Users can follow other users to customize what messages they see in their personal feed.  Users have the ability to duplicate or "re-Tweet" any message onto their own timeline with an optional comment.  Prefixing a word with the pound or hashtag (#) symbol makes the term searchable by other users.  Search is available  for other users by their handle or search for tweets by keyword.  Optional cookies are used for persistent user sessions.
 
@@ -45,6 +42,7 @@ We build full stack web application in Sinatra framework with high functional da
 
 ### Data Model Design
 
+Data is stored in a MongoDB, a NoSQL database, as nested JSON-like "documents."  The primary model is the User model, assigned to registered users of the nanoTwitter app, that contains pertinent information such as username, email, encrypted password, and API token.  Each User has a nested Profile document containing more user details such as name, location, birthday, and biography.  Each User also contains a list of Tweet ids, each linked to a Tweet document.  Tweets contain 280-character content, the author id, the author handle.  Tweets also contains a list of ids to its reply Tweets.  A Tweet can be a Retweet of another Tweet.  The Tweet's original_tweet_id field is used to denote if the Tweet is a Retweet of another Tweet.  A Hashtag consists of a keyword and a list of Tweet documents that contain the Hashtag.
 
 
 ### Architecture Design
@@ -84,8 +82,6 @@ COSI-105b Software Engineering for Scalability
 
 Brandeis University, Spring 2018
 
-## Dates
-
 ## API and Client Library
 
 nanoTwitter has a REST API that can be utilized with the [nanoTwitter Client Library](https://github.com/amgoncalves/nt-client) for client applications written in Ruby.  The following routes are implemented in the nanoTwitter API:
@@ -124,12 +120,6 @@ POST "/api/v1/:apitoken/search/:key/tweets"
 - Mongodb and Mongoid
 - Sidekiq
 - Multithreading and JRuby (attempted, was not successful)
-
-
-## Scalability Test Data and Results
-
-[TODO]
-
 
 ## Installation and Setup
 
@@ -223,4 +213,4 @@ We would like to thank Professor Pito Salas, Zach Weis, and Ian Leeds for their 
 
 ## Last Modified
 
-April 19, 2018
+April 25, 2018
