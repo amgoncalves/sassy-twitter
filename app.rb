@@ -55,7 +55,7 @@ configure :production do
 end
 
 configure do
-	$redis = Redis.new(:url => ENV["REDIS_URL"], :timeout => 4)
+	$redis = Redis.new(:url => ENV["REDIS_URL"])
 end
 
 # Sets level for Mongo messages.  Set to DEBUG to see all messages.
