@@ -19,7 +19,6 @@ class FollowPageTest < MiniTest::Unit::TestCase
     @day_before_yesterday = @day_before_yesterday
     @dob = @day_before_yesterday.strftime("%B %d, %Y")
     @date_joined = @day_before_yesterday.strftime("%B %Y")
-    # @profile = Profile.new('engineer', @day_before_yesterday, @day_before_yesterday, 'new york', 'Shuai Yu')
     shuai_profile = {:bio => "engineer", :dob => @dob, :date_joined => @date_joined, :location => 'new york', :name=> 'Shuai Yu'}
     @params[:user][:profile] = Profile.new(shuai_profile)
     @targeted = User.new(@params[:user])
@@ -36,7 +35,6 @@ class FollowPageTest < MiniTest::Unit::TestCase
     @dob = @yesterday.strftime("%B %d, %Y")
     @date_joined = @yesterday.strftime("%B %Y")
     alyssa_profile = {:bio => 'girl', :dob => @dob, :date_joined => @date_joined, :location => 'boston', :name => 'Alyssa Goncalves'}
-    # @profile = Profile.new('girl', @yesterday, @yesterday, 'boston', 'Alyssa Goncalves')
     @profile = Profile.new(alyssa_profile)
     @params[:user][:profile] = @profile
     @targeted = User.new(@params[:user])

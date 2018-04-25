@@ -1,27 +1,3 @@
-# post '/loadtest/user/create' do
-#   if User.where(handle: "test0406").exists?
-#     User.where(handle: "test0406").delete
-#   end
-
-#   # Build the user's profile
-#   @profile = Profile.new("", Date.jd(0), Date.today, "", "")
-#   testuser = Hash.new
-#   testuser[:profile] = @profile
-#   testuser[:handle] = "test0406"
-#   testuser[:email] = "test0406@test"
-#   testuser[:password_hash] = "test0406"
-#   testuser[:APItoken] = "test0406"
-
-#   # Build the user's account
-#   @user = User.new(testuser)
-#   if @user.save
-#     $testUserID = @user._id
-#     flash[:notice] = 'Signup Successfully.'
-#   else
-#     flash[:notice] = 'Signup failed.'
-#   end
-# end
-
 post '/loadtest/user/create/:count' do
   i = 0
   while i < params[:count].to_i do
@@ -117,9 +93,7 @@ post '/loadtest/tweet/new' do
         Hashtag.where(hashtag_name: hashtag_name, tweets: tweets).create
       end
     end
-    # erb :alltweets, :locals => { :title => 'all tweets' }
   else
     flash[:warning] = 'Create tweet failed'
-    # redirect back
   end
 end
