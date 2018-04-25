@@ -16,8 +16,6 @@ This application is optimized to scale with the load of user activity.  Caching,
 
 nanoTwitter has a REST API that can be utilized with the [nanoTwitter Client Library](https://github.com/amgoncalves/nt-client) for client applications written in Ruby.
 
-
-
 ## Screenshots
 
 ![nanoTwitter Homepage](/doc/img/screenshot01.png)
@@ -64,20 +62,11 @@ To make a response to a client faster, we only update the data in redis when nec
 
 We also use Rack Timeout to abort requests which will take more than 5 seconds. The reason we do this is to avoid web requests which run longer than 5000ms. We either put the job in a queue for worker node to process or abort those requests so we can focus the resources to process other incoming reqeusts.
 
-
-## Screenshots
-
-![nanoTwitter Homepage](/doc/img/screenshot01.png)
-
-![nanoTwitter User Timeline](/doc/img/screenshot02.png)
-
-![nanoTwitter Tweet](/doc/img/screenshot03.png)
-
-
 ## Result of scalability work, timings
 
 ![500 clients over 1 min without worker dyno](/doc/tests/500_create_new_tweet_web1thread1.png)
 *0 - 500 clients over 1 min, maintain client load, tweet route, with only one web dyno, no worker dyno added*
+
 ![500 clients over 1 min with worker dyno](/doc/tests/500_create_new_tweet_web1worker1thread1.png)
 *0 - 500 clients over 1 min, maintain client load, tweet route, with one web dyno and one worker dyno*
 
