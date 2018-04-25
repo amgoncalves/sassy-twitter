@@ -37,6 +37,7 @@ require_relative './spec/follow_loadtest.rb'
 require_relative './spec/reply_loadtest.rb'
 require_relative './spec/load_test_search.rb'
 require_relative './helper/user_related.rb'
+require_relative './helper/function.rb'
 require_relative './api/api_user.rb'
 require_relative './api/api_tweet.rb'
 require_relative './api/api_search.rb'
@@ -76,7 +77,8 @@ get "/" do
       redirect "/"
     end
 
-    @tweets = $redis.lrange($globalTL,0, 50)
+    tweet_ids = $redis.lrange($globalTL, 0, -1)
+    @tweets = Tweet.in(_id, tweet_ids)
 
     # if session contains user information extract user from redis
     # otherwise from mongodb
@@ -94,7 +96,9 @@ get "/" do
     @info[:target_user] = @targeted_user
     @info[:target_tweets] = @tweets
   else
-    @tweets = $redis.lrange($globalTL, 0, 50)
+    # @tweets = $redis.lrange($globalTL, 0, 50)
+    tweet_ids = $redis.lrange($globalTL, 0, -1)
+    @tweets = Tweet.in(_id, tweet_ids)
   end
   erb :index, :locals => { :title => 'Welcome!' }
 end
