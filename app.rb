@@ -78,7 +78,7 @@ get "/" do
     end
 
     tweet_ids = $redis.lrange($globalTL, 0, -1)
-    @tweets = Tweet.in(_id, tweet_ids)
+    @tweets = Tweet.in(_id: tweet_ids)
 
     # if session contains user information extract user from redis
     # otherwise from mongodb
@@ -98,7 +98,7 @@ get "/" do
   else
     # @tweets = $redis.lrange($globalTL, 0, 50)
     tweet_ids = $redis.lrange($globalTL, 0, -1)
-    @tweets = Tweet.in(_id, tweet_ids)
+    @tweets = Tweet.in(_id: tweet_ids)
   end
   erb :index, :locals => { :title => 'Welcome!' }
 end
