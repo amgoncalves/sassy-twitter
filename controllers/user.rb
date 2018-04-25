@@ -54,7 +54,6 @@ get '/user/testuser/' do
   target_exist = query_res.exists?
 
   if target_exist
-    # login_user = get_user_from_redis
 		login_user = redis_login_user
 
     target_user = query_res.first
@@ -65,12 +64,6 @@ get '/user/testuser/' do
       target_tweets = Tweet.in(_id: target_user[:tweets])
       target_tweets = target_tweets.reverse
     end
-    # @info[:login_user] = login_user
-    # @info[:target_user] = target_user
-    # @info[:isfollowing] = isfollowing
-    # @info[:target_tweets] = target_tweets
-    # @tweets = @info[:target_tweets]
-    # erb :user
 	end
 end
 

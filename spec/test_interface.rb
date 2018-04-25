@@ -51,7 +51,6 @@ class ResetStandard
       n = params[:tweets].to_i
     end
   
-    # CSV.foreach('../seeds/tweets.csv') do |row|
     tweets_text = File.read("seeds/tweets.csv")
     tweets_csv = CSV.parse(tweets_text, :headers => false)
     tweets_csv.each do |row|
@@ -69,12 +68,6 @@ class ResetStandard
           time_created: time_created)
         # add tweet under user
         author.add_tweet(tweet._id)
-
-        # # save this tweet in global timeline
-        # $redis.rpush($globalTL, tweet.to_json)
-        # if $redis.llen($globalTL) > 50
-        #   $redis.rpop($globalTL)
-        # end
       end
       
       i = i + 1
@@ -82,21 +75,17 @@ class ResetStandard
   
     endtime = Time.now
     puts endtime - starttime
-    # erb "process time: #{endtime - starttime} seconds",
-    # :locals => { :title => 'Test Interface' }
   end
 end
 
 
 # get the test home page for all test interface
 get '/test' do
-  # Mongoid::Config.connect_to('nanotwitter-loadtest')
   erb :test_interface, :locals => { :title => 'Test Interface' }
 end
 
 # delete everything and recreate test uesr
 post '/test/reset/all' do
-  # Mongoid::Config.connect_to('nanotwitter-loadtest')
   # delete everything
   # delete db
   Mongoid.purge!
@@ -131,7 +120,6 @@ end
 
 # delete and recreate TestUser
 post '/test/reset/testuser' do
-  # Mongoid::Config.connect_to('nanotwitter-loadtest')
   user = session[:testuser]
   # remove the following relationship of followed users
   user.followed.each do |followed_id|
@@ -200,13 +188,6 @@ get '/test/status' do
   if session[:testuser] != nil
     testuser = session[:testuser]
     testuser_id = testuser._id
-  # elsif $redis.exists("testuser")
-  #   user_hash = JSON.parse($redis.get("testuser"))
-  #   profile_hash = user_hash["profile"]
-  #   profile = Profile.new(profile_hash)
-  #   user_hash["profile"] = profile
-  #   testuser = User.new(user_hash)
-  #   testuser_id = testuser._id
   elsif User.where(handle: "testuser").exists?
     testuser = User.where(handle: "testuser").first
     testuser_id = testuser._id
@@ -223,7 +204,6 @@ end
 
 # display version number of this build
 get '/test/version' do
-  # Mongoid::Config.connect_to('nanotwitter-loadtest')
   erb "version: 1.0", :locals => { :title => 'Test Version' }
 end
 
@@ -315,7 +295,6 @@ post '/test/users/create' do
         end
 
         # spread this tweet to all followers
-        # followers = db_login_user.followeds
         followers = user.followeds
         followers.each do |follower|
           $redis.rpush(follower.to_s, tweet_id)
@@ -340,7 +319,6 @@ end
 # user u generates t(integer) new fake tweets
 # if u=”testuser” then this refers to the TestUser
 post "/test/user/:user/tweets" do
-  # Mongoid::Config.connect_to('nanotwitter-loadtest')
   # initialize variables
   user = nil
   tweets_count = 0
@@ -374,7 +352,6 @@ post "/test/user/:user/tweets" do
         end
 
         # spread this tweet to all followers
-        # followers = db_login_user.followeds
         followers = user.followeds
         followers.each do |follower|
           $redis.rpush(follower.to_s, tweet_id)
@@ -395,7 +372,6 @@ end
 # n (integer) randomly selected users follow 
 # ‘n’ (integer) different randomly seleted users.
 post '/test/user/follow' do
-  # Mongoid::Config.connect_to('nanotwitter-loadtest')
   if User.count < 2
     erb "Run post '/test/reset/standard' first!", :locals => { :title => 'Test Interface' }
   else
@@ -427,7 +403,6 @@ end
 # n (integer) randomly selected users follow user u (integer)
 # if u=”testuser” then this refers to the TestUser
 post "/test/user/:user/follow" do
-  # Mongoid::Config.connect_to('nanotwitter-loadtest')
   # initialize variables
   user = nil
   n = 0
@@ -455,9 +430,6 @@ post "/test/user/:user/follow" do
     else
       Thread.new do
         users = User.all
-        # if params[:user] != "testuser"
-        #   users.delete(params[:user].to_i)
-        # end
         tweets = user.tweets
         users.sample(n).each do |follower_user|
           user.toggle_followed(follower_user._id)
@@ -484,5 +456,3 @@ post "/test/user/:user/follow" do
     erb "User #{params[:user]} doen't exist in database", :locals => { :title => 'Test Interface' }
   end
 end
-
-

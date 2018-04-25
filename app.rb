@@ -1,4 +1,3 @@
-# require 'byebug'
 require 'json'
 require 'mongoid'
 require 'mongo'
@@ -11,8 +10,6 @@ require 'redis'
 require 'sidekiq'
 require 'sidekiq/api'
 require 'rack-timeout'
-# require 'sinatra/cache'
-#require 'sinatra/sessionshelper'
 require_relative './models/user'
 require_relative './models/userd'
 require_relative './models/tweet'
@@ -55,16 +52,8 @@ if ENV['MONGOID_ENV'] == 'production'
   Mongoid.load!("config/mongoid.yml", :production)
 else
   Mongoid::Config.connect_to('nanotwitter-dev') 
-  # $redis = Redis.new(url: ENV["REDIS_URL"]) 
-	# $redis = Redis.new(:url => ENV["REDIS_URL"], :timeout => 4)
 end
 
-# configure do
-# 	register(Sinatra::Cache)
-# 	set :root, File.dirname(__FILE__)
-# 	set :cache_enabled, true
-# 	set :cache_output_dir, Proc.new { File.join(root, 'public', 'cache') }
-# end
 configure :production do
 	require 'newrelic_rpm'
 end

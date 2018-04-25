@@ -28,18 +28,12 @@ post "/follow" do
           $redis.rpop(login_id.to_s)
         end
       end
-      #store in mongodb
-      # new_tweets = $redis.lrange(login_id.to_s, 0, -1).reverse
-      # login_user.update_tweets(new_tweets)
     else
       # delete all tweets of that user to current user timeline
       tweets = target_user.tweets
       tweets.each do |tweet_id|
         $redis.lrem(login_id.to_s, 0, tweet_id.to_s)
       end
-      # store in mongodb
-      # new_tweets = $redis.lrange(login_id.to_s, 0, -1).reverse
-      # login_user.update_tweets(new_tweets)
     end
   end
 end

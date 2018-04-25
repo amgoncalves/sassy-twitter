@@ -29,17 +29,12 @@ post "/tweet/new" do
     tweet_id = tweet._id
     login_user_id = redis_login_user._id
 
-    # update db
-    # db_login_user = User.where(_id: login_user_id).first
-    # db_login_user.add_tweet(tweet_id)
-    #
     TweetMongoWorker.perform_async(login_user_id.to_s, tweet_id.to_s)
     # update redis
     redis_login_user.add_tweet(tweet_id)
     save_user_to_redis(redis_login_user)
 
     # spread this tweet to all followers
-    # followers = db_login_user.followeds
     followers = redis_login_user.followeds
     followers.each do |follower|
       $redis.rpush(follower.to_s, tweet_id)
@@ -153,8 +148,6 @@ post '/user/testuser/tweet' do
     login_user_id = redis_login_user._id
 
     # update db
-    # db_login_user = User.where(_id: login_user_id).first
-    # db_login_user.add_tweet(tweet_id)
     TweetMongoWorker.perform_async(login_user_id.to_s, tweet_id.to_s)
     
     # update redis
@@ -163,12 +156,12 @@ post '/user/testuser/tweet' do
 
     # save this tweet in global timeline
     globalTL_len = $redis.rpush($globalTL, tweet.to_json)
+
     if globalTL_len > 50
       $redis.rpop($globalTL)
     end
 
     # spread this tweet to all followers
-    # followers = db_login_user.followeds
     followers = redis_login_user.followeds
     followers.each do |follower|
       personalTL_len = $redis.rpush(follower.to_s, tweet_id)
@@ -181,7 +174,6 @@ post '/user/testuser/tweet' do
     # redirect back
   end
 end
-
 
 def generateHashtagTweet(content)
   content.gsub!(/#\S+/) { |match|
@@ -208,6 +200,4 @@ def generateMentionTweet(content)
   end
 
   return content
-  
 end
-
