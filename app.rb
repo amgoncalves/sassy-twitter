@@ -76,7 +76,7 @@ get "/" do
       redirect "/"
     end
 
-    @tweets = $redis.lrange($globalTL,0, 50).reverse
+    @tweets = $redis.lrange($globalTL,0, 50)
 
     # if session contains user information extract user from redis
     # otherwise from mongodb
@@ -94,7 +94,7 @@ get "/" do
     @info[:target_user] = @targeted_user
     @info[:target_tweets] = @tweets
   else
-    @tweets = $redis.lrange($globalTL, 0, 50).reverse
+    @tweets = $redis.lrange($globalTL, 0, 50)
   end
   erb :index, :locals => { :title => 'Welcome!' }
 end
