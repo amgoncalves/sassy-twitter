@@ -449,8 +449,6 @@ post "/test/user/:user/follow" do
     erb "User #{params[:user]} doen't exist in database", :locals => { :title => 'Test Interface' }
   end
 end
-<<<<<<< HEAD
-=======
 
 post "/test/standard" do
   starttime = Time.now
