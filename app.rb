@@ -55,7 +55,7 @@ configure :production do
 end
 
 configure do
-	$redis = Redis.new(:url => ENV["REDIS_URL"])
+	$redis = Redis.new(:url => ENV["REDIS_URL"], :timeout => 4)
 end
 
 # Sets level for Mongo messages.  Set to DEBUG to see all messages.
@@ -96,7 +96,6 @@ get "/" do
   else
     @tweets = $redis.lrange($globalTL, 0, 50)
   end
-  $redis.quit
   erb :index, :locals => { :title => 'Welcome!' }
 end
 
