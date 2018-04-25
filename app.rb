@@ -69,6 +69,7 @@ set :views, Proc.new { File.join(root, "views") }
 set :public_folder, Proc.new { File.join(root, "public") }
 
 get "/" do
+  Thread.new do
   if is_authenticated?
     if session[:user_id] == nil
       session.clear
@@ -96,7 +97,10 @@ get "/" do
   else
     @tweets = $redis.lrange($globalTL, 0, 50)
   end
+end
+  $redis.quit
   erb :index, :locals => { :title => 'Welcome!' }
+
 end
 
 get '/reset/redis' do
