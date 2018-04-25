@@ -37,14 +37,14 @@ post "/api/v1/:apitoken/tweets/new" do
   # spread this tweet to all followers
   followers = user.followeds
   followers.each do |follower|
-    $redis.rpush(follower.to_s, tweet_id)
+    $redis.lpush(follower.to_s, tweet_id)
     if $redis.llen(follower.to_s) > 50
       $redis.rpop(follower.to_s)
     end
   end
 
   # save this tweet in global timeline
-  $redis.rpush($globalTL, tweet.to_json)
+  $redis.lpush($globalTL, tweet._id.to_s)
   if $redis.llen($globalTL) > 50
     $redis.rpop($globalTL)
   end
@@ -135,14 +135,14 @@ post "/api/v1/:apitoken/tweets/:tweet_id/retweet" do
   # spread this tweet to all followers
   followers = user.followeds
   followers.each do |follower|
-    $redis.rpush(follower.to_s, retweet._id)
+    $redis.lpush(follower.to_s, retweet._id)
     if $redis.llen(follower.to_s) > 50
       $redis.rpop(follower.to_s)
     end
   end
 
   # save this tweet in global timeline
-  $redis.rpush($globalTL, retweet.to_json)
+  $redis.lpush($globalTL, tweet._id.to_s)
   if $redis.llen($globalTL) > 50
     $redis.rpop($globalTL)
   end
@@ -167,9 +167,10 @@ post "/api/v1/:apitoken/tweets/:tweet_id/retweet" do
 end
 
 # json formatter for returning multiple tweets from api calls
-def build_json_tweets(tweets)
+def build_json_tweets(tweet_ids)
   hash = Hash.new
   count = 1
+  tweets = Tweet.in(_id: tweet_ids)
   tweets.each do |tweet|
     tweet = tweet.to_json unless tweet.class != Tweet    
     hash["#{count}"] = JSON.parse(tweet)

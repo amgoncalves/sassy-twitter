@@ -49,7 +49,7 @@ post "/tweet/new" do
     end
 
     # save this tweet in global timeline
-    $redis.lpush($globalTL, tweet.to_json)
+    $redis.lpush($globalTL, tweet._id.to_s)
     if $redis.llen($globalTL) > 50
       $redis.rpop($globalTL)
     end
@@ -160,8 +160,8 @@ post '/user/testuser/tweet' do
     save_user_to_redis(redis_login_user)
 
     # save this tweet in global timeline
-    globalTL_len = $redis.lpush($globalTL, tweet.to_json)
-    if globalTL_len > 50
+    $redis.lpush($globalTL, tweet._id.to_s)
+    if $redis.llen($globalTL) > 50
       $redis.rpop($globalTL)
     end
 

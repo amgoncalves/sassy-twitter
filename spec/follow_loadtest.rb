@@ -15,7 +15,10 @@ post '/loadtest/follow' do
 
 		tweets = target_user.tweets
 		tweets.each do |tweet_id|
-			$redis.rpush(db_login_user._id.to_s, tweet_id)
+			$redis.lpush(db_login_user._id.to_s, tweet_id)
+      if $redis.llen(db_login_user._id.to_s) > 50
+        $redis.rpop(db_login_user._id.to_s)
+      end
 		end
 
 		isfollowing = db_login_user.follow?(target_user)

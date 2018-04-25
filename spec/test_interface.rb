@@ -256,7 +256,7 @@ post '/test/users/create' do
           author_handle: user.handle)
         user.add_tweet(tweet._id)
         # save this tweet in global timeline
-        $redis.lpush($globalTL, tweet.to_json)
+        $redis.lpush($globalTL, tweet._id.to_s)
         if $redis.llen($globalTL) > 50
           $redis.rpop($globalTL)
         end
@@ -314,8 +314,9 @@ post "/test/user/:user/tweets" do
       while i < tweets_count.to_i do
         tweet = Tweet.create(content: "no.#{i} fake tweet", author_id: user._id, author_handle: user.handle)
         user.add_tweet(tweet._id)
+
         # save this tweet in global timeline
-        $redis.lpush($globalTL, tweet.to_json)
+        $redis.lpush($globalTL, tweet._id.to_s)
         if $redis.llen($globalTL) > 50
           $redis.rpop($globalTL)
         end

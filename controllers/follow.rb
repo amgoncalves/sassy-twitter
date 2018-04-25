@@ -23,7 +23,7 @@ post "/follow" do
       # add all tweets of that user to current user timeline
       tweets = target_user.tweets
       tweets.each do |tweet_id|
-        $redis.rpush(login_id.to_s, tweet_id)
+        $redis.lpush(login_id.to_s, tweet_id)
         if $redis.llen(login_id.to_s) > 100
           $redis.rpop(login_id.to_s)
         end

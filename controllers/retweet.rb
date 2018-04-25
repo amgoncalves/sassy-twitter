@@ -22,14 +22,14 @@ post "/retweet" do
     # spread this tweet to all followers
     followers = user.followeds
     followers.each do |follower|
-      $redis.rpush(follower.to_s, retweet._id)
+      $redis.lpush(follower.to_s, retweet._id)
       if $redis.llen(follower.to_s) > 50
         $redis.rpop(follower.to_s)
       end
     end
 
     # save this tweet in global timeline
-    $redis.rpush($globalTL, retweet.to_json)
+    $redis.lpush($globalTL, tweet._id.to_s)
     if $redis.llen($globalTL) > 50
       $redis.rpop($globalTL)
     end
