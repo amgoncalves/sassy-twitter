@@ -42,14 +42,14 @@ post "/tweet/new" do
     # followers = db_login_user.followeds
     followers = redis_login_user.followeds
     followers.each do |follower|
-      $redis.rpush(follower.to_s, tweet_id)
+      $redis.lpush(follower.to_s, tweet_id)
       if $redis.llen(follower.to_s) > 50
         $redis.rpop(follower.to_s)
       end
     end
 
     # save this tweet in global timeline
-    $redis.rpush($globalTL, tweet.to_json)
+    $redis.lpush($globalTL, tweet.to_json)
     if $redis.llen($globalTL) > 50
       $redis.rpop($globalTL)
     end
@@ -126,8 +126,6 @@ get "/tweet/:tweet_id" do
 end
 
 post '/user/testuser/tweet' do
-  @apitoken = "/"
-
   redis_login_user = $redis.get("testuser")
   if redis_login_user != nil
     user_hash = JSON.parse($redis.get("testuser"))
@@ -162,16 +160,15 @@ post '/user/testuser/tweet' do
     save_user_to_redis(redis_login_user)
 
     # save this tweet in global timeline
-    globalTL_len = $redis.rpush($globalTL, tweet.to_json)
+    globalTL_len = $redis.lpush($globalTL, tweet.to_json)
     if globalTL_len > 50
       $redis.rpop($globalTL)
     end
 
     # spread this tweet to all followers
-    # followers = db_login_user.followeds
     followers = redis_login_user.followeds
     followers.each do |follower|
-      personalTL_len = $redis.rpush(follower.to_s, tweet_id)
+      personalTL_len = $redis.lpush(follower.to_s, tweet_id)
       if personalTL_len > 50
         $redis.rpop(follower.to_s)
       end

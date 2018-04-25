@@ -1,7 +1,7 @@
 # Gets a single tweet if one exists with an id = params[:id]
 # To get most recent tweets, set params[:id] = "recent"
 get "/api/v1/:apitoken/tweets/:id" do
-  return build_json_tweets($redis.lrange($globalTL, 0, 50).reverse) unless params[:id] != "recent"
+  return build_json_tweets($redis.lrange($globalTL, 0, 50)) unless params[:id] != "recent"
   tweet = Tweet.where(_id: params[:id]).first
   if tweet
     tweet.to_json
