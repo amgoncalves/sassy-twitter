@@ -112,7 +112,7 @@ DEPENDENCIES
   sinatra-flash (~> 0.3.0)
 
 RUBY VERSION
-   ruby 2.3.3p0 (jruby 9.1.15.0)
+   ruby 2.5.0p0
 
 BUNDLED WITH
    1.16.1
