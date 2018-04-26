@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
-ruby '2.5.0'
-# ruby '2.3.3', :engine => 'jruby', :engine_version => '9.1.15.0'
+# ruby '2.5.0'
+ruby '2.3.3', :engine => 'jruby', :engine_version => '9.1.15.0'
 
 gem 'bcrypt',        '~> 3.1', '>= 3.1.11'
 # gem 'byebug'
