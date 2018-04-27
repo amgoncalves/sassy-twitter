@@ -1,4 +1,4 @@
-[![Maintainability](https://api.codeclimate.com/v1/badges/a99a88d28ad37a79dbf6/maintainability)](https://codeclimate.com/github/codeclimate/codeclimate/maintainability)
+# Sassy Twitter [![Maintainability](https://api.codeclimate.com/v1/badges/a99a88d28ad37a79dbf6/maintainability)](https://codeclimate.com/github/codeclimate/codeclimate/maintainability)
 
 [View nanoTwitter](https://sassy-nanotwitter.herokuapp.com/)
 
@@ -7,7 +7,7 @@
 
 [Sassy nanoTwitter (nT)](https://sassy-nanotwitter.herokuapp.com/) is a minimal version of [Twitter](https://twitter.com/) built on [Sinatra](http://sinatrarb.com/) and deployed on [heroku](https://www.heroku.com/platform) cloud platform.  It can support the basic functions the same as Twitter that it allows user to register an account, build a profile, make a tweet and so on. Even this is a nano version of Twitter, but our main goal to scale this application based on data collected from load tests.
 
-# Summary
+## Summary
 
 Users who register for an account can broadcast short 400-character messages to the site-wide global timeline.  Each user has a unique username, called a handle, and a profile page with a log of their messages.  Users can follow other users to customize what messages they see in their personal feed.  Users have the ability to duplicate or "re-Tweet" any message onto their own timeline with an optional comment.  Prefixing a word with the pound or hashtag (#) symbol makes the term searchable by other users.  Search is available  for other users by their handle or search for tweets by keyword.  Optional cookies are used for persistent user sessions.
 
