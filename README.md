@@ -4,6 +4,8 @@
 
 * [View nanoTwitter](https://sassy-nanotwitter.herokuapp.com/)
 
+* [View Development Logs for each version](https://github.com/amgoncalves/sassy-twitter/blob/master/README_VERSION.md)
+
 * [Github Repo](https://github.com/amgoncalves/sassy-twitter)
 
 * [Download repo](https://github.com/amgoncalves/sassy-twitter/archive/master.zip)
@@ -83,7 +85,7 @@ We did the performance expriment of JRuby, the result shows that it improves the
 
 ### Scaled with worker dyno
 
-We scaled our application by applying the worker dyno, in the way that our applications transferred the computational intensive tasks from web layer to background to improve the performance of responde time back to client. We compared the 
+We scaled our application by applying the worker dyno, in the way that our applications transferred the computational intensive tasks from web layer to background to improve the performance of responde time back to client. We compared the performance before and after we applied the worker dyno, the performance was improved by this scaling up.
 
 ![500 clients over 1 min without worker dyno](/doc/tests/500_create_new_tweet_web1thread1.png)
 *0 - 500 clients over 1 min, maintain client load, tweet route, with only one web dyno, no worker dyno added*
@@ -93,13 +95,20 @@ We scaled our application by applying the worker dyno, in the way that our appli
 
 ### Applying Rack Timeout
 
+The requset which takes too long time also will affect the subsequent jobs since all the jobs are waiting in the job queue, once the first one takes too long time and exceeds the time of timeout, as a chain effect all the subsequent jobs will fall in the timeout error too. For solving this problem, we implemented our application with [Rack::Timeout](https://github.com/heroku/rack-timeout) , this library will abort the request that are taking too long time and let the susequent jobs to execute.
+
+We compared the number of timeout before and after the setting of Rack Timeout. Long time taking request yields to the next job reduced the number of timeout requests in total. 
+
 ![1000 clients over 1 min with worker dyno, no Rack Timeout](/doc/tests/1000_create_new_tweet_web1worker1thread1_no_timeout.png)
 *0 - 1000 clients over 1 min, maintain client load, tweet route, with one web dyno and one worker dyno, not using Rack:Timeout*
 
 ![1000 clients over 1 min with worker dyno, with Rack Timeout](/doc/tests/1000_create_new_tweet_web1worker1thread1_timeout.png)
 *0 - 1000 clients over 1 min, maintain client load, tweet route, with one web dyno and one worker dyno, using Rack:Timeout*
 
-### Limitation in Redis
+### Limit in Redis
+In this application, we store the timeline of each user in Redis. This algorithm is also being used by Twitter for storing their users' timeline. In this algorithm, once a user creates a new tweet, this new created tweet will be broadcasted to all followers and update each follower's timeline.
+
+We searched all the free Redis add-on for heroku cloud framework, in which the best option is [Redis Cloud](https://elements.heroku.com/addons/rediscloud) with the largest memory size and connection allowed. However, for the need of our application in creating new tweet, this server provided Redis Cloud reache the maximum connection limit and the test failed. Below is the load test performance and Redis server state.
 
 
 
