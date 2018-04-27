@@ -196,6 +196,12 @@ OK
 redis> keys *         # show all keys stored in redis
 redis> lrange "key" 0 -1          # show all elements stored in the "key" as a list
 ````
+### Sidekiq Setup
+Sidekiq is used to handle the backgroud jobs, before starting Sinatra application, we need starting Sidekiq first.
+```
+$ gem install sidekiq
+$ bundle exec sidekiq -r ./app.rb
+```
 
 ### Sinatra Setup
 
