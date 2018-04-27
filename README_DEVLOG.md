@@ -1,4 +1,4 @@
-# nanoTwitter 0.6 :bird:
+# nanoTwitter 1.0 :bird:
 
 [https://sassy-nanotwitter.herokuapp.com/](https://sassy-nanotwitter.herokuapp.com/)
 
@@ -209,11 +209,12 @@ Brandeis University, Spring 2018
 
 - [x] Config and add work dyno for database relate operation - Shuai
 - [x] Add Sidekiq to work with worker dyno -Shuai
-- [x] Reconstruct the test interface with new requirement - Si
+- [x] Reconstruct the setup test interface with new requirement - Si
+- [x] Prepare the test interface for final runoff - Shuai, Si
 - [x] Do the final test as senario - All
 - [x] Clean up and recheck the source code - Shuai, Si
 - [x] Write Report - Alyssa, Si
-
+- [x] Add Code Climate badge - Si
 
 ## Documentation
 
