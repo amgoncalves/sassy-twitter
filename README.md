@@ -85,7 +85,7 @@ We did the performance expriment of JRuby, the result shows that it improves the
 
 ### Scaled with worker dyno
 
-We scaled our application by applying the worker dyno, in the way that our applications transferred the computational intensive tasks from web layer to background to improve the performance of responde time back to client. We compared the 
+We scaled our application by applying the worker dyno, in the way that our applications transferred the computational intensive tasks from web layer to background to improve the performance of responde time back to client. We compared the performance before and after we applied the worker dyno, the performance was improved by this scaling up.
 
 ![500 clients over 1 min without worker dyno](/doc/tests/500_create_new_tweet_web1thread1.png)
 *0 - 500 clients over 1 min, maintain client load, tweet route, with only one web dyno, no worker dyno added*
@@ -94,6 +94,10 @@ We scaled our application by applying the worker dyno, in the way that our appli
 *0 - 500 clients over 1 min, maintain client load, tweet route, with one web dyno and one worker dyno*
 
 ### Applying Rack Timeout
+
+The requset which takes too long time also will affect the subsequent jobs since all the jobs are waiting in the job queue, once the first one takes too long time and exceeds the time of timeout, as a chain effect all the subsequent jobs will fall in the timeout error too. For solving this problem, we implemented our application with [Rack::Timeout](https://github.com/heroku/rack-timeout) , this library will abort the request that are taking too long time and let the susequent jobs to execute.
+
+We compared the number of timeout before and after the setting of Rack Timeout. Long time taking request yields to the next job reduced the number of timeout requests in total. 
 
 ![1000 clients over 1 min with worker dyno, no Rack Timeout](/doc/tests/1000_create_new_tweet_web1worker1thread1_no_timeout.png)
 *0 - 1000 clients over 1 min, maintain client load, tweet route, with one web dyno and one worker dyno, not using Rack:Timeout*
