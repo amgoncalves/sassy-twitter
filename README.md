@@ -53,7 +53,7 @@ To make a response to a client faster, we only update the data in redis when nec
 We also use Rack Timeout to abort requests which will take more than 5 seconds. The reason we do this is to avoid web requests which run longer than 5000ms. We either put the job in a queue for worker node to process or abort those requests so we can focus the resources to process other incoming reqeusts.
 
 ### Multithreading and JRuby (not used in final version)
-We also consider the approach to distribute the load of main thread to multiple background thread. Since original Ruby interpreter was written in C and has some issues in multithreading jobs, we also applied ![JRuby](http://jruby.org/) engine to run the code on JVM which has better controlls of multiple thread which can scale them to many cpus, cores etc.
+We also consider the approach to distribute the load of main thread to multiple background thread. Since original Ruby interpreter was written in C and has some issues in multithreading jobs, we also applied [JRuby](http://jruby.org/) engine to run the code on JVM which has better controlls of multiple thread which can scale them to many cpus, cores etc.
 
 We did the performance expriment of JRuby, the result shows that it improves the performance for reducing the load of main thread. However, in our application we also introduced the worker dyno which releases the load of main job. So we only applied worker dyno as background job worker in our application.
 
@@ -83,7 +83,7 @@ We did the performance expriment of JRuby, the result shows that it improves the
 
 ### Scaled with worker dyno
 
-We sacaled our application by applying the worker dyno, in the way that our applications transferred the computational intensive tasks from web layer to background to improve the performance of responde time back to client.  
+We scaled our application by applying the worker dyno, in the way that our applications transferred the computational intensive tasks from web layer to background to improve the performance of responde time back to client. We compared the 
 
 ![500 clients over 1 min without worker dyno](/doc/tests/500_create_new_tweet_web1thread1.png)
 *0 - 500 clients over 1 min, maintain client load, tweet route, with only one web dyno, no worker dyno added*
