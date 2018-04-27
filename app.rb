@@ -96,7 +96,6 @@ get "/" do
     @info[:target_user] = @targeted_user
     @info[:target_tweets] = @tweets
   else
-    # @tweets = $redis.lrange($globalTL, 0, 50)
     tweet_ids = $redis.lrange($globalTL, 0, -1)
     @tweets = Tweet.in(_id: tweet_ids).reverse
   end

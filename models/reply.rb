@@ -13,6 +13,5 @@ class Reply
 
   validates_length_of :content, minimum: 1, maximum: 400
 
-  # belongs_to :user
   belongs_to :tweet
 end

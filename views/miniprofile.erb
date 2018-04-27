@@ -1,11 +1,6 @@
 <div class="panel panel-default">
   <div class="panel-body">
     <a href="#"><img class="img-responsive" alt="" src="/images/profile_64x64.png"></a>
-    <%# <% if @info[:target_user]._id != @info[:login_user]._id %1> %>
-      <%# <div> %>
-        <%# <button id="follow-button" class="btn btn-primary"><% if @info[:isfollowing] == true %1>Following<% else %1>+ Follow<% end %1></button> %>
-      <%# </div> %>
-    <%# <% end %1> %>
 
     <p style="margin-top:0px;" >
       <div class="twPc-divName">
@@ -15,10 +10,8 @@
 
     <div style="margin-top:-15px;">
       <span>
-        <%# <a href="/user/<%= f._id.to_s %1>"> %>
-        <!-- <a href=<%= "/" + @info[:login_user].handle + "/user/" + f._id.to_s %>> -->
-          <a href=<%= "/user/" + f._id.to_s %>>
-          @<span><%= f.handle %></span>
+        <a href=<%= "/user/" + f._id.to_s %>>
+        @<span><%= f.handle %></span>
         </a>
       </span>
     </div>

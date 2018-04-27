@@ -30,16 +30,12 @@ post "/tweet/new" do
     login_user_id = redis_login_user._id
 
     # update db
-    # db_login_user = User.where(_id: login_user_id).first
-    # db_login_user.add_tweet(tweet_id)
-    #
     TweetMongoWorker.perform_async(login_user_id.to_s, tweet_id.to_s)
     # update redis
     redis_login_user.add_tweet(tweet_id)
     save_user_to_redis(redis_login_user)
 
     # spread this tweet to all followers
-    # followers = db_login_user.followeds
     followers = redis_login_user.followeds
     followers.each do |follower|
       $redis.lpush(follower.to_s, tweet_id)
@@ -151,8 +147,6 @@ post '/user/testuser/tweet' do
     login_user_id = redis_login_user._id
 
     # update db
-    # db_login_user = User.where(_id: login_user_id).first
-    # db_login_user.add_tweet(tweet_id)
     TweetMongoWorker.perform_async(login_user_id.to_s, tweet_id.to_s)
     
     # update redis

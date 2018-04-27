@@ -45,7 +45,6 @@ class ResetStandard
     n = tweets_count
     i = 0
     
-    # CSV.foreach('../seeds/tweets.csv') do |row|
     tweets_text = File.read("seeds/tweets.csv")
     tweets_csv = CSV.parse(tweets_text, :headers => false)
     tweets_csv.each do |row|
@@ -83,7 +82,6 @@ end
 
 # delete everything and recreate test uesr
 post '/test/reset/all' do
-  # Mongoid::Config.connect_to('nanotwitter-loadtest')
   # delete everything
   # delete db
   Mongoid.purge!
@@ -118,7 +116,6 @@ end
 
 # delete and recreate TestUser
 post '/test/reset/testuser' do
-  # Mongoid::Config.connect_to('nanotwitter-loadtest')
   user = session[:testuser]
   # remove the following relationship of followed users
   user.followed.each do |followed_id|
@@ -187,13 +184,7 @@ get '/test/status' do
   if session[:testuser] != nil
     testuser = session[:testuser]
     testuser_id = testuser._id
-  # elsif $redis.exists("testuser")
-  #   user_hash = JSON.parse($redis.get("testuser"))
-  #   profile_hash = user_hash["profile"]
-  #   profile = Profile.new(profile_hash)
-  #   user_hash["profile"] = profile
-  #   testuser = User.new(user_hash)
-  #   testuser_id = testuser._id
+
   elsif User.where(handle: "testuser").exists?
     testuser = User.where(handle: "testuser").first
     testuser_id = testuser._id
@@ -262,7 +253,6 @@ post '/test/users/create' do
         end
 
         # spread this tweet to all followers
-        # followers = db_login_user.followeds
         followers = user.followeds
         followers.each do |follower|
           $redis.lpush(follower.to_s, tweet_id)
@@ -292,7 +282,6 @@ post "/test/user/:user/tweets" do
   user = nil
   tweets_count = 0
   # botain user from database
-  # TODO: store the testuser with id of testuser into db too
   if params[:user] == "testuser"
     if session[:testuser] != nil
       user = session[:testuser]
@@ -402,9 +391,6 @@ post "/test/user/:user/follow" do
     else
       Thread.new do
         users = User.all
-        # if params[:user] != "testuser"
-        #   users.delete(params[:user].to_i)
-        # end
         tweets = user.tweets
         users.sample(n).each do |follower_user|
           user.toggle_followed(follower_user._id)
