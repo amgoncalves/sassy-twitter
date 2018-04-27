@@ -110,11 +110,11 @@ In this application, we store the timeline of each user in Redis. This algorithm
 
 We searched all the free Redis add-on for heroku cloud framework, in which the best option is [Redis Cloud](https://elements.heroku.com/addons/rediscloud) with the largest memory size and connection allowed. However, for the need of our application in creating new tweet, this server provided Redis Cloud reache the maximum connection limit and the test failed. Below is the load test performance and Redis server state, the maximum connection for this free plan is 30.
 
-Therefore, 
+We can see from the result that when there are 184 concurrent request to create new tweet it reached the Redis connection maximum limitation. However, the minimum response time is around 180ms which is very fast and prove the efficiency of updating timeline using this Redis algorithm. Therefore, if we can update the Redis server to allow more concurrent connection we can expect better performance for creating new tweets.
 
-![500 clients over 1 min create new tweets](/doc/tests/create_new_tweet_500_failed.png)
+![500 clients over 1 min create new tweets](/doc/tests/create_new_tweet_1000_failed.png)
 ![Redis Error Message](/doc/tests/Redis_Error_message.png)
-![Redis Connection reached maximum number](/doc/tests/Redis_Error_message.png)
+![Redis Connection reached maximum number](/doc/tests/Redis_Connection_Limit.png)
 
 ## Team Members
 
