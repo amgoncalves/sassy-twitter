@@ -173,6 +173,48 @@ Brandeis University, Spring 2018
 - [x] Load test for searching for tweets 250 clients per min - Alyssa
 - [x] Added a worker to launch a small Rake background task for microservice experiment - Alyssa
 
+### nt0.7 - Web Service API and Client
+
+### Requirements
+* *[APIROUTES]* - Implement Design external REST API urls as further Sinatra routes using Swagger
+
+* *[CLIENTLIB]* - Write client libraries for APIs
+
+* *[CLIENTLIBTEST]* - Write a complete set of tests for client library
+
+* *[nanoTwitter 0.7]* - Clean up directory. Update repo.
+
+#### Developer's Log
+
+- [x] Applied and test Jruby engine and muliple thread for database store function as backgroud job - Si
+- [x] Completed Api routes of external REST API Design in Swagger -Si
+- [x] Optmized tweet related functions - Si
+- [x] Implemented Client library - Alyssa
+- [x] Implemented a set of test for client library - Alyssa
+
+### nt1.0 - Completion
+
+### Requirements
+* *[MICROSERVICE]* - Refactor one bit of functionality from your main Sinatra app into a separate microservice
+
+* *[CODECLIMATE]* - Do a static code anlysis by submitting source code to Code Climate
+
+* *[CLEANUP]* - Do whatever clean up of the source code
+
+** [PREPARE]* - Prepare for the final Scalability Runoff
+
+* *[nanoTwitter 0.7]* - Clean up directory. Update repo.
+
+#### Developer's Log
+
+- [x] Config and add work dyno for database relate operation - Shuai
+- [x] Add Sidekiq to work with worker dyno -Shuai
+- [x] Reconstruct the test interface with new requirement - Si
+- [x] Do the final test as senario - All
+- [x] Clean up and recheck the source code - Shuai, Si
+- [x] Write Report - Alyssa, Si
+
+
 ## Documentation
 
 This Github has a [developer's Wiki](https://github.com/amgoncalves/sassy-twitter/wiki).
