@@ -30,7 +30,7 @@ We build full stack web application in Sinatra framework with high functional da
 * The UI uses a combination of HTML and [embedded Ruby](https://ruby-doc.com/docs/ProgrammingRuby/html/web.html).  Elements are styled in CSS using [Bootstrap](https://getbootstrap.com/). [JQuery](https://jquery.com/) is used to provide additional functionality to certain UI elements.
 * Load testing was accomplished by using [loader.io](https://loader.io/) to stress the application with thousands of concurrent connections. [New Relic](https://newrelic.com/) was used in part to monitor application performance.
 
-## Interesting Engineering
+## Notable Engineering
 
 ### Data Model Design
 
@@ -40,18 +40,20 @@ Data is stored in a MongoDB, a NoSQL database, as nested JSON-like "documents." 
 
 
 ### Architecture Design
-
 We noticed that the communication cost between microservices is much larger than the one between two dynos in the same server. In other words,  an HTTP call (a hop) between two servers at different locations would cost more time than working in the same server.
 
 We noticed that the communication cost between microservices is much larger than the communication cost between two dynos in the same server. In other words,  an HTTP call (a hop) between two servers at different locations would cost more time than working in the same server.
 
 So we implemented a web dyno which receives HTTP traffic from the routers and a worker dyno used for background jobs. (Note that one web dyno and one worker dyno is the maximum dynos we get without paying)
 
-### System Design
-
+### Worker Dyno & Sidekiq
 To make a response to a client faster, we only update the data in redis when necessary and put the job of mongodb update into a queue (using Sidekiq) and reply to the client. Asynchronously, the worker dyno fetches a job from the queue and update the mongodb as a background job.
 
+### Rack Timeout
 We also use Rack Timeout to abort requests which will take more than 5 seconds. The reason we do this is to avoid web requests which run longer than 5000ms. We either put the job in a queue for worker node to process or abort those requests so we can focus the resources to process other incoming reqeusts.
+
+### Multithreading and JRuby (not used in final version)
+
 
 ## Screenshots
 
@@ -139,12 +141,6 @@ POST "/api/v1/:apitoken/search/:key/users"
 POST "/api/v1/:apitoken/search/:key/tweets"
 
 ```
-
-## Notable Engineering
-
-- Mongodb and Mongoid
-- Sidekiq
-- Multithreading and JRuby (attempted, was not successful)
 
 ## Installation and Setup
 
