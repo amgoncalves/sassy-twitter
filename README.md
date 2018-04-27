@@ -34,6 +34,8 @@ We build full stack web application in Sinatra framework with high functional da
 
 ### Data Model Design
 
+Different from OOD we designed our data model by the use in service unit to reduce the access of database for one request. Also, the operation of relationship between models like join is limited to the minimum level, we store the data simply as a key-value pair. 
+
 Data is stored in a MongoDB, a NoSQL database, as nested JSON-like "documents."  The primary model is the User model, assigned to registered users of the nanoTwitter app, that contains pertinent information such as username, email, encrypted password, and API token.  Each User has a nested Profile document containing more user details such as name, location, birthday, and biography.  Each User also contains a list of Tweet ids, each linked to a Tweet document.  Tweets contain 280-character content, the author id, the author handle.  Tweets also contains a list of ids to its reply Tweets.  A Tweet can be a Retweet of another Tweet.  The Tweet's original_tweet_id field is used to denote if the Tweet is a Retweet of another Tweet.  A Hashtag consists of a keyword and a list of Tweet documents that contain the Hashtag.
 
 
