@@ -105,7 +105,10 @@ We compared the number of timeout before and after the setting of Rack Timeout. 
 ![1000 clients over 1 min with worker dyno, with Rack Timeout](/doc/tests/1000_create_new_tweet_web1worker1thread1_timeout.png)
 *0 - 1000 clients over 1 min, maintain client load, tweet route, with one web dyno and one worker dyno, using Rack:Timeout*
 
-### Limitation in Redis
+### Limit in Redis
+In this application, we store the timeline of each user in Redis. This algorithm is also being used by Twitter for storing their users' timeline. In this algorithm, once a user creates a new tweet, this new created tweet will be broadcasted to all followers and update each follower's timeline.
+
+We searched all the free Redis add-on for heroku cloud framework, in which the best option is [Redis Cloud](https://elements.heroku.com/addons/rediscloud) with the largest memory size and connection allowed. However, for the need of our application in creating new tweet, this server provided Redis Cloud reache the maximum connection limit and the test failed. Below is the load test performance and Redis server state.
 
 
 
