@@ -201,7 +201,7 @@ Brandeis University, Spring 2018
 
 * *[CLEANUP]* - Do whatever clean up of the source code
 
-* * [PREPARE]* - Prepare for the final Scalability Runoff
+* *[PREPARE]* - Prepare for the final Scalability Runoff
 
 * *[nanoTwitter 0.7]* - Clean up directory. Update repo.
 
