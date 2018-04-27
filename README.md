@@ -1,8 +1,12 @@
 # Sassy Twitter [![Maintainability](https://api.codeclimate.com/v1/badges/a99a88d28ad37a79dbf6/maintainability)](https://codeclimate.com/github/codeclimate/codeclimate/maintainability)
 
-[View nanoTwitter](https://sassy-nanotwitter.herokuapp.com/)
+* [View Portfolio](https://amgoncalves.github.io/sassy-twitter/)
 
-[Download repo](https://github.com/amgoncalves/sassy-twitter/archive/master.zip)
+* [View nanoTwitter](https://sassy-nanotwitter.herokuapp.com/)
+
+* [Github Repo](https://github.com/amgoncalves/sassy-twitter)
+
+* [Download repo](https://github.com/amgoncalves/sassy-twitter/archive/master.zip)
 
 
 [Sassy nanoTwitter (nT)](https://sassy-nanotwitter.herokuapp.com/) is a minimal version of [Twitter](https://twitter.com/) built on [Sinatra](http://sinatrarb.com/) and deployed on [heroku](https://www.heroku.com/platform) cloud platform.  It can support the basic functions the same as Twitter that it allows user to register an account, build a profile, make a tweet and so on. Even this is a nano version of Twitter, but our main goal to scale this application based on data collected from load tests.
@@ -14,19 +18,6 @@ Users who register for an account can broadcast short 400-character messages to 
 This application is optimized to scale with the load of user activity.  Caching, multi-threading, and a lightweight NoSQL database with in-memory data caching are employed to manage scalability problems.
 
 nanoTwitter has a REST API that can be utilized with the [nanoTwitter Client Library](https://github.com/amgoncalves/nt-client) for client applications written in Ruby.
-
-## Screenshots
-
-![nanoTwitter Homepage](/doc/img/screenshot01.png)
-
-![nanoTwitter User Timeline](/doc/img/screenshot02.png)
-
-![nanoTwitter Tweet](/doc/img/screenshot03.png)
-
-![nanoTwitter User Page](/doc/img/screenshot04.png)
-
-![nanoTwitter Followers Page](/doc/img/screenshot05.png)
-
 
 ## Technology Description
 
@@ -41,7 +32,6 @@ We build full stack web application in Sinatra framework with high functional da
 
 ## Interesting Engineering
 
-
 ### Data Model Design
 
 Data is stored in a MongoDB, a NoSQL database, as nested JSON-like "documents."  The primary model is the User model, assigned to registered users of the nanoTwitter app, that contains pertinent information such as username, email, encrypted password, and API token.  Each User has a nested Profile document containing more user details such as name, location, birthday, and biography.  Each User also contains a list of Tweet ids, each linked to a Tweet document.  Tweets contain 280-character content, the author id, the author handle.  Tweets also contains a list of ids to its reply Tweets.  A Tweet can be a Retweet of another Tweet.  The Tweet's original_tweet_id field is used to denote if the Tweet is a Retweet of another Tweet.  A Hashtag consists of a keyword and a list of Tweet documents that contain the Hashtag.
@@ -53,7 +43,6 @@ We noticed that the communication cost between microservices is much larger than
 
 We noticed that the communication cost between microservices is much larger than the communication cost between two dynos in the same server. In other words,  an HTTP call (a hop) between two servers at different locations would cost more time than working in the same server.
 
-
 So we implemented a web dyno which receives HTTP traffic from the routers and a worker dyno used for background jobs. (Note that one web dyno and one worker dyno is the maximum dynos we get without paying)
 
 ### System Design
@@ -62,7 +51,33 @@ To make a response to a client faster, we only update the data in redis when nec
 
 We also use Rack Timeout to abort requests which will take more than 5 seconds. The reason we do this is to avoid web requests which run longer than 5000ms. We either put the job in a queue for worker node to process or abort those requests so we can focus the resources to process other incoming reqeusts.
 
+## Screenshots
+
+#### Homepage
+![nanoTwitter Homepage](/doc/img/screenshot01.png)
+
+#### Timeline
+
+![nanoTwitter User Timeline](/doc/img/screenshot02.png)
+
+#### Create Tweet
+
+![nanoTwitter Tweet](/doc/img/screenshot03.png)
+
+#### User Page
+
+![nanoTwitter User Page](/doc/img/screenshot04.png)
+
+#### Follower List
+
+![nanoTwitter Followers Page](/doc/img/screenshot05.png)
+
+
 ## Result of scalability work, timings
+
+### Scaled with worker dyno
+
+We sacaled our application by applying the worker dyno, in the way that our applications transferred the computational intensive tasks from web layer to background to improve the performance of responde time back to client.  
 
 ![500 clients over 1 min without worker dyno](/doc/tests/500_create_new_tweet_web1thread1.png)
 *0 - 500 clients over 1 min, maintain client load, tweet route, with only one web dyno, no worker dyno added*
@@ -70,11 +85,17 @@ We also use Rack Timeout to abort requests which will take more than 5 seconds. 
 ![500 clients over 1 min with worker dyno](/doc/tests/500_create_new_tweet_web1worker1thread1.png)
 *0 - 500 clients over 1 min, maintain client load, tweet route, with one web dyno and one worker dyno*
 
+### Applying Rack Timeout
+
 ![1000 clients over 1 min with worker dyno, no Rack Timeout](/doc/tests/1000_create_new_tweet_web1worker1thread1_no_timeout.png)
 *0 - 1000 clients over 1 min, maintain client load, tweet route, with one web dyno and one worker dyno, not using Rack:Timeout*
 
-![1000 clients over 1 min with worker dyno, no Rack Timeout](/doc/tests/1000_create_new_tweet_web1worker1thread1_timeout.png)
+![1000 clients over 1 min with worker dyno, with Rack Timeout](/doc/tests/1000_create_new_tweet_web1worker1thread1_timeout.png)
 *0 - 1000 clients over 1 min, maintain client load, tweet route, with one web dyno and one worker dyno, using Rack:Timeout*
+
+### Limitation in Redis
+
+
 
 ## Team Members
 
