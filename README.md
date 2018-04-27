@@ -4,6 +4,8 @@
 
 * [View nanoTwitter](https://sassy-nanotwitter.herokuapp.com/)
 
+* [View Development Logs for each version](https://github.com/amgoncalves/sassy-twitter/blob/master/README_VERSION.md)
+
 * [Github Repo](https://github.com/amgoncalves/sassy-twitter)
 
 * [Download repo](https://github.com/amgoncalves/sassy-twitter/archive/master.zip)
