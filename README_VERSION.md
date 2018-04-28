@@ -186,8 +186,8 @@ Brandeis University, Spring 2018
 
 #### Developer's Log
 
-- [x] Config and add worker dyno for database relate operation - Shuai
-- [x] Add Sidekiq to work with worker dyno -Shuai
+- [x] Config Procfile and add one worker dyno for heroku server - Shuai
+- [x] Add Sidekiq to work with worker dyno, double loadtest performance -Shuai
 - [x] Applied and test Jruby engine and muliple thread for database store function as backgroud job - Si
 - [x] Completed Api routes of external REST API Design in Swagger -Si
 - [x] Optmized tweet related functions - Si
@@ -208,7 +208,8 @@ Brandeis University, Spring 2018
 * *[nanoTwitter 1.0]* - Clean up directory. Update repo.
 
 #### Developer's Log
-- [x] Added Rack:Timeout - Shuai
+- [x] Added Rack:Timeout to improve loadtest performance - Shuai
+- [X] Added Redis Timeout to avoid redis connection limits - Shuai
 - [x] Reconstruct the setup test interface with new requirement - Si
 - [x] Prepare the test interface for final runoff - Shuai, Si
 - [x] Clean up and recheck the source code - Shuai, Si
@@ -216,7 +217,7 @@ Brandeis University, Spring 2018
 - [x] Add Code Climate badge - Si
 - [x] Do the final load test as senario - Si, Alyssa, Shuai
 - [x] Tuning performance based on the result of load test - Si, Alyssa, Shuai
-- [x] Reconstruct global timeline storage from redis to mongodb and test the Redis connection limit - Si
+- [x] Reconstruct global timeline storage from redis to mongodb and test the Redis connection limit - Si, Shuai
 - [x] Reconstruct personal timeline algorithm and test the improvement in Redis connection limit - Si
 
 ## Documentation
