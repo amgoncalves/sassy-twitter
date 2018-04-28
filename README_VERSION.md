@@ -209,11 +209,12 @@ Brandeis University, Spring 2018
 
 #### Developer's Log
 - [x] Added Rack:Timeout to improve loadtest performance - Shuai
-- [X] Added Redis Timeout to avoid redis connection limits - Shuai
+- [X] Tried to add Redis Timeout to avoid redis connection limits - Shuai
 - [x] Reconstruct the setup test interface with new requirement - Si
 - [x] Prepare the test interface for final runoff - Shuai, Si
 - [x] Clean up and recheck the source code - Shuai, Si
-- [x] Write Report - Alyssa, Si
+- [x] Write Report - Alyssa, Si, Shuai
+- [x] Make the portforlio page - Alyssa, Shuai, Si
 - [x] Add Code Climate badge - Si
 - [x] Do the final load test as senario - Si, Alyssa, Shuai
 - [x] Tuning performance based on the result of load test - Si, Alyssa, Shuai
@@ -292,5 +293,3 @@ OK
 redis> keys *         # show all keys stored in redis
 redis> lrange "key" 0 -1          # show all elements stored in the "key" as a list
 ````
-
-
